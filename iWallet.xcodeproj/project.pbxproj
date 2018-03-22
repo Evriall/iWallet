@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
 		9ABA9AF42063DB4500ADA34E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF32063DB4500ADA34E /* ViewController.swift */; };
 		9ABA9AF72063DB4500ADA34E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF52063DB4500ADA34E /* Main.storyboard */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
 		9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */; };
 		9ABA9AFF2063DB4500ADA34E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AFD2063DB4500ADA34E /* LaunchScreen.storyboard */; };
+		9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B082063DCB500ADA34E /* SWRevealViewController.m */; };
+		9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0C2063E01000ADA34E /* SlideVC.swift */; };
+		9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0E2063E02500ADA34E /* MainVC.swift */; };
+		9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B112063E18800ADA34E /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F0844252092F4D146C20B7B /* Pods-iWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.release.xcconfig"; sourceTree = "<group>"; };
+		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9ABA9AF32063DB4500ADA34E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +31,13 @@
 		9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9ABA9AFE2063DB4500ADA34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9ABA9B002063DB4500ADA34E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9ABA9B072063DCB500ADA34E /* iWallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iWallet-Bridging-Header.h"; sourceTree = "<group>"; };
+		9ABA9B082063DCB500ADA34E /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		9ABA9B092063DCB500ADA34E /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		9ABA9B0C2063E01000ADA34E /* SlideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideVC.swift; sourceTree = "<group>"; };
+		9ABA9B0E2063E02500ADA34E /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		9ABA9B112063E18800ADA34E /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +45,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		747C799939B274BBEBB627D0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9ABA9AE52063DB4500ADA34E = {
 			isa = PBXGroup;
 			children = (
 				9ABA9AF02063DB4500ADA34E /* iWallet */,
 				9ABA9AEF2063DB4500ADA34E /* Products */,
+				CF44050666741276020DD3AD /* Pods */,
+				747C799939B274BBEBB627D0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +81,9 @@
 		9ABA9AF02063DB4500ADA34E /* iWallet */ = {
 			isa = PBXGroup;
 			children = (
+				9ABA9B102063E17500ADA34E /* Views */,
+				9ABA9B0B2063DF4B00ADA34E /* Controllers */,
+				9ABA9B062063DC9400ADA34E /* Supporting Files */,
 				9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */,
 				9ABA9AF32063DB4500ADA34E /* ViewController.swift */,
 				9ABA9AF52063DB4500ADA34E /* Main.storyboard */,
@@ -67,6 +95,42 @@
 			path = iWallet;
 			sourceTree = "<group>";
 		};
+		9ABA9B062063DC9400ADA34E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9ABA9B092063DCB500ADA34E /* SWRevealViewController.h */,
+				9ABA9B082063DCB500ADA34E /* SWRevealViewController.m */,
+				9ABA9B072063DCB500ADA34E /* iWallet-Bridging-Header.h */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9ABA9B0B2063DF4B00ADA34E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9ABA9B0C2063E01000ADA34E /* SlideVC.swift */,
+				9ABA9B0E2063E02500ADA34E /* MainVC.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9ABA9B102063E17500ADA34E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9ABA9B112063E18800ADA34E /* GradientView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CF44050666741276020DD3AD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */,
+				1F0844252092F4D146C20B7B /* Pods-iWallet.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +138,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9ABA9B032063DB4500ADA34E /* Build configuration list for PBXNativeTarget "iWallet" */;
 			buildPhases = (
+				A6378D059F244E22AC24E467 /* [CP] Check Pods Manifest.lock */,
 				9ABA9AEA2063DB4500ADA34E /* Sources */,
 				9ABA9AEB2063DB4500ADA34E /* Frameworks */,
 				9ABA9AEC2063DB4500ADA34E /* Resources */,
+				42F074F9D1E772804B796560 /* [CP] Embed Pods Frameworks */,
+				36B70393AD3496212BB0F81E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -99,6 +166,7 @@
 				TargetAttributes = {
 					9ABA9AED2063DB4500ADA34E = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -134,14 +202,74 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		36B70393AD3496212BB0F81E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iWallet/Pods-iWallet-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		42F074F9D1E772804B796560 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-iWallet/Pods-iWallet-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iWallet/Pods-iWallet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A6378D059F244E22AC24E467 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iWallet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9ABA9AEA2063DB4500ADA34E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */,
+				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,
 				9ABA9AF42063DB4500ADA34E /* ViewController.swift in Sources */,
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
+				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
+				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
+				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,14 +404,18 @@
 		};
 		9ABA9B042063DB4500ADA34E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5AW3RZJ6LJ;
 				INFOPLIST_FILE = iWallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ua.org.sguznin.iWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iWallet/Supporting Files/iWallet-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -291,14 +423,17 @@
 		};
 		9ABA9B052063DB4500ADA34E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F0844252092F4D146C20B7B /* Pods-iWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5AW3RZJ6LJ;
 				INFOPLIST_FILE = iWallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ua.org.sguznin.iWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iWallet/Supporting Files/iWallet-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
