@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
+		9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */; };
+		9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */; };
+		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
+		9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D402065558700CC7DE0 /* ReportVC.swift */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
-		9ABA9AF42063DB4500ADA34E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF32063DB4500ADA34E /* ViewController.swift */; };
 		9ABA9AF72063DB4500ADA34E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF52063DB4500ADA34E /* Main.storyboard */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
 		9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */; };
@@ -23,9 +26,12 @@
 /* Begin PBXFileReference section */
 		1F0844252092F4D146C20B7B /* Pods-iWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.release.xcconfig"; sourceTree = "<group>"; };
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
+		9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
+		9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
+		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
+		9A9D2D402065558700CC7DE0 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9ABA9AF32063DB4500ADA34E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9ABA9AF62063DB4500ADA34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9ABA9AF92063DB4500ADA34E /* iWallet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iWallet.xcdatamodel; sourceTree = "<group>"; };
 		9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -60,6 +66,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9A9D2D39206548D800CC7DE0 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */,
+				9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */,
+				9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		9ABA9AE52063DB4500ADA34E = {
 			isa = PBXGroup;
 			children = (
@@ -81,11 +97,11 @@
 		9ABA9AF02063DB4500ADA34E /* iWallet */ = {
 			isa = PBXGroup;
 			children = (
+				9A9D2D39206548D800CC7DE0 /* Extension */,
 				9ABA9B102063E17500ADA34E /* Views */,
 				9ABA9B0B2063DF4B00ADA34E /* Controllers */,
 				9ABA9B062063DC9400ADA34E /* Supporting Files */,
 				9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */,
-				9ABA9AF32063DB4500ADA34E /* ViewController.swift */,
 				9ABA9AF52063DB4500ADA34E /* Main.storyboard */,
 				9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */,
 				9ABA9AFD2063DB4500ADA34E /* LaunchScreen.storyboard */,
@@ -110,6 +126,7 @@
 			children = (
 				9ABA9B0C2063E01000ADA34E /* SlideVC.swift */,
 				9ABA9B0E2063E02500ADA34E /* MainVC.swift */,
+				9A9D2D402065558700CC7DE0 /* ReportVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -263,10 +280,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */,
+				9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */,
 				9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */,
 				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,
-				9ABA9AF42063DB4500ADA34E /* ViewController.swift in Sources */,
+				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
+				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
