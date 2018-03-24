@@ -20,6 +20,12 @@ class SlideVC: UIViewController {
         let reportVC = storyboard?.instantiateViewController(withIdentifier: "ReportVC")
         revealViewController().pushFrontViewController(reportVC, animated: true)
     }
+    
+    @IBAction func openCategoryBtnPressed(_ sender: Any) {
+        let categoryVC = storyboard?.instantiateViewController(withIdentifier: "CategoryVC")
+        revealViewController().pushFrontViewController(categoryVC, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 60
