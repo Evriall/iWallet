@@ -13,12 +13,17 @@
 		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
 		9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D402065558700CC7DE0 /* ReportVC.swift */; };
 		9A9D2D4320665BFC00CC7DE0 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D4220665BFC00CC7DE0 /* CategoryVC.swift */; };
-		9A9D2D4520665F7700CC7DE0 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D4420665F7700CC7DE0 /* CategoryCell.swift */; };
 		9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D472066636800CC7DE0 /* Constants.swift */; };
 		9A9D2D4B206663D400CC7DE0 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D4A206663D400CC7DE0 /* CoreDataService.swift */; };
 		9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D4C2066674800CC7DE0 /* AddCategoryVC.swift */; };
 		9A9D2D4F2066A47700CC7DE0 /* EncodeDecodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D4E2066A47600CC7DE0 /* EncodeDecodeService.swift */; };
 		9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D502066C34E00CC7DE0 /* ColorCell.swift */; };
+		9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D572068FA1300CC7DE0 /* SelectParentCategoryVC.swift */; };
+		9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A9D2D582068FA1300CC7DE0 /* SelectParentCategoryVC.xib */; };
+		9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D5B2068FDA800CC7DE0 /* CategoryCell.swift */; };
+		9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */; };
+		9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */; };
+		9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
 		9ABA9AF72063DB4500ADA34E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF52063DB4500ADA34E /* Main.storyboard */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
@@ -38,12 +43,17 @@
 		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
 		9A9D2D402065558700CC7DE0 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		9A9D2D4220665BFC00CC7DE0 /* CategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
-		9A9D2D4420665F7700CC7DE0 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		9A9D2D472066636800CC7DE0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9A9D2D4A206663D400CC7DE0 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		9A9D2D4C2066674800CC7DE0 /* AddCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryVC.swift; sourceTree = "<group>"; };
 		9A9D2D4E2066A47600CC7DE0 /* EncodeDecodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeDecodeService.swift; sourceTree = "<group>"; };
 		9A9D2D502066C34E00CC7DE0 /* ColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCell.swift; sourceTree = "<group>"; };
+		9A9D2D572068FA1300CC7DE0 /* SelectParentCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectParentCategoryVC.swift; sourceTree = "<group>"; };
+		9A9D2D582068FA1300CC7DE0 /* SelectParentCategoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectParentCategoryVC.xib; sourceTree = "<group>"; };
+		9A9D2D5B2068FDA800CC7DE0 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
+		9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryProtocol.swift; sourceTree = "<group>"; };
+		9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHelper.swift; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9ABA9AF62063DB4500ADA34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -94,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				9A9D2D472066636800CC7DE0 /* Constants.swift */,
+				9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -105,6 +116,23 @@
 				9A9D2D4E2066A47600CC7DE0 /* EncodeDecodeService.swift */,
 			);
 			path = Srevices;
+			sourceTree = "<group>";
+		};
+		9A9D2D562068DCC300CC7DE0 /* XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				9A9D2D582068FA1300CC7DE0 /* SelectParentCategoryVC.xib */,
+				9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */,
+			);
+			path = XIBs;
+			sourceTree = "<group>";
+		};
+		9A9D2D5F2069110700CC7DE0 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		9ABA9AE52063DB4500ADA34E = {
@@ -128,6 +156,8 @@
 		9ABA9AF02063DB4500ADA34E /* iWallet */ = {
 			isa = PBXGroup;
 			children = (
+				9A9D2D5F2069110700CC7DE0 /* Protocols */,
+				9A9D2D562068DCC300CC7DE0 /* XIBs */,
 				9A9D2D49206663B500CC7DE0 /* Srevices */,
 				9A9D2D462066635600CC7DE0 /* Helpers */,
 				9A9D2D39206548D800CC7DE0 /* Extension */,
@@ -162,6 +192,7 @@
 				9A9D2D402065558700CC7DE0 /* ReportVC.swift */,
 				9A9D2D4220665BFC00CC7DE0 /* CategoryVC.swift */,
 				9A9D2D4C2066674800CC7DE0 /* AddCategoryVC.swift */,
+				9A9D2D572068FA1300CC7DE0 /* SelectParentCategoryVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -170,8 +201,8 @@
 			isa = PBXGroup;
 			children = (
 				9ABA9B112063E18800ADA34E /* GradientView.swift */,
-				9A9D2D4420665F7700CC7DE0 /* CategoryCell.swift */,
 				9A9D2D502066C34E00CC7DE0 /* ColorCell.swift */,
+				9A9D2D5B2068FDA800CC7DE0 /* CategoryCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -248,6 +279,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
+				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
 				9ABA9AFF2063DB4500ADA34E /* LaunchScreen.storyboard in Resources */,
 				9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */,
 				9ABA9AF72063DB4500ADA34E /* Main.storyboard in Resources */,
@@ -322,18 +355,21 @@
 				9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */,
 				9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */,
 				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,
+				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9A9D2D4F2066A47700CC7DE0 /* EncodeDecodeService.swift in Sources */,
 				9A9D2D4320665BFC00CC7DE0 /* CategoryVC.swift in Sources */,
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
+				9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */,
 				9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */,
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,
+				9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */,
+				9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */,
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
-				9A9D2D4520665F7700CC7DE0 /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

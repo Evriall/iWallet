@@ -30,13 +30,42 @@ class CoreDataService{
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
         let predicate = NSPredicate(format: "parent == nil")
+        let sortDescriptor = [NSSortDescriptor(key: "name", ascending: true)]
         fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptor
         do{
             let category = try managedContext.fetch(fetchRequest) as! [Category]
             complition(category)
         } catch {
             debugPrint("Could not fetch categories\(error.localizedDescription)")
-//            complition(nil)
+        }
+    }
+    
+    func fetchChildrenByParent(_ parent: Category, complition: (_ complete: [Category])-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        let predicate = NSPredicate(format: "parent == %@", parent)
+        let sortDescriptor = [NSSortDescriptor(key: "name", ascending: true)]
+        fetchRequest.sortDescriptors = sortDescriptor
+        fetchRequest.predicate = predicate
+        do{
+            let category = try managedContext.fetch(fetchRequest) as! [Category]
+            complition(category)
+        } catch {
+            debugPrint("Could not fetch categories by parent \(parent.name) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetch(ByName name: String, complition: (_ complete: [Category])-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        let predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = predicate
+        do{
+            let category = try managedContext.fetch(fetchRequest) as! [Category]
+            complition(category)
+        } catch {
+            debugPrint("Could not fetch category by name \(name) \(error.localizedDescription)")
         }
     }
 }

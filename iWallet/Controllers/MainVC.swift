@@ -17,5 +17,14 @@ class MainVC: UIViewController {
         menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
+        checkInitData()
+    }
+    
+    func checkInitData(){
+        CoreDataService.instance.fetchParents { (categories) in
+            if categories.count == 0 {
+                CategoryHelper.instance.initCategories()
+            }
+        }
     }
 }

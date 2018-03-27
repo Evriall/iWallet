@@ -9,7 +9,12 @@
 import UIKit
 
 class AddCategoryVC: UIViewController {
-    var categoryParent: Category?
+    var categoryParent: Category? {
+        didSet {
+           categoryParentBtn.setTitle(categoryParent?.name, for: .normal)
+        }
+    }
+    var categoryItem: Category?
     
     @IBOutlet weak var categoryImg: UIImageView!
     @IBOutlet weak var categoryNameTxt: UITextField!
@@ -17,27 +22,58 @@ class AddCategoryVC: UIViewController {
     
     @IBOutlet weak var saveCategoryBtn: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
         categoryNameTxt.addTarget(self, action: #selector(AddCategoryVC.textFieldDidChange), for: UIControlEvents.editingChanged)
-        saveCategoryBtn.bindToKeyBoard()
+        categoryNameTxt.delegate = self
+        if let category = categoryItem {
+            categoryNameTxt.text = category.name
+            if let parent = category.parent {
+                categoryParent = parent
+            } else {
+                categoryParentBtn.isEnabled = false
+            }
+            categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: category.color)
+            collectionView.isHidden = true
+        }
+//        self.saveCategoryBtn.bindToKeyBoard()
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(AddCategoryVC.handleTap))
+//        self.view.addGestureRecognizer(tap)
+//        categoryNameTxt.inputAccessoryView = saveCategoryBtn
         saveCategoryBtn.isEnabled = false
         saveCategoryBtn.setDeselectedColor()
     }
+    
+    @objc func handleTap() {
+        self.view.endEditing(true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         collectionView.reloadData()
     }
     @IBAction func saveCategoryBtnPressed(_ sender: Any) {
         guard let text = categoryNameTxt.text else {return}
-        CoreDataService.instance.saveCategory(name: text, color: categoryImg.backgroundColor, parent: categoryParent) { (success) in
-            if success {
-                dismissDetail()
+        if !text.isEmpty {
+            CoreDataService.instance.saveCategory(name: text, color: categoryImg.backgroundColor, parent: categoryParent) { (success) in
+                if success {
+                    dismissDetail()
+                }
             }
         }
     }
     @IBAction func categoryParentBtnPressed(_ sender: Any) {
+        CoreDataService.instance.fetchParents { (categories) in
+            if categories.count > 0 {
+                let selectCategory = SelectParentCategoryVC()
+                selectCategory.delegate = self
+                selectCategory.modalPresentationStyle = .custom
+                present(selectCategory, animated: true, completion: nil)
+            }
+        }
     }
     
     @objc func textFieldDidChange() {
@@ -71,6 +107,20 @@ extension AddCategoryVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         categoryImg.backgroundColor = Constants.colors[indexPath.row]
     }
-    
-    
+  
+}
+
+extension AddCategoryVC: CategoryProtocol, UITextFieldDelegate {
+    func handleCategory(_ category: Category) {
+        categoryParent = category
+//        categoryParentBtn.setTitle(categoryParent?.name, for: .normal)
+        categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: categoryParent?.color)
+        collectionView.isHidden = true
+        saveCategoryBtn.isEnabled = true
+        saveCategoryBtn.setSelectedColor()
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
 }
