@@ -10,6 +10,15 @@ import Foundation
 
 class CategoryHelper {
     static let instance = CategoryHelper()
+    let defaults  = UserDefaults.standard
+    var editableCategories: Bool{
+        get {
+            return defaults.bool(forKey: Constants.EDITABLE_CATEGORIES)
+        }
+        set {
+            defaults.set(newValue, forKey: Constants.EDITABLE_CATEGORIES)
+        }
+    }
     private var categoryChildrenShown = [String: Bool]()
     private let initParentCategories: Array<(String, UIColor, String?)> =
         [(name: "Without category", color: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), parent: nil),

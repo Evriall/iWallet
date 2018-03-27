@@ -21,8 +21,8 @@ class CategoryCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func configureCell(category: Category, showChildren: Bool = true) {
-        openCategoryForEditingBtn.isHidden = !showChildren
+    func configureCell(category: Category, showChildren: Bool = true, editable: Bool = false) {
+        openCategoryForEditingBtn.isHidden = !editable
         let bgColor = EncodeDecodeService.instance.returnUIColor(components: category.color)
         categoryImg.backgroundColor = bgColor
         categoryNameLbl.text = category.name

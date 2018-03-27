@@ -13,7 +13,8 @@ let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
 
 struct Constants {
-    static let UNWIND_TO_ADD_CATEGORY = "unwindToAddCategoryVC"
+    //Defaults
+    static let EDITABLE_CATEGORIES = "editableCategories"
     
    static let colors = [
     #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1),

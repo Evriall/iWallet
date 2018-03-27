@@ -48,7 +48,7 @@ extension CategoryVC : UITableViewDelegate, UITableViewDataSource {
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as? CategoryCell {
-            cell.configureCell(category: categories[indexPath.row])
+            cell.configureCell(category: categories[indexPath.row],showChildren: true, editable: CategoryHelper.instance.editableCategories)
             cell.openChildrenCategoriesBtn.tag = indexPath.row
             cell.openChildrenCategoriesBtn.addTarget(self, action: #selector(CategoryVC.openChildrenCategories), for: .touchUpInside)
             cell.closeChildrenCategoriesBtn.tag = indexPath.row

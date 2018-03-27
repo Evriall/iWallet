@@ -68,4 +68,25 @@ class CoreDataService{
             debugPrint("Could not fetch category by name \(name) \(error.localizedDescription)")
         }
     }
+    
+    func update(complition: (_ complete: Bool)-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        do{
+            try managedContext.save()
+            complition(true)
+        } catch {
+            debugPrint("Could not save category: \(error.localizedDescription)")
+            complition(false)
+        }
+    }
+    
+//    func removeGoal(atIndexPath indexPath: IndexPath){
+//        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+//        managedContext.delete(goals[indexPath.row])
+//        do{
+//            try managedContext.save()
+//        } catch {
+//            debugPrint("Could not remove: \(error.localizedDescription)")
+//        }
+//    }
 }

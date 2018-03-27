@@ -24,6 +24,7 @@
 		9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */; };
 		9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */; };
 		9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */; };
+		9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
 		9ABA9AF72063DB4500ADA34E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF52063DB4500ADA34E /* Main.storyboard */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
@@ -54,6 +55,7 @@
 		9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
 		9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryProtocol.swift; sourceTree = "<group>"; };
 		9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHelper.swift; sourceTree = "<group>"; };
+		9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9ABA9AF62063DB4500ADA34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				9A9D2D4220665BFC00CC7DE0 /* CategoryVC.swift */,
 				9A9D2D4C2066674800CC7DE0 /* AddCategoryVC.swift */,
 				9A9D2D572068FA1300CC7DE0 /* SelectParentCategoryVC.swift */,
+				9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
+				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -65,7 +65,7 @@
                             <constraint firstAttribute="height" constant="28" id="DOv-64-ILY"/>
                             <constraint firstAttribute="width" constant="28" id="enT-fu-sIX"/>
                         </constraints>
-                        <state key="normal" image="EditIcon"/>
+                        <state key="normal" backgroundImage="EditIcon"/>
                     </button>
                 </subviews>
                 <constraints>

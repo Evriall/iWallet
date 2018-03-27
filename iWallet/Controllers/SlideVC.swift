@@ -22,8 +22,8 @@ class SlideVC: UIViewController {
     }
     
     @IBAction func openCategoryBtnPressed(_ sender: Any) {
-        let categoryVC = storyboard?.instantiateViewController(withIdentifier: "CategoryVC")
-        revealViewController().pushFrontViewController(categoryVC, animated: true)
+        let settingsVC = storyboard?.instantiateViewController(withIdentifier: "SettingsVC")
+        revealViewController().pushFrontViewController(settingsVC, animated: true)
     }
     
     override func viewDidLoad() {

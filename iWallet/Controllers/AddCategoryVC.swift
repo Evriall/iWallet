@@ -58,9 +58,20 @@ class AddCategoryVC: UIViewController {
     @IBAction func saveCategoryBtnPressed(_ sender: Any) {
         guard let text = categoryNameTxt.text else {return}
         if !text.isEmpty {
-            CoreDataService.instance.saveCategory(name: text, color: categoryImg.backgroundColor, parent: categoryParent) { (success) in
-                if success {
-                    dismissDetail()
+            if let category = categoryItem {
+                category.name = text
+                category.color = EncodeDecodeService.instance.fromUIColorToStr(color: categoryImg.backgroundColor)
+                category.parent = categoryParent
+                CoreDataService.instance.update(complition: { (success) in
+                    if success {
+                      dismissDetail()
+                    }
+                })
+            } else {
+                CoreDataService.instance.saveCategory(name: text, color: categoryImg.backgroundColor, parent: categoryParent) { (success) in
+                    if success {
+                        dismissDetail()
+                    }
                 }
             }
         }
@@ -113,11 +124,12 @@ extension AddCategoryVC: UICollectionViewDelegate, UICollectionViewDataSource {
 extension AddCategoryVC: CategoryProtocol, UITextFieldDelegate {
     func handleCategory(_ category: Category) {
         categoryParent = category
-//        categoryParentBtn.setTitle(categoryParent?.name, for: .normal)
         categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: categoryParent?.color)
         collectionView.isHidden = true
-        saveCategoryBtn.isEnabled = true
-        saveCategoryBtn.setSelectedColor()
+        if let text = categoryNameTxt.text, text != ""{
+            saveCategoryBtn.isEnabled = true
+            saveCategoryBtn.setSelectedColor()
+        }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
