@@ -4,8 +4,32 @@
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" syncable="YES"/>
+        <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transaction" inverseName="category" inverseEntity="Transaction" syncable="YES"/>
+    </entity>
+    <entity name="Photo" representedClassName="Photo" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="photos" inverseEntity="Transaction" syncable="YES"/>
+    </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transaction" inverseName="tag" inverseEntity="Transaction" syncable="YES"/>
+    </entity>
+    <entity name="Transaction" representedClassName="Transaction" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="transactions" inverseEntity="Category" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="transaction" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="tag" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="transactions" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="-54" positionY="-9" width="128" height="90"/>
+        <element name="Category" positionX="-54" positionY="-9" width="128" height="105"/>
+        <element name="Transaction" positionX="-45" positionY="27" width="128" height="180"/>
+        <element name="Tag" positionX="-36" positionY="81" width="128" height="75"/>
+        <element name="Photo" positionX="-27" positionY="99" width="128" height="90"/>
     </elements>
 </model>

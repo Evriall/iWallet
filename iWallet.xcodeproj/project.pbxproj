@@ -25,6 +25,8 @@
 		9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */; };
 		9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */; };
 		9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */; };
+		9AA7FF30206AB3A60093D0DE /* AddTransactionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA7FF2E206AB3A60093D0DE /* AddTransactionsVC.swift */; };
+		9AA7FF31206AB3A60093D0DE /* AddTransactionsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AA7FF2F206AB3A60093D0DE /* AddTransactionsVC.xib */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
 		9ABA9AF72063DB4500ADA34E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF52063DB4500ADA34E /* Main.storyboard */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
@@ -56,6 +58,8 @@
 		9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryProtocol.swift; sourceTree = "<group>"; };
 		9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHelper.swift; sourceTree = "<group>"; };
 		9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		9AA7FF2E206AB3A60093D0DE /* AddTransactionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionsVC.swift; sourceTree = "<group>"; };
+		9AA7FF2F206AB3A60093D0DE /* AddTransactionsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionsVC.xib; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9ABA9AF62063DB4500ADA34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 			children = (
 				9A9D2D582068FA1300CC7DE0 /* SelectParentCategoryVC.xib */,
 				9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */,
+				9AA7FF2F206AB3A60093D0DE /* AddTransactionsVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -196,6 +201,7 @@
 				9A9D2D4C2066674800CC7DE0 /* AddCategoryVC.swift */,
 				9A9D2D572068FA1300CC7DE0 /* SelectParentCategoryVC.swift */,
 				9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */,
+				9AA7FF2E206AB3A60093D0DE /* AddTransactionsVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -283,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
+				9AA7FF31206AB3A60093D0DE /* AddTransactionsVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
 				9ABA9AFF2063DB4500ADA34E /* LaunchScreen.storyboard in Resources */,
 				9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */,
@@ -364,6 +371,7 @@
 				9A9D2D4F2066A47700CC7DE0 /* EncodeDecodeService.swift in Sources */,
 				9A9D2D4320665BFC00CC7DE0 /* CategoryVC.swift in Sources */,
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
+				9AA7FF30206AB3A60093D0DE /* AddTransactionsVC.swift in Sources */,
 				9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */,
 				9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */,
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,

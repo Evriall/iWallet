@@ -183,18 +183,31 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="topColor">
-                                        <color key="value" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" red="0.0" green="0.56862745098039214" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="buttomColor">
                                         <color key="value" red="0.0" green="0.85669371139999995" blue="0.87303848640000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TtY-xc-AqN">
+                                <rect key="frame" x="291" y="583" width="64" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="naf-g2-yTF"/>
+                                    <constraint firstAttribute="height" constant="64" id="oyc-Vs-ZKT"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="addCategory copy"/>
+                                <connections>
+                                    <action selector="openAddTransactionBtnPressed:" destination="edR-Wt-V7y" eventType="touchUpInside" id="hHg-OY-QCg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="cYS-49-BwK" firstAttribute="leading" secondItem="QbX-kA-Fdn" secondAttribute="leading" id="0j1-E3-Yw1"/>
                             <constraint firstItem="cYS-49-BwK" firstAttribute="top" secondItem="sk3-2M-68D" secondAttribute="top" id="AB9-vz-qiq"/>
+                            <constraint firstItem="QbX-kA-Fdn" firstAttribute="trailing" secondItem="TtY-xc-AqN" secondAttribute="trailing" constant="20" id="DmA-mS-GNd"/>
+                            <constraint firstItem="QbX-kA-Fdn" firstAttribute="bottom" secondItem="TtY-xc-AqN" secondAttribute="bottom" constant="20" id="J8J-d0-s2C"/>
                             <constraint firstItem="cYS-49-BwK" firstAttribute="trailing" secondItem="QbX-kA-Fdn" secondAttribute="trailing" id="cv6-Wf-Che"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QbX-kA-Fdn"/>
@@ -619,6 +632,7 @@
     </scenes>
     <resources>
         <image name="SettingsIcon" width="191" height="191"/>
+        <image name="addCategory copy" width="66" height="66"/>
         <image name="addChannelButton" width="22" height="22"/>
         <image name="back" width="14" height="25"/>
         <image name="brief" width="191" height="191"/>

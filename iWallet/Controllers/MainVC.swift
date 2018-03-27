@@ -11,6 +11,11 @@ import UIKit
 class MainVC: UIViewController {
 
     @IBOutlet weak var menuBtn: UIButton!
+    @IBAction func openAddTransactionBtnPressed(_ sender: Any) {
+        let addTransaction = AddTransactionsVC()
+        addTransaction.modalPresentationStyle = .custom
+        presentDetail(addTransaction)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
