@@ -10,6 +10,8 @@
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
 		9A0CDBE4206BD9F2009801EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A0CDBE3206BD9F1009801EA /* Main.storyboard */; };
 		9A62763A206BCDCB00958962 /* SB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A627639206BCDCB00958962 /* SB.storyboard */; };
+		9A659822206BDC2000519722 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A659820206BDC2000519722 /* AccountCell.swift */; };
+		9A659823206BDC2000519722 /* AccountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A659821206BDC2000519722 /* AccountCell.xib */; };
 		9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */; };
 		9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */; };
 		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
@@ -45,6 +47,8 @@
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		9A0CDBE3206BD9F1009801EA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../Desktop/Main.storyboard; sourceTree = "<group>"; };
 		9A627639206BCDCB00958962 /* SB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SB.storyboard; sourceTree = "<group>"; };
+		9A659820206BDC2000519722 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
+		9A659821206BDC2000519722 /* AccountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountCell.xib; sourceTree = "<group>"; };
 		9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				9A9D2D582068FA1300CC7DE0 /* SelectParentCategoryVC.xib */,
 				9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */,
 				9AA7FF2F206AB3A60093D0DE /* AddTransactionsVC.xib */,
+				9A659821206BDC2000519722 /* AccountCell.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -218,6 +223,7 @@
 				9ABA9B112063E18800ADA34E /* GradientView.swift */,
 				9A9D2D502066C34E00CC7DE0 /* ColorCell.swift */,
 				9A9D2D5B2068FDA800CC7DE0 /* CategoryCell.swift */,
+				9A659820206BDC2000519722 /* AccountCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -299,6 +305,7 @@
 				9AA7FF31206AB3A60093D0DE /* AddTransactionsVC.xib in Resources */,
 				9A62763A206BCDCB00958962 /* SB.storyboard in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
+				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
 				9ABA9AFF2063DB4500ADA34E /* LaunchScreen.storyboard in Resources */,
 				9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */,
 			);
@@ -384,6 +391,7 @@
 				9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */,
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,
 				9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */,
+				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
 				9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */,
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,

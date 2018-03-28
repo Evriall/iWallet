@@ -18,9 +18,9 @@ enum AccountType : String {
 class AccountHelper{
     static let instance = AccountHelper()
     private let defaults  = UserDefaults.standard
-    var currentAccount: Account?{
+    var currentAccount: String?{
         get {
-            return defaults.object(forKey: Constants.CURRENT_ACCOUNT) as? Account
+            return defaults.string(forKey: Constants.CURRENT_ACCOUNT)
         }
         set {
             defaults.set(newValue, forKey: Constants.CURRENT_ACCOUNT)
@@ -39,9 +39,12 @@ class AccountHelper{
         return currSymbol?.1 ?? ""
     }
     
-    func initAccount(){
+    func initAccount(_ complition: (Bool)->()){
         CoreDataService.instance.saveAccount(name: "Cash", type: AccountType.Cash, currency: Locale.current.currencyCode ?? "USD") { (success) in
-            if !success {
+            if success {
+                complition(success)
+            } else {
+                complition(success)
                 print("Can`t create account")
             }
         }

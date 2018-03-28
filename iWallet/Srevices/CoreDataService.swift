@@ -84,6 +84,19 @@ class CoreDataService{
         }
     }
     
+    func fetchAccount(byDescription description: String, complition: (_ complete: [Account])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        let predicate = NSPredicate(format: "description == %@", description)
+        fetchRequest.predicate = predicate
+        do{
+            let account = try managedContext.fetch(fetchRequest) as! [Account]
+            complition(account)
+        } catch {
+            debugPrint("Could not fetch account by description \(description) \(error.localizedDescription)")
+        }
+    }
+    
     func saveAccount(name: String, type: AccountType, currency: String, complition: (Bool) ->()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let account = Account(context: managedContext)

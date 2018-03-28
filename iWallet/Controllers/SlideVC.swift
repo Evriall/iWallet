@@ -10,7 +10,10 @@ import UIKit
 
 class SlideVC: UIViewController {
 
-
+    @IBOutlet weak var tableView: UITableView!
+    
+    var accounts = [Account]()
+    
     @IBAction func openMainBtnPressed(_ sender: Any) {
         let mainVC = storyboard?.instantiateViewController(withIdentifier: "MainVC")
         revealViewController().pushFrontViewController(mainVC, animated: true)
@@ -28,7 +31,36 @@ class SlideVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "AccountCell", bundle: nil), forCellReuseIdentifier: "AccountCell")
         self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 60
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        CoreDataService.instance.fetchAccounts { (accounts) in
+            self.accounts = accounts
+        }
+        tableView.reloadData()
+    }
 
+}
+
+extension SlideVC: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return accounts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell  = tableView.dequeueReusableCell(withIdentifier: "AccountCell", for: indexPath) as? AccountCell {
+            cell.configureCell(account: accounts[indexPath.row])
+            return cell
+        }
+        return AccountCell()
+    }
+    
 }
