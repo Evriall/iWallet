@@ -15,6 +15,7 @@ let appDelegate = UIApplication.shared.delegate as? AppDelegate
 struct Constants {
     //Defaults
     static let EDITABLE_CATEGORIES = "editableCategories"
+    static let CURRENT_ACCOUNT = "currentAccount"
     
    static let colors = [
     #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1),

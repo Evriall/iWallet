@@ -11,6 +11,8 @@ import CoreData
 
 class CoreDataService{
     static let instance = CoreDataService()
+    
+    // Category
     func saveCategory(name: String, color: UIColor?, parent: Category?, complition: (_ finished: Bool) ->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let category = Category(context: managedContext)
@@ -69,6 +71,35 @@ class CoreDataService{
         }
     }
     
+    // Account
+    
+    func fetchAccounts(complition: (_ complete: [Account])-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        do{
+            let accounts = try managedContext.fetch(fetchRequest) as! [Account]
+            complition(accounts)
+        } catch {
+            debugPrint("Could not fetch accounts\(error.localizedDescription)")
+        }
+    }
+    
+    func saveAccount(name: String, type: AccountType, currency: String, complition: (Bool) ->()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let account = Account(context: managedContext)
+        account.name = name
+        account.type = type.rawValue
+        account.currency = currency
+        do{
+            try managedContext.save()
+            complition(true)
+        } catch {
+            debugPrint("Could not save account: \(error.localizedDescription)")
+            complition(false)
+        }
+    }
+    
+    // General
     func update(complition: (_ complete: Bool)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         do{

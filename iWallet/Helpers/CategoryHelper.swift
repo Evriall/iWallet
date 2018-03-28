@@ -10,7 +10,7 @@ import Foundation
 
 class CategoryHelper {
     static let instance = CategoryHelper()
-    let defaults  = UserDefaults.standard
+    private let defaults  = UserDefaults.standard
     var editableCategories: Bool{
         get {
             return defaults.bool(forKey: Constants.EDITABLE_CATEGORIES)
@@ -41,7 +41,8 @@ class CategoryHelper {
           (name: "Travels", color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), parent: nil),
           (name: "Entertainment", color: #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1), parent: nil),
           (name: "Equipment", color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), parent: nil),
-          (name: "Transport", color: #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), parent: nil)
+          (name: "Transport", color: #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), parent: nil),
+          (name: "Transfer", color: #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1), parent: nil)
         ]
     private let initChildrenCategories: Array<(String, UIColor, String)> =
         [

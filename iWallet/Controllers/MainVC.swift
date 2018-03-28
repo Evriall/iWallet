@@ -31,5 +31,9 @@ class MainVC: UIViewController {
                 CategoryHelper.instance.initCategories()
             }
         }
+        CoreDataService.instance.fetchAccounts { (accounts) in
+            if accounts.count == 0 {}
+                AccountHelper.instance.initAccount()
+        }
     }
 }
