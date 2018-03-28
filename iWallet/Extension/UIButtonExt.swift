@@ -14,6 +14,6 @@ extension UIButton {
     }
     
     func setDeselectedColor(){
-        self.backgroundColor = #colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 0.5)
+        self.backgroundColor = #colorLiteral(red: 0.001855805167, green: 0.569607079, blue: 0.5755836368, alpha: 0.5)
     }
 }

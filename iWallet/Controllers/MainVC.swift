@@ -11,11 +11,29 @@ import UIKit
 class MainVC: UIViewController {
 
     @IBOutlet weak var menuBtn: UIButton!
+    @IBAction func openAddTransactionBtnPressed(_ sender: Any) {
+        let addTransaction = AddTransactionsVC()
+        addTransaction.modalPresentationStyle = .custom
+        presentDetail(addTransaction)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
+        checkInitData()
+    }
+    
+    func checkInitData(){
+        CoreDataService.instance.fetchParents { (categories) in
+            if categories.count == 0 {
+                CategoryHelper.instance.initCategories()
+            }
+        }
+        CoreDataService.instance.fetchAccounts { (accounts) in
+            if accounts.count == 0 {}
+                AccountHelper.instance.initAccount()
+        }
     }
 }
