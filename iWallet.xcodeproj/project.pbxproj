@@ -14,6 +14,11 @@
 		9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A65982E206CFD3500519722 /* AddAccountVC.swift */; };
 		9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A65982F206CFD3500519722 /* AddAccountVC.xib */; };
 		9A659833206D063400519722 /* ButtonWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A659832206D063400519722 /* ButtonWithImage.swift */; };
+		9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A659834206D413A00519722 /* SelectAccountTypeVC.swift */; };
+		9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A659835206D413A00519722 /* SelectAccountTypeVC.xib */; };
+		9A659839206D41F200519722 /* AccountProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A659838206D41F200519722 /* AccountProtocol.swift */; };
+		9A65983E206D46DD00519722 /* TypeAndCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */; };
+		9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */; };
 		9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */; };
 		9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */; };
 		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
@@ -53,6 +58,11 @@
 		9A65982E206CFD3500519722 /* AddAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountVC.swift; sourceTree = "<group>"; };
 		9A65982F206CFD3500519722 /* AddAccountVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAccountVC.xib; sourceTree = "<group>"; };
 		9A659832206D063400519722 /* ButtonWithImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithImage.swift; sourceTree = "<group>"; };
+		9A659834206D413A00519722 /* SelectAccountTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAccountTypeVC.swift; sourceTree = "<group>"; };
+		9A659835206D413A00519722 /* SelectAccountTypeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountTypeVC.xib; sourceTree = "<group>"; };
+		9A659838206D41F200519722 /* AccountProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProtocol.swift; sourceTree = "<group>"; };
+		9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAndCurrencyCell.swift; sourceTree = "<group>"; };
+		9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TypeAndCurrencyCell.xib; sourceTree = "<group>"; };
 		9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
@@ -146,6 +156,8 @@
 				9AA7FF2F206AB3A60093D0DE /* AddTransactionsVC.xib */,
 				9A659821206BDC2000519722 /* AccountCell.xib */,
 				9A65982F206CFD3500519722 /* AddAccountVC.xib */,
+				9A659835206D413A00519722 /* SelectAccountTypeVC.xib */,
+				9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -154,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */,
+				9A659838206D41F200519722 /* AccountProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -219,6 +232,7 @@
 				9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */,
 				9AA7FF2E206AB3A60093D0DE /* AddTransactionsVC.swift */,
 				9A65982E206CFD3500519722 /* AddAccountVC.swift */,
+				9A659834206D413A00519722 /* SelectAccountTypeVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -230,6 +244,7 @@
 				9A9D2D502066C34E00CC7DE0 /* ColorCell.swift */,
 				9A9D2D5B2068FDA800CC7DE0 /* CategoryCell.swift */,
 				9A659820206BDC2000519722 /* AccountCell.swift */,
+				9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -308,8 +323,10 @@
 			files = (
 				9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */,
 				9A65982D206BFB3100519722 /* Main.storyboard in Resources */,
+				9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */,
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
 				9AA7FF31206AB3A60093D0DE /* AddTransactionsVC.xib in Resources */,
+				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
 				9ABA9AFF2063DB4500ADA34E /* LaunchScreen.storyboard in Resources */,
@@ -404,8 +421,11 @@
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
+				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
 				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,
 				9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */,
+				9A65983E206D46DD00519722 /* TypeAndCurrencyCell.swift in Sources */,
+				9A659839206D41F200519722 /* AccountProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

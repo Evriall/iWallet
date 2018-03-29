@@ -45,14 +45,27 @@ class AddAccountVC: UIViewController {
     }
     
     @IBAction func typeAccountBtnPressed(_ sender: Any) {
+        let selectTypeAccountVC = SelectAccountTypeVC()
+        selectTypeAccountVC.delegate = self
+        selectTypeAccountVC.modalPresentationStyle = .custom
+        presentDetail(selectTypeAccountVC)
     }
     @IBAction func saveAccountBtnPressed(_ sender: Any) {
     }
 }
 
-extension AddAccountVC: UITextFieldDelegate {
+extension AddAccountVC: UITextFieldDelegate, AccountProtocol {
+    func handleCarrency(_ carrency: String) {
+        
+    }
+    
+    func handleType(_ type: String) {
+        typeAccountBtn.setTitle(type, for: .normal)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }
+    
 }

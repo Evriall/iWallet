@@ -13,6 +13,7 @@ enum AccountType : String {
     case DebitCard = "Debit card"
     case CreditCard = "Credit card"
     case ElectronicWallet = "Electronic wallet"
+    static let allValues = [Cash, DebitCard, CreditCard, ElectronicWallet]
 }
 
 class AccountHelper{
