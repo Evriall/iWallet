@@ -16,4 +16,17 @@ extension UIButton {
     func setDeselectedColor(){
         self.backgroundColor = #colorLiteral(red: 0.001855805167, green: 0.569607079, blue: 0.5755836368, alpha: 0.5)
     }
+    
+//    func centerImageAndButton(_ gap: CGFloat, imageOnTop: Bool) {
+//        
+//        guard let imageView = self.imageView,
+//            let titleLabel = self.titleLabel else { return }
+//        
+//        let sign: CGFloat = imageOnTop ? 1 : -1;
+//        let imageSize = imageView.frame.size;
+//        self.titleEdgeInsets = UIEdgeInsetsMake((imageSize.height+gap)*sign, -imageSize.width, 0, 0);
+//        
+//        let titleSize = titleLabel.bounds.size;
+//        self.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height+gap)*sign, 0, 0, -titleSize.width);
+//    }
 }

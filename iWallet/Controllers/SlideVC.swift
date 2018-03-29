@@ -43,7 +43,11 @@ class SlideVC: UIViewController {
         }
         tableView.reloadData()
     }
-
+    @IBAction func addAccountBtnPressed(_ sender: Any) {
+        let addAccountVC = AddAccountVC()
+        presentDetail(addAccountVC)
+    }
+    
 }
 
 extension SlideVC: UITableViewDelegate, UITableViewDataSource {

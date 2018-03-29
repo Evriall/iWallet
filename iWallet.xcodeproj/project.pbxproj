@@ -11,6 +11,9 @@
 		9A659822206BDC2000519722 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A659820206BDC2000519722 /* AccountCell.swift */; };
 		9A659823206BDC2000519722 /* AccountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A659821206BDC2000519722 /* AccountCell.xib */; };
 		9A65982D206BFB3100519722 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A65982B206BFB3100519722 /* Main.storyboard */; };
+		9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A65982E206CFD3500519722 /* AddAccountVC.swift */; };
+		9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A65982F206CFD3500519722 /* AddAccountVC.xib */; };
+		9A659833206D063400519722 /* ButtonWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A659832206D063400519722 /* ButtonWithImage.swift */; };
 		9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */; };
 		9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */; };
 		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
@@ -47,6 +50,9 @@
 		9A659820206BDC2000519722 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		9A659821206BDC2000519722 /* AccountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountCell.xib; sourceTree = "<group>"; };
 		9A65982C206BFB3100519722 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9A65982E206CFD3500519722 /* AddAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountVC.swift; sourceTree = "<group>"; };
+		9A65982F206CFD3500519722 /* AddAccountVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAccountVC.xib; sourceTree = "<group>"; };
+		9A659832206D063400519722 /* ButtonWithImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithImage.swift; sourceTree = "<group>"; };
 		9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
@@ -108,6 +114,7 @@
 				9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */,
 				9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */,
 				9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */,
+				9A659832206D063400519722 /* ButtonWithImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -138,6 +145,7 @@
 				9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */,
 				9AA7FF2F206AB3A60093D0DE /* AddTransactionsVC.xib */,
 				9A659821206BDC2000519722 /* AccountCell.xib */,
+				9A65982F206CFD3500519722 /* AddAccountVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -210,6 +218,7 @@
 				9A9D2D572068FA1300CC7DE0 /* SelectParentCategoryVC.swift */,
 				9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */,
 				9AA7FF2E206AB3A60093D0DE /* AddTransactionsVC.swift */,
+				9A65982E206CFD3500519722 /* AddAccountVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -297,6 +306,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */,
 				9A65982D206BFB3100519722 /* Main.storyboard in Resources */,
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
 				9AA7FF31206AB3A60093D0DE /* AddTransactionsVC.xib in Resources */,
@@ -379,6 +389,7 @@
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
+				9A659833206D063400519722 /* ButtonWithImage.swift in Sources */,
 				9A9D2D4F2066A47700CC7DE0 /* EncodeDecodeService.swift in Sources */,
 				9A9D2D4320665BFC00CC7DE0 /* CategoryVC.swift in Sources */,
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
@@ -394,6 +405,7 @@
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
 				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,
+				9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
