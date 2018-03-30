@@ -42,7 +42,7 @@ class AccountHelper{
     }
     
     func initAccount(_ complition: (Bool)->()){
-        CoreDataService.instance.saveAccount(name: "Cash", type: AccountType.Cash, currency: getLocaleCarrencySymbolAndCode().code) { (success) in
+        CoreDataService.instance.saveAccount(name: "Cash", type: AccountType.Cash.rawValue, currency: getLocaleCarrencySymbolAndCode().code) { (success) in
             if success {
                 complition(success)
             } else {

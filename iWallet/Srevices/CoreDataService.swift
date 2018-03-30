@@ -97,11 +97,11 @@ class CoreDataService{
         }
     }
     
-    func saveAccount(name: String, type: AccountType, currency: String, complition: (Bool) ->()) {
+    func saveAccount(name: String, type: String, currency: String, complition: (Bool) ->()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let account = Account(context: managedContext)
         account.name = name
-        account.type = type.rawValue
+        account.type = type
         account.currency = currency
         do{
             try managedContext.save()

@@ -56,6 +56,16 @@ class AddAccountVC: UIViewController {
         presentDetail(selectTypeAccountVC)
     }
     @IBAction func saveAccountBtnPressed(_ sender: Any) {
+        guard let name = nameAccountTxt.text, !name.isEmpty else {return}
+        guard let type = typeAccountBtn.titleLabel?.text else {return}
+        guard let currency = currencyAccountBtn.titleLabel?.text else {return}
+        CoreDataService.instance.saveAccount(name: name, type: type, currency: currency) { (success) in
+            if success {
+                dismissDetail()
+            } else {
+                print("Could not save account \(name)")
+            }
+        }
     }
 }
 
