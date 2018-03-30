@@ -47,6 +47,8 @@
 		9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0C2063E01000ADA34E /* SlideVC.swift */; };
 		9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0E2063E02500ADA34E /* MainVC.swift */; };
 		9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B112063E18800ADA34E /* GradientView.swift */; };
+		9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */; };
+		9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +97,8 @@
 		9ABA9B0C2063E01000ADA34E /* SlideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideVC.swift; sourceTree = "<group>"; };
 		9ABA9B0E2063E02500ADA34E /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9ABA9B112063E18800ADA34E /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAccountCurrencyVC.swift; sourceTree = "<group>"; };
+		9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountCurrencyVC.xib; sourceTree = "<group>"; };
 		DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -158,6 +162,7 @@
 				9A65982F206CFD3500519722 /* AddAccountVC.xib */,
 				9A659835206D413A00519722 /* SelectAccountTypeVC.xib */,
 				9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */,
+				9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 				9AA7FF2E206AB3A60093D0DE /* AddTransactionsVC.swift */,
 				9A65982E206CFD3500519722 /* AddAccountVC.swift */,
 				9A659834206D413A00519722 /* SelectAccountTypeVC.swift */,
+				9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -326,6 +332,7 @@
 				9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */,
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
 				9AA7FF31206AB3A60093D0DE /* AddTransactionsVC.xib in Resources */,
+				9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
@@ -406,6 +413,7 @@
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
+				9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */,
 				9A659833206D063400519722 /* ButtonWithImage.swift in Sources */,
 				9A9D2D4F2066A47700CC7DE0 /* EncodeDecodeService.swift in Sources */,
 				9A9D2D4320665BFC00CC7DE0 /* CategoryVC.swift in Sources */,

@@ -28,7 +28,7 @@ class AddAccountVC: UIViewController {
         nameAccountTxt.delegate = self
         nameAccountTxt.addTarget(self, action: #selector(AddAccountVC.textFieldDidChange), for: UIControlEvents.editingChanged)
         typeAccountBtn.setTitle(AccountType.Cash.rawValue, for: .normal)
-        currencyAccountBtn.setTitle(Locale.current.currencyCode, for: .normal)
+        currencyAccountBtn.setTitle(AccountHelper.instance.getLocaleCarrencySymbolAndCode().code, for: .normal)
     }
     @objc func textFieldDidChange(){
         guard let text = nameAccountTxt.text else {return}
@@ -42,7 +42,12 @@ class AddAccountVC: UIViewController {
         
     }
     @IBAction func currencyAccountBtnPressed(_ sender: Any) {
+        let selectAccountCurrencyVC = SelectAccountCurrencyVC()
+        selectAccountCurrencyVC .delegate = self
+        selectAccountCurrencyVC .modalPresentationStyle = .custom
+        presentDetail(selectAccountCurrencyVC )
     }
+    
     
     @IBAction func typeAccountBtnPressed(_ sender: Any) {
         let selectTypeAccountVC = SelectAccountTypeVC()
@@ -55,8 +60,8 @@ class AddAccountVC: UIViewController {
 }
 
 extension AddAccountVC: UITextFieldDelegate, AccountProtocol {
-    func handleCarrency(_ carrency: String) {
-        
+    func handleCarrency(_ currency: String) {
+        currencyAccountBtn.setTitle(currency, for: .normal)
     }
     
     func handleType(_ type: String) {

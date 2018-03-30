@@ -31,17 +31,18 @@ class AccountHelper{
     
     func getLocaleCarrencySymbolAndCode() -> (symbol: String, code: String) {
         let locale = Locale.current
-        guard let currencySymbol = locale.currencySymbol else {return ("","")}
-        guard let currencyCode = locale.currencyCode else {return (currencySymbol, "")}
+        guard let currencySymbol = locale.currencySymbol else {return ("$","USD")}
+        guard let currencyCode = locale.currencyCode else {return ("$","USD")}
         return (currencySymbol, currencyCode)
     }
+    
     func getCurrencySymbol(byCurrencyCode currencyCode: String) -> String {
         let currSymbol = Locale.availableIdentifiers.map{ Locale(identifier: $0)}.filter { return currencyCode == $0.currencyCode }.map { ($0.identifier, $0.currencySymbol) }.flatMap {$0}.first
         return currSymbol?.1 ?? ""
     }
     
     func initAccount(_ complition: (Bool)->()){
-        CoreDataService.instance.saveAccount(name: "Cash", type: AccountType.Cash, currency: Locale.current.currencyCode ?? "USD") { (success) in
+        CoreDataService.instance.saveAccount(name: "Cash", type: AccountType.Cash, currency: getLocaleCarrencySymbolAndCode().code) { (success) in
             if success {
                 complition(success)
             } else {
