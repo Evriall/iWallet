@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectAccountCurrencyVC" customModule="iWallet" customModuleProvider="target">
             <connections>
+                <outlet property="searchBar" destination="wuY-BD-pqN" id="KxO-SR-Xue"/>
                 <outlet property="tableView" destination="zBX-m7-ce6" id="skq-oi-y5V"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,13 +29,28 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f0T-Oj-q8G">
                     <rect key="frame" x="16" y="90" width="382" height="576"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zBX-m7-ce6">
-                            <rect key="frame" x="0.0" y="0.0" width="382" height="596"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zBX-m7-ce6">
+                            <rect key="frame" x="0.0" y="56" width="382" height="520"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="wuY-BD-pqN">
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="56"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="wfU-U5-OQk"/>
+                            </constraints>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="wuY-BD-pqN" firstAttribute="top" secondItem="f0T-Oj-q8G" secondAttribute="top" id="6r5-CW-YLE"/>
+                        <constraint firstAttribute="bottom" secondItem="zBX-m7-ce6" secondAttribute="bottom" id="Ewp-3J-9R6"/>
+                        <constraint firstItem="zBX-m7-ce6" firstAttribute="leading" secondItem="f0T-Oj-q8G" secondAttribute="leading" id="K8i-2c-XF3"/>
+                        <constraint firstItem="zBX-m7-ce6" firstAttribute="top" secondItem="wuY-BD-pqN" secondAttribute="bottom" id="RYD-iN-sd2"/>
+                        <constraint firstAttribute="trailing" secondItem="zBX-m7-ce6" secondAttribute="trailing" id="Sn3-If-uJc"/>
+                        <constraint firstAttribute="trailing" secondItem="wuY-BD-pqN" secondAttribute="trailing" id="Zl8-Bf-BQV"/>
+                        <constraint firstItem="wuY-BD-pqN" firstAttribute="leading" secondItem="f0T-Oj-q8G" secondAttribute="leading" id="fdf-0l-zYx"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
