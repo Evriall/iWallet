@@ -22,6 +22,9 @@ class AccountCell: UITableViewCell {
         if String(describing: account.objectID) == AccountHelper.instance.currentAccount  {
               accountNameLbl.font = UIFont(name: "Avenir-Heavy", size: 24)
               accountCurrencyLbl.font = UIFont(name: "Avenir-Heavy", size: 24)
+        } else {
+            accountNameLbl.font = UIFont(name: "Avenir-Book", size: 20)
+            accountCurrencyLbl.font = UIFont(name: "Avenir-Book", size: 20 )
         }
         accountNameLbl.text = account.name
         if let currency = account.currency {

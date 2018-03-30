@@ -67,4 +67,8 @@ extension SlideVC: UITableViewDelegate, UITableViewDataSource {
         return AccountCell()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        AccountHelper.instance.currentAccount = String(describing: accounts[indexPath.row].objectID)
+    }
+    
 }

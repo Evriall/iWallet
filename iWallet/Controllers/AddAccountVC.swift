@@ -10,9 +10,9 @@ import UIKit
 
 class AddAccountVC: UIViewController {
     
-    @IBOutlet weak var typeAccountBtn: ButtonWithImage!
+    @IBOutlet weak var typeAccountBtn: ButtonWithRightImage!
     @IBOutlet weak var nameAccountTxt: UITextField!
-    @IBOutlet weak var currencyAccountBtn: ButtonWithImage!
+    @IBOutlet weak var currencyAccountBtn: ButtonWithRightImage!
     @IBOutlet weak var saveAccountBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()

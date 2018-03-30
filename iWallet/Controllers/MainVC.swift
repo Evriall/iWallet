@@ -12,7 +12,7 @@ class MainVC: UIViewController {
 
     @IBOutlet weak var menuBtn: UIButton!
     @IBAction func openAddTransactionBtnPressed(_ sender: Any) {
-        let addTransaction = AddTransactionsVC()
+        let addTransaction = AddTransactionVC()
         addTransaction.modalPresentationStyle = .custom
         presentDetail(addTransaction)
     }

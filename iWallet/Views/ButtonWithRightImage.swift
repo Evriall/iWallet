@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ButtonWithImage: UIButton {
+class ButtonWithRightImage: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         if imageView != nil {

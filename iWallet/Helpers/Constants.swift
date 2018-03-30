@@ -16,7 +16,8 @@ struct Constants {
     //Defaults
     static let EDITABLE_CATEGORIES = "editableCategories"
     static let CURRENT_ACCOUNT = "currentAccount"
-    
+    static let CURRENT_TRANSACTION_TYPE = "currentTransactionType"
+
    static let colors = [
     #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1),
     #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1),
