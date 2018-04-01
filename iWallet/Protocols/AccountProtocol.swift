@@ -10,5 +10,5 @@ import Foundation
 
 protocol AccountProtocol {
     func handleCarrency(_ carrency: String)
-    func handleType(_ type: String)
+    func handleAccountType(_ type: String)
 }

@@ -13,18 +13,26 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var amountTxt: UITextField!
     
     @IBOutlet weak var descriptionTxt: UITextField!
-    @IBOutlet weak var openParentese: UIButton!
+    @IBOutlet weak var typeBtn: ButtonWithRightImage!
+    @IBOutlet weak var categoryBtn: ButtonWithRightImage!
+    @IBOutlet weak var categoryImg: UIImageView!
     
     @IBOutlet weak var tagsTxt: UITextField!
     
     let height: CGFloat = 40.0
+    var category: Category?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUIElements()
     }
     func setUpUIElements(){
+        let tap = UITapGestureRecognizer(target: self, action: #selector(AddTransactionVC.handleTap))
+        view.addGestureRecognizer(tap)
         amountTxt.addTarget(self, action: #selector(AddTransactionVC.textFieldDidChange), for: UIControlEvents.editingChanged)
-        
+        amountTxt.delegate = self
+        descriptionTxt.delegate = self
+        tagsTxt.delegate = self
         let opView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: height))
           opView.backgroundColor =  #colorLiteral(red: 0.1803921569, green: 0.8, blue: 0.8470588235, alpha: 1)
             opView.translatesAutoresizingMaskIntoConstraints = false
@@ -68,8 +76,50 @@ class AddTransactionVC: UIViewController {
         descriptionTxt.inputAccessoryView = opView
         tagsTxt.inputAccessoryView = opView
         
+        typeBtn.setTitle(TransactionHelper.instance.currentType, for: .normal)
+        
+        categoryBtn.titleLabel?.numberOfLines = 0
+        categoryBtn.titleLabel?.lineBreakMode = .byWordWrapping
+        
+        if let currentCategory = CategoryHelper.instance.currentCAtegory {
+            CoreDataService.instance.fetchCategory(ByObjectID: currentCategory) { (categoryFetched) in
+                self.category = categoryFetched
+                categoryBtn.setTitle(textNameCategory(category: categoryFetched), for: .normal)
+                categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: categoryFetched.color)
+            }
+        } else {
+            CoreDataService.instance.fetchCategory(ByName: "Without category", complition: { (categories) in
+                for item in categories {
+                    self.category = item
+                    categoryBtn.setTitle(item.name, for: .normal)
+                    categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                }
+            })
+        }
+        
+    }
+    func textNameCategory(category: Category?) -> String{
+        guard let category = category else {
+            return ""
+        }
+        guard let name = category.name else {return ""}
+        guard let parentName = category.parent?.name else {return name}
+        return "\(parentName)\n\(name)"
     }
     
+    @IBAction func openTypeBtnPressed(_ sender: Any) {
+        let selectType = SelectTransactionTypeVC()
+        selectType.delegate = self
+        selectType.modalPresentationStyle = .custom
+        presentDetail(selectType)
+    }
+    
+    @IBAction func openCategoryBtnPressed(_ sender: Any) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        guard let categoryVC = storyBoard.instantiateViewController(withIdentifier: "CategoryVC") as? CategoryVC else {return}
+        categoryVC.delegate = self
+        presentDetail(categoryVC)
+    }
     override func viewWillAppear(_ animated: Bool) {
        
     }
@@ -99,11 +149,35 @@ class AddTransactionVC: UIViewController {
     @objc func textFieldDidChange(){
     }
     
+    @objc func handleTap(){
+        self.view.endEditing(true)
+    }
+    
     @IBAction func backBtnPressed(_ sender: Any) {
         dismissDetail()
     }
     @IBAction func saveTransactionBtnPressed(_ sender: Any) {
+        CategoryHelper.instance.currentCAtegory = category?.objectID.uriRepresentation().absoluteString
         dismissDetail()
+    }
+    
+}
+
+extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol {
+    func handleTransactionType(_ type: String) {
+        typeBtn.setTitle(type, for: .normal)
+        TransactionHelper.instance.currentType = type
+    }
+    
+    func handleCategory(_ category: Category) {
+        self.category = category
+        categoryBtn.setTitle(textNameCategory(category: category), for: .normal)
+        categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: category.color)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
 }

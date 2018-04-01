@@ -24,18 +24,19 @@ class CategoryVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CategoryCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
-        menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        CoreDataService.instance.fetchParents { (categories) in
+        CoreDataService.instance.fetchCategoryParents{ (categories) in
             self.categories = categories
              CategoryHelper.instance.clear()
             self.tableView.reloadData()
         }
+    }
+    
+    @IBAction func backBtnPressed(_ sender: Any) {
+        dismissDetail()
     }
 }
 
@@ -73,7 +74,7 @@ extension CategoryVC : UITableViewDelegate, UITableViewDataSource {
         let parent = categories[tag]
         guard let name = parent.name else {return}
         CategoryHelper.instance.set(categoryName: name, isShown: true)
-        CoreDataService.instance.fetchChildrenByParent(parent) { (children) in
+        CoreDataService.instance.fetchCategoryChildrenByParent(parent) { (children) in
             if children.count > 0 {
                 categories.insert(contentsOf: children, at: tag + 1)
                 self.tableView.reloadData()
@@ -86,7 +87,7 @@ extension CategoryVC : UITableViewDelegate, UITableViewDataSource {
         let parent = categories[tag]
         guard let name = parent.name else {return}
         CategoryHelper.instance.set(categoryName: name, isShown: false)
-        CoreDataService.instance.fetchChildrenByParent(parent) { (children) in
+        CoreDataService.instance.fetchCategoryChildrenByParent(parent) { (children) in
             if children.count > 0 {
                 tag += 1
                 for _ in children{

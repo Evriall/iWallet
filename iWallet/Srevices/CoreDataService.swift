@@ -28,7 +28,7 @@ class CoreDataService{
         }
     }
     
-    func fetchParents(complition: (_ complete: [Category])-> ()) {
+    func fetchCategoryParents(complition: (_ complete: [Category])-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
         let predicate = NSPredicate(format: "parent == nil")
@@ -43,7 +43,7 @@ class CoreDataService{
         }
     }
     
-    func fetchChildrenByParent(_ parent: Category, complition: (_ complete: [Category])-> ()) {
+    func fetchCategoryChildrenByParent(_ parent: Category, complition: (_ complete: [Category])-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
         let predicate = NSPredicate(format: "parent == %@", parent)
@@ -58,7 +58,7 @@ class CoreDataService{
         }
     }
     
-    func fetch(ByName name: String, complition: (_ complete: [Category])-> ()) {
+    func fetchCategory(ByName name: String, complition: (_ complete: [Category])-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
         let predicate = NSPredicate(format: "name == %@", name)
@@ -68,6 +68,21 @@ class CoreDataService{
             complition(category)
         } catch {
             debugPrint("Could not fetch category by name \(name) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchCategory(ByObjectID id: String, complition: (_ complete: Category)-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        do{
+            let categories = try managedContext.fetch(fetchRequest) as! [Category]
+            for item in categories {
+                if item.objectID.uriRepresentation().absoluteString == id {
+                    complition(item)
+                }
+            }
+        } catch {
+            debugPrint("Could not fetch categories\(error.localizedDescription)")
         }
     }
     

@@ -37,6 +37,9 @@
 		9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */; };
 		9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */; };
 		9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA7FF34206BA7F70093D0DE /* AccountHelper.swift */; };
+		9AABAD6B2070DB87001AA162 /* SelectTransactionTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */; };
+		9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */; };
+		9AABAD6E2070E0BB001AA162 /* TransactioProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
 		9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */; };
@@ -85,6 +88,9 @@
 		9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHelper.swift; sourceTree = "<group>"; };
 		9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		9AA7FF34206BA7F70093D0DE /* AccountHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHelper.swift; sourceTree = "<group>"; };
+		9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTransactionTypeVC.swift; sourceTree = "<group>"; };
+		9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectTransactionTypeVC.xib; sourceTree = "<group>"; };
+		9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactioProtocol.swift; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9ABA9AF92063DB4500ADA34E /* iWallet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iWallet.xcdatamodel; sourceTree = "<group>"; };
@@ -166,6 +172,7 @@
 				9A659835206D413A00519722 /* SelectAccountTypeVC.xib */,
 				9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */,
 				9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */,
+				9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */,
 				9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */,
 			);
 			path = XIBs;
@@ -176,6 +183,7 @@
 			children = (
 				9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */,
 				9A659838206D41F200519722 /* AccountProtocol.swift */,
+				9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -243,6 +251,7 @@
 				9A659834206D413A00519722 /* SelectAccountTypeVC.swift */,
 				9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */,
 				9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */,
+				9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -338,6 +347,7 @@
 				9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */,
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
 				9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */,
+				9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
@@ -416,6 +426,8 @@
 				9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */,
 				9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */,
 				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,
+				9AABAD6B2070DB87001AA162 /* SelectTransactionTypeVC.swift in Sources */,
+				9AABAD6E2070E0BB001AA162 /* TransactioProtocol.swift in Sources */,
 				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,

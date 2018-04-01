@@ -9,17 +9,18 @@
 import Foundation
 
 enum TransactionType: String {
-    case expance = "expence"
-    case income = "income"
-    case transfer = "transfer"
+    case expance = "Expence"
+    case income = "Income"
+    case transfer = "Transfer"
+    static let allValues = [expance, income, transfer]
 }
 
 class TransactionHelper {
     static let instance = TransactionHelper()
     private let defaults  = UserDefaults.standard
-    var currentType: String? {
+    var currentType: String {
         get {
-            return defaults.string(forKey: Constants.CURRENT_TRANSACTION_TYPE)
+            return defaults.string(forKey: Constants.CURRENT_TRANSACTION_TYPE) ?? TransactionType.expance.rawValue
         }
         set {
             defaults.set(newValue, forKey: Constants.CURRENT_TRANSACTION_TYPE)

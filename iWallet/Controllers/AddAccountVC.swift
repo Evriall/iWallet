@@ -74,7 +74,7 @@ extension AddAccountVC: UITextFieldDelegate, AccountProtocol {
         currencyAccountBtn.setTitle(currency, for: .normal)
     }
     
-    func handleType(_ type: String) {
+    func handleAccountType(_ type: String) {
         typeAccountBtn.setTitle(type, for: .normal)
     }
     

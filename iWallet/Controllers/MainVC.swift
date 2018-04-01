@@ -26,7 +26,7 @@ class MainVC: UIViewController {
     }
     
     func checkInitData(){
-        CoreDataService.instance.fetchParents { (categories) in
+        CoreDataService.instance.fetchCategoryParents { (categories) in
             if categories.count == 0 {
                 CategoryHelper.instance.initCategories()
             }

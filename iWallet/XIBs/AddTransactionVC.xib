@@ -13,8 +13,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddTransactionVC" customModule="iWallet" customModuleProvider="target">
             <connections>
                 <outlet property="amountTxt" destination="Ymw-TG-X36" id="Xk4-sy-ymM"/>
+                <outlet property="categoryBtn" destination="wtB-PR-vux" id="CL2-bN-hPO"/>
+                <outlet property="categoryImg" destination="19C-yz-j9B" id="3py-hy-1t8"/>
                 <outlet property="descriptionTxt" destination="EDi-0L-VDf" id="hcC-Yw-khz"/>
                 <outlet property="tagsTxt" destination="MYA-1m-hYa" id="Ho2-jn-MGH"/>
+                <outlet property="typeBtn" destination="qgp-zO-d9K" id="9Ur-Dw-d2o"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -94,20 +97,32 @@
                                         <constraint firstAttribute="width" constant="100" id="UvL-jt-Pq1"/>
                                         <constraint firstAttribute="height" constant="30" id="f40-8j-taN"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                    <state key="normal" title="Expense" image="ArrowsIcon">
-                                        <color key="titleColor" red="0.47450980390000003" green="0.47450980390000003" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
+                                    <state key="normal" title="Expense" image="ArrowsIcon32_32">
+                                        <color key="titleColor" red="1" green="0.82991328220000005" blue="0.022163973029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="openTypeBtnPressed:" destination="-1" eventType="touchUpInside" id="M90-Mh-dcB"/>
+                                    </connections>
                                 </button>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="19C-yz-j9B">
+                                    <rect key="frame" x="100" y="0.0" width="8" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="8" id="DkL-fy-ybe"/>
+                                    </constraints>
+                                </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wtB-PR-vux" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
-                                    <rect key="frame" x="100" y="0.0" width="243" height="30"/>
+                                    <rect key="frame" x="108" y="0.0" width="235" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="Xjf-Kv-Vy1"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                    <state key="normal" title="Select category" image="ArrowsIcon">
+                                    <state key="normal" title="Select category" image="ArrowsIcon32_32">
                                         <color key="titleColor" red="0.47450980390000003" green="0.47450980390000003" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="openCategoryBtnPressed:" destination="-1" eventType="touchUpInside" id="R0k-lO-77C"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
@@ -155,14 +170,14 @@
                                 <color key="titleColor" red="0.47450980390000003" green="0.47450980390000003" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfy-Br-KST">
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfy-Br-KST">
                             <rect key="frame" x="0.0" y="248" width="343" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="9O9-z3-a5T"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                             <state key="normal" title=" Add photo" image="photoCameraIcon copy32_32">
-                                <color key="titleColor" red="0.0" green="0.56862745098039214" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleColor" red="0.47450980390000003" green="0.47450980390000003" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                         </button>
                     </subviews>
@@ -182,7 +197,7 @@
         </view>
     </objects>
     <resources>
-        <image name="ArrowsIcon" width="191" height="191"/>
+        <image name="ArrowsIcon32_32" width="32" height="32"/>
         <image name="PinMapIcon32_32" width="32" height="32"/>
         <image name="back" width="14" height="25"/>
         <image name="checkmark-round" width="512" height="512"/>

@@ -77,7 +77,7 @@ class AddCategoryVC: UIViewController {
         }
     }
     @IBAction func categoryParentBtnPressed(_ sender: Any) {
-        CoreDataService.instance.fetchParents { (categories) in
+        CoreDataService.instance.fetchCategoryParents { (categories) in
             if categories.count > 0 {
                 let selectCategory = SelectParentCategoryVC()
                 selectCategory.delegate = self
