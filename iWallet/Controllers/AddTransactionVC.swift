@@ -19,8 +19,13 @@ class AddTransactionVC: UIViewController {
     
     @IBOutlet weak var tagsTxt: UITextField!
     
+    @IBOutlet weak var yesterdayBtn: UIButton!
+    @IBOutlet weak var todayBtn: UIButton!
+    @IBOutlet weak var otherDateBtn: UIButton!
+    
     let height: CGFloat = 40.0
     var category: Category?
+    var date = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +101,8 @@ class AddTransactionVC: UIViewController {
                 }
             })
         }
-        
+      yesterdayBtn.setImage(nil, for: .normal)
+      otherDateBtn.setImage(nil, for: .normal)
     }
     func textNameCategory(category: Category?) -> String{
         guard let category = category else {
@@ -160,10 +166,57 @@ class AddTransactionVC: UIViewController {
         CategoryHelper.instance.currentCAtegory = category?.objectID.uriRepresentation().absoluteString
         dismissDetail()
     }
+    @IBAction func yesterdayBtnPressed(_ sender: Any) {
+        yesterdayBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
+        todayBtn.setImage(nil, for: .normal)
+        otherDateBtn.setImage(nil, for: .normal)
+        yesterdayBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
+        todayBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
+        otherDateBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
+        otherDateBtn.setTitle("Other", for: .normal)
+        date = Date() - 86400
+    }
+    @IBAction func todayBtnPressed(_ sender: Any) {
+        yesterdayBtn.setImage(nil, for: .normal)
+        todayBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
+        otherDateBtn.setImage(nil, for: .normal)
+        yesterdayBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
+        todayBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
+        otherDateBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
+        otherDateBtn.setTitle("Other", for: .normal)
+        let calendarVC = CalendarVC()
+        
+        date = Date()
+    }
     
+    @IBAction func otherDateBtnPressed(_ sender: Any) {
+        yesterdayBtn.setImage(nil, for: .normal)
+        todayBtn.setImage(nil, for: .normal)
+        otherDateBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
+        yesterdayBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
+        todayBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
+        otherDateBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
+        
+        let calendarVC = CalendarVC()
+        calendarVC.delegate = self
+        calendarVC.modalPresentationStyle = .custom
+        presentDetail(calendarVC )
+    }
+    
+    func formatDateToStr(date: Date) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM"
+        return dateFormatter.string(from: date)
+    }
 }
 
-extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol {
+extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol {
+    func handleDate(_ date: Date) {
+        self.date = date
+        otherDateBtn.setTitle(formatDateToStr(date: date), for: .normal)
+        print(date)
+    }
+    
     func handleTransactionType(_ type: String) {
         typeBtn.setTitle(type, for: .normal)
         TransactionHelper.instance.currentType = type
@@ -179,5 +232,6 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
         self.view.endEditing(true)
         return true
     }
+    
     
 }

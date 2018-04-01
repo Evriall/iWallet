@@ -40,6 +40,10 @@
 		9AABAD6B2070DB87001AA162 /* SelectTransactionTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */; };
 		9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */; };
 		9AABAD6E2070E0BB001AA162 /* TransactioProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */; };
+		9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AABAD70207147E9001AA162 /* CalendarVC.xib */; };
+		9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD6F207147E8001AA162 /* CalendarVC.swift */; };
+		9AABAD7720716716001AA162 /* CalendarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD7620716716001AA162 /* CalendarProtocol.swift */; };
+		9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD7820716AC4001AA162 /* ColorsConfig.swift */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
 		9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */; };
@@ -91,6 +95,11 @@
 		9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTransactionTypeVC.swift; sourceTree = "<group>"; };
 		9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectTransactionTypeVC.xib; sourceTree = "<group>"; };
 		9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactioProtocol.swift; sourceTree = "<group>"; };
+		9AABAD6F207147E8001AA162 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
+		9AABAD70207147E9001AA162 /* CalendarVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarVC.xib; sourceTree = "<group>"; };
+		9AABAD7420714CCF001AA162 /* CVCalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CVCalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AABAD7620716716001AA162 /* CalendarProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarProtocol.swift; sourceTree = "<group>"; };
+		9AABAD7820716AC4001AA162 /* ColorsConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsConfig.swift; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9ABA9AF92063DB4500ADA34E /* iWallet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iWallet.xcdatamodel; sourceTree = "<group>"; };
@@ -127,6 +136,7 @@
 		747C799939B274BBEBB627D0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AABAD7420714CCF001AA162 /* CVCalendar.framework */,
 				DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */,
 			);
 			name = Frameworks;
@@ -145,6 +155,7 @@
 		9A9D2D462066635600CC7DE0 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				9AABAD7820716AC4001AA162 /* ColorsConfig.swift */,
 				9A9D2D472066636800CC7DE0 /* Constants.swift */,
 				9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */,
 				9AA7FF34206BA7F70093D0DE /* AccountHelper.swift */,
@@ -174,6 +185,7 @@
 				9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */,
 				9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */,
 				9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */,
+				9AABAD70207147E9001AA162 /* CalendarVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -184,6 +196,7 @@
 				9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */,
 				9A659838206D41F200519722 /* AccountProtocol.swift */,
 				9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */,
+				9AABAD7620716716001AA162 /* CalendarProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -252,6 +265,7 @@
 				9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */,
 				9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */,
 				9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */,
+				9AABAD6F207147E8001AA162 /* CalendarVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -348,6 +362,7 @@
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
 				9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */,
 				9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */,
+				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
@@ -383,11 +398,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-iWallet/Pods-iWallet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CVCalendar/CVCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CVCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +450,7 @@
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
 				9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */,
+				9AABAD7720716716001AA162 /* CalendarProtocol.swift in Sources */,
 				9A659833206D063400519722 /* ButtonWithRightImage.swift in Sources */,
 				9A9D2D4F2066A47700CC7DE0 /* EncodeDecodeService.swift in Sources */,
 				9A9D2D4320665BFC00CC7DE0 /* CategoryVC.swift in Sources */,
@@ -445,7 +463,9 @@
 				9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */,
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
+				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
+				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
 				9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */,

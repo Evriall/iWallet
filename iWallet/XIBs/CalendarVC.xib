@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CalendarVC" customModule="iWallet" customModuleProvider="target">
+            <connections>
+                <outlet property="calendarView" destination="9h8-Uj-bk7" id="NcU-DW-Zyr"/>
+                <outlet property="menuView" destination="7Jg-kV-3Rs" id="usj-h5-aUJ"/>
+                <outlet property="monthLbl" destination="QB8-P8-32n" id="Pcj-bm-X7T"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Jg-kV-3Rs" customClass="CVCalendarMenuView" customModule="CVCalendar">
+                    <rect key="frame" x="0.0" y="77" width="375" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="vLE-vu-8HK"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Yj-nM-KaC" customClass="GradientView" customModule="iWallet" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="April, 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QB8-P8-32n">
+                            <rect key="frame" x="87.5" y="41" width="200" height="28"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="7oo-Hm-L3k"/>
+                                <constraint firstAttribute="height" constant="28" id="JJa-Vp-sCQ"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="77" id="0h2-dC-xmV"/>
+                        <constraint firstAttribute="bottom" secondItem="QB8-P8-32n" secondAttribute="bottom" constant="8" id="ECq-Cn-qFq"/>
+                        <constraint firstItem="QB8-P8-32n" firstAttribute="centerX" secondItem="7Yj-nM-KaC" secondAttribute="centerX" id="Q7M-6y-y8O"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="topColor">
+                            <color key="value" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="buttomColor">
+                            <color key="value" red="0.0" green="0.85669371139999995" blue="0.87303848640000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9h8-Uj-bk7" customClass="CVCalendarView" customModule="CVCalendar">
+                    <rect key="frame" x="0.0" y="127" width="375" height="300"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="APL-Wr-EiV"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="9h8-Uj-bk7" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="C9N-np-K5f"/>
+                <constraint firstItem="9h8-Uj-bk7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="K5n-br-BKj"/>
+                <constraint firstItem="7Yj-nM-KaC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="LXA-e6-KIR"/>
+                <constraint firstItem="7Jg-kV-3Rs" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="OyA-Ho-eQB"/>
+                <constraint firstItem="9h8-Uj-bk7" firstAttribute="top" secondItem="7Jg-kV-3Rs" secondAttribute="bottom" id="Sja-nb-Bqr"/>
+                <constraint firstItem="7Jg-kV-3Rs" firstAttribute="top" secondItem="7Yj-nM-KaC" secondAttribute="bottom" id="f94-bI-aS4"/>
+                <constraint firstItem="7Jg-kV-3Rs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="flS-2T-TX9"/>
+                <constraint firstItem="7Yj-nM-KaC" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="rWm-sh-ZpO"/>
+                <constraint firstItem="7Yj-nM-KaC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="wUP-Kd-bPy"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+</document>
