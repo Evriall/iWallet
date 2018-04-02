@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17D102" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="class">
         <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -9,6 +9,7 @@
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="systemName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" syncable="YES"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transaction" inverseName="category" inverseEntity="Transaction" syncable="YES"/>
     </entity>
@@ -19,7 +20,7 @@
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transaction" inverseName="tag" inverseEntity="Transaction" syncable="YES"/>
+        <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="tags" inverseEntity="Transaction" syncable="YES"/>
     </entity>
     <entity name="Transaction" representedClassName="Transaction" syncable="YES" codeGenerationType="class">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -27,17 +28,18 @@
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="transactions" inverseEntity="Account" syncable="YES"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="transactions" inverseEntity="Category" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="transaction" inverseEntity="Photo" syncable="YES"/>
-        <relationship name="tag" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="transactions" inverseEntity="Tag" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="transaction" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="-54" positionY="-9" width="128" height="105"/>
+        <element name="Account" positionX="-18" positionY="108" width="128" height="105"/>
+        <element name="Category" positionX="-54" positionY="-9" width="128" height="120"/>
         <element name="Photo" positionX="-27" positionY="99" width="128" height="90"/>
         <element name="Tag" positionX="-36" positionY="81" width="128" height="75"/>
-        <element name="Transaction" positionX="-45" positionY="27" width="128" height="195"/>
-        <element name="Account" positionX="-18" positionY="108" width="128" height="105"/>
+        <element name="Transaction" positionX="-45" positionY="27" width="128" height="210"/>
     </elements>
 </model>

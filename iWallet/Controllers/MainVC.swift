@@ -37,7 +37,7 @@ class MainVC: UIViewController {
                     if success {
                         CoreDataService.instance.fetchAccounts(complition: { (accounts) in
                             for item in accounts {
-                                AccountHelper.instance.currentAccount = String(describing: item.objectID)
+                                AccountHelper.instance.currentAccount = item.objectID.uriRepresentation().absoluteString
                             }
                         })
                     }

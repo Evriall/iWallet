@@ -12,6 +12,7 @@ class AddTransactionVC: UIViewController {
 
     @IBOutlet weak var amountTxt: UITextField!
     
+    @IBOutlet weak var accountsStackView: UIStackView!
     @IBOutlet weak var descriptionTxt: UITextField!
     @IBOutlet weak var typeBtn: ButtonWithRightImage!
     @IBOutlet weak var categoryBtn: ButtonWithRightImage!
@@ -22,10 +23,20 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var yesterdayBtn: UIButton!
     @IBOutlet weak var todayBtn: UIButton!
     @IBOutlet weak var otherDateBtn: UIButton!
+    @IBOutlet weak var accountFromBtn: ButtonWithLeftImage!
+    @IBOutlet weak var accountToBtn: ButtonWithLeftImage!
     
     let height: CGFloat = 40.0
     var category: Category?
     var date = Date()
+    var tags = [String]()
+    var photos = [String: UIImage]()
+    var latitude = ""
+    var longitude = ""
+    var place = ""
+    var accountFrom: Account?
+    var accountTo: Account?
+    var accountsCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,30 +91,67 @@ class AddTransactionVC: UIViewController {
         amountTxt.inputAccessoryView = opView
         descriptionTxt.inputAccessoryView = opView
         tagsTxt.inputAccessoryView = opView
-        
-        typeBtn.setTitle(TransactionHelper.instance.currentType, for: .normal)
-        
+ 
         categoryBtn.titleLabel?.numberOfLines = 0
         categoryBtn.titleLabel?.lineBreakMode = .byWordWrapping
-        
-        if let currentCategory = CategoryHelper.instance.currentCAtegory {
-            CoreDataService.instance.fetchCategory(ByObjectID: currentCategory) { (categoryFetched) in
-                self.category = categoryFetched
-                categoryBtn.setTitle(textNameCategory(category: categoryFetched), for: .normal)
-                categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: categoryFetched.color)
-            }
-        } else {
-            CoreDataService.instance.fetchCategory(ByName: "Without category", complition: { (categories) in
-                for item in categories {
-                    self.category = item
-                    categoryBtn.setTitle(item.name, for: .normal)
-                    categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                }
-            })
-        }
+        typeBtn.setTitle(TransactionHelper.instance.currentType, for: .normal)
+        setCategory()
       yesterdayBtn.setImage(nil, for: .normal)
       otherDateBtn.setImage(nil, for: .normal)
+        
+        if TransactionHelper.instance.currentType != TransactionType.expance.rawValue {
+            accountToBtn.isHidden = true
+        }
+        CoreDataService.instance.fetchAccounts { (accounts) in
+            accountsCount = accounts.count
+            if accounts.count < 2 {
+                accountFromBtn.isEnabled = false
+            }
+        }
+        
+        CoreDataService.instance.fetchAccount(ByObjectID: AccountHelper.instance.currentAccount ?? "") { (account) in
+            self.accountFrom = account
+            accountFromBtn.setTitle(accountFrom?.name, for: .normal)
+        }
     }
+    func setCategory() {
+        guard let typeText = typeBtn.titleLabel?.text else {return}
+        switch typeText {
+        case TransactionType.transfer.rawValue :
+            CoreDataService.instance.fetchCategory(ByName: "Transfer", system: true) { (categories) in
+                for item in categories {
+                    handleCategory(item)
+                }
+            }
+            accountToBtn.isHidden = false
+            categoryBtn.isEnabled = false
+        default:
+            if let currentCategory = CategoryHelper.instance.currentCAtegory {
+                CoreDataService.instance.fetchCategory(ByObjectID: currentCategory) { (categoryFetched) in
+                    if categoryFetched.systemName == "Transfer" {
+                        setWithoutCategory()
+                    } else {
+                        self.category = categoryFetched
+                        handleCategory(categoryFetched)
+                    }
+                }
+            } else {
+                setWithoutCategory()
+            }
+            accountToBtn.isHidden = true
+            categoryBtn.isEnabled = true
+        }
+    }
+    
+    func setWithoutCategory(){
+        CoreDataService.instance.fetchCategory(ByName: "Without category",system: true, complition: { (categories) in
+            for item in categories {
+                self.category = item
+                handleCategory(item)
+            }
+        })
+    }
+    
     func textNameCategory(category: Category?) -> String{
         guard let category = category else {
             return ""
@@ -163,8 +211,23 @@ class AddTransactionVC: UIViewController {
         dismissDetail()
     }
     @IBAction func saveTransactionBtnPressed(_ sender: Any) {
-        CategoryHelper.instance.currentCAtegory = category?.objectID.uriRepresentation().absoluteString
-        dismissDetail()
+        guard let amountText = amountTxt.text, let amount = Double(amountText), amount != 0 else {return}
+        guard let type = typeBtn.titleLabel?.text else {return}
+        guard let account = self.accountFrom else {return}
+        guard let category = self.category else {return}
+        CategoryHelper.instance.currentCAtegory = category.objectID.uriRepresentation().absoluteString
+        TransactionHelper.instance.currentType = type
+        CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: account, category: category) { (transaction) in
+            for tag in tags {
+                CoreDataService.instance.saveTag(name: tag, transaction: transaction)
+            }
+            for photo in photos {
+                CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
+            }
+            dismissDetail()
+        }
+        
+        
     }
     @IBAction func yesterdayBtnPressed(_ sender: Any) {
         yesterdayBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
@@ -203,11 +266,19 @@ class AddTransactionVC: UIViewController {
         presentDetail(calendarVC )
     }
     
+    @IBAction func accountFromBtnPressed(_ sender: Any) {
+    }
+    @IBAction func accountToBtnPressed(_ sender: Any) {
+    }
+    
+    
     func formatDateToStr(date: Date) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM"
         return dateFormatter.string(from: date)
     }
+    
+    
 }
 
 extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol {
@@ -219,7 +290,7 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
     
     func handleTransactionType(_ type: String) {
         typeBtn.setTitle(type, for: .normal)
-        TransactionHelper.instance.currentType = type
+        setCategory()
     }
     
     func handleCategory(_ category: Category) {

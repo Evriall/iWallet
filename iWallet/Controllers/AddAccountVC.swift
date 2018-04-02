@@ -62,8 +62,6 @@ class AddAccountVC: UIViewController {
         CoreDataService.instance.saveAccount(name: name, type: type, currency: currency) { (success) in
             if success {
                 dismissDetail()
-            } else {
-                print("Could not save account \(name)")
             }
         }
     }

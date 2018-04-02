@@ -19,7 +19,7 @@ class AccountCell: UITableViewCell {
     }
     
    func configureCell(account: Account) {
-        if String(describing: account.objectID) == AccountHelper.instance.currentAccount  {
+        if account.objectID.uriRepresentation().absoluteString == AccountHelper.instance.currentAccount  {
               accountNameLbl.font = UIFont(name: "Avenir-Heavy", size: 24)
               accountCurrencyLbl.font = UIFont(name: "Avenir-Heavy", size: 24)
         } else {

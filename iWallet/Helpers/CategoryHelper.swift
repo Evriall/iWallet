@@ -146,7 +146,7 @@ class CategoryHelper {
     
     func initCategories() {
         for item in initParentCategories {
-            CoreDataService.instance.saveCategory(name: item.0, color: item.1, parent: nil, complition: { (success) in
+            CoreDataService.instance.saveCategory(name: item.0, color: item.1, parent: nil,system: true ,complition: { (success) in
                 if !success {
                     print("Can`t create \(item.0) in DB")
                 }
@@ -156,7 +156,7 @@ class CategoryHelper {
         for item in initChildrenCategories {
             CoreDataService.instance.fetchCategory(ByName: item.2, complition: { (parent) in
                 for  element in parent {
-                    CoreDataService.instance.saveCategory(name: item.0, color: item.1, parent: element, complition: { (success) in
+                    CoreDataService.instance.saveCategory(name: item.0, color: item.1, parent: element, system: true, complition: { (success) in
                         if !success {
                             print("Can`t create \(item.0) in DB")
                         }

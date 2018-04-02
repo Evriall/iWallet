@@ -68,7 +68,9 @@ extension SlideVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        AccountHelper.instance.currentAccount = String(describing: accounts[indexPath.row].objectID)
+        AccountHelper.instance.currentAccount = accounts[indexPath.row].objectID.uriRepresentation().absoluteString
+        let brief = storyboard?.instantiateViewController(withIdentifier: "BriefByAccountVC")
+        revealViewController().pushFrontViewController(brief, animated: true)
     }
     
 }
