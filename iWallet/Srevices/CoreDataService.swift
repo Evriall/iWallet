@@ -194,6 +194,22 @@ class CoreDataService{
         }
     }
     
+    func fetchTransactions(account: Account, date: Date, complition: ([Transaction])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        let predicate = NSPredicate(format: "account == %@ AND date >= %@ AND date <= %@", account, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
+        let sortDescriptor = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptor
+        
+        do{
+            let transaction = try managedContext.fetch(fetchRequest) as! [Transaction]
+            complition(transaction)
+        } catch {
+            debugPrint("Could not fetch transactions for account \(account.name) \(error.localizedDescription)")
+        }
+    }
+    
     // General
     func update(complition: (_ complete: Bool)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}

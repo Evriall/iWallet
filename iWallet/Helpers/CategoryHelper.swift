@@ -141,7 +141,14 @@ class CategoryHelper {
     func clear(){
         categoryChildrenShown = [:]
     }
-    
+    func textNameCategory(category: Category?) -> String{
+        guard let category = category else {
+            return ""
+        }
+        guard let name = category.name else {return ""}
+        guard let parentName = category.parent?.name else {return name}
+        return "\(parentName)\n\(name)"
+    }
     // Init Categories by array
     
     func initCategories() {

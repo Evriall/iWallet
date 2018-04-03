@@ -21,7 +21,7 @@ class CalendarVC: UIViewController {
     override func awakeFromNib() {
         let timeZoneBias = 480 // (UTC+08:00)
         currentCalendar = Calendar(identifier: .gregorian)
-        currentCalendar?.locale = Locale(identifier: "fr_FR")
+        currentCalendar?.locale = Locale(identifier: "eng_ENG")
         if let timeZone = TimeZone(secondsFromGMT: -timeZoneBias * 60) {
             currentCalendar?.timeZone = timeZone
         }
@@ -62,6 +62,20 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCale
         delegate?.handleDate(selectedDate)
         dismissDetail()
     }
+    
+    func preliminaryView(viewOnDayView dayView: DayView) -> UIView {
+        let circleView = CVAuxiliaryView(dayView: dayView, rect: dayView.frame, shape: CVShape.circle)
+        circleView.fillColor = .colorFromCode(0xCCCCCC)
+        return circleView
+    }
+    
+    func preliminaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
+        if (dayView.isCurrentDay) {
+            return true
+        }
+        return false
+    }
+    
     
     func presentedDateUpdated(_ date: CVDate) {
         monthLbl.text = date.globalDescription

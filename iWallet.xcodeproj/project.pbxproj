@@ -20,6 +20,8 @@
 		9A65983E206D46DD00519722 /* TypeAndCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */; };
 		9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */; };
 		9A73000920727DF6002F84F6 /* BriefByAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000820727DF6002F84F6 /* BriefByAccountVC.swift */; };
+		9A73000B207384E7002F84F6 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000A207384E7002F84F6 /* DateExt.swift */; };
+		9A73000D2073A0A3002F84F6 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000C2073A0A3002F84F6 /* TransactionCell.swift */; };
 		9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */; };
 		9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */; };
 		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
@@ -76,6 +78,8 @@
 		9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAndCurrencyCell.swift; sourceTree = "<group>"; };
 		9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TypeAndCurrencyCell.xib; sourceTree = "<group>"; };
 		9A73000820727DF6002F84F6 /* BriefByAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BriefByAccountVC.swift; sourceTree = "<group>"; };
+		9A73000A207384E7002F84F6 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
+		9A73000C2073A0A3002F84F6 /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
@@ -150,6 +154,7 @@
 				9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */,
 				9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */,
 				9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */,
+				9A73000A207384E7002F84F6 /* DateExt.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				9A659820206BDC2000519722 /* AccountCell.swift */,
 				9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */,
 				9AE6D569206E9D5300886F73 /* ButtonWithLeftImage.swift */,
+				9A73000C2073A0A3002F84F6 /* TransactionCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -442,6 +448,7 @@
 			files = (
 				9A9D2D4B206663D400CC7DE0 /* CoreDataService.swift in Sources */,
 				9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */,
+				9A73000B207384E7002F84F6 /* DateExt.swift in Sources */,
 				9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */,
 				9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */,
 				9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */,
@@ -477,6 +484,7 @@
 				9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */,
 				9A65983E206D46DD00519722 /* TypeAndCurrencyCell.swift in Sources */,
 				9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */,
+				9A73000D2073A0A3002F84F6 /* TransactionCell.swift in Sources */,
 				9A659839206D41F200519722 /* AccountProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

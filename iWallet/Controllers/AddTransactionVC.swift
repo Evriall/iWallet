@@ -42,6 +42,9 @@ class AddTransactionVC: UIViewController {
         super.viewDidLoad()
         setUpUIElements()
     }
+    
+
+    
     func setUpUIElements(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(AddTransactionVC.handleTap))
         view.addGestureRecognizer(tap)
@@ -118,7 +121,7 @@ class AddTransactionVC: UIViewController {
         guard let typeText = typeBtn.titleLabel?.text else {return}
         switch typeText {
         case TransactionType.transfer.rawValue :
-            CoreDataService.instance.fetchCategory(ByName: "Transfer", system: true) { (categories) in
+            CoreDataService.instance.fetchCategory(ByName: Constants.CATEGORY_TRANSFER, system: true) { (categories) in
                 for item in categories {
                     handleCategory(item)
                 }
@@ -128,7 +131,7 @@ class AddTransactionVC: UIViewController {
         default:
             if let currentCategory = CategoryHelper.instance.currentCAtegory {
                 CoreDataService.instance.fetchCategory(ByObjectID: currentCategory) { (categoryFetched) in
-                    if categoryFetched.systemName == "Transfer" {
+                    if categoryFetched.systemName == Constants.CATEGORY_TRANSFER {
                         setWithoutCategory()
                     } else {
                         self.category = categoryFetched
@@ -152,14 +155,7 @@ class AddTransactionVC: UIViewController {
         })
     }
     
-    func textNameCategory(category: Category?) -> String{
-        guard let category = category else {
-            return ""
-        }
-        guard let name = category.name else {return ""}
-        guard let parentName = category.parent?.name else {return name}
-        return "\(parentName)\n\(name)"
-    }
+    
     
     @IBAction func openTypeBtnPressed(_ sender: Any) {
         let selectType = SelectTransactionTypeVC()
@@ -215,7 +211,6 @@ class AddTransactionVC: UIViewController {
         guard let type = typeBtn.titleLabel?.text else {return}
         guard let account = self.accountFrom else {return}
         guard let category = self.category else {return}
-        CategoryHelper.instance.currentCAtegory = category.objectID.uriRepresentation().absoluteString
         TransactionHelper.instance.currentType = type
         CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: account, category: category) { (transaction) in
             for tag in tags {
@@ -272,11 +267,7 @@ class AddTransactionVC: UIViewController {
     }
     
     
-    func formatDateToStr(date: Date) -> String{
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM"
-        return dateFormatter.string(from: date)
-    }
+   
     
     
 }
@@ -284,7 +275,7 @@ class AddTransactionVC: UIViewController {
 extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol {
     func handleDate(_ date: Date) {
         self.date = date
-        otherDateBtn.setTitle(formatDateToStr(date: date), for: .normal)
+        otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
         print(date)
     }
     
@@ -295,8 +286,11 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
     
     func handleCategory(_ category: Category) {
         self.category = category
-        categoryBtn.setTitle(textNameCategory(category: category), for: .normal)
+        categoryBtn.setTitle(CategoryHelper.instance.textNameCategory(category: category), for: .normal)
         categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: category.color)
+        if category.systemName != Constants.CATEGORY_TRANSFER {
+            CategoryHelper.instance.currentCAtegory = category.objectID.uriRepresentation().absoluteString
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
