@@ -52,6 +52,16 @@ class AccountHelper{
         }
     }
     
+    func evaluateBalance(byAccount: Account? = nil, complition: (Double)->()){
+        CoreDataService.instance.evaluateAllIncome(byAccount: byAccount) { (incomeSum) in
+            CoreDataService.instance.evaluateAllExpanse(byAccount: byAccount, complition: { (expanceSum) in
+                complition(incomeSum - expanceSum)
+            })
+        }
+        
+    }
+    
+    
     func initExternalAccount(){
         CoreDataService.instance.saveAccount(name: Constants.NAME_FOR_EXTERNAL_ACCOUNT, type: AccountType.DebitCard.rawValue, currency: getLocaleCarrencySymbolAndCode().code, external: true) { (success) in
             if !success {

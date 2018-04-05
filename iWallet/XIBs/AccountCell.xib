@@ -23,15 +23,15 @@
                         <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" preferredMaxLayoutWidth="60" translatesAutoresizingMaskIntoConstraints="NO" id="JUi-HJ-6La">
-                                <rect key="frame" x="0.0" y="0.0" width="264" height="43.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="216" height="43.5"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
                                 <color key="textColor" red="1" green="0.82991328216086457" blue="0.022163973029363682" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GqF-s9-UJB">
-                                <rect key="frame" x="264" y="0.0" width="24" height="43.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="GqF-s9-UJB">
+                                <rect key="frame" x="216" y="0.0" width="72" height="43.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="Lx7-3F-DhM"/>
+                                    <constraint firstAttribute="width" constant="72" id="Lx7-3F-DhM"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
                                 <color key="textColor" red="1" green="0.82991328220000005" blue="0.022163973029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

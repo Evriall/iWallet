@@ -31,6 +31,12 @@ class AccountCell: UITableViewCell {
         accountCurrencyLbl.textColor = colorText
         if let currency = account.currency {
             accountCurrencyLbl.text = AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)
+        } else {
+            accountCurrencyLbl.text = ""
+        }
+        
+        AccountHelper.instance.evaluateBalance(byAccount: account) { (balance) in
+            accountCurrencyLbl.text = "\(balance)" + accountCurrencyLbl.text!
         }
     }
 }

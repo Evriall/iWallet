@@ -107,7 +107,7 @@ class CoreDataService{
     func fetchAccount(bySystemName name: String, complition: (_ complete: [Account])-> ()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
-        let predicate = NSPredicate(format: "name == %@", name)
+        let predicate = NSPredicate(format: "systemName == %@", name)
         fetchRequest.predicate = predicate
         do{
             let account = try managedContext.fetch(fetchRequest) as! [Account]
@@ -216,6 +216,89 @@ class CoreDataService{
             debugPrint("Could not fetch transactions for account \(account.name) \(error.localizedDescription)")
         }
     }
+    
+    func evaluateAllIncome(byAccount: Account? = nil, complition: (Double)->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .doubleAttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToFetch = [sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        if let account = byAccount {
+            let predicate = NSPredicate(format: "account == %@ AND account.external == %@ AND type == %@", account, NSNumber(value: false), TransactionType.income.rawValue)
+            fetchRequest.predicate = predicate
+        } else {
+            let predicate = NSPredicate(format: "account.external == %@ AND type == %@", NSNumber(value: false), TransactionType.income.rawValue)
+            fetchRequest.predicate = predicate
+        }
+        
+        
+        do{
+            let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary]
+            if let result = resultArray {
+                for item in result {
+                    if let sum = item["sum"] {
+                        if let sumDouble = sum as? Double{
+                            complition(sumDouble)
+                        }
+                    }
+                }
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
+
+    func evaluateAllExpanse(byAccount: Account? = nil, complition: (Double)->()){
+            guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+            
+            let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+            let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+            
+            let sumDesc = NSExpressionDescription()
+            sumDesc.expression = expression
+            sumDesc.name = "sum"
+            sumDesc.expressionResultType = .doubleAttributeType
+            fetchRequest.returnsObjectsAsFaults = false
+            fetchRequest.propertiesToFetch = [sumDesc]
+            fetchRequest.resultType = .dictionaryResultType
+            if let account = byAccount {
+                let predicate = NSPredicate(format: "account == %@ AND account.external == %@ AND type == %@", account, NSNumber(value: false), TransactionType.expance.rawValue)
+                fetchRequest.predicate = predicate
+            } else {
+                let predicate = NSPredicate(format: "account.external == %@ AND type == %@", NSNumber(value: false), TransactionType.income.rawValue)
+                fetchRequest.predicate = predicate
+            }
+            
+            
+            do{
+                let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary]
+                if let result = resultArray {
+                    for item in result {
+                        if let sum = item["sum"] {
+                            if let sumDouble = sum as? Double{
+                                complition(sumDouble)
+                            }
+                        }
+                    }
+                }
+            } catch {
+                debugPrint("Could not evaluate income \(error.localizedDescription)")
+            }
+        }
+    
+//    func evaluateAllIncome(byAccount account: Account, complition: (Double)->()){
+//
+//    }
     
     // General
     func update(complition: (_ complete: Bool)-> ()) {
