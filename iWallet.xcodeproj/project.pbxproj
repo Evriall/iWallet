@@ -22,6 +22,9 @@
 		9A73000920727DF6002F84F6 /* BriefByAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000820727DF6002F84F6 /* BriefByAccountVC.swift */; };
 		9A73000B207384E7002F84F6 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000A207384E7002F84F6 /* DateExt.swift */; };
 		9A73000D2073A0A3002F84F6 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000C2073A0A3002F84F6 /* TransactionCell.swift */; };
+		9A73000F2073C4FF002F84F6 /* BriefProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */; };
+		9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73002E207602AF002F84F6 /* SelectAccountVC.swift */; };
+		9A730031207602AF002F84F6 /* SelectAccountVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A73002F207602AF002F84F6 /* SelectAccountVC.xib */; };
 		9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */; };
 		9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */; };
 		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
@@ -80,6 +83,9 @@
 		9A73000820727DF6002F84F6 /* BriefByAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BriefByAccountVC.swift; sourceTree = "<group>"; };
 		9A73000A207384E7002F84F6 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
 		9A73000C2073A0A3002F84F6 /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
+		9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BriefProtocol.swift; sourceTree = "<group>"; };
+		9A73002E207602AF002F84F6 /* SelectAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAccountVC.swift; sourceTree = "<group>"; };
+		9A73002F207602AF002F84F6 /* SelectAccountVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountVC.xib; sourceTree = "<group>"; };
 		9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
@@ -193,6 +199,7 @@
 				9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */,
 				9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */,
 				9AABAD70207147E9001AA162 /* CalendarVC.xib */,
+				9A73002F207602AF002F84F6 /* SelectAccountVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -204,6 +211,7 @@
 				9A659838206D41F200519722 /* AccountProtocol.swift */,
 				9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */,
 				9AABAD7620716716001AA162 /* CalendarProtocol.swift */,
+				9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -274,6 +282,7 @@
 				9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */,
 				9AABAD6F207147E8001AA162 /* CalendarVC.swift */,
 				9A73000820727DF6002F84F6 /* BriefByAccountVC.swift */,
+				9A73002E207602AF002F84F6 /* SelectAccountVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -367,6 +376,7 @@
 			files = (
 				9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */,
 				9A65982D206BFB3100519722 /* Main.storyboard in Resources */,
+				9A730031207602AF002F84F6 /* SelectAccountVC.xib in Resources */,
 				9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */,
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
 				9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */,
@@ -467,6 +477,7 @@
 				9A9D2D4320665BFC00CC7DE0 /* CategoryVC.swift in Sources */,
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
 				9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */,
+				9A73000F2073C4FF002F84F6 /* BriefProtocol.swift in Sources */,
 				9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */,
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,
 				9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */,
@@ -479,6 +490,7 @@
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
+				9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */,
 				9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */,
 				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,
 				9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */,

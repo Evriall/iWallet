@@ -18,7 +18,7 @@ class AccountCell: UITableViewCell {
         // Initialization code
     }
     
-   func configureCell(account: Account) {
+    func configureCell(account: Account, colorText: UIColor = #colorLiteral(red: 0.9960784314, green: 0.8274509804, blue: 0.1921568627, alpha: 1)) {
         if account.objectID.uriRepresentation().absoluteString == AccountHelper.instance.currentAccount  {
               accountNameLbl.font = UIFont(name: "Avenir-Heavy", size: 24)
               accountCurrencyLbl.font = UIFont(name: "Avenir-Heavy", size: 24)
@@ -27,6 +27,8 @@ class AccountCell: UITableViewCell {
             accountCurrencyLbl.font = UIFont(name: "Avenir-Book", size: 20 )
         }
         accountNameLbl.text = account.name
+        accountNameLbl.textColor = colorText
+        accountCurrencyLbl.textColor = colorText
         if let currency = account.currency {
             accountCurrencyLbl.text = AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)
         }

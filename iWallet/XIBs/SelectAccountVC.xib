@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectAccountVC" customModule="iWallet" customModuleProvider="target">
+            <connections>
+                <outlet property="fragmentViewHeightConstraint" destination="bjX-XE-O9U" id="MSP-PY-YJQ"/>
+                <outlet property="tableView" destination="7gq-Tc-22n" id="rg2-sD-bRW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgY-Dp-5uq">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oHs-Fl-CBX">
+                            <rect key="frame" x="16" y="338" width="382" height="60"/>
+                            <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7gq-Tc-22n">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="60"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </tableView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="7gq-Tc-22n" firstAttribute="top" secondItem="oHs-Fl-CBX" secondAttribute="top" id="EvL-Uj-nzx"/>
+                                <constraint firstAttribute="trailing" secondItem="7gq-Tc-22n" secondAttribute="trailing" id="Z0M-XI-PUV"/>
+                                <constraint firstAttribute="height" constant="60" id="bjX-XE-O9U"/>
+                                <constraint firstItem="7gq-Tc-22n" firstAttribute="leading" secondItem="oHs-Fl-CBX" secondAttribute="leading" id="eVi-Zd-AB8"/>
+                                <constraint firstAttribute="bottom" secondItem="7gq-Tc-22n" secondAttribute="bottom" id="eZH-3S-1zv"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <constraints>
+                        <constraint firstItem="oHs-Fl-CBX" firstAttribute="centerY" secondItem="wgY-Dp-5uq" secondAttribute="centerY" id="IzM-rd-Ryj"/>
+                        <constraint firstItem="oHs-Fl-CBX" firstAttribute="centerX" secondItem="wgY-Dp-5uq" secondAttribute="centerX" id="PEb-93-J4P"/>
+                        <constraint firstItem="oHs-Fl-CBX" firstAttribute="leading" secondItem="wgY-Dp-5uq" secondAttribute="leading" constant="16" id="QQx-ic-ZX6"/>
+                        <constraint firstAttribute="trailing" secondItem="oHs-Fl-CBX" secondAttribute="trailing" constant="16" id="qdn-7t-Dfe"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="wgY-Dp-5uq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2ku-so-lOD"/>
+                <constraint firstItem="wgY-Dp-5uq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Kr3-dX-Pc2"/>
+                <constraint firstItem="wgY-Dp-5uq" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Q65-mK-eBU"/>
+                <constraint firstItem="wgY-Dp-5uq" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="iRc-6U-MmS"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>

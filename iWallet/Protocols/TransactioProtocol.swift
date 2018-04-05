@@ -10,4 +10,6 @@ import Foundation
 
 protocol TransactionProtocol {
     func handleTransactionType(_ type: String)
+    func handleAccountFrom(_ account: Account)
+    func handleAccountTo(_ account: Account)
 }

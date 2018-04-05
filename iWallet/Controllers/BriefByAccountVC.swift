@@ -62,6 +62,7 @@ class BriefByAccountVC: UIViewController {
     
     @IBAction func addTransactionBtnPressed(_ sender: Any) {
         let addTransaction = AddTransactionVC()
+        addTransaction.delegate = self
         addTransaction.modalPresentationStyle = .custom
         presentDetail(addTransaction)
     }
@@ -126,5 +127,11 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
+    }
+}
+
+extension BriefByAccountVC: BriefProtocol {
+    func handleTransaction() {
+        fetchTransactions()
     }
 }

@@ -38,6 +38,8 @@ class AddTransactionVC: UIViewController {
     var accountTo: Account?
     var accountsCount = 0
     
+    var delegate: BriefProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUIElements()
@@ -219,6 +221,7 @@ class AddTransactionVC: UIViewController {
             for photo in photos {
                 CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
             }
+            delegate?.handleTransaction()
             dismissDetail()
         }
         
@@ -262,8 +265,22 @@ class AddTransactionVC: UIViewController {
     }
     
     @IBAction func accountFromBtnPressed(_ sender: Any) {
+        let selectAccountVC = SelectAccountVC()
+        selectAccountVC.delegate = self
+        if let hidenAccount = accountTo {
+            selectAccountVC.hidenAccounts.append(hidenAccount)
+        }
+        selectAccountVC.transactionDirection = TransactionDirection.from
+        presentDetail(selectAccountVC)
     }
     @IBAction func accountToBtnPressed(_ sender: Any) {
+        let selectAccountVC = SelectAccountVC()
+        selectAccountVC.delegate = self
+        if let hidenAccount = accountFrom {
+            selectAccountVC.hidenAccounts.append(hidenAccount)
+        }
+        selectAccountVC.transactionDirection = TransactionDirection.to
+        presentDetail(selectAccountVC)
     }
     
     
@@ -273,6 +290,16 @@ class AddTransactionVC: UIViewController {
 }
 
 extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol {
+    func handleAccountFrom(_ account: Account) {
+        self.accountFrom = account
+        accountFromBtn.setTitle(account.name, for: .normal)
+    }
+    
+    func handleAccountTo(_ account: Account) {
+        self.accountTo = account
+        accountToBtn.setTitle(account.name, for: .normal)
+    }
+    
     func handleDate(_ date: Date) {
         self.date = date
         otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
