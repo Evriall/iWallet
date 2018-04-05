@@ -33,7 +33,8 @@ class MainVC: UIViewController {
         }
         CoreDataService.instance.fetchAccounts { (accounts) in
             if accounts.count == 0 {
-                AccountHelper.instance.initAccount({ (success) in
+                AccountHelper.instance.initExternalAccount()
+                AccountHelper.instance.initPersonalAccount({ (success) in
                     if success {
                         CoreDataService.instance.fetchAccounts(complition: { (accounts) in
                             for item in accounts {

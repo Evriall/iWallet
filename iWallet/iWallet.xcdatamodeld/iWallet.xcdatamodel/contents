@@ -2,7 +2,9 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="class">
         <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="external" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="systemName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Transaction" inverseName="account" inverseEntity="Transaction" syncable="YES"/>
     </entity>
@@ -34,14 +36,13 @@
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="transactions" inverseEntity="Category" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="transaction" inverseEntity="Photo" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="transaction" inverseEntity="Tag" syncable="YES"/>
-        <relationship name="transferFrom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="transferTo" inverseEntity="Transaction" syncable="YES"/>
-        <relationship name="transferTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="transferFrom" inverseEntity="Transaction" syncable="YES"/>
+        <relationship name="transfer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="transfer" inverseEntity="Transaction" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-18" positionY="108" width="128" height="105"/>
+        <element name="Account" positionX="-18" positionY="108" width="128" height="135"/>
         <element name="Category" positionX="-54" positionY="-9" width="128" height="120"/>
         <element name="Photo" positionX="-27" positionY="99" width="128" height="90"/>
         <element name="Tag" positionX="-36" positionY="81" width="128" height="75"/>
-        <element name="Transaction" positionX="-45" positionY="27" width="128" height="240"/>
+        <element name="Transaction" positionX="-45" positionY="27" width="128" height="225"/>
     </elements>
 </model>

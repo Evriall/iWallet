@@ -32,10 +32,14 @@ class TransactionCell: UITableViewCell {
         guard let transactionType = transaction.type else {return}
         amountLbl.text = transactionType == TransactionType.expance.rawValue ? "-" + transaction.amount.description : transaction.amount.description
         var description = ""
-        if let transferTo = transaction.transferTo {
-            description = "\(transaction.account?.name) → \(transferTo.account?.name)"
-        } else if let transferFrom = transaction.transferFrom {
-            description = "\(transferFrom.account?.name) → \(transaction.account?.name)"
+        if let transfer = transaction.transfer {
+            guard let nameTransactionFrom = transaction.account?.name else {return}
+            guard let nameTransactionTo = transfer.account?.name else {return}
+            if transactionType == TransactionType.expance.rawValue {
+                description = "\(nameTransactionFrom) → \(nameTransactionTo)"
+            } else {
+                description = "\(nameTransactionTo) → \(nameTransactionFrom)"
+            }
         } else if let place = transaction.place {
             description = place
         }

@@ -26,15 +26,16 @@ class SelectAccountVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "AccountCell", bundle: nil), forCellReuseIdentifier: "AccountCell")
-        CoreDataService.instance.fetchAccounts { (accounts) in
+        guard  let direction = transactionDirection else { return }
+        CoreDataService.instance.fetchAccounts(withoutExternal: direction == TransactionDirection.from , complition: { (accounts) in
             for item in accounts {
                 if !hidenAccounts.contains(item) {
                     self.accounts.append(item)
                 }
             }
             let tableDataHeight =  CGFloat(self.accounts.count * 60)
-            fragmentViewHeightConstraint.constant = tableDataHeight >= view.frame.size.height ? view.frame.size.height - 60 : tableDataHeight
-        }
+            fragmentViewHeightConstraint.constant = tableDataHeight >= self.view.frame.size.height ? self.view.frame.size.height - 60 : tableDataHeight
+        })
     }
 }
 

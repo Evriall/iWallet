@@ -41,12 +41,20 @@ class AccountHelper{
         return currSymbol?.1 ?? ""
     }
     
-    func initAccount(_ complition: (Bool)->()){
+    func initPersonalAccount(_ complition: (Bool)->()){
         CoreDataService.instance.saveAccount(name: "Cash", type: AccountType.Cash.rawValue, currency: getLocaleCarrencySymbolAndCode().code) { (success) in
             if success {
                 complition(success)
             } else {
                 complition(success)
+                print("Can`t create account")
+            }
+        }
+    }
+    
+    func initExternalAccount(){
+        CoreDataService.instance.saveAccount(name: Constants.NAME_FOR_EXTERNAL_ACCOUNT, type: AccountType.DebitCard.rawValue, currency: getLocaleCarrencySymbolAndCode().code, external: true) { (success) in
+            if !success {
                 print("Can`t create account")
             }
         }

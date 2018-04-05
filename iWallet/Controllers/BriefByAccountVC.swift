@@ -65,6 +65,7 @@ class BriefByAccountVC: UIViewController {
         addTransaction.delegate = self
         addTransaction.modalPresentationStyle = .custom
         presentDetail(addTransaction)
+
     }
     @IBAction func backBtnPressed(_ sender: Any) {
         date = date.previousMonth()

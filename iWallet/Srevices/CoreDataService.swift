@@ -89,9 +89,13 @@ class CoreDataService{
     
     // Account
     
-    func fetchAccounts(complition: (_ complete: [Account])-> ()) {
+    func fetchAccounts(withoutExternal: Bool = true, complition: (_ complete: [Account])-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        if withoutExternal {
+            let predicate = NSPredicate(format: "external == %@", NSNumber(value: false))
+            fetchRequest.predicate = predicate
+        }
         do{
             let accounts = try managedContext.fetch(fetchRequest) as! [Account]
             complition(accounts)
@@ -100,16 +104,16 @@ class CoreDataService{
         }
     }
     
-    func fetchAccount(byDescription description: String, complition: (_ complete: [Account])-> ()){
+    func fetchAccount(bySystemName name: String, complition: (_ complete: [Account])-> ()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
-        let predicate = NSPredicate(format: "description == %@", description)
+        let predicate = NSPredicate(format: "name == %@", name)
         fetchRequest.predicate = predicate
         do{
             let account = try managedContext.fetch(fetchRequest) as! [Account]
             complition(account)
         } catch {
-            debugPrint("Could not fetch account by description \(description) \(error.localizedDescription)")
+            debugPrint("Could not fetch account by description \(name) \(error.localizedDescription)")
         }
     }
     
@@ -129,12 +133,14 @@ class CoreDataService{
     }
     
     
-    func saveAccount(name: String, type: String, currency: String, complition: (Bool) ->()) {
+    func saveAccount(name: String, type: String, currency: String, external: Bool = false, complition: (Bool) ->()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let account = Account(context: managedContext)
         account.name = name
         account.type = type
         account.currency = currency
+        account.external = external
+        account.systemName = external ? name : ""
         do{
             try managedContext.save()
             complition(true)
@@ -174,7 +180,7 @@ class CoreDataService{
     
     //Transaction
     
-    func saveTransaction(amount: Double,desc: String?,type: String, date: Date, latitude: String?, longitude: String?, place: String?, account: Account, category: Category,complition: (Transaction) ->()){
+    func saveTransaction(amount: Double,desc: String?,type: String, date: Date, latitude: String?, longitude: String?, place: String?, account: Account, category: Category,transfer: Transaction?, complition: (Transaction) ->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let transaction = Transaction(context: managedContext)
         transaction.amount = amount
@@ -186,6 +192,7 @@ class CoreDataService{
         transaction.place = place
         transaction.account = account
         transaction.category = category
+        transaction.transfer = transfer
         do{
             try managedContext.save()
             complition(transaction)

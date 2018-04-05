@@ -104,13 +104,14 @@ class AddTransactionVC: UIViewController {
       yesterdayBtn.setImage(nil, for: .normal)
       otherDateBtn.setImage(nil, for: .normal)
         
-        if TransactionHelper.instance.currentType != TransactionType.expance.rawValue {
+        if TransactionHelper.instance.currentType != TransactionType.transfer.rawValue {
             accountToBtn.isHidden = true
         }
         CoreDataService.instance.fetchAccounts { (accounts) in
             accountsCount = accounts.count
             if accounts.count < 2 {
                 accountFromBtn.isEnabled = false
+                accountToBtn.isEnabled = false
             }
         }
         
@@ -130,6 +131,12 @@ class AddTransactionVC: UIViewController {
             }
             accountToBtn.isHidden = false
             categoryBtn.isEnabled = false
+            CoreDataService.instance.fetchAccount(bySystemName: Constants.NAME_FOR_EXTERNAL_ACCOUNT) { (externalAccounts) in
+                for item in externalAccounts {
+                    self.accountTo = item
+                    accountToBtn.setTitle(item.name, for: .normal)
+                }
+            }
         default:
             if let currentCategory = CategoryHelper.instance.currentCAtegory {
                 CoreDataService.instance.fetchCategory(ByObjectID: currentCategory) { (categoryFetched) in
@@ -211,21 +218,42 @@ class AddTransactionVC: UIViewController {
     @IBAction func saveTransactionBtnPressed(_ sender: Any) {
         guard let amountText = amountTxt.text, let amount = Double(amountText), amount != 0 else {return}
         guard let type = typeBtn.titleLabel?.text else {return}
-        guard let account = self.accountFrom else {return}
+        guard let accountFrom = self.accountFrom else {return}
         guard let category = self.category else {return}
         TransactionHelper.instance.currentType = type
-        CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: account, category: category) { (transaction) in
-            for tag in tags {
-                CoreDataService.instance.saveTag(name: tag, transaction: transaction)
+        if type == TransactionType.transfer.rawValue {
+            CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: TransactionType.expance.rawValue , date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+                for tag in tags {
+                    CoreDataService.instance.saveTag(name: tag, transaction: transaction)
+                }
+                for photo in photos {
+                    CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
+                }
+                guard let accountTo = self.accountTo else {return}
+                CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: TransactionType.income.rawValue , date: date, latitude: latitude, longitude: longitude, place: place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
+                    for tag in tags {
+                        CoreDataService.instance.saveTag(name: tag, transaction: transferTransaction)
+                    }
+                    for photo in photos {
+                        CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transferTransaction)
+                    }
+                    delegate?.handleTransaction()
+                    dismissDetail()
+                }
+                
             }
-            for photo in photos {
-                CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
+        } else {
+            CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+                for tag in tags {
+                    CoreDataService.instance.saveTag(name: tag, transaction: transaction)
+                }
+                for photo in photos {
+                    CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
+                }
+                delegate?.handleTransaction()
+                dismissDetail()
             }
-            delegate?.handleTransaction()
-            dismissDetail()
         }
-        
-        
     }
     @IBAction func yesterdayBtnPressed(_ sender: Any) {
         yesterdayBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
@@ -271,6 +299,7 @@ class AddTransactionVC: UIViewController {
             selectAccountVC.hidenAccounts.append(hidenAccount)
         }
         selectAccountVC.transactionDirection = TransactionDirection.from
+        selectAccountVC.modalPresentationStyle = .custom
         presentDetail(selectAccountVC)
     }
     @IBAction func accountToBtnPressed(_ sender: Any) {
@@ -280,6 +309,7 @@ class AddTransactionVC: UIViewController {
             selectAccountVC.hidenAccounts.append(hidenAccount)
         }
         selectAccountVC.transactionDirection = TransactionDirection.to
+        selectAccountVC.modalPresentationStyle = .custom
         presentDetail(selectAccountVC)
     }
     

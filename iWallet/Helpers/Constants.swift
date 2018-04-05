@@ -20,6 +20,7 @@ struct Constants {
     static let CURRENT_CATEGORY = "currentCategory"
 
     static let CATEGORY_TRANSFER = "Transfer"
+    static let NAME_FOR_EXTERNAL_ACCOUNT = "Withdraw"
    static let colors = [
     #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1),
     #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1),
