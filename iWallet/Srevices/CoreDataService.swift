@@ -335,42 +335,45 @@ class CoreDataService{
     
     //CurrencyRate
     
-    func saveCurrencyRate(base: String, pair: String, rate: Double){
+    func saveCurrencyRate(base: String, pair: String, rate: Double, date: Date, complition: @escaping (Bool)->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let currencyRate = CurrencyRate(context: managedContext)
         currencyRate.base = base
         currencyRate.pair = pair
         currencyRate.rate = rate
+        currencyRate.date = date.startOfDay()
         do{
             try managedContext.save()
+            complition(true)
         } catch {
+            complition(false)
             debugPrint("Could not save transaction: \(error.localizedDescription)")
         }
     }
     
-    func fetchCurrencyRates(base: String, complition: @escaping ([CurrencyRate])->()){
-        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrencyRate")
-        let predicate = NSPredicate(format: "base == %@", base)
-        fetchRequest.predicate = predicate
-        do{
-            let currencyRate = try managedContext.fetch(fetchRequest) as! [CurrencyRate]
-            complition(currencyRate)
-        } catch {
-            debugPrint("Could not fetch currency rate by base \(base) \(error.localizedDescription)")
-        }
-    }
+//    func fetchCurrencyRates(base: String, complition: @escaping ([CurrencyRate])->()){
+//        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrencyRate")
+//        let predicate = NSPredicate(format: "base == %@", base)
+//        fetchRequest.predicate = predicate
+//        do{
+//            let currencyRate = try managedContext.fetch(fetchRequest) as! [CurrencyRate]
+//            complition(currencyRate)
+//        } catch {
+//            debugPrint("Could not fetch currency rate by base \(base) \(error.localizedDescription)")
+//        }
+//    }
     
-    func fetchCurrencyRate(base: String, pair: String,complition: @escaping ([CurrencyRate])->()){
+    func fetchCurrencyRate(base: String, pair: String, date: Date, complition: @escaping ([CurrencyRate])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrencyRate")
-        let predicate = NSPredicate(format: "base == %@ AND pair == %@", base, pair)
+        let predicate = NSPredicate(format: "(pair == %@ || pair == %@) AND date == %@", base, pair, date.startOfDay() as CVarArg)
         fetchRequest.predicate = predicate
         do{
             let currencyRate = try managedContext.fetch(fetchRequest) as! [CurrencyRate]
             complition(currencyRate)
         } catch {
-            debugPrint("Could not fetch currency rate by base \(base) and pair \(pair)\(error.localizedDescription)")
+            debugPrint("Could not fetch currency rate by base \(base) and pair \(pair) and date \(date)\(error.localizedDescription)")
         }
     }
     

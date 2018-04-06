@@ -27,13 +27,6 @@ class InitDataHelper {
                                 AccountHelper.instance.currentAccount = item.objectID.uriRepresentation().absoluteString
                             }
                         })
-                        if !ExchangeService.instance.checkCurrencyRateExistanceForAllCurrency() {
-                            ExchangeService.instance.getCurrencyRate(complition: { (success) in
-                                if success {
-                                    print("Currency rates loaded")
-                                }
-                            })
-                        }
                     }
                 })
             }

@@ -13,11 +13,11 @@ import SwiftyJSON
 class ExchangeService{
     static let instance = ExchangeService()
     
-    func getCurrencyRate(complition: @escaping (Bool)->()) {
+    func getCurrencyRateByAPILatest(complition: @escaping (Bool)->()) {
         Alamofire.request("\(Constants.URL_CURRENCY_EXCHANGE_RATE)\(Constants.API_KEY_CURRENCY_EXCHANGE_RATE)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: Constants.HEADER).responseJSON { (response) in
             if response.result.error == nil {
                 guard let data = response.data else {return}
-                self.setExchangeRate(data: data, complition: { (success) in
+                self.saveExchangeRate(data: data, complition: { (success) in
                     complition(success)
                 })
             } else {
@@ -26,55 +26,27 @@ class ExchangeService{
             }
         }
     }
+
     
-    func setEuroExchangeRate(rates: [String : Double]){
+    func evaluateCurrencyRate(base: String, pair: String, rates: [CurrencyRate]) -> (Double?){
+        var baseRate = 0.0
+        var pairRate = 0.0
+        for item in rates {
+            if item.pair == base {
+                baseRate = item.rate
+            }
+            if item.pair == pair {
+                pairRate = item.rate
+            }
+        }
+        if baseRate == 0.0 || pairRate == 0.0 {
+            return nil
+        }
+        return pairRate / baseRate
+    }
+    
+    func saveExchangeRate(data: Data,complition:@escaping  (Bool)->()) {
         let base = Constants.EUR
-        for (currencyName, rate) in rates {
-            CoreDataService.instance.fetchCurrencyRate(base: base, pair: currencyName) { (currencyRates) in
-                if currencyRates.count > 0 {
-                    for item in currencyRates {
-                        item.rate = rate
-                        CoreDataService.instance.update(complition: { (success) in
-                            if success {
-                                
-                            }
-                        })
-                    }
-                } else {
-                    CoreDataService.instance.saveCurrencyRate(base: base, pair: currencyName, rate: rate)
-                }
-            }
-        }
-        
-        CoreDataService.instance.fetchCurrencyRate(base: base, pair: base) { (currencyRates) in
-            if currencyRates.count == 0 {
-                CoreDataService.instance.saveCurrencyRate(base: base, pair: base, rate: 1.0)
-            }
-        }
-        
-    }
-    
-    func setExchangeRate(byBaseCurrency base: String, rates: [String: Double]){
-        guard let rateToEur = rates[base] else {return}
-        for (currencyName, rate) in rates {
-            CoreDataService.instance.fetchCurrencyRate(base: base, pair: currencyName) { (currencyRates) in
-                if currencyRates.count > 0 {
-                    for item in currencyRates {
-                        item.rate = rate / rateToEur
-                        CoreDataService.instance.update(complition: { (success) in
-                            if success {
-                                
-                            }
-                        })
-                    }
-                } else {
-                    CoreDataService.instance.saveCurrencyRate(base: base, pair: currencyName, rate: rate / rateToEur)
-                }
-            }
-        }
-    }
-    
-    func setExchangeRate(data: Data,complition:@escaping  (Bool)->()) {
         let json = JSON(data)
         var euroRates = [String: Double]()
         if let jsonRates = json["rates"].dictionary {
@@ -82,31 +54,18 @@ class ExchangeService{
                 euroRates[currencyName] = rate.double
             }
         }
-        CoreDataService.instance.fetchCurrencies { (currencies) in
-            for item in currencies {
-                if item == Constants.EUR {
-                    setEuroExchangeRate(rates: euroRates)
-                } else {
-                    setExchangeRate(byBaseCurrency: item, rates: euroRates)
-                }
+        if euroRates.count > 0 {
+            for (currencyName, rate) in euroRates {
+                CoreDataService.instance.saveCurrencyRate(base: base, pair: currencyName, rate: rate, date: Date(), complition:{ (success) in
+                    if success {
+                    }
+                })
             }
-            complition(true)
+            CoreDataService.instance.saveCurrencyRate(base: base, pair: base, rate: 1.0, date: Date(), complition:{ (success) in
+                complition(success)
+            })
+        } else {
+            complition(false)
         }
-    }
-    
-    func checkCurrencyRateExistanceForAllCurrency() -> Bool {
-        var result = true
-        CoreDataService.instance.fetchCurrencies(complition: { (currencies) in
-            if currencies.count > 0 {
-                for item in currencies {
-                    CoreDataService.instance.fetchCurrencyRates(base: item, complition: { (currencyRates) in
-                        if currencyRates.count == 0 {
-                            result = false
-                        }
-                    })
-                }
-            }
-        })
-        return result
     }
 }

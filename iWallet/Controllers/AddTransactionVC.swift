@@ -215,6 +215,32 @@ class AddTransactionVC: UIViewController {
     @IBAction func backBtnPressed(_ sender: Any) {
         dismissDetail()
     }
+    
+    
+    func saveTransferTransactions(amount: Double, amountWithCurrencyRate: Double, accountFrom: Account, accountTo: Account, category: Category){
+        
+        CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.expance.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+            for tag in self.tags {
+                CoreDataService.instance.saveTag(name: tag, transaction: transaction)
+            }
+            for photo in self.photos {
+                CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
+            }
+            
+            CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.descriptionTxt.text, type: TransactionType.income.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
+                for tag in self.tags {
+                    CoreDataService.instance.saveTag(name: tag, transaction: transferTransaction)
+                }
+                for photo in self.photos {
+                    CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transferTransaction)
+                }
+                self.delegate?.handleTransaction()
+                self.dismissDetail()
+            }
+            
+        }
+    }
+    
     @IBAction func saveTransactionBtnPressed(_ sender: Any) {
         guard let amountText = amountTxt.text, let amount = Double(amountText), amount != 0 else {return}
         guard let type = typeBtn.titleLabel?.text else {return}
@@ -226,34 +252,34 @@ class AddTransactionVC: UIViewController {
         if type == TransactionType.transfer.rawValue {
             guard let currencyFrom = accountFrom.currency else {return}
             guard let currencyTo = accountTo.currency else {return}
-            var currencyRate = 1.0
-            CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo) { (currencyRates) in
-                for item in currencyRates {
-                    currencyRate = item.rate
-                }
-                let amountWithCurrencyRate = amount * currencyRate
-                CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.expance.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
-                    for tag in self.tags {
-                        CoreDataService.instance.saveTag(name: tag, transaction: transaction)
+            CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: date) { (currencyRates) in
+                if currencyRates.count > 0 {
+                    if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
+                        let amountWithCurrencyRate = currencyRate * amount
+                        self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                    } else {
+                        print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
                     }
-                    for photo in self.photos {
-                        CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
+                } else {
+                    if  Date().startOfDay() <= self.date {
+                        ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
+                            if success {
+                                CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
+                                    if currencyRates.count > 0 {
+                                        if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
+                                            let amountWithCurrencyRate = currencyRate * amount
+                                            self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                                        } else {
+                                            print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        })
                     }
-                    
-                    CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.descriptionTxt.text, type: TransactionType.income.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
-                        for tag in self.tags {
-                            CoreDataService.instance.saveTag(name: tag, transaction: transferTransaction)
-                        }
-                        for photo in self.photos {
-                            CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transferTransaction)
-                        }
-                        self.delegate?.handleTransaction()
-                        self.dismissDetail()
-                    }
-                    
                 }
             }
-            
         } else {
             CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
                 for tag in tags {
