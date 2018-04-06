@@ -21,7 +21,17 @@ struct Constants {
 
     static let CATEGORY_TRANSFER = "Transfer"
     static let NAME_FOR_EXTERNAL_ACCOUNT = "Withdraw"
-   static let colors = [
+    
+    //URLs
+    static let URL_CURRENCY_EXCHANGE_RATE = "http://data.fixer.io/api/latest?access_key="
+    
+    //API keys
+    static let API_KEY_CURRENCY_EXCHANGE_RATE = "a759f6dbbd30585e787b0e8c3ff662ef"
+    
+    //Currencies
+    static let EUR = "EUR"
+    
+    static let colors = [
     #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1),
     #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1),
     #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1),
@@ -32,6 +42,11 @@ struct Constants {
     #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1),
     #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1),
     #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+    ]
+    
+    //Headers
+    static let HEADER = [
+        "Content-Type" : "application/json; charset = utf-8"
     ]
 }
 

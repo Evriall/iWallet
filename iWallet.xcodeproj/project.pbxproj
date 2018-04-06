@@ -60,6 +60,7 @@
 		9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B112063E18800ADA34E /* GradientView.swift */; };
 		9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */; };
 		9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */; };
+		9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DB2077583C00AFB3BE /* ExchangeService.swift */; };
 		9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */; };
 		9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */; };
 		9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D567206E93C700886F73 /* TransactionHelper.swift */; };
@@ -126,6 +127,7 @@
 		9ABA9B112063E18800ADA34E /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAccountCurrencyVC.swift; sourceTree = "<group>"; };
 		9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountCurrencyVC.xib; sourceTree = "<group>"; };
+		9AD795DB2077583C00AFB3BE /* ExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeService.swift; sourceTree = "<group>"; };
 		9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionVC.swift; sourceTree = "<group>"; };
 		9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionVC.xib; sourceTree = "<group>"; };
 		9AE6D567206E93C700886F73 /* TransactionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHelper.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			children = (
 				9A9D2D4A206663D400CC7DE0 /* CoreDataService.swift */,
 				9A9D2D4E2066A47600CC7DE0 /* EncodeDecodeService.swift */,
+				9AD795DB2077583C00AFB3BE /* ExchangeService.swift */,
 			);
 			path = Srevices;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
 				9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */,
+				9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */,
 				9AABAD7720716716001AA162 /* CalendarProtocol.swift in Sources */,
 				9A73000920727DF6002F84F6 /* BriefByAccountVC.swift in Sources */,
 				9A659833206D063400519722 /* ButtonWithRightImage.swift in Sources */,

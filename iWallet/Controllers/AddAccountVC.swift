@@ -61,7 +61,14 @@ class AddAccountVC: UIViewController {
         guard let currency = currencyAccountBtn.titleLabel?.text else {return}
         CoreDataService.instance.saveAccount(name: name, type: type, currency: currency) { (success) in
             if success {
-                dismissDetail()
+                if !ExchangeService.instance.checkCurrencyRateExistanceForAllCurrency() {
+                    ExchangeService.instance.getCurrencyRate(complition: { (success) in
+                        if success {
+                            
+                        }
+                    })
+                }
+             self.dismissDetail()
             }
         }
     }

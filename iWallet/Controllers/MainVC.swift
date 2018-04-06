@@ -23,8 +23,9 @@ class MainVC: UIViewController {
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
         checkInitData()
-        
     }
+    
+    
     
     func checkInitData(){
         CoreDataService.instance.fetchCategoryParents { (categories) in
@@ -42,6 +43,13 @@ class MainVC: UIViewController {
                                 AccountHelper.instance.currentAccount = item.objectID.uriRepresentation().absoluteString
                             }
                         })
+                        if !ExchangeService.instance.checkCurrencyRateExistanceForAllCurrency() {
+                            ExchangeService.instance.getCurrencyRate(complition: { (success) in
+                                if success {
+                                 print("Curreny rate loaded")
+                                }
+                            })
+                        }
                     }
                 })
             }

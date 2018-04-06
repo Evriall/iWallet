@@ -296,9 +296,83 @@ class CoreDataService{
             }
         }
     
-//    func evaluateAllIncome(byAccount account: Account, complition: (Double)->()){
-//
-//    }
+    //Currency
+    
+    func fetchCurrencies(complition: (_ complete: [String])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        var currencies = [String]()
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        let keypathExp = NSExpression(forKeyPath: "currency") // can be any column
+        let expression = NSExpression(forFunction: "count:", arguments: [keypathExp])
+        
+        let countDesc = NSExpressionDescription()
+        countDesc.expression = expression
+        countDesc.name = "count"
+        countDesc.expressionResultType = .doubleAttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["currency"]
+        fetchRequest.propertiesToFetch = ["currency", countDesc]
+        fetchRequest.resultType = .dictionaryResultType
+ 
+        do{
+            let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary]
+            if let result = resultArray {
+                for item in result {
+                    if let currency = item["currency"] {
+                        if let currencyStr = currency as? String{
+                            currencies.append(currencyStr)
+                        }
+                    }
+                }
+                complition(currencies)
+            }
+        } catch {
+            debugPrint("Could not fetch currencies \(error.localizedDescription)")
+        }
+        
+    }
+    
+    
+    //CurrencyRate
+    
+    func saveCurrencyRate(base: String, pair: String, rate: Double){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let currencyRate = CurrencyRate(context: managedContext)
+        currencyRate.base = base
+        currencyRate.pair = pair
+        currencyRate.rate = rate
+        do{
+            try managedContext.save()
+        } catch {
+            debugPrint("Could not save transaction: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchCurrencyRates(base: String, complition: @escaping ([CurrencyRate])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrencyRate")
+        let predicate = NSPredicate(format: "base == %@", base)
+        fetchRequest.predicate = predicate
+        do{
+            let currencyRate = try managedContext.fetch(fetchRequest) as! [CurrencyRate]
+            complition(currencyRate)
+        } catch {
+            debugPrint("Could not fetch currency rate by base \(base) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchCurrencyRate(base: String, pair: String,complition: @escaping ([CurrencyRate])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrencyRate")
+        let predicate = NSPredicate(format: "base == %@ AND pair == %@", base, pair)
+        fetchRequest.predicate = predicate
+        do{
+            let currencyRate = try managedContext.fetch(fetchRequest) as! [CurrencyRate]
+            complition(currencyRate)
+        } catch {
+            debugPrint("Could not fetch currency rate by base \(base) and pair \(pair)\(error.localizedDescription)")
+        }
+    }
     
     // General
     func update(complition: (_ complete: Bool)-> ()) {
