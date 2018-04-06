@@ -219,29 +219,41 @@ class AddTransactionVC: UIViewController {
         guard let amountText = amountTxt.text, let amount = Double(amountText), amount != 0 else {return}
         guard let type = typeBtn.titleLabel?.text else {return}
         guard let accountFrom = self.accountFrom else {return}
+        guard let accountTo = self.accountTo else {return}
         guard let category = self.category else {return}
+        
         TransactionHelper.instance.currentType = type
         if type == TransactionType.transfer.rawValue {
-            CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: TransactionType.expance.rawValue , date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
-                for tag in tags {
-                    CoreDataService.instance.saveTag(name: tag, transaction: transaction)
+            guard let currencyFrom = accountFrom.currency else {return}
+            guard let currencyTo = accountTo.currency else {return}
+            var currencyRate = 1.0
+            CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo) { (currencyRates) in
+                for item in currencyRates {
+                    currencyRate = item.rate
                 }
-                for photo in photos {
-                    CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
-                }
-                guard let accountTo = self.accountTo else {return}
-                CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: TransactionType.income.rawValue , date: date, latitude: latitude, longitude: longitude, place: place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
-                    for tag in tags {
-                        CoreDataService.instance.saveTag(name: tag, transaction: transferTransaction)
+                let amountWithCurrencyRate = amount * currencyRate
+                CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.expance.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+                    for tag in self.tags {
+                        CoreDataService.instance.saveTag(name: tag, transaction: transaction)
                     }
-                    for photo in photos {
-                        CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transferTransaction)
+                    for photo in self.photos {
+                        CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
                     }
-                    delegate?.handleTransaction()
-                    dismissDetail()
+                    
+                    CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.descriptionTxt.text, type: TransactionType.income.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
+                        for tag in self.tags {
+                            CoreDataService.instance.saveTag(name: tag, transaction: transferTransaction)
+                        }
+                        for photo in self.photos {
+                            CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transferTransaction)
+                        }
+                        self.delegate?.handleTransaction()
+                        self.dismissDetail()
+                    }
+                    
                 }
-                
             }
+            
         } else {
             CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
                 for tag in tags {

@@ -377,13 +377,15 @@ class CoreDataService{
     // General
     func update(complition: (_ complete: Bool)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
-        do{
-            try managedContext.save()
-            complition(true)
-        } catch {
-            debugPrint("Could not save category: \(error.localizedDescription)")
-            complition(false)
-        }
+//        if managedContext.hasChanges {
+            do{
+                try managedContext.save()
+                complition(true)
+            } catch {
+                debugPrint("Could not save category: \(error.localizedDescription)")
+                complition(false)
+            }
+//        }
     }
     
 //    func removeGoal(atIndexPath indexPath: IndexPath){

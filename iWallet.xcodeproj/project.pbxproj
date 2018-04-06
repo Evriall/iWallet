@@ -61,6 +61,8 @@
 		9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */; };
 		9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */; };
 		9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DB2077583C00AFB3BE /* ExchangeService.swift */; };
+		9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */; };
+		9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */; };
 		9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */; };
 		9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */; };
 		9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D567206E93C700886F73 /* TransactionHelper.swift */; };
@@ -128,6 +130,8 @@
 		9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAccountCurrencyVC.swift; sourceTree = "<group>"; };
 		9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountCurrencyVC.xib; sourceTree = "<group>"; };
 		9AD795DB2077583C00AFB3BE /* ExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeService.swift; sourceTree = "<group>"; };
+		9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitDataHelper.swift; sourceTree = "<group>"; };
+		9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
 		9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionVC.swift; sourceTree = "<group>"; };
 		9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionVC.xib; sourceTree = "<group>"; };
 		9AE6D567206E93C700886F73 /* TransactionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHelper.swift; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 				9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */,
 				9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */,
 				9A73000A207384E7002F84F6 /* DateExt.swift */,
+				9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 				9A9D2D64206A238400CC7DE0 /* CategoryHelper.swift */,
 				9AA7FF34206BA7F70093D0DE /* AccountHelper.swift */,
 				9AE6D567206E93C700886F73 /* TransactionHelper.swift */,
+				9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -493,6 +499,7 @@
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
+				9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
 				9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */,
 				9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */,
@@ -500,6 +507,7 @@
 				9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */,
 				9A65983E206D46DD00519722 /* TypeAndCurrencyCell.swift in Sources */,
 				9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */,
+				9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */,
 				9A73000D2073A0A3002F84F6 /* TransactionCell.swift in Sources */,
 				9A659839206D41F200519722 /* AccountProtocol.swift in Sources */,
 			);
