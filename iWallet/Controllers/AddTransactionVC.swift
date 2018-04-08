@@ -245,11 +245,11 @@ class AddTransactionVC: UIViewController {
         guard let amountText = amountTxt.text, let amount = Double(amountText), amount != 0 else {return}
         guard let type = typeBtn.titleLabel?.text else {return}
         guard let accountFrom = self.accountFrom else {return}
-        guard let accountTo = self.accountTo else {return}
         guard let category = self.category else {return}
         
         TransactionHelper.instance.currentType = type
         if type == TransactionType.transfer.rawValue {
+            guard let accountTo = self.accountTo else {return}
             guard let currencyFrom = accountFrom.currency else {return}
             guard let currencyTo = accountTo.currency else {return}
             CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: date) { (currencyRates) in

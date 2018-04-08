@@ -34,7 +34,7 @@
                                     <constraint firstAttribute="width" constant="72" id="Lx7-3F-DhM"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                                <color key="textColor" red="1" green="0.82991328220000005" blue="0.022163973029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="1" green="0.83137254901960778" blue="0.023529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
