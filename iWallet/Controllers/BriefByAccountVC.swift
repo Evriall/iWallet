@@ -18,7 +18,7 @@ class BriefByAccountVC: UIViewController {
     var account: Account?
     var date = Date()
     private var currentCalendar: Calendar?
-    var sections = [String]()
+    var sections = [(date: String, sum: String)]()
     var transactions = [[Transaction]]()
     
     override func awakeFromNib() {
@@ -46,6 +46,7 @@ class BriefByAccountVC: UIViewController {
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
         tableView.delegate = self
         tableView.dataSource = self
+        self.tableView.sectionHeaderHeight = 32
         CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID) { (account) in
             self.account = account
             titleLbl.text = account.name
@@ -93,7 +94,7 @@ class BriefByAccountVC: UIViewController {
                 if transactionDate != tempDate {
                     if transactionsByDay.count > 0 {
                         transactions.append(transactionsByDay)
-                        sections.append("\(tempDate) \(sumByDay)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))")
+                        sections.append(("\(tempDate)", "\(sumByDay)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))"))
                         sumByDay = 0
                         transactionsByDay = []
                     }
@@ -103,7 +104,7 @@ class BriefByAccountVC: UIViewController {
                 sumByDay += transactionType == TransactionType.expance.rawValue ? -item.amount : item.amount
             }
             if transactionsByDay.count > 0 {
-                sections.append("\(tempDate) \(sumByDay)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))")
+                sections.append(("\(tempDate)", "\(sumByDay)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))"))
                 transactions.append(transactionsByDay)
             }
         }
@@ -127,9 +128,29 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return sections[section]
+//    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
+        headerView.backgroundColor = #colorLiteral(red: 0, green: 0.8549019608, blue: 0.8745098039, alpha: 0.25)
+        let dateLabel = UILabel(frame: CGRect(x: 16, y: 0, width: 64, height: 32))
+        dateLabel.text = sections[section].date
+        dateLabel.font = UIFont(name: "Avenir-Heavy", size: 17)
+        dateLabel.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        
+        let sumLabel = UILabel(frame: CGRect(x: tableView.frame.size.width - 200, y: 0, width: 184, height: 32))
+        sumLabel.text = sections[section].sum
+        sumLabel.font = UIFont(name: "Avenir-Heavy", size: 17)
+        sumLabel.textAlignment = .right
+        sumLabel.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        headerView.addSubview(sumLabel)
+        headerView.addSubview(dateLabel)
+        
+        return headerView
     }
+    
 }
 
 extension BriefByAccountVC: BriefProtocol {
