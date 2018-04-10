@@ -14,7 +14,7 @@
             <connections>
                 <outlet property="currencyAccountBtn" destination="h0o-lg-T0M" id="sJr-d1-iBc"/>
                 <outlet property="nameAccountTxt" destination="mlF-k2-IKK" id="abs-oN-SEt"/>
-                <outlet property="saveAccountBtn" destination="j73-8X-6MO" id="r12-d8-kJ6"/>
+                <outlet property="saveAccountBtn" destination="WaK-XH-ifz" id="65i-N2-ooR"/>
                 <outlet property="typeAccountBtn" destination="gIY-bS-VlA" id="JLy-P2-ova"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -45,11 +45,24 @@
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WaK-XH-ifz">
+                            <rect key="frame" x="343" y="48" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="VSe-fU-UMs"/>
+                                <constraint firstAttribute="width" constant="24" id="xIy-wE-XV3"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="checkmark-round"/>
+                            <connections>
+                                <action selector="saveAccountBtnPressed:" destination="-1" eventType="touchUpInside" id="l0o-tb-VAc"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="FQ3-HN-FT2" secondAttribute="bottom" constant="8" id="Ftv-lM-x2Y"/>
                         <constraint firstItem="FQ3-HN-FT2" firstAttribute="leading" secondItem="Ufn-mJ-du6" secondAttribute="leading" constant="8" id="Nb5-Sc-ize"/>
+                        <constraint firstItem="WaK-XH-ifz" firstAttribute="centerY" secondItem="FQ3-HN-FT2" secondAttribute="centerY" id="cH0-rq-VeV"/>
+                        <constraint firstAttribute="trailing" secondItem="WaK-XH-ifz" secondAttribute="trailing" constant="8" id="jaL-p0-GxL"/>
                         <constraint firstAttribute="height" constant="77" id="vFl-HW-Xpf"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
@@ -61,22 +74,8 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j73-8X-6MO">
-                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
-                    <color key="backgroundColor" red="0.0" green="0.58039215686274503" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="fRq-Ka-n0z"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                    <state key="normal" title="SAVE">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="saveAccountBtnPressed:" destination="-1" eventType="touchUpInside" id="SbA-8h-tKS"/>
-                    </connections>
-                </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uy8-8k-Q1g">
-                    <rect key="frame" x="16" y="93" width="343" height="220.5"/>
+                    <rect key="frame" x="16" y="93" width="343" height="227.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zjs-ye-CJ1">
                             <rect key="frame" x="0.0" y="0.0" width="343" height="27.5"/>
@@ -84,20 +83,20 @@
                             <color key="textColor" red="0.0" green="0.58039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mlF-k2-IKK">
-                            <rect key="frame" x="0.0" y="37.5" width="343" height="30"/>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mlF-k2-IKK">
+                            <rect key="frame" x="0.0" y="37.5" width="343" height="37"/>
                             <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MA4-PE-A1W">
-                            <rect key="frame" x="0.0" y="77.5" width="343" height="27.5"/>
+                            <rect key="frame" x="0.0" y="84.5" width="343" height="27.5"/>
                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
                             <color key="textColor" red="0.0" green="0.58039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIY-bS-VlA" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="115" width="343" height="29"/>
+                            <rect key="frame" x="0.0" y="122" width="343" height="29"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="KX6-yb-6QH"/>
                             </constraints>
@@ -110,13 +109,13 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8q1-Ut-Tbw">
-                            <rect key="frame" x="0.0" y="154" width="343" height="27.5"/>
+                            <rect key="frame" x="0.0" y="161" width="343" height="27.5"/>
                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
                             <color key="textColor" red="0.0" green="0.58039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0o-lg-T0M" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="191.5" width="343" height="29"/>
+                            <rect key="frame" x="0.0" y="198.5" width="343" height="29"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="Wkh-Ov-mNl"/>
                             </constraints>
@@ -134,13 +133,10 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Ufn-mJ-du6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="8hs-7w-0B4"/>
-                <constraint firstItem="j73-8X-6MO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="GXJ-nE-In9"/>
                 <constraint firstItem="uy8-8k-Q1g" firstAttribute="top" secondItem="Ufn-mJ-du6" secondAttribute="bottom" constant="16" id="Ije-Sm-t2t"/>
                 <constraint firstItem="Ufn-mJ-du6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JI2-bi-Qpw"/>
-                <constraint firstItem="j73-8X-6MO" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Z6W-Gy-MSl"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uy8-8k-Q1g" secondAttribute="trailing" constant="16" id="bVT-M0-kVD"/>
                 <constraint firstItem="Ufn-mJ-du6" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="fYb-bu-Bk5"/>
-                <constraint firstItem="j73-8X-6MO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jcj-Qs-gow"/>
                 <constraint firstItem="uy8-8k-Q1g" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="t38-VW-l48"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -150,5 +146,6 @@
     <resources>
         <image name="ArrowsIcon" width="191" height="191"/>
         <image name="burger" width="40" height="40"/>
+        <image name="checkmark-round" width="512" height="512"/>
     </resources>
 </document>

@@ -22,9 +22,7 @@ class AddAccountVC: UIViewController {
         dismissDetail()
     }
     func setUIElements(){
-        saveAccountBtn.bindToKeyBoard()
         saveAccountBtn.isEnabled = false
-        saveAccountBtn.setDeselectedColor()
         nameAccountTxt.delegate = self
         nameAccountTxt.addTarget(self, action: #selector(AddAccountVC.textFieldDidChange), for: UIControlEvents.editingChanged)
         typeAccountBtn.setTitle(AccountType.Cash.rawValue, for: .normal)
@@ -34,10 +32,8 @@ class AddAccountVC: UIViewController {
         guard let text = nameAccountTxt.text else {return}
         if text.isEmpty {
             saveAccountBtn.isEnabled = false
-            saveAccountBtn.setDeselectedColor()
         } else {
             saveAccountBtn.isEnabled = true
-            saveAccountBtn.setSelectedColor()
         }
         
     }

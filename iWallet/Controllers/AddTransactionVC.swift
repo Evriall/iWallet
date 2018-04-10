@@ -252,31 +252,51 @@ class AddTransactionVC: UIViewController {
             guard let accountTo = self.accountTo else {return}
             guard let currencyFrom = accountFrom.currency else {return}
             guard let currencyTo = accountTo.currency else {return}
-            CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: date) { (currencyRates) in
-                if currencyRates.count > 0 {
-                    if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
-                        let amountWithCurrencyRate = currencyRate * amount
-                        self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+            if currencyFrom == currencyTo {
+                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amount, accountFrom: accountFrom, accountTo: accountTo, category: category)
+            } else {
+                CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: date) { (currencyRates) in
+                    if currencyRates.count > 0 {
+                        if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
+                            let amountWithCurrencyRate = currencyRate * amount
+                            self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                        } else {
+                            print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                        }
                     } else {
-                        print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
-                    }
-                } else {
-                    if  Date().startOfDay() <= self.date {
-                        ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
-                            if success {
-                                CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
-                                    if currencyRates.count > 0 {
-                                        if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
-                                            let amountWithCurrencyRate = currencyRate * amount
-                                            self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
-                                        } else {
-                                            print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                        print(Date().startOfDay(), self.date)
+                        if  Date().startOfDay() <= self.date {
+                            ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
+                                if success {
+                                    CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
+                                        if currencyRates.count > 0 {
+                                            if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
+                                                let amountWithCurrencyRate = currencyRate * amount
+                                                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                                            } else {
+                                                print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                            })
+                        } else {
+                            ExchangeService.instance.getCurrencyRateByHtmlHistorical(date: self.date, complition: { (success) in
+                                if success {
+                                    CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
+                                        if currencyRates.count > 0 {
+                                            if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
+                                                let amountWithCurrencyRate = currencyRate * amount
+                                                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                                            } else {
+                                                print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                                            }
                                         }
                                     }
                                 }
-                                
-                            }
-                        })
+                            })
+                        }
                     }
                 }
             }
@@ -371,7 +391,6 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
     func handleDate(_ date: Date) {
         self.date = date
         otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
-        print(date)
     }
     
     func handleTransactionType(_ type: String) {

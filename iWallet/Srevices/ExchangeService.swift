@@ -26,7 +26,44 @@ class ExchangeService{
             }
         }
     }
-
+    
+    func getStartPosition(str: String, subStr: String)->Int? {
+        if let range = str.lowercased().range(of: subStr) {
+            let startPos = str.distance(from: str.startIndex, to: range.lowerBound)
+            return startPos
+        }
+        return nil
+    }
+    
+    func getEndPosition(str: String, subStr: String)->Int? {
+        if let range = str.lowercased().range(of: subStr) {
+            let endPos = str.distance(from: str.startIndex, to: range.upperBound)
+            return endPos
+        }
+        return nil
+    }
+    func getCurrencyRateByHtmlHistorical(date: Date, complition: @escaping (Bool)->()) {
+        CoreDataService.instance.fetchCurrencies { (currencies) in
+            if currencies.count == 0 { return }
+            var currencies = currencies
+            if let index = currencies.index(of: Constants.EUR) {
+                currencies.remove(at: index)
+            }
+            let pairs = currencies.joined(separator: ",")
+            Alamofire.request("\(Constants.URL_CURRENCY_EXCHANGE_RATE_HISTORICAL)\(date.fixerStr())?access_key=\(Constants.API_KEY_CURRENCY_EXCHANGE_RATE)&base=\(Constants.EUR)&symbols=\(pairs)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: Constants.HEADER).responseJSON{ (response) in
+                if response.result.error == nil {
+                    guard let data = response.data else {return}
+                    self.saveExchangeRate(data: data, date: date, complition: { (success) in
+                        complition(success)
+                    })
+                } else {
+                    debugPrint(response.result.error as Any)
+                    complition(false)
+                }
+            }
+        }
+        
+    }
     
     func evaluateCurrencyRate(base: String, pair: String, rates: [CurrencyRate]) -> (Double?){
         var baseRate = 0.0
@@ -45,7 +82,7 @@ class ExchangeService{
         return pairRate / baseRate
     }
     
-    func saveExchangeRate(data: Data,complition:@escaping  (Bool)->()) {
+    func saveExchangeRate(data: Data, date: Date = Date(),complition:@escaping  (Bool)->()) {
         let base = Constants.EUR
         let json = JSON(data)
         var euroRates = [String: Double]()
@@ -56,14 +93,15 @@ class ExchangeService{
         }
         if euroRates.count > 0 {
             for (currencyName, rate) in euroRates {
-                CoreDataService.instance.saveCurrencyRate(base: base, pair: currencyName, rate: rate, date: Date(), complition:{ (success) in
-                    if success {
-                    }
+                CoreDataService.instance.saveCurrencyRate(base: base, pair: currencyName, rate: rate, date: date, complition:{ (success) in
                 })
             }
-            CoreDataService.instance.saveCurrencyRate(base: base, pair: base, rate: 1.0, date: Date(), complition:{ (success) in
-                complition(success)
+            CoreDataService.instance.saveCurrencyRate(base: Constants.EUR, pair: Constants.EUR, rate: 1.0, date: date, complition:{ (success) in
+                if success {
+                    complition(true)
+                }
             })
+            
         } else {
             complition(false)
         }

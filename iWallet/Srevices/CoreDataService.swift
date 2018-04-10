@@ -217,6 +217,8 @@ class CoreDataService{
         }
     }
     
+    
+    
     func evaluateAllIncome(byAccount: Account? = nil, complition: (Double)->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")

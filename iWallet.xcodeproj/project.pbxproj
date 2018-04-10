@@ -63,10 +63,12 @@
 		9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DB2077583C00AFB3BE /* ExchangeService.swift */; };
 		9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */; };
 		9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */; };
+		9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA1035207CBAB2001BFCD4 /* StringExt.swift */; };
 		9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */; };
 		9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */; };
 		9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D567206E93C700886F73 /* TransactionHelper.swift */; };
 		9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D569206E9D5300886F73 /* ButtonWithLeftImage.swift */; };
+		9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEEDBAB207A951600BB9925 /* LaunchVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,10 +134,12 @@
 		9AD795DB2077583C00AFB3BE /* ExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeService.swift; sourceTree = "<group>"; };
 		9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitDataHelper.swift; sourceTree = "<group>"; };
 		9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
+		9ADA1035207CBAB2001BFCD4 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionVC.swift; sourceTree = "<group>"; };
 		9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionVC.xib; sourceTree = "<group>"; };
 		9AE6D567206E93C700886F73 /* TransactionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHelper.swift; sourceTree = "<group>"; };
 		9AE6D569206E9D5300886F73 /* ButtonWithLeftImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithLeftImage.swift; sourceTree = "<group>"; };
+		9AEEDBAB207A951600BB9925 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
 		DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -168,6 +172,7 @@
 				9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */,
 				9A73000A207384E7002F84F6 /* DateExt.swift */,
 				9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */,
+				9ADA1035207CBAB2001BFCD4 /* StringExt.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 				9AABAD6F207147E8001AA162 /* CalendarVC.swift */,
 				9A73000820727DF6002F84F6 /* BriefByAccountVC.swift */,
 				9A73002E207602AF002F84F6 /* SelectAccountVC.swift */,
+				9AEEDBAB207A951600BB9925 /* LaunchVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -476,6 +482,7 @@
 				9AABAD6E2070E0BB001AA162 /* TransactioProtocol.swift in Sources */,
 				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
+				9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
 				9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */,
@@ -496,6 +503,7 @@
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
+				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,

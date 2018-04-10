@@ -238,7 +238,7 @@
                 <constraint firstItem="Uxt-kU-J9e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="yiw-h3-mrB"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="56.5" y="39.5"/>
+            <point key="canvasLocation" x="248" y="-36"/>
         </view>
     </objects>
     <resources>

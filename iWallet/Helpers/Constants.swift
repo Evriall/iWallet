@@ -24,6 +24,7 @@ struct Constants {
     
     //URLs
     static let URL_CURRENCY_EXCHANGE_RATE = "http://data.fixer.io/api/latest?access_key="
+    static let URL_CURRENCY_EXCHANGE_RATE_HISTORICAL = "http://data.fixer.io/api/"
     
     //API keys
     static let API_KEY_CURRENCY_EXCHANGE_RATE = "a759f6dbbd30585e787b0e8c3ff662ef"

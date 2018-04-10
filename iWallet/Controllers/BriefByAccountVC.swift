@@ -89,6 +89,7 @@ class BriefByAccountVC: UIViewController {
             for item in transactionsFetched {
                 guard let transactionType = item.type else {continue}
                 guard let transactionDate = item.date?.formatDateToStr() else {continue}
+                
                 if transactionDate != tempDate {
                     if transactionsByDay.count > 0 {
                         transactions.append(transactionsByDay)
