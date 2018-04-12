@@ -19,23 +19,35 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPe-QJ-vqf">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TQN-ih-xtj">
                         <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
-                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
-                        <color key="textColor" red="0.29157040036826909" green="0.29157040036826909" blue="0.29157040036826909" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="hPe-QJ-vqf">
+                                <rect key="frame" x="0.0" y="0.0" width="288" height="43.5"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
+                                <color key="textColor" red="0.29157040036826909" green="0.29157040036826909" blue="0.29157040036826909" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxD-LS-You">
+                                <rect key="frame" x="0.0" y="43.5" width="288" height="0.0"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.29157040039999998" green="0.29157040039999998" blue="0.29157040039999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="hPe-QJ-vqf" secondAttribute="trailing" constant="16" id="26Y-Ro-Q0V"/>
-                    <constraint firstItem="hPe-QJ-vqf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="J8c-zc-iS6"/>
-                    <constraint firstAttribute="bottom" secondItem="hPe-QJ-vqf" secondAttribute="bottom" id="PzT-vp-vsV"/>
-                    <constraint firstItem="hPe-QJ-vqf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="zP2-3x-aJo"/>
+                    <constraint firstAttribute="trailing" secondItem="TQN-ih-xtj" secondAttribute="trailing" constant="16" id="1be-gr-mnb"/>
+                    <constraint firstItem="TQN-ih-xtj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="FAF-OB-W1z"/>
+                    <constraint firstItem="TQN-ih-xtj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Kbg-PI-N3w"/>
+                    <constraint firstAttribute="bottom" secondItem="TQN-ih-xtj" secondAttribute="bottom" id="eyG-B1-IDf"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="Lbl" destination="hPe-QJ-vqf" id="lIU-Ie-oRO"/>
+                <outlet property="currencyRateLbl" destination="jxD-LS-You" id="mBI-2r-rHD"/>
             </connections>
         </tableViewCell>
     </objects>

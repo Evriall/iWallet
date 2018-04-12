@@ -45,4 +45,14 @@ class EncodeDecodeService{
         let color = "[\(r), \(g), \(b), \(a)]"
         return color
     }
+    
+    func transformCurrencyRate(value: Double) -> (multiplier: Int, newValue: Double) {
+        var multiplier  = 1
+        var value = value
+        while value < 1 {
+            value *= 10
+            multiplier *= 10
+        }
+        return (multiplier, value)
+    }
 }

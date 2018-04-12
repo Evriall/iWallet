@@ -8,14 +8,15 @@
 
 import UIKit
 
-class SelectAccountCurrencyVC: UIViewController {
+class SelectCurrencyVC: UIViewController {
 
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var delegate: AccountProtocol?
-    var filteredCurrency = [String]()
+    var filteredCurrencies = [String]()
+    var currencies = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,15 +26,29 @@ class SelectAccountCurrencyVC: UIViewController {
         
         searchBar.placeholder = "Search currency"
         searchBar.delegate = self
+        
+        CoreDataService.instance.fetchCurrenciesFromCurrencyRate { (currencies) in
+            if currencies.count > 0 {
+                self.currencies = currencies
+            } else {
+                ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
+                    if success {
+                        CoreDataService.instance.fetchCurrenciesFromCurrencyRate(complition: { (currencies) in
+                            self.currencies = currencies
+                        })
+                    }
+                })
+            }
+        }
     }
 }
 
-extension SelectAccountCurrencyVC: UITableViewDataSource, UITableViewDelegate {
+extension SelectCurrencyVC: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFiltering() ? filteredCurrency.count : Locale.isoCurrencyCodes.count
+        return isFiltering() ? filteredCurrencies.count : currencies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -47,7 +62,7 @@ extension SelectAccountCurrencyVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currency = isFiltering() ? filteredCurrency[indexPath.row] : Locale.isoCurrencyCodes[indexPath.row]
+        let currency = isFiltering() ? filteredCurrencies[indexPath.row] : currencies[indexPath.row]
         delegate?.handleCarrency(currency)
         dismissDetail()
     }
@@ -59,17 +74,17 @@ extension SelectAccountCurrencyVC: UITableViewDataSource, UITableViewDelegate {
     
     func selectCurrency(index: Int) -> String {
         if isFiltering() {
-            return filteredCurrency[index]
+            return filteredCurrencies[index]
         } else {
-            return Locale.isoCurrencyCodes[index]
+            return currencies[index]
         }
     }
 }
 
-extension SelectAccountCurrencyVC: UISearchBarDelegate {
+extension SelectCurrencyVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let searchText = searchBar.text, !searchText.isEmpty {
-            filteredCurrency = Locale.isoCurrencyCodes.filter { currency in
+            filteredCurrencies = currencies.filter { currency in
                 return currency.lowercased().contains(searchText.lowercased())
             }
         tableView.reloadData()

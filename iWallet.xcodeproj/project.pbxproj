@@ -58,12 +58,12 @@
 		9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0C2063E01000ADA34E /* SlideVC.swift */; };
 		9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0E2063E02500ADA34E /* MainVC.swift */; };
 		9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B112063E18800ADA34E /* GradientView.swift */; };
-		9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */; };
-		9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */; };
+		9ABEB6BC206E25AE00F817BD /* SelectCurrencyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */; };
 		9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DB2077583C00AFB3BE /* ExchangeService.swift */; };
 		9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */; };
 		9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */; };
 		9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA1035207CBAB2001BFCD4 /* StringExt.swift */; };
+		9ADA1038207FC672001BFCD4 /* SelectCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA1037207FC672001BFCD4 /* SelectCurrencyVC.swift */; };
 		9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */; };
 		9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */; };
 		9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D567206E93C700886F73 /* TransactionHelper.swift */; };
@@ -129,12 +129,12 @@
 		9ABA9B0C2063E01000ADA34E /* SlideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideVC.swift; sourceTree = "<group>"; };
 		9ABA9B0E2063E02500ADA34E /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9ABA9B112063E18800ADA34E /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAccountCurrencyVC.swift; sourceTree = "<group>"; };
-		9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountCurrencyVC.xib; sourceTree = "<group>"; };
+		9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectCurrencyVC.xib; sourceTree = "<group>"; };
 		9AD795DB2077583C00AFB3BE /* ExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeService.swift; sourceTree = "<group>"; };
 		9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitDataHelper.swift; sourceTree = "<group>"; };
 		9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
 		9ADA1035207CBAB2001BFCD4 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
+		9ADA1037207FC672001BFCD4 /* SelectCurrencyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectCurrencyVC.swift; path = ../../../../../Desktop/SelectCurrencyVC.swift; sourceTree = "<group>"; };
 		9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionVC.swift; sourceTree = "<group>"; };
 		9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionVC.xib; sourceTree = "<group>"; };
 		9AE6D567206E93C700886F73 /* TransactionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHelper.swift; sourceTree = "<group>"; };
@@ -209,7 +209,7 @@
 				9A65982F206CFD3500519722 /* AddAccountVC.xib */,
 				9A659835206D413A00519722 /* SelectAccountTypeVC.xib */,
 				9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */,
-				9ABEB6BA206E25AE00F817BD /* SelectAccountCurrencyVC.xib */,
+				9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */,
 				9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */,
 				9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */,
 				9AABAD70207147E9001AA162 /* CalendarVC.xib */,
@@ -291,7 +291,7 @@
 				9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */,
 				9A65982E206CFD3500519722 /* AddAccountVC.swift */,
 				9A659834206D413A00519722 /* SelectAccountTypeVC.swift */,
-				9ABEB6B9206E25AE00F817BD /* SelectAccountCurrencyVC.swift */,
+				9ADA1037207FC672001BFCD4 /* SelectCurrencyVC.swift */,
 				9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */,
 				9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */,
 				9AABAD6F207147E8001AA162 /* CalendarVC.swift */,
@@ -394,7 +394,7 @@
 				9A730031207602AF002F84F6 /* SelectAccountVC.xib in Resources */,
 				9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */,
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
-				9ABEB6BC206E25AE00F817BD /* SelectAccountCurrencyVC.xib in Resources */,
+				9ABEB6BC206E25AE00F817BD /* SelectCurrencyVC.xib in Resources */,
 				9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */,
 				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
@@ -480,12 +480,12 @@
 				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,
 				9AABAD6B2070DB87001AA162 /* SelectTransactionTypeVC.swift in Sources */,
 				9AABAD6E2070E0BB001AA162 /* TransactioProtocol.swift in Sources */,
+				9ADA1038207FC672001BFCD4 /* SelectCurrencyVC.swift in Sources */,
 				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
-				9ABEB6BB206E25AE00F817BD /* SelectAccountCurrencyVC.swift in Sources */,
 				9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */,
 				9AABAD7720716716001AA162 /* CalendarProtocol.swift in Sources */,
 				9A73000920727DF6002F84F6 /* BriefByAccountVC.swift in Sources */,

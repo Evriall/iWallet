@@ -37,7 +37,8 @@ class AddTransactionVC: UIViewController {
     var accountFrom: Account?
     var accountTo: Account?
     var accountsCount = 0
-    
+    var currencyForExchange = ""
+    var currencyRateForExchange = 1.0
     var delegate: BriefProtocol?
     
     override func viewDidLoad() {
@@ -46,11 +47,21 @@ class AddTransactionVC: UIViewController {
     }
     
 
+    @objc func selectCurrency(){
+        guard let currencyCode = accountFrom?.currency else {return}
+        let selectCurrency = SelectCurrencyVC()
+        selectCurrency.modalPresentationStyle = .custom
+        selectCurrency.pairCurrency = currencyCode
+        selectCurrency.delegate = self
+        presentDetail(selectCurrency)
+    }
     
     func setUpUIElements(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(AddTransactionVC.handleTap))
         view.addGestureRecognizer(tap)
         amountTxt.addTarget(self, action: #selector(AddTransactionVC.textFieldDidChange), for: UIControlEvents.editingChanged)
+        
+        
         amountTxt.delegate = self
         descriptionTxt.delegate = self
         tagsTxt.delegate = self
@@ -118,6 +129,15 @@ class AddTransactionVC: UIViewController {
         CoreDataService.instance.fetchAccount(ByObjectID: AccountHelper.instance.currentAccount ?? "") { (account) in
             self.accountFrom = account
             accountFromBtn.setTitle(accountFrom?.name, for: .normal)
+            
+            if let currency = self.accountFrom?.currency {
+                let currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 16, y: 0, width: 16, height: 40))
+                currencyBtn.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
+                currencyBtn.setTitleColor(#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), for: .normal)
+                currencyBtn.addTarget(self, action: #selector(AddTransactionVC.selectCurrency), for: .touchUpInside)
+                currencyBtn.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 24)
+                amountTxt.addSubview(currencyBtn)
+            }
         }
     }
     func setCategory() {
@@ -264,7 +284,6 @@ class AddTransactionVC: UIViewController {
                             print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
                         }
                     } else {
-                        print(Date().startOfDay(), self.date)
                         if  Date().startOfDay() <= self.date {
                             ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
                                 if success {
@@ -282,7 +301,7 @@ class AddTransactionVC: UIViewController {
                                 }
                             })
                         } else {
-                            ExchangeService.instance.getCurrencyRateByHtmlHistorical(date: self.date, complition: { (success) in
+                            ExchangeService.instance.getHistoricalCurrencyRate(date: self.date, complition: { (success) in
                                 if success {
                                     CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
                                         if currencyRates.count > 0 {
@@ -377,7 +396,17 @@ class AddTransactionVC: UIViewController {
     
 }
 
-extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol {
+extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol, AccountProtocol {
+    func handleCarrency(_ currency: String, currencyRate: Double) {
+        self.currencyForExchange = currency
+        self.currencyRateForExchange = currencyRate
+    }
+
+    
+    func handleAccountType(_ type: String) {
+        
+    }
+    
     func handleAccountFrom(_ account: Account) {
         self.accountFrom = account
         accountFromBtn.setTitle(account.name, for: .normal)

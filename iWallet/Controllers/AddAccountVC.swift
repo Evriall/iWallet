@@ -38,7 +38,7 @@ class AddAccountVC: UIViewController {
         
     }
     @IBAction func currencyAccountBtnPressed(_ sender: Any) {
-        let selectAccountCurrencyVC = SelectAccountCurrencyVC()
+        let selectAccountCurrencyVC = SelectCurrencyVC()
         selectAccountCurrencyVC .delegate = self
         selectAccountCurrencyVC .modalPresentationStyle = .custom
         presentDetail(selectAccountCurrencyVC )
@@ -64,9 +64,10 @@ class AddAccountVC: UIViewController {
 }
 
 extension AddAccountVC: UITextFieldDelegate, AccountProtocol {
-    func handleCarrency(_ currency: String) {
+    func handleCarrency(_ currency: String, currencyRate: Double) {
         currencyAccountBtn.setTitle(currency, for: .normal)
     }
+
     
     func handleAccountType(_ type: String) {
         typeAccountBtn.setTitle(type, for: .normal)

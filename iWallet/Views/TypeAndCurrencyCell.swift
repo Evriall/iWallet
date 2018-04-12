@@ -11,9 +11,19 @@ import UIKit
 class TypeAndCurrencyCell: UITableViewCell {
 
     @IBOutlet weak var Lbl: UILabel!
+    @IBOutlet weak var currencyRateLbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+    
+    func configureCell(pairCode: String, currencyRate: String = ""){
+        let pairName = Locale.current.localizedString(forCurrencyCode: pairCode) ?? ""
+        Lbl.text = pairName
+        if !currencyRate.isEmpty {
+            currencyRateLbl.text = currencyRate
+            currencyRateLbl.isHidden = false
+        }
     }
     
     func configureCell(item: String){

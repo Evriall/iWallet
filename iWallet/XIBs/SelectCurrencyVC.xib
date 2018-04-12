@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectAccountCurrencyVC" customModule="iWallet" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectCurrencyVC" customModule="iWallet" customModuleProvider="target">
             <connections>
-                <outlet property="searchBar" destination="wuY-BD-pqN" id="KxO-SR-Xue"/>
-                <outlet property="tableView" destination="zBX-m7-ce6" id="skq-oi-y5V"/>
+                <outlet property="searchBar" destination="wuY-BD-pqN" id="7uS-7g-dra"/>
+                <outlet property="tableView" destination="zBX-m7-ce6" id="xXu-u6-CAA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

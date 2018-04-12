@@ -300,7 +300,7 @@ class CoreDataService{
     
     //Currency
     
-    func fetchCurrencies(complition: (_ complete: [String])-> ()){
+    func fetchCurrenciesFromAccount(complition: (_ complete: [String])-> ()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         var currencies = [String]()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
@@ -334,6 +334,33 @@ class CoreDataService{
         
     }
     
+    
+    func fetchCurrenciesFromCurrencyRate(complition: (_ complete: [String])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        var currencies = [String]()
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrencyRate")
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["pair"]
+        fetchRequest.propertiesToFetch = ["pair"]
+        fetchRequest.resultType = .dictionaryResultType
+        
+        do{
+            let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary]
+            if let result = resultArray {
+                for item in result {
+                    if let currency = item["pair"] {
+                        if let currencyStr = currency as? String{
+                            currencies.append(currencyStr)
+                        }
+                    }
+                }
+                complition(currencies)
+            }
+        } catch {
+            debugPrint("Could not fetch currencies \(error.localizedDescription)")
+        }
+        
+    }
     
     //CurrencyRate
     

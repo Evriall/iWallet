@@ -42,26 +42,45 @@ class ExchangeService{
         }
         return nil
     }
-    func getCurrencyRateByHtmlHistorical(date: Date, complition: @escaping (Bool)->()) {
-        CoreDataService.instance.fetchCurrencies { (currencies) in
-            if currencies.count == 0 { return }
-            var currencies = currencies
-            if let index = currencies.index(of: Constants.EUR) {
-                currencies.remove(at: index)
-            }
-            let pairs = currencies.joined(separator: ",")
-            Alamofire.request("\(Constants.URL_CURRENCY_EXCHANGE_RATE_HISTORICAL)\(date.fixerStr())?access_key=\(Constants.API_KEY_CURRENCY_EXCHANGE_RATE)&base=\(Constants.EUR)&symbols=\(pairs)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: Constants.HEADER).responseJSON{ (response) in
-                if response.result.error == nil {
-                    guard let data = response.data else {return}
-                    self.saveExchangeRate(data: data, date: date, complition: { (success) in
-                        complition(success)
-                    })
-                } else {
-                    debugPrint(response.result.error as Any)
-                    complition(false)
-                }
+    
+    func getHistoricalCurrencyRate(date: Date, currencies: [String], complition: @escaping (Bool)->()){
+        if currencies.count == 0 {
+            complition(false)
+            return
+        }
+        var currencies = currencies
+        if let index = currencies.index(of: Constants.EUR) {
+            currencies.remove(at: index)
+        }
+        let pairs = currencies.joined(separator: ",")
+        Alamofire.request("\(Constants.URL_CURRENCY_EXCHANGE_RATE_HISTORICAL)\(date.fixerStr())?access_key=\(Constants.API_KEY_CURRENCY_EXCHANGE_RATE)&base=\(Constants.EUR)&symbols=\(pairs)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: Constants.HEADER).responseJSON{ (response) in
+            if response.result.error == nil {
+                guard let data = response.data else {return}
+                self.saveExchangeRate(data: data, date: date, complition: { (success) in
+                    complition(success)
+                })
+            } else {
+                debugPrint(response.result.error as Any)
+                complition(false)
             }
         }
+    }
+    
+    func getHistoricalCurrencyRate(date: Date, complition: @escaping (Bool)->()) {
+        CoreDataService.instance.fetchCurrenciesFromCurrencyRate { (currencies) in
+            if currencies.count == 0 {
+                CoreDataService.instance.fetchCurrenciesFromAccount { (currencies) in
+                    ExchangeService.instance.getHistoricalCurrencyRate(date: date, currencies: currencies, complition: { (success) in
+                        complition(success)
+                    })
+                }
+            } else {
+                    ExchangeService.instance.getHistoricalCurrencyRate(date: date, currencies: currencies, complition: { (success) in
+                        complition(success)
+                })
+            }
+        }
+        
         
     }
     
