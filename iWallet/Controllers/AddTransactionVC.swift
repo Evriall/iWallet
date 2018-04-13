@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Expression
 
 class AddTransactionVC: UIViewController {
 
@@ -25,6 +26,9 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var otherDateBtn: UIButton!
     @IBOutlet weak var accountFromBtn: ButtonWithLeftImage!
     @IBOutlet weak var accountToBtn: ButtonWithLeftImage!
+    @IBOutlet weak var expressionLbl: UILabel!
+    @IBOutlet weak var currencyRateLbl: UILabel!
+    var currencyBtn: UIButton?
     
     let height: CGFloat = 40.0
     var category: Category?
@@ -39,7 +43,47 @@ class AddTransactionVC: UIViewController {
     var accountsCount = 0
     var currencyForExchange = ""
     var currencyRateForExchange = 1.0
+
+    var amountForAccountCurrency = 0.0
     var delegate: BriefProtocol?
+    var amount: Double {
+        get{
+            let value = amountTxt.text ?? ""
+            return Double(value) ?? 0.0
+        }
+        set{
+            amountTxt.text = "\(newValue.roundTo(places: 2))"
+        }
+    }
+    
+    var expressionStr: String {
+        get{
+            return expressionLbl.text ?? ""
+        }
+        set{
+            expressionLbl.text = newValue
+            if newValue.isEmpty {
+                expressionLbl.isHidden = true
+                self.amount = 0.0
+            } else {
+                expressionLbl.isHidden = false
+                if newValue.hasSuffix(Constants.dotSymbol) {return}
+                do{
+                    let expression = Expression(newValue)
+                    let result = try expression.evaluate()
+                    self.amount = result
+                }catch {
+                    return
+                }
+                
+            }
+            
+            self.amountForAccountCurrency = (self.amount * self.currencyRateForExchange)
+            self.amountForAccountCurrency = self.amountForAccountCurrency.roundTo(places: 2)
+            guard let currencyAccount = self.accountFrom?.currency else {return}
+            currencyRateLbl.text = createDescriptionForCurrencyRate(baseCurrencyCode: self.currencyForExchange, pairCurrencyCode: currencyAccount, rate: currencyRateForExchange, amount: self.amountForAccountCurrency)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,12 +175,12 @@ class AddTransactionVC: UIViewController {
             accountFromBtn.setTitle(accountFrom?.name, for: .normal)
             
             if let currency = self.accountFrom?.currency {
-                let currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 16, y: 0, width: 16, height: 40))
-                currencyBtn.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
-                currencyBtn.setTitleColor(#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), for: .normal)
-                currencyBtn.addTarget(self, action: #selector(AddTransactionVC.selectCurrency), for: .touchUpInside)
-                currencyBtn.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 24)
-                amountTxt.addSubview(currencyBtn)
+                currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 16, y: 0, width: 16, height: 40))
+                currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
+                currencyBtn?.setTitleColor(#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), for: .normal)
+                currencyBtn?.addTarget(self, action: #selector(AddTransactionVC.selectCurrency), for: .touchUpInside)
+                currencyBtn?.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 24)
+                amountTxt.addSubview(currencyBtn!)
             }
         }
     }
@@ -206,23 +250,46 @@ class AddTransactionVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
        
     }
+    
+    func checkAndSetLastMathSymbolInExpression(symbol: String){
+        var mathSymbolPresented = false
+        if self.expressionStr.count == 0  {
+            if (symbol == "(" || symbol == "-") {
+                self.expressionStr = symbol
+                return
+            }
+        } else {
+            for item in Constants.allowedMathSymbolsForEvaluationInExpression {
+                if item != "(" && item != ")" {
+                    if self.expressionStr.hasSuffix(item) {
+                        mathSymbolPresented = true
+                    }
+                }
+            }
+            if mathSymbolPresented {
+                self.expressionStr = "\(self.expressionStr.dropLast())\(symbol)"
+            } else {
+                self.expressionStr += symbol
+            }
+        }
+    }
     @objc func addOpenParenthese(){
-   
+        checkAndSetLastMathSymbolInExpression(symbol: "(")
     }
     @objc func addCloseParenthese(){
-        
+        checkAndSetLastMathSymbolInExpression(symbol: ")")
     }
     @objc func addPlusSymbol(){
-        
+        checkAndSetLastMathSymbolInExpression(symbol: "+")
     }
     @objc func addMinusSymbol(){
-        
+        checkAndSetLastMathSymbolInExpression(symbol: "-")
     }
     @objc func addMultiplySymbol(){
-        
+        checkAndSetLastMathSymbolInExpression(symbol: "*")
     }
     @objc func addDivideSymbol(){
-        
+        checkAndSetLastMathSymbolInExpression(symbol: "/")
     }
     
     @objc func textFieldDidChange(){
@@ -262,7 +329,9 @@ class AddTransactionVC: UIViewController {
     }
     
     @IBAction func saveTransactionBtnPressed(_ sender: Any) {
-        guard let amountText = amountTxt.text, let amount = Double(amountText), amount != 0 else {return}
+//        guard let amountText = amountTxt.text, let amount = Double(amountText), amount != 0 else {return}
+        let amount = amountForAccountCurrency
+        if amount == 0 {return}
         guard let type = typeBtn.titleLabel?.text else {return}
         guard let accountFrom = self.accountFrom else {return}
         guard let category = self.category else {return}
@@ -390,16 +459,26 @@ class AddTransactionVC: UIViewController {
         presentDetail(selectAccountVC)
     }
     
-    
-   
+    func createDescriptionForCurrencyRate(baseCurrencyCode: String, pairCurrencyCode: String, rate: Double, amount: Double) -> String{
+        let transormedValue = EncodeDecodeService.instance.transformCurrencyRate(value: rate)
+        let currencyRateDesc = "\(amount.roundTo(places: 2))\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: pairCurrencyCode)) (\(transormedValue.multiplier)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: baseCurrencyCode)) = \(transormedValue.newValue.roundTo(places: 2))\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: pairCurrencyCode)))"
+        return currencyRateDesc
+    }
     
     
 }
 
 extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol, AccountProtocol {
     func handleCarrency(_ currency: String, currencyRate: Double) {
+        guard let accountCurrency = accountFrom?.currency else {return}
+        self.currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
         self.currencyForExchange = currency
         self.currencyRateForExchange = currencyRate
+        self.amountForAccountCurrency = amount * currencyRate
+         self.amountForAccountCurrency =  self.amountForAccountCurrency.roundTo(places: 2)
+        self.currencyRateLbl.text = self.createDescriptionForCurrencyRate(baseCurrencyCode: currency, pairCurrencyCode: accountCurrency, rate: currencyRate, amount: amountForAccountCurrency)
+        self.currencyRateLbl.isHidden = false
+        
     }
 
     
@@ -441,5 +520,21 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
         return true
     }
     
-    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.count == 0{
+            if self.expressionStr.count > 1 {
+                self.expressionStr = "\(self.expressionStr.dropLast())"
+            } else {
+                self.expressionStr = ""
+            }
+        } else {
+            if Constants.allowedSDigits.contains(string) {
+                expressionStr += string
+            } else if (Constants.allowedMathSymbolsForEvaluationInExpression.contains(string) || Constants.dotSymbol == string) && !expressionStr.hasSuffix(string){
+                    expressionStr += string
+            }
+        }
+        
+        return false
+    }
 }

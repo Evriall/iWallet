@@ -49,6 +49,12 @@ struct Constants {
     static let HEADER = [
         "Content-Type" : "application/json; charset = utf-8"
     ]
+    
+    //Digits and allowed symbols
+    static let allowedSDigits = ["0","1","2","3","4","5","6","7","8","9"]
+    static let dotSymbol = "."
+    static let allowedMathSymbolsForEvaluationInExpression = ["(",")","+","-","*","/"]
+    static let InvisibleSign = "\u{200B}"
 }
 
 
