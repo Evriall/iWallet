@@ -63,7 +63,7 @@
 		9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */; };
 		9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */; };
 		9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA1035207CBAB2001BFCD4 /* StringExt.swift */; };
-		9ADA1038207FC672001BFCD4 /* SelectCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA1037207FC672001BFCD4 /* SelectCurrencyVC.swift */; };
+		9ADCC8BB2080BAEB00F446E4 /* SelectCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADCC8BA2080BAEB00F446E4 /* SelectCurrencyVC.swift */; };
 		9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */; };
 		9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */; };
 		9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D567206E93C700886F73 /* TransactionHelper.swift */; };
@@ -134,7 +134,7 @@
 		9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitDataHelper.swift; sourceTree = "<group>"; };
 		9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
 		9ADA1035207CBAB2001BFCD4 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
-		9ADA1037207FC672001BFCD4 /* SelectCurrencyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectCurrencyVC.swift; path = ../../../../../Desktop/SelectCurrencyVC.swift; sourceTree = "<group>"; };
+		9ADCC8BA2080BAEB00F446E4 /* SelectCurrencyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCurrencyVC.swift; sourceTree = "<group>"; };
 		9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionVC.swift; sourceTree = "<group>"; };
 		9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionVC.xib; sourceTree = "<group>"; };
 		9AE6D567206E93C700886F73 /* TransactionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHelper.swift; sourceTree = "<group>"; };
@@ -291,7 +291,7 @@
 				9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */,
 				9A65982E206CFD3500519722 /* AddAccountVC.swift */,
 				9A659834206D413A00519722 /* SelectAccountTypeVC.swift */,
-				9ADA1037207FC672001BFCD4 /* SelectCurrencyVC.swift */,
+				9ADCC8BA2080BAEB00F446E4 /* SelectCurrencyVC.swift */,
 				9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */,
 				9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */,
 				9AABAD6F207147E8001AA162 /* CalendarVC.swift */,
@@ -480,7 +480,6 @@
 				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,
 				9AABAD6B2070DB87001AA162 /* SelectTransactionTypeVC.swift in Sources */,
 				9AABAD6E2070E0BB001AA162 /* TransactioProtocol.swift in Sources */,
-				9ADA1038207FC672001BFCD4 /* SelectCurrencyVC.swift in Sources */,
 				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */,
@@ -508,6 +507,7 @@
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
 				9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */,
+				9ADCC8BB2080BAEB00F446E4 /* SelectCurrencyVC.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
 				9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */,
 				9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */,
