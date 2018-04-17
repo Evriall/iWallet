@@ -163,6 +163,42 @@ class CoreDataService{
         }
     }
     
+    func fetchTag(name: String, transaction: Transaction, complition: (_ complete: [Tag])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Tag")
+        let predicate = NSPredicate(format: "name == %@ && transaction == %@", name, transaction)
+        fetchRequest.predicate = predicate
+        do{
+            let tag = try managedContext.fetch(fetchRequest) as! [Tag]
+            complition(tag)
+        } catch {
+            debugPrint("Could not fetch tag \(name) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchTags(transaction: Transaction, complition: (_ complete: [Tag])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Tag")
+        let predicate = NSPredicate(format: "transaction == %@", transaction)
+        fetchRequest.predicate = predicate
+        do{
+            let tag = try managedContext.fetch(fetchRequest) as! [Tag]
+            complition(tag)
+        } catch {
+            debugPrint("Could not fetch tags \(error.localizedDescription)")
+        }
+    }
+    
+    func removeTag(tag: Tag){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        managedContext.delete(tag)
+        do{
+            try managedContext.save()
+        } catch {
+            debugPrint("Could not remove: \(error.localizedDescription)")
+        }
+    }
+    
     //Photo
     
     func savePhoto(name: String, image: UIImage, transaction: Transaction) {
@@ -217,7 +253,15 @@ class CoreDataService{
         }
     }
     
-    
+    func removeTransaction(transaction: Transaction){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        managedContext.delete(transaction)
+        do{
+            try managedContext.save()
+        } catch {
+            debugPrint("Could not remove transaction: \(error.localizedDescription)")
+        }
+    }
     
     func evaluateAllIncome(byAccount: Account? = nil, complition: (Double)->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}

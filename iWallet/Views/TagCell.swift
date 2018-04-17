@@ -19,8 +19,10 @@ class TagCell: UICollectionViewCell {
         bgView.layer.cornerRadius = 5
     }
     
-    func configureCell(title: String){
+    func configureCell(title: String, selected: Bool){
         titleLbl.text = title
+        closeBtn.setImage(selected ? UIImage(named: "closeTagRed") : UIImage(named: "closeTagGreen"), for: .normal)
     }
+
 
 }

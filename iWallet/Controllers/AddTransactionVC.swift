@@ -31,13 +31,14 @@ class AddTransactionVC: UIViewController {
     var currencyBtn: UIButton?
     var tagsCollectionView: UICollectionView?
     var tagTxt =  UITextField()
+    let tagImageView = UIImageView(image: UIImage(named: "TagIcon"))
+    let layoutCV: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     
-   
-    
+    var transaction: Transaction?
     let height: CGFloat = 40.0
     var category: Category?
     var date = Date()
-    var tags = [String]()
+    var tags = [(name: String, selected: Bool)]()
     var photos = [String: UIImage]()
     var latitude = ""
     var longitude = ""
@@ -106,6 +107,7 @@ class AddTransactionVC: UIViewController {
     
     func setUpUIElements(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(AddTransactionVC.handleTap))
+        tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         amountTxt.addTarget(self, action: #selector(AddTransactionVC.textFieldDidChange), for: UIControlEvents.editingChanged)
         
@@ -113,8 +115,8 @@ class AddTransactionVC: UIViewController {
         amountTxt.delegate = self
         descriptionTxt.delegate = self
         let opView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: height))
-          opView.backgroundColor =  #colorLiteral(red: 0.1803921569, green: 0.8, blue: 0.8470588235, alpha: 0.5)
-            opView.translatesAutoresizingMaskIntoConstraints = false
+        opView.backgroundColor =  #colorLiteral(red: 0.1803921569, green: 0.8, blue: 0.8470588235, alpha: 0.5)
+        opView.translatesAutoresizingMaskIntoConstraints = false
         
         let openParentheseBtn = UIButton(frame: CGRect(x: 0, y: 0, width: opView.frame.width / 6, height: height))
         openParentheseBtn.setTitle("(", for: .normal)
@@ -154,14 +156,6 @@ class AddTransactionVC: UIViewController {
         amountTxt.inputAccessoryView = opView
         categoryBtn.titleLabel?.numberOfLines = 0
         categoryBtn.titleLabel?.lineBreakMode = .byWordWrapping
-        typeBtn.setTitle(TransactionHelper.instance.currentType, for: .normal)
-        setCategory()
-      yesterdayBtn.setImage(nil, for: .normal)
-      otherDateBtn.setImage(nil, for: .normal)
-        
-        if TransactionHelper.instance.currentType != TransactionType.transfer.rawValue {
-            accountToBtn.isHidden = true
-        }
         CoreDataService.instance.fetchAccounts { (accounts) in
             accountsCount = accounts.count
             if accounts.count < 2 {
@@ -170,41 +164,127 @@ class AddTransactionVC: UIViewController {
             }
         }
         
-        CoreDataService.instance.fetchAccount(ByObjectID: AccountHelper.instance.currentAccount ?? "") { (account) in
-            self.accountFrom = account
-            accountFromBtn.setTitle(accountFrom?.name, for: .normal)
-            
-            if let currency = self.accountFrom?.currency {
-                currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 32, y: 0, width: 32, height: 40))
-                currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
-                currencyBtn?.setTitleColor(#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), for: .normal)
-                currencyBtn?.titleLabel?.adjustsFontSizeToFitWidth = true
-                currencyBtn?.addTarget(self, action: #selector(AddTransactionVC.selectCurrency), for: .touchUpInside)
-                currencyBtn?.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 24)
-                amountTxt.addSubview(currencyBtn!)
-            }
-        }
-        
-        //
-        let layoutCV: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layoutCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layoutCV.itemSize = CGSize(width: 70, height: 24)
         layoutCV.minimumInteritemSpacing = 8
         layoutCV.minimumLineSpacing = 8
-        tagsCollectionView = UICollectionView(frame: CGRect(x: scrollView.frame.origin.x, y: scrollView.frame.origin.y, width: 0, height: 0), collectionViewLayout: layoutCV)
-        tagsCollectionView?.dataSource = self
-        tagsCollectionView?.delegate = self
-//        tagsCollectionView?.register(TagCell.self, forCellWithReuseIdentifier: "TagCell")
-        tagsCollectionView?.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "TagCell")
-        tagsCollectionView?.showsVerticalScrollIndicator = false
-        tagsCollectionView?.showsHorizontalScrollIndicator = false
-        tagsCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        tagTxt = UITextField(frame: CGRect(x: 8, y: 0, width: scrollView.frame.width, height: scrollView.frame.height))
-        tagTxt.delegate = self
-        scrollView.delegate = self
-        scrollView.addSubview(tagsCollectionView!)
-        scrollView.addSubview(tagTxt)
+       
+        tagImageView.frame = CGRect(x: 4, y: 3, width: 32, height: 24)
         
+        if transaction == nil {
+            typeBtn.setTitle(TransactionHelper.instance.currentType, for: .normal)
+            setCategory()
+            yesterdayBtn.setImage(nil, for: .normal)
+            otherDateBtn.setImage(nil, for: .normal)
+            
+            if TransactionHelper.instance.currentType != TransactionType.transfer.rawValue {
+                accountToBtn.isHidden = true
+            }
+            
+            
+            CoreDataService.instance.fetchAccount(ByObjectID: AccountHelper.instance.currentAccount ?? "") { (account) in
+                self.accountFrom = account
+                accountFromBtn.setTitle(accountFrom?.name, for: .normal)
+                
+                if let currency = self.accountFrom?.currency {
+                    currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 32, y: 0, width: 32, height: 40))
+                    currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
+                    currencyBtn?.setTitleColor(#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), for: .normal)
+                    currencyBtn?.titleLabel?.adjustsFontSizeToFitWidth = true
+                    currencyBtn?.addTarget(self, action: #selector(AddTransactionVC.selectCurrency), for: .touchUpInside)
+                    currencyBtn?.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 24)
+                    amountTxt.addSubview(currencyBtn!)
+                }
+            }
+            
+            //
+           
+            tagsCollectionView = UICollectionView(frame: CGRect(x: scrollView.frame.origin.x, y: scrollView.frame.origin.y, width: 0, height: 0), collectionViewLayout: layoutCV)
+            tagsCollectionView?.dataSource = self
+            tagsCollectionView?.delegate = self
+            tagsCollectionView?.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "TagCell")
+            tagsCollectionView?.showsVerticalScrollIndicator = false
+            tagsCollectionView?.showsHorizontalScrollIndicator = false
+            tagsCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            
+            tagTxt = UITextField(frame: CGRect(x: 0, y: 3, width: scrollView.frame.width, height: 24))
+            
+            tagTxt.returnKeyType = .done
+            tagTxt.leftView = tagImageView
+            tagTxt.leftViewMode = .unlessEditing
+            tagTxt.delegate = self
+            scrollView.delegate = self
+            scrollView.addSubview(tagsCollectionView!)
+            scrollView.addSubview(tagTxt)
+        } else {
+            guard let transaction = self.transaction, let date = transaction.date, let description = transaction.desc, let category = transaction.category else {return}
+            guard let account = transaction.account, let currency = account.currency else {return}
+            self.expressionStr = "\(transaction.amount)"
+            self.descriptionTxt.text = description
+            self.category = category
+            handleCategory(category)
+            typeBtn.setTitle(transaction.type, for: .normal)
+            accountToBtn.isHidden = true
+            self.date = date
+            if date.startOfDay() == Date().startOfDay() {
+                setToday()
+            } else if date.startOfDay() == (Date() - 86400).startOfDay() {
+                setYesterday()
+            } else {
+                setOtherDay()
+                otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
+            }
+            if transaction.transfer != nil {
+                typeBtn.isEnabled = false
+                categoryBtn.isEnabled = false
+                accountFromBtn.isEnabled = false
+                yesterdayBtn.isEnabled = false
+                todayBtn.isEnabled = false
+                otherDateBtn.isEnabled = false
+            }
+            accountToBtn.isHidden = true
+            accountFrom = account
+            accountFromBtn.setTitle(accountFrom?.name, for: .normal)
+            currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 32, y: 0, width: 32, height: 40))
+            currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
+            currencyBtn?.setTitleColor(#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), for: .normal)
+            currencyBtn?.titleLabel?.adjustsFontSizeToFitWidth = true
+            currencyBtn?.addTarget(self, action: #selector(AddTransactionVC.selectCurrency), for: .touchUpInside)
+            currencyBtn?.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 24)
+            amountTxt.addSubview(currencyBtn!)
+            CoreDataService.instance.fetchTags(transaction: transaction) { (tags) in
+                for item in tags {
+                    if let name =  item.name {
+                        self.tags.append((name, false))
+                    }
+                }
+                let contentWidth = getTagsWith()
+                tagsCollectionView = UICollectionView(frame: CGRect(x: 0, y: 3, width: contentWidth, height: 24), collectionViewLayout: layoutCV)
+                tagsCollectionView?.dataSource = self
+                tagsCollectionView?.delegate = self
+                tagsCollectionView?.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "TagCell")
+                tagsCollectionView?.showsVerticalScrollIndicator = false
+                tagsCollectionView?.showsHorizontalScrollIndicator = false
+                tagsCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    
+                tagTxt.frame = CGRect(x: contentWidth, y: 3, width: contentWidth > (0.5*scrollView.frame.width) ? (0.5*scrollView.frame.width): scrollView.frame.width - contentWidth, height: 24)
+                tagTxt.returnKeyType = .done
+                tagTxt.leftView = tagImageView
+                tagTxt.leftViewMode = .unlessEditing
+                tagTxt.delegate = self
+                scrollView.delegate = self
+                scrollView.contentSize = CGSize(width: contentWidth + tagTxt.frame.width, height: 30)
+                scrollView.addSubview(tagsCollectionView!)
+                scrollView.addSubview(tagTxt)
+            }
+        }
+    }
+    func rebuildTagsUIElements(){
+        let contentWidth = getTagsWith()
+        tagsCollectionView?.frame = CGRect(x: 0, y: 3, width: contentWidth, height: 24)
+        tagsCollectionView?.reloadData()
+        tagTxt.frame = CGRect(x: contentWidth, y: (tagTxt.frame.origin.y), width: contentWidth > (0.5*scrollView.frame.width) ? (0.5*scrollView.frame.width): scrollView.frame.width - contentWidth, height: 24)
+        scrollView.contentSize = CGSize(width: contentWidth + tagTxt.frame.width, height: 30)
+        tagTxt.becomeFirstResponder()
     }
     func setCategory() {
         guard let typeText = typeBtn.titleLabel?.text else {return}
@@ -325,21 +405,26 @@ class AddTransactionVC: UIViewController {
         dismissDetail()
     }
     
+    func saveTransactionTags(transaction: Transaction, tags: [(name: String, selected: Bool)]){
+        for item in tags {
+            CoreDataService.instance.fetchTag(name: item.name, transaction: transaction) { (tag) in
+                if tag.count == 0 {
+                     CoreDataService.instance.saveTag(name: item.name, transaction: transaction)
+                }
+            }
+        }
+    }
     
     func saveTransferTransactions(amount: Double, amountWithCurrencyRate: Double, accountFrom: Account, accountTo: Account, category: Category){
         
         CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.expance.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
-            for tag in self.tags {
-                CoreDataService.instance.saveTag(name: tag, transaction: transaction)
-            }
+            saveTransactionTags(transaction: transaction, tags: self.tags)
             for photo in self.photos {
                 CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
             }
             
             CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.descriptionTxt.text, type: TransactionType.income.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
-                for tag in self.tags {
-                    CoreDataService.instance.saveTag(name: tag, transaction: transferTransaction)
-                }
+                saveTransactionTags(transaction: transferTransaction, tags: self.tags)
                 for photo in self.photos {
                     CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transferTransaction)
                 }
@@ -351,79 +436,95 @@ class AddTransactionVC: UIViewController {
     }
     
     @IBAction func saveTransactionBtnPressed(_ sender: Any) {
-//        guard let amountText = amountTxt.text, let amount = Double(amountText), amount != 0 else {return}
         let amount = amountForAccountCurrency
         if amount == 0 {return}
+        
         guard let type = typeBtn.titleLabel?.text else {return}
         guard let accountFrom = self.accountFrom else {return}
         guard let category = self.category else {return}
         
-        TransactionHelper.instance.currentType = type
-        if type == TransactionType.transfer.rawValue {
-            guard let accountTo = self.accountTo else {return}
-            guard let currencyFrom = accountFrom.currency else {return}
-            guard let currencyTo = accountTo.currency else {return}
-            if currencyFrom == currencyTo {
-                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amount, accountFrom: accountFrom, accountTo: accountTo, category: category)
-            } else {
-                CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: date) { (currencyRates) in
-                    if currencyRates.count > 0 {
-                        if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
-                            let amountWithCurrencyRate = currencyRate * amount
-                            self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+         if transaction == nil {
+            TransactionHelper.instance.currentType = type
+            if type == TransactionType.transfer.rawValue {
+                guard let accountTo = self.accountTo else {return}
+                guard let currencyFrom = accountFrom.currency else {return}
+                guard let currencyTo = accountTo.currency else {return}
+                if currencyFrom == currencyTo {
+                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amount, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                } else {
+                    CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: date) { (currencyRates) in
+                        if currencyRates.count > 0 {
+                            if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
+                                let amountWithCurrencyRate = currencyRate * amount
+                                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                            } else {
+                                print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                            }
                         } else {
-                            print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
-                        }
-                    } else {
-                        if  Date().startOfDay() <= self.date {
-                            ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
-                                if success {
-                                    CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
-                                        if currencyRates.count > 0 {
-                                            if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
-                                                let amountWithCurrencyRate = currencyRate * amount
-                                                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
-                                            } else {
-                                                print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                            if  Date().startOfDay() <= self.date {
+                                ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
+                                    if success {
+                                        CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
+                                            if currencyRates.count > 0 {
+                                                if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
+                                                    let amountWithCurrencyRate = currencyRate * amount
+                                                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                                                } else {
+                                                    print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                                                }
+                                            }
+                                        }
+                                        
+                                    }
+                                })
+                            } else {
+                                ExchangeService.instance.getHistoricalCurrencyRate(date: self.date, complition: { (success) in
+                                    if success {
+                                        CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
+                                            if currencyRates.count > 0 {
+                                                if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
+                                                    let amountWithCurrencyRate = currencyRate * amount
+                                                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                                                } else {
+                                                    print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                                                }
                                             }
                                         }
                                     }
-                                    
-                                }
-                            })
-                        } else {
-                            ExchangeService.instance.getHistoricalCurrencyRate(date: self.date, complition: { (success) in
-                                if success {
-                                    CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: self.date) { (currencyRates) in
-                                        if currencyRates.count > 0 {
-                                            if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
-                                                let amountWithCurrencyRate = currencyRate * amount
-                                                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
-                                            } else {
-                                                print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
-                                            }
-                                        }
-                                    }
-                                }
-                            })
+                                })
+                            }
                         }
                     }
                 }
+            } else {
+                CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+                    saveTransactionTags(transaction: transaction, tags: self.tags)
+                    for photo in photos {
+                        CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
+                    }
+                    delegate?.handleTransaction()
+                    dismissDetail()
+                }
             }
         } else {
-            CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
-                for tag in tags {
-                    CoreDataService.instance.saveTag(name: tag, transaction: transaction)
+            if let transaction = self.transaction {
+                transaction.amount = amount
+                transaction.type = type
+                transaction.category = category
+                transaction.desc = descriptionTxt.text
+                transaction.date = date
+                transaction.account = accountFrom
+                CoreDataService.instance.update { (success) in
+                    if success {
+                        saveTransactionTags(transaction: transaction, tags: self.tags)
+                        dismissDetail()
+                    }
                 }
-                for photo in photos {
-                    CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
-                }
-                delegate?.handleTransaction()
-                dismissDetail()
             }
         }
     }
-    @IBAction func yesterdayBtnPressed(_ sender: Any) {
+    
+    func setYesterday(){
         yesterdayBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
         todayBtn.setImage(nil, for: .normal)
         otherDateBtn.setImage(nil, for: .normal)
@@ -431,9 +532,9 @@ class AddTransactionVC: UIViewController {
         todayBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
         otherDateBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
         otherDateBtn.setTitle("Other", for: .normal)
-        date = Date() - 86400
     }
-    @IBAction func todayBtnPressed(_ sender: Any) {
+    
+    func setToday() {
         yesterdayBtn.setImage(nil, for: .normal)
         todayBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
         otherDateBtn.setImage(nil, for: .normal)
@@ -441,19 +542,29 @@ class AddTransactionVC: UIViewController {
         todayBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
         otherDateBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
         otherDateBtn.setTitle("Other", for: .normal)
-        let calendarVC = CalendarVC()
-        
-        date = Date()
     }
     
-    @IBAction func otherDateBtnPressed(_ sender: Any) {
+    func setOtherDay() {
         yesterdayBtn.setImage(nil, for: .normal)
         todayBtn.setImage(nil, for: .normal)
         otherDateBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
         yesterdayBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
         todayBtn.setTitleColor(#colorLiteral(red: 0.2915704004, green: 0.2915704004, blue: 0.2915704004, alpha: 1), for: .normal)
         otherDateBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
-        
+    }
+    
+    @IBAction func yesterdayBtnPressed(_ sender: Any) {
+        setYesterday()
+        date = Date() - 86400
+    }
+    
+    @IBAction func todayBtnPressed(_ sender: Any) {
+        setToday()
+        date = Date()
+    }
+    
+    @IBAction func otherDateBtnPressed(_ sender: Any) {
+        setOtherDay()
         let calendarVC = CalendarVC()
         calendarVC.delegate = self
         calendarVC.modalPresentationStyle = .custom
@@ -497,7 +608,7 @@ class AddTransactionVC: UIViewController {
     func getTagsWith() -> CGFloat{
         var width = CGFloat(0)
         for item in tags {
-            width += estimatedFrameForText(text: item).width + 32
+            width += estimatedFrameForText(text: item.name).width + 32
         }
         return width
     }
@@ -516,18 +627,50 @@ extension AddTransactionVC: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = tagsCollectionView?.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as? TagCell {
-            cell.configureCell(title: tags[indexPath.row])
+            cell.configureCell(title: tags[indexPath.row].name, selected: tags[indexPath.row].selected)
+            cell.closeBtn.tag = indexPath.row
+            cell.closeBtn.addTarget(self, action: #selector(AddTransactionVC.handleCellCloseBtnPressed), for: UIControlEvents.touchUpInside)
             return cell
         }
         return UICollectionViewCell()
     }
     
+    @objc func handleCellCloseBtnPressed(sender : UIButton!){
+        guard let transaction = self.transaction else {
+            tags.remove(at: sender.tag)
+            rebuildTagsUIElements()
+            tagsCollectionView?.reloadData()
+            return
+        }
+        CoreDataService.instance.fetchTag(name: tags[sender.tag].name, transaction: transaction) { (tag) in
+            if tag.count > 0 {
+                CoreDataService.instance.removeTag(tag: tag[0])
+            }
+            tags.remove(at: sender.tag)
+            rebuildTagsUIElements()
+            tagsCollectionView?.reloadData()
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = estimatedFrameForText(text: tags[indexPath.row]).width + 24
+        let width = estimatedFrameForText(text: tags[indexPath.row].name).width + 24
         return CGSize(width: width, height: 24)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = tagsCollectionView?.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as? TagCell {
+            deselectAllcell()
+            tags[indexPath.row].selected = true
+            collectionView.reloadData()
+        }
+    }
     
+    func deselectAllcell(){
+        for (index, value) in self.tags.enumerated() {
+            let item = (value.name, false)
+            tags.remove(at: index)
+            tags.insert(item, at: index)
+        }
+    }
     
 }
 
@@ -584,14 +727,9 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
         if textField == tagTxt {
             if let text = textField.text {
                 if !text.isEmpty {
-                    tags.append(text)
-                    let contentWith = getTagsWith()
-                    tagsCollectionView?.frame = CGRect(x: 8, y: 3, width: contentWith, height: 24)
-                    tagsCollectionView?.reloadData()
-                    tagTxt.frame = CGRect(x: contentWith + 8, y: (tagTxt.frame.origin.y), width: contentWith > (0.5*scrollView.frame.width) ? (0.5*scrollView.frame.width): scrollView.frame.width - contentWith, height: (tagTxt.frame.height))
+                    tags.append((text, false))
+                    rebuildTagsUIElements()
                     tagTxt.text = ""
-                    scrollView.contentSize = CGSize(width: contentWith + tagTxt.frame.width + 8, height: 30)
-                    tagTxt.becomeFirstResponder()
                 } else {
                     self.view.endEditing(true)
                 }
@@ -624,5 +762,18 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
             return true
         }
         
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == tagTxt {
+            tagTxt.leftView = tagImageView
+        }
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == tagTxt {
+            tagTxt.leftView = nil
+        }
+        return true
     }
 }

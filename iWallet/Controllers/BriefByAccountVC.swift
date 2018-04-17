@@ -128,9 +128,11 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return sections[section]
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let transactionVC = AddTransactionVC()
+        transactionVC.transaction = transactions[indexPath.section][indexPath.row]
+        presentDetail(transactionVC)
+    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
@@ -149,6 +151,29 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
         headerView.addSubview(dateLabel)
         
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.none
+    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "DELETE") { (rowAction, indexPath) in
+            CoreDataService.instance.fetchTags(transaction: self.transactions[indexPath.section][indexPath.row], complition: { (tags) in
+                for item in tags {
+                    CoreDataService.instance.removeTag(tag: item)
+                }
+                CoreDataService.instance.removeTransaction(transaction: self.transactions[indexPath.section][indexPath.row])
+            })
+            
+            self.fetchTransactions()
+        }
+        deleteAction.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        
+        return [deleteAction]
     }
     
 }

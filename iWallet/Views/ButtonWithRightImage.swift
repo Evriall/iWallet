@@ -13,7 +13,7 @@ class ButtonWithRightImage: UIButton {
         super.layoutSubviews()
         if imageView != nil {
             imageEdgeInsets = UIEdgeInsets(top: 0, left: (bounds.width - bounds.height), bottom: 0, right: 0)
-         titleEdgeInsets = UIEdgeInsets(top: 0, left: -(imageView?.frame.width)! + 8, bottom: 0, right: (imageView?.frame.width)!)
+         titleEdgeInsets = UIEdgeInsets(top: 0, left: -(imageView?.frame.width)!, bottom: 0, right: (imageView?.frame.width)!)
             contentHorizontalAlignment = .left
 //            layer.borderColor = #colorLiteral(red: 0, green: 0.5803921569, blue: 0.5882352941, alpha: 1)
 //            layer.borderWidth = 1
