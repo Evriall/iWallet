@@ -101,7 +101,7 @@
                                 <constraint firstAttribute="height" constant="29" id="KX6-yb-6QH"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                            <state key="normal" image="ArrowsIcon">
+                            <state key="normal" image="arrowOepn">
                                 <color key="titleColor" red="0.47450980392156861" green="0.47450980392156861" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
@@ -120,7 +120,7 @@
                                 <constraint firstAttribute="height" constant="29" id="Wkh-Ov-mNl"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                            <state key="normal" image="ArrowsIcon">
+                            <state key="normal" image="arrowOepn">
                                 <color key="titleColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
@@ -144,7 +144,7 @@
         </view>
     </objects>
     <resources>
-        <image name="ArrowsIcon" width="191" height="191"/>
+        <image name="arrowOepn" width="32" height="32"/>
         <image name="burger" width="40" height="40"/>
         <image name="checkmark-round" width="512" height="512"/>
     </resources>

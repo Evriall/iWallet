@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TagCell" id="gTV-IL-0wX" customClass="TagCell" customModule="iWallet" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="70" height="24"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="70" height="24"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8rC-Oq-VXW">
+                        <rect key="frame" x="0.0" y="0.0" width="70" height="24"/>
+                        <color key="backgroundColor" red="0.47450980390000003" green="0.47450980390000003" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LHt-ha-t3Y">
+                        <rect key="frame" x="0.0" y="4" width="70" height="16"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QcU-iF-RY7">
+                                <rect key="frame" x="0.0" y="0.0" width="54" height="16"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsh-2f-wlc">
+                                <rect key="frame" x="54" y="0.0" width="16" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="5hH-Xe-705"/>
+                                    <constraint firstAttribute="width" constant="16" id="duh-yf-qXx"/>
+                                </constraints>
+                                <state key="normal" image="closeTagGreen"/>
+                            </button>
+                        </subviews>
+                    </stackView>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="8rC-Oq-VXW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4C9-SY-Lxu"/>
+                <constraint firstAttribute="trailing" secondItem="LHt-ha-t3Y" secondAttribute="trailing" id="FkL-R5-IhP"/>
+                <constraint firstItem="LHt-ha-t3Y" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Ii9-xE-aPf"/>
+                <constraint firstAttribute="trailing" secondItem="8rC-Oq-VXW" secondAttribute="trailing" id="VnZ-Yq-5JO"/>
+                <constraint firstItem="LHt-ha-t3Y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="c88-D5-6Zb"/>
+                <constraint firstAttribute="bottom" secondItem="8rC-Oq-VXW" secondAttribute="bottom" id="drx-PK-Eqr"/>
+                <constraint firstItem="8rC-Oq-VXW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="yXc-Bm-VbB"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="70" height="51"/>
+            <connections>
+                <outlet property="bgView" destination="8rC-Oq-VXW" id="8f8-Ib-mpc"/>
+                <outlet property="closeBtn" destination="zsh-2f-wlc" id="lAg-dc-FIE"/>
+                <outlet property="titleLbl" destination="QcU-iF-RY7" id="lqS-hC-wRP"/>
+            </connections>
+            <point key="canvasLocation" x="50" y="53"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="closeTagGreen" width="32" height="32"/>
+    </resources>
+</document>

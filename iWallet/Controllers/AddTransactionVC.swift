@@ -19,7 +19,7 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var categoryBtn: ButtonWithRightImage!
     @IBOutlet weak var categoryImg: UIImageView!
     
-    @IBOutlet weak var tagsTxt: UITextField!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var yesterdayBtn: UIButton!
     @IBOutlet weak var todayBtn: UIButton!
@@ -29,6 +29,10 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var expressionLbl: UILabel!
     @IBOutlet weak var currencyRateLbl: UILabel!
     var currencyBtn: UIButton?
+    var tagsCollectionView: UICollectionView?
+    var tagTxt =  UITextField()
+    
+   
     
     let height: CGFloat = 40.0
     var category: Category?
@@ -108,9 +112,8 @@ class AddTransactionVC: UIViewController {
         
         amountTxt.delegate = self
         descriptionTxt.delegate = self
-        tagsTxt.delegate = self
         let opView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: height))
-          opView.backgroundColor =  #colorLiteral(red: 0.1803921569, green: 0.8, blue: 0.8470588235, alpha: 1)
+          opView.backgroundColor =  #colorLiteral(red: 0.1803921569, green: 0.8, blue: 0.8470588235, alpha: 0.5)
             opView.translatesAutoresizingMaskIntoConstraints = false
         
         let openParentheseBtn = UIButton(frame: CGRect(x: 0, y: 0, width: opView.frame.width / 6, height: height))
@@ -149,9 +152,6 @@ class AddTransactionVC: UIViewController {
         opView.addSubview(divideBtn)
 
         amountTxt.inputAccessoryView = opView
-        descriptionTxt.inputAccessoryView = opView
-        tagsTxt.inputAccessoryView = opView
- 
         categoryBtn.titleLabel?.numberOfLines = 0
         categoryBtn.titleLabel?.lineBreakMode = .byWordWrapping
         typeBtn.setTitle(TransactionHelper.instance.currentType, for: .normal)
@@ -175,14 +175,36 @@ class AddTransactionVC: UIViewController {
             accountFromBtn.setTitle(accountFrom?.name, for: .normal)
             
             if let currency = self.accountFrom?.currency {
-                currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 16, y: 0, width: 16, height: 40))
+                currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 32, y: 0, width: 32, height: 40))
                 currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
                 currencyBtn?.setTitleColor(#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), for: .normal)
+                currencyBtn?.titleLabel?.adjustsFontSizeToFitWidth = true
                 currencyBtn?.addTarget(self, action: #selector(AddTransactionVC.selectCurrency), for: .touchUpInside)
                 currencyBtn?.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 24)
                 amountTxt.addSubview(currencyBtn!)
             }
         }
+        
+        //
+        let layoutCV: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layoutCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layoutCV.itemSize = CGSize(width: 70, height: 24)
+        layoutCV.minimumInteritemSpacing = 8
+        layoutCV.minimumLineSpacing = 8
+        tagsCollectionView = UICollectionView(frame: CGRect(x: scrollView.frame.origin.x, y: scrollView.frame.origin.y, width: 0, height: 0), collectionViewLayout: layoutCV)
+        tagsCollectionView?.dataSource = self
+        tagsCollectionView?.delegate = self
+//        tagsCollectionView?.register(TagCell.self, forCellWithReuseIdentifier: "TagCell")
+        tagsCollectionView?.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "TagCell")
+        tagsCollectionView?.showsVerticalScrollIndicator = false
+        tagsCollectionView?.showsHorizontalScrollIndicator = false
+        tagsCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        tagTxt = UITextField(frame: CGRect(x: 8, y: 0, width: scrollView.frame.width, height: scrollView.frame.height))
+        tagTxt.delegate = self
+        scrollView.delegate = self
+        scrollView.addSubview(tagsCollectionView!)
+        scrollView.addSubview(tagTxt)
+        
     }
     func setCategory() {
         guard let typeText = typeBtn.titleLabel?.text else {return}
@@ -465,6 +487,47 @@ class AddTransactionVC: UIViewController {
         return currencyRateDesc
     }
     
+    private func estimatedFrameForText(text: String) -> CGRect {
+        let size = CGSize(width: scrollView.frame.width, height: 24)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        guard let attributes = [NSAttributedStringKey.font:  UIFont(name: "Avenir-Book", size: 17)] as? [NSAttributedStringKey: Any] else {return CGRect(x: 0, y: 0, width: 70, height: 24)}
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: attributes, context: nil)
+    }
+    
+    func getTagsWith() -> CGFloat{
+        var width = CGFloat(0)
+        for item in tags {
+            width += estimatedFrameForText(text: item).width + 32
+        }
+        return width
+    }
+    
+}
+
+extension AddTransactionVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.contentSize.height = 1.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tags.count
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = tagsCollectionView?.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as? TagCell {
+            cell.configureCell(title: tags[indexPath.row])
+            return cell
+        }
+        return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = estimatedFrameForText(text: tags[indexPath.row]).width + 24
+        return CGSize(width: width, height: 24)
+    }
+    
+    
     
 }
 
@@ -515,26 +578,51 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
         }
     }
     
+
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
+        if textField == tagTxt {
+            if let text = textField.text {
+                if !text.isEmpty {
+                    tags.append(text)
+                    let contentWith = getTagsWith()
+                    tagsCollectionView?.frame = CGRect(x: 8, y: 3, width: contentWith, height: 24)
+                    tagsCollectionView?.reloadData()
+                    tagTxt.frame = CGRect(x: contentWith + 8, y: (tagTxt.frame.origin.y), width: contentWith > (0.5*scrollView.frame.width) ? (0.5*scrollView.frame.width): scrollView.frame.width - contentWith, height: (tagTxt.frame.height))
+                    tagTxt.text = ""
+                    scrollView.contentSize = CGSize(width: contentWith + tagTxt.frame.width + 8, height: 30)
+                    tagTxt.becomeFirstResponder()
+                } else {
+                    self.view.endEditing(true)
+                }
+            } else {
+                self.view.endEditing(true)
+            }
+        } else {
+            self.view.endEditing(true)
+        }
         return true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if string.count == 0{
-            if self.expressionStr.count > 1 {
-                self.expressionStr = "\(self.expressionStr.dropLast())"
+        if textField == amountTxt {
+            if string.count == 0{
+                if self.expressionStr.count > 1 {
+                    self.expressionStr = "\(self.expressionStr.dropLast())"
+                } else {
+                    self.expressionStr = ""
+                }
             } else {
-                self.expressionStr = ""
-            }
-        } else {
-            if Constants.allowedSDigits.contains(string) {
-                expressionStr += string
-            } else if (Constants.allowedMathSymbolsForEvaluationInExpression.contains(string) || Constants.dotSymbol == string) && !expressionStr.hasSuffix(string){
+                if Constants.allowedSDigits.contains(string) {
                     expressionStr += string
+                } else if (Constants.allowedMathSymbolsForEvaluationInExpression.contains(string) || Constants.dotSymbol == string) && !expressionStr.hasSuffix(string){
+                        expressionStr += string
+                }
             }
+            return false
+        } else {
+            return true
         }
         
-        return false
     }
 }
