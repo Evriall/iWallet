@@ -11,6 +11,8 @@ import Expression
 
 class AddTransactionVC: UIViewController {
 
+    
+    @IBOutlet weak var photoView: UIView!
     @IBOutlet weak var amountTxt: UITextField!
     
     @IBOutlet weak var accountsStackView: UIStackView!
@@ -28,18 +30,22 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var accountToBtn: ButtonWithLeftImage!
     @IBOutlet weak var expressionLbl: UILabel!
     @IBOutlet weak var currencyRateLbl: UILabel!
+    @IBOutlet weak var makePhotoBtn: UIButton!
+    @IBOutlet weak var photosCollectionView: UICollectionView!
+    
     var currencyBtn: UIButton?
     var tagsCollectionView: UICollectionView?
     var tagTxt =  UITextField()
     let tagImageView = UIImageView(image: UIImage(named: "TagIcon"))
     let layoutCV: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    let layoutPCV: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     
     var transaction: Transaction?
     let height: CGFloat = 40.0
     var category: Category?
     var date = Date()
     var tags = [(name: String, selected: Bool)]()
-    var photos = [String: UIImage]()
+    var photos = [[String: UIImage]]()
     var latitude = ""
     var longitude = ""
     var place = ""
@@ -115,7 +121,7 @@ class AddTransactionVC: UIViewController {
         amountTxt.delegate = self
         descriptionTxt.delegate = self
         let opView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: height))
-        opView.backgroundColor =  #colorLiteral(red: 0.1803921569, green: 0.8, blue: 0.8470588235, alpha: 0.5)
+        opView.backgroundColor =  #colorLiteral(red: 0, green: 0.8549019608, blue: 0.8745098039, alpha: 1)
         opView.translatesAutoresizingMaskIntoConstraints = false
         
         let openParentheseBtn = UIButton(frame: CGRect(x: 0, y: 0, width: opView.frame.width / 6, height: height))
@@ -167,9 +173,18 @@ class AddTransactionVC: UIViewController {
         layoutCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layoutCV.minimumInteritemSpacing = 8
         layoutCV.minimumLineSpacing = 8
+        
+        layoutPCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layoutPCV.itemSize = CGSize(width: 100, height: 100)
+        layoutPCV.minimumInteritemSpacing = 10
+        layoutPCV.minimumLineSpacing = 10
        
         tagImageView.frame = CGRect(x: 4, y: 3, width: 32, height: 24)
-        
+        photosCollectionView?.delegate = self
+        photosCollectionView?.dataSource = self
+        photosCollectionView?.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCell")
+        photosCollectionView?.showsVerticalScrollIndicator = false
+        photosCollectionView?.showsHorizontalScrollIndicator = false
         if transaction == nil {
             typeBtn.setTitle(TransactionHelper.instance.currentType, for: .normal)
             setCategory()
@@ -275,6 +290,13 @@ class AddTransactionVC: UIViewController {
                 scrollView.contentSize = CGSize(width: contentWidth + tagTxt.frame.width, height: 30)
                 scrollView.addSubview(tagsCollectionView!)
                 scrollView.addSubview(tagTxt)
+            }
+            CoreDataService.instance.fetchPhotos(transaction: transaction) { (photos) in
+                for item in photos {
+                    guard let data = item.data, let name = item.name else {continue}
+                    guard let image = UIImage(data: data) else {continue}
+                    self.photos.append([name : image])
+                }
             }
         }
     }
@@ -415,19 +437,26 @@ class AddTransactionVC: UIViewController {
         }
     }
     
+    func saveTransactionPhotos(transaction: Transaction, photos: [[String : UIImage]]){
+        for (index, item) in photos.enumerated() {
+            for photo in item {
+                if photo.key.isEmpty {
+                    let name = date.description + "\(index)"
+                    CoreDataService.instance.savePhoto(name: name, image: photo.value, transaction: transaction)
+                }
+            }
+        }
+    }
+    
     func saveTransferTransactions(amount: Double, amountWithCurrencyRate: Double, accountFrom: Account, accountTo: Account, category: Category){
         
         CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.expance.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
             saveTransactionTags(transaction: transaction, tags: self.tags)
-            for photo in self.photos {
-                CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
-            }
+            saveTransactionPhotos(transaction: transaction, photos: self.photos)
             
             CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.descriptionTxt.text, type: TransactionType.income.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
                 saveTransactionTags(transaction: transferTransaction, tags: self.tags)
-                for photo in self.photos {
-                    CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transferTransaction)
-                }
+                saveTransactionPhotos(transaction: transferTransaction, photos: self.photos)
                 self.delegate?.handleTransaction()
                 self.dismissDetail()
             }
@@ -499,9 +528,7 @@ class AddTransactionVC: UIViewController {
             } else {
                 CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
                     saveTransactionTags(transaction: transaction, tags: self.tags)
-                    for photo in photos {
-                        CoreDataService.instance.savePhoto(name: photo.key, image: photo.value, transaction: transaction)
-                    }
+                    saveTransactionPhotos(transaction: transaction, photos: self.photos)
                     delegate?.handleTransaction()
                     dismissDetail()
                 }
@@ -517,6 +544,7 @@ class AddTransactionVC: UIViewController {
                 CoreDataService.instance.update { (success) in
                     if success {
                         saveTransactionTags(transaction: transaction, tags: self.tags)
+                        saveTransactionPhotos(transaction: transaction, photos: self.photos)
                         dismissDetail()
                     }
                 }
@@ -591,6 +619,34 @@ class AddTransactionVC: UIViewController {
         selectAccountVC.modalPresentationStyle = .custom
         presentDetail(selectAccountVC)
     }
+    @IBAction func makePhotoBtnPressed(_ sender: Any) {
+        let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let makePhoto = UIAlertAction(title: "Make photo", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                var imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = .camera;
+                imagePicker.allowsEditing = true
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
+        let chosePhotoFromLibrary = UIAlertAction(title: "Choose from library", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = .photoLibrary;
+                imagePicker.allowsEditing = true
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            
+        }
+        menu.addAction(makePhoto)
+        menu.addAction(chosePhotoFromLibrary)
+        menu.addAction(cancel)
+        self.present(menu, animated: true, completion: nil)
+    }
     
     func createDescriptionForCurrencyRate(baseCurrencyCode: String, pairCurrencyCode: String, rate: Double, amount: Double) -> String{
         let transormedValue = EncodeDecodeService.instance.transformCurrencyRate(value: rate)
@@ -598,39 +654,66 @@ class AddTransactionVC: UIViewController {
         return currencyRateDesc
     }
     
-    private func estimatedFrameForText(text: String) -> CGRect {
-        let size = CGSize(width: scrollView.frame.width, height: 24)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        guard let attributes = [NSAttributedStringKey.font:  UIFont(name: "Avenir-Book", size: 17)] as? [NSAttributedStringKey: Any] else {return CGRect(x: 0, y: 0, width: 70, height: 24)}
-        return NSString(string: text).boundingRect(with: size, options: options, attributes: attributes, context: nil)
-    }
+    
     
     func getTagsWith() -> CGFloat{
         var width = CGFloat(0)
         for item in tags {
-            width += estimatedFrameForText(text: item.name).width + 32
+            width += item.name.estimatedFrameForText(maxFrameWidth: scrollView.frame.width).width + 32
         }
         return width
     }
     
 }
+extension AddTransactionVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard var image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        image = ImageHelper.instance.imageOrientation(image)
+        self.photos.append(["":image])
+        self.photosCollectionView?.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+}
 
 extension AddTransactionVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollView.contentSize.height = 1.0
+        if scrollView == photosCollectionView {
+            
+        } else {
+            scrollView.contentSize.height = 1.0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tags.count
+        if collectionView == photosCollectionView {
+           return photos.count
+        } else {
+            return tags.count
+        }
     }
     
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = tagsCollectionView?.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as? TagCell {
-            cell.configureCell(title: tags[indexPath.row].name, selected: tags[indexPath.row].selected)
-            cell.closeBtn.tag = indexPath.row
-            cell.closeBtn.addTarget(self, action: #selector(AddTransactionVC.handleCellCloseBtnPressed), for: UIControlEvents.touchUpInside)
-            return cell
+        if collectionView == photosCollectionView {
+            if let cell = photosCollectionView?.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as? PhotoCell {
+                cell.configureCell(image: ImageHelper.instance.getPhotoImagebyIndex(index: indexPath.row, photos: self.photos))
+                return cell
+            }
+        } else {
+            if let cell = tagsCollectionView?.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as? TagCell {
+                cell.configureCell(title: tags[indexPath.row].name, selected: tags[indexPath.row].selected)
+                cell.closeBtn.tag = indexPath.row
+                cell.closeBtn.addTarget(self, action: #selector(AddTransactionVC.handleCellCloseBtnPressed), for: UIControlEvents.touchUpInside)
+                return cell
+            }
         }
         return UICollectionViewCell()
     }
@@ -652,15 +735,33 @@ extension AddTransactionVC: UICollectionViewDelegate, UICollectionViewDataSource
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = estimatedFrameForText(text: tags[indexPath.row].name).width + 24
-        return CGSize(width: width, height: 24)
+        var width: CGFloat = 100
+        var height: CGFloat = 100
+        if collectionView == self.tagsCollectionView {
+            let size = tags[indexPath.row].name.estimatedFrameForText(maxFrameWidth: scrollView.frame.width)
+            width = size.width + 24
+            height = 24
+        } else if collectionView == self.photosCollectionView{
+            width = self.photosCollectionView.frame.width / 2
+            height = width
+        }
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = tagsCollectionView?.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as? TagCell {
-            deselectAllcell()
-            tags[indexPath.row].selected = true
-            collectionView.reloadData()
+        if collectionView == self.tagsCollectionView {
+            if let cell = tagsCollectionView?.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as? TagCell {
+                deselectAllcell()
+                tags[indexPath.row].selected = true
+                collectionView.reloadData()
+            }
+        } else if collectionView == self.photosCollectionView {
+            let photoVC = PhotoVC()
+            photoVC.modalPresentationStyle = .custom
+            photoVC.photos = self.photos
+            photoVC.openedImage = indexPath.row
+            photoVC.delegate = self
+            present(photoVC, animated: true, completion: nil)
         }
     }
     
@@ -672,6 +773,15 @@ extension AddTransactionVC: UICollectionViewDelegate, UICollectionViewDataSource
         }
     }
     
+}
+
+extension AddTransactionVC: PhotoProtocol {
+    func handlePhotos(photos: [[String : UIImage]]) {
+        self.photos = photos
+        photosCollectionView.reloadData()
+    }
+    
+
 }
 
 extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol, AccountProtocol {

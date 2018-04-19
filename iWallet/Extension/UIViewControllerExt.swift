@@ -29,6 +29,16 @@ extension UIViewController {
         dismiss(animated: false, completion: nil)
     }
     
+    func dismissDetailUp(){
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionFade
+        transition.subtype = kCATransitionFromTop
+        self.view.window?.layer.add(transition, forKey: kCATransition)
+        
+        dismiss(animated: false, completion: nil)
+    }
+    
     func presentSecondaryDetail( _ viewControllerToPresent: UIViewController){
         let transition = CATransition()
         transition.duration = 0.3

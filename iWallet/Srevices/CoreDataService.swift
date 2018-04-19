@@ -214,6 +214,42 @@ class CoreDataService{
         }
     }
     
+    func fetchPhoto(name: String, complition: (_ complete: [Photo])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
+        let predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = predicate
+        do{
+            let photo = try managedContext.fetch(fetchRequest) as! [Photo]
+            complition(photo)
+        } catch {
+            debugPrint("Could not fetch photos \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchPhotos(transaction: Transaction, complition: (_ complete: [Photo])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
+        let predicate = NSPredicate(format: "transaction == %@", transaction)
+        fetchRequest.predicate = predicate
+        do{
+            let photo = try managedContext.fetch(fetchRequest) as! [Photo]
+            complition(photo)
+        } catch {
+            debugPrint("Could not fetch photos \(error.localizedDescription)")
+        }
+    }
+    
+    func removePhoto(_ photo: Photo){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        managedContext.delete(photo)
+        do{
+            try managedContext.save()
+        } catch {
+            debugPrint("Could not remove: \(error.localizedDescription)")
+        }
+    }
+    
     //Transaction
     
     func saveTransaction(amount: Double,desc: String?,type: String, date: Date, latitude: String?, longitude: String?, place: String?, account: Account, category: Category,transfer: Transaction?, complition: (Transaction) ->()){

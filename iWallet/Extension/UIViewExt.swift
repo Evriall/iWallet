@@ -25,4 +25,9 @@ extension UIView {
             self.frame.origin.y += deltaY
         }, completion: nil)
     }
+    func animateToggleAlpha() {
+        UIView.animate(withDuration: 0.5) {
+            self.alpha = self.alpha == 1 ? 0 : 1
+        }
+    }
 }

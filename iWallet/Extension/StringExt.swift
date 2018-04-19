@@ -17,4 +17,11 @@ extension String {
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return self[start ..< end]
     }
+    
+    func estimatedFrameForText(fontSize: CGFloat = 17.0, height: CGFloat = 24.0, maxFrameWidth: CGFloat) -> CGRect {
+        let size = CGSize(width: maxFrameWidth, height: height)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        guard let attributes = [NSAttributedStringKey.font:  UIFont(name: "Avenir-Book", size: fontSize)] as? [NSAttributedStringKey: Any] else {return CGRect(x: 0, y: 0, width: 70, height: 24)}
+        return NSString(string: self).boundingRect(with: size, options: options, attributes: attributes, context: nil)
+    }
 }
