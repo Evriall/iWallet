@@ -26,6 +26,14 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="photos" inverseEntity="Transaction" syncable="YES"/>
     </entity>
+    <entity name="Place" representedClassName="Place" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transaction" inverseName="place" inverseEntity="Transaction" syncable="YES"/>
+    </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="tags" inverseEntity="Transaction" syncable="YES"/>
@@ -34,13 +42,11 @@
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="transactions" inverseEntity="Account" syncable="YES"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="transactions" inverseEntity="Category" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="transaction" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="place" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Place" inverseName="transactions" inverseEntity="Place" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="transaction" inverseEntity="Tag" syncable="YES"/>
         <relationship name="transfer" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Transaction" inverseName="transfer" inverseEntity="Transaction" syncable="YES"/>
     </entity>
@@ -50,6 +56,7 @@
         <element name="CurrencyRate" positionX="-45" positionY="108" width="128" height="105"/>
         <element name="Photo" positionX="-27" positionY="99" width="128" height="90"/>
         <element name="Tag" positionX="-36" positionY="81" width="128" height="75"/>
-        <element name="Transaction" positionX="-45" positionY="27" width="128" height="225"/>
+        <element name="Transaction" positionX="-45" positionY="27" width="128" height="195"/>
+        <element name="Place" positionX="-45" positionY="117" width="128" height="135"/>
     </elements>
 </model>

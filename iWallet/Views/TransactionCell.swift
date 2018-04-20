@@ -41,7 +41,7 @@ class TransactionCell: UITableViewCell {
                 description = "\(nameTransactionTo) → \(nameTransactionFrom)"
             }
         } else if let place = transaction.place {
-            description = place
+            description = place.name ?? ""
         }
         infoLbl.text = description
     }

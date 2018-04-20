@@ -18,6 +18,10 @@ class CalendarVC: UIViewController {
     private var selectedDay: DayView!
     private var currentCalendar: Calendar?
     var delegate: CalendarProtocol?
+    var currentDate = Date()
+    @IBAction func closeBtnPressed(_ sender: Any) {
+        dismissDetail()
+    }
     override func awakeFromNib() {
         let timeZoneBias = 480 // (UTC+08:00)
         currentCalendar = Calendar(identifier: .gregorian)
@@ -36,6 +40,7 @@ class CalendarVC: UIViewController {
             monthLbl.text = CVDate(date: Date(), calendar: currentCalendar).globalDescription
         }
         calendarView.contentController.refreshPresentedMonth()
+//        calendarView.toggleViewWithDate(currentDate)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -66,11 +71,16 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCale
     func preliminaryView(viewOnDayView dayView: DayView) -> UIView {
         let circleView = CVAuxiliaryView(dayView: dayView, rect: dayView.frame, shape: CVShape.circle)
         circleView.fillColor = .colorFromCode(0xCCCCCC)
+        guard let date = dayView.date.convertedDate()?.startOfDay() else {return circleView}
+        if date == currentDate.startOfDay() {
+          circleView.fillColor = .colorFromCode(0x00DADF)
+        }
         return circleView
     }
     
     func preliminaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
-        if (dayView.isCurrentDay) {
+        guard let date = dayView.date.convertedDate()?.startOfDay() else {return false}
+        if (dayView.isCurrentDay || date == currentDate.startOfDay()) {
             return true
         }
         return false
@@ -112,6 +122,7 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCale
         default: return nil
         }
     }
+    
 //    func didShowNextMonthView(_ date: Date) {
 ////        calendarView.contentController.refreshPresentedMonth()
 //    }

@@ -43,19 +43,32 @@
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sh0-P4-1Fi">
+                            <rect key="frame" x="20" y="43" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="MPQ-Ff-nKa"/>
+                                <constraint firstAttribute="width" constant="22" id="YC8-6q-yqa"/>
+                            </constraints>
+                            <state key="normal" image="close"/>
+                            <connections>
+                                <action selector="closeBtnPressed:" destination="-1" eventType="touchUpInside" id="B0U-my-esA"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="77" id="0h2-dC-xmV"/>
                         <constraint firstAttribute="bottom" secondItem="QB8-P8-32n" secondAttribute="bottom" constant="8" id="ECq-Cn-qFq"/>
                         <constraint firstItem="QB8-P8-32n" firstAttribute="centerX" secondItem="7Yj-nM-KaC" secondAttribute="centerX" id="Q7M-6y-y8O"/>
+                        <constraint firstAttribute="bottom" secondItem="Sh0-P4-1Fi" secondAttribute="bottom" constant="12" id="eCg-lc-inP"/>
+                        <constraint firstItem="Sh0-P4-1Fi" firstAttribute="leading" secondItem="7Yj-nM-KaC" secondAttribute="leading" constant="20" id="zMa-gH-O39"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="topColor">
                             <color key="value" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="buttomColor">
-                            <color key="value" red="0.0" green="0.85669371139999995" blue="0.87303848640000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="value" red="0.0" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
@@ -83,4 +96,7 @@
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="close" width="22" height="20"/>
+    </resources>
 </document>

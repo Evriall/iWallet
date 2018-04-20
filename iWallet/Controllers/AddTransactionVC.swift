@@ -32,6 +32,8 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var currencyRateLbl: UILabel!
     @IBOutlet weak var makePhotoBtn: UIButton!
     @IBOutlet weak var photosCollectionView: UICollectionView!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var selectPlaceBtn: UIButton!
     
     var currencyBtn: UIButton?
     var tagsCollectionView: UICollectionView?
@@ -46,16 +48,13 @@ class AddTransactionVC: UIViewController {
     var date = Date()
     var tags = [(name: String, selected: Bool)]()
     var photos = [[String: UIImage]]()
-    var latitude = ""
-    var longitude = ""
-    var place = ""
     var accountFrom: Account?
     var accountTo: Account?
     var accountsCount = 0
     var currencyForExchange = ""
     var currencyRateForExchange = 1.0
-
     var amountForAccountCurrency = 0.0
+    var place: Place?
     var delegate: BriefProtocol?
     var amount: Double {
         get{
@@ -116,7 +115,7 @@ class AddTransactionVC: UIViewController {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         amountTxt.addTarget(self, action: #selector(AddTransactionVC.textFieldDidChange), for: UIControlEvents.editingChanged)
-        
+        amountTxt.text = "0.0"
         
         amountTxt.delegate = self
         descriptionTxt.delegate = self
@@ -236,7 +235,10 @@ class AddTransactionVC: UIViewController {
             self.expressionStr = "\(transaction.amount)"
             self.descriptionTxt.text = description
             self.category = category
+            self.place = transaction.place
+            selectPlaceBtn.setTitle(self.place?.name, for: .normal)
             handleCategory(category)
+            titleLbl.text = "TRANSACTION"
             typeBtn.setTitle(transaction.type, for: .normal)
             accountToBtn.isHidden = true
             self.date = date
@@ -450,11 +452,11 @@ class AddTransactionVC: UIViewController {
     
     func saveTransferTransactions(amount: Double, amountWithCurrencyRate: Double, accountFrom: Account, accountTo: Account, category: Category){
         
-        CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.expance.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+        CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.expance.rawValue , date: self.date, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
             saveTransactionTags(transaction: transaction, tags: self.tags)
             saveTransactionPhotos(transaction: transaction, photos: self.photos)
             
-            CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.descriptionTxt.text, type: TransactionType.income.rawValue , date: self.date, latitude: self.latitude, longitude: self.longitude, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
+            CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.descriptionTxt.text, type: TransactionType.income.rawValue , date: self.date, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
                 saveTransactionTags(transaction: transferTransaction, tags: self.tags)
                 saveTransactionPhotos(transaction: transferTransaction, photos: self.photos)
                 self.delegate?.handleTransaction()
@@ -526,7 +528,7 @@ class AddTransactionVC: UIViewController {
                     }
                 }
             } else {
-                CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, latitude: latitude, longitude: longitude, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+                CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
                     saveTransactionTags(transaction: transaction, tags: self.tags)
                     saveTransactionPhotos(transaction: transaction, photos: self.photos)
                     delegate?.handleTransaction()
@@ -592,9 +594,9 @@ class AddTransactionVC: UIViewController {
     }
     
     @IBAction func otherDateBtnPressed(_ sender: Any) {
-        setOtherDay()
         let calendarVC = CalendarVC()
         calendarVC.delegate = self
+        calendarVC.currentDate = date
         calendarVC.modalPresentationStyle = .custom
         presentDetail(calendarVC )
     }
@@ -648,6 +650,12 @@ class AddTransactionVC: UIViewController {
         self.present(menu, animated: true, completion: nil)
     }
     
+    @IBAction func selectPlaceBtnPressed(_ sender: Any) {
+        let selectPlaceVC = SelectPlaceVC()
+        selectPlaceVC.modalPresentationStyle = .custom
+        selectPlaceVC.delegate = self
+        presentDetail(selectPlaceVC)
+    }
     func createDescriptionForCurrencyRate(baseCurrencyCode: String, pairCurrencyCode: String, rate: Double, amount: Double) -> String{
         let transormedValue = EncodeDecodeService.instance.transformCurrencyRate(value: rate)
         let currencyRateDesc = "\(amount.roundTo(places: 2))\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: pairCurrencyCode)) (\(transormedValue.multiplier)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: baseCurrencyCode)) = \(transormedValue.newValue.roundTo(places: 2))\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: pairCurrencyCode)))"
@@ -784,7 +792,12 @@ extension AddTransactionVC: PhotoProtocol {
 
 }
 
-extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol, AccountProtocol {
+extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryProtocol, CalendarProtocol, AccountProtocol, PlaceProtocol {
+    func handlePlace(_ place: Place) {
+        self.place = place
+        self.selectPlaceBtn.setTitle(place.name, for: .normal)
+    }
+    
     func handleCarrency(_ currency: String, currencyRate: Double) {
         guard let accountCurrency = accountFrom?.currency else {return}
         self.currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
@@ -815,6 +828,7 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
     func handleDate(_ date: Date) {
         self.date = date
         otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
+        setOtherDay()
     }
     
     func handleTransactionType(_ type: String) {

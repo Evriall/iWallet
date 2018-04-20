@@ -78,4 +78,10 @@ extension Date {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: self)
     }
+    
+    func fourSquareStr() -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        return dateFormatter.string(from: self)
+    }
 }

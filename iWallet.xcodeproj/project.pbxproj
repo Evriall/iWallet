@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
+		9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */; };
+		9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853FA208A3F59008B804D /* PlaceCell.swift */; };
+		9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A3853FB208A3F59008B804D /* PlaceCell.xib */; };
 		9A4A531B20878D9400E90EEA /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4A531A20878D9400E90EEA /* ImageHelper.swift */; };
 		9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4A531C208790AA00E90EEA /* PhotoVC.swift */; };
 		9A4A531F208790AA00E90EEA /* PhotoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A4A531D208790AA00E90EEA /* PhotoVC.xib */; };
@@ -79,11 +82,17 @@
 		9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D569206E9D5300886F73 /* ButtonWithLeftImage.swift */; };
 		9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEEDBAB207A951600BB9925 /* LaunchVC.swift */; };
 		9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF349FF2088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift */; };
+		9AF34A022089E9E9005A94C7 /* FourSquareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF34A012089E9E9005A94C7 /* FourSquareService.swift */; };
+		9AF34A05208A1C74005A94C7 /* SelectPlaceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF34A03208A1C74005A94C7 /* SelectPlaceVC.swift */; };
+		9AF34A06208A1C74005A94C7 /* SelectPlaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF34A04208A1C74005A94C7 /* SelectPlaceVC.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1F0844252092F4D146C20B7B /* Pods-iWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.release.xcconfig"; sourceTree = "<group>"; };
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
+		9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceProtocol.swift; sourceTree = "<group>"; };
+		9A3853FA208A3F59008B804D /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
+		9A3853FB208A3F59008B804D /* PlaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
 		9A4A531A20878D9400E90EEA /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		9A4A531C208790AA00E90EEA /* PhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
 		9A4A531D208790AA00E90EEA /* PhotoVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoVC.xib; sourceTree = "<group>"; };
@@ -160,6 +169,9 @@
 		9AE6D569206E9D5300886F73 /* ButtonWithLeftImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithLeftImage.swift; sourceTree = "<group>"; };
 		9AEEDBAB207A951600BB9925 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
 		9AF349FF2088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectedPanGestureRecognizer.swift; sourceTree = "<group>"; };
+		9AF34A012089E9E9005A94C7 /* FourSquareService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourSquareService.swift; sourceTree = "<group>"; };
+		9AF34A03208A1C74005A94C7 /* SelectPlaceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlaceVC.swift; sourceTree = "<group>"; };
+		9AF34A04208A1C74005A94C7 /* SelectPlaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPlaceVC.xib; sourceTree = "<group>"; };
 		DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -218,6 +230,7 @@
 				9A9D2D4A206663D400CC7DE0 /* CoreDataService.swift */,
 				9A9D2D4E2066A47600CC7DE0 /* EncodeDecodeService.swift */,
 				9AD795DB2077583C00AFB3BE /* ExchangeService.swift */,
+				9AF34A012089E9E9005A94C7 /* FourSquareService.swift */,
 			);
 			path = Srevices;
 			sourceTree = "<group>";
@@ -225,6 +238,7 @@
 		9A9D2D562068DCC300CC7DE0 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				9AF34A04208A1C74005A94C7 /* SelectPlaceVC.xib */,
 				9A9D2D582068FA1300CC7DE0 /* SelectParentCategoryVC.xib */,
 				9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */,
 				9A659821206BDC2000519722 /* AccountCell.xib */,
@@ -239,6 +253,7 @@
 				9A538FCA2083C1B200107B31 /* TagCell.xib */,
 				9AE093C22087550A00CF43E6 /* PhotoCell.xib */,
 				9A4A531D208790AA00E90EEA /* PhotoVC.xib */,
+				9A3853FB208A3F59008B804D /* PlaceCell.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -252,6 +267,7 @@
 				9AABAD7620716716001AA162 /* CalendarProtocol.swift */,
 				9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */,
 				9A4A53202087A95800E90EEA /* PhotoProtocol.swift */,
+				9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -325,6 +341,7 @@
 				9A73002E207602AF002F84F6 /* SelectAccountVC.swift */,
 				9AEEDBAB207A951600BB9925 /* LaunchVC.swift */,
 				9A4A531C208790AA00E90EEA /* PhotoVC.swift */,
+				9AF34A03208A1C74005A94C7 /* SelectPlaceVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -343,6 +360,7 @@
 				9A538FC92083C1B200107B31 /* TagCell.swift */,
 				9AE093C12087550A00CF43E6 /* PhotoCell.swift */,
 				9A4A53222088604700E90EEA /* ScrollViewWithTopAndBottomFixedViews.swift */,
+				9A3853FA208A3F59008B804D /* PlaceCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -431,10 +449,12 @@
 				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
+				9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */,
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
 				9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */,
 				9ABA9AFF2063DB4500ADA34E /* LaunchScreen.storyboard in Resources */,
 				9A4A531F208790AA00E90EEA /* PhotoVC.xib in Resources */,
+				9AF34A06208A1C74005A94C7 /* SelectPlaceVC.xib in Resources */,
 				9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,6 +538,7 @@
 				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */,
+				9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
 				9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */,
@@ -536,16 +557,19 @@
 				9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */,
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
+				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
 				9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */,
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,
+				9AF34A05208A1C74005A94C7 /* SelectPlaceVC.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
 				9A4A53212087A95800E90EEA /* PhotoProtocol.swift in Sources */,
+				9AF34A022089E9E9005A94C7 /* FourSquareService.swift in Sources */,
 				9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */,
 				9ADCC8BB2080BAEB00F446E4 /* SelectCurrencyVC.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,

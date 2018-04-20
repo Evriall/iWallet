@@ -26,8 +26,15 @@ struct Constants {
     static let URL_CURRENCY_EXCHANGE_RATE = "http://data.fixer.io/api/latest?access_key="
     static let URL_CURRENCY_EXCHANGE_RATE_HISTORICAL = "http://data.fixer.io/api/"
     
+    static let URL_FOURSQUARE =  "https://api.foursquare.com/v2/venues/search?"
+    
     //API keys
     static let API_KEY_CURRENCY_EXCHANGE_RATE = "a759f6dbbd30585e787b0e8c3ff662ef"
+    static let API_CLIENT_ID_FOURSQUARE = "TZJQGNH0UMMAPQZIBM0JEDHRL42SK41AV3YI5CBWJAZMYUSE"
+    static let API_CLIENT_SECRET_FOURSQUARE = "ACV3PKE5CEFPYQSXJ0J2YCDZLFTSQXOY1WSEIOYDBT24ZQ3A"
+    
+    //Size
+    static let  REGION_SIZE_FOURSQUARE = 1000
     
     //Currencies
     static let EUR = "EUR"

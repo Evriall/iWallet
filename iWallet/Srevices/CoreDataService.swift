@@ -252,15 +252,13 @@ class CoreDataService{
     
     //Transaction
     
-    func saveTransaction(amount: Double,desc: String?,type: String, date: Date, latitude: String?, longitude: String?, place: String?, account: Account, category: Category,transfer: Transaction?, complition: (Transaction) ->()){
+    func saveTransaction(amount: Double,desc: String?,type: String, date: Date, place: Place?, account: Account, category: Category,transfer: Transaction?, complition: (Transaction) ->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let transaction = Transaction(context: managedContext)
         transaction.amount = amount
         transaction.desc = desc
         transaction.type = type
         transaction.date = date
-        transaction.latitude = latitude
-        transaction.longitude = longitude
         transaction.place = place
         transaction.account = account
         transaction.category = category
@@ -460,18 +458,6 @@ class CoreDataService{
         }
     }
     
-//    func fetchCurrencyRates(base: String, complition: @escaping ([CurrencyRate])->()){
-//        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrencyRate")
-//        let predicate = NSPredicate(format: "base == %@", base)
-//        fetchRequest.predicate = predicate
-//        do{
-//            let currencyRate = try managedContext.fetch(fetchRequest) as! [CurrencyRate]
-//            complition(currencyRate)
-//        } catch {
-//            debugPrint("Could not fetch currency rate by base \(base) \(error.localizedDescription)")
-//        }
-//    }
     
     func fetchCurrencyRate(base: String, pair: String, date: Date, complition: @escaping ([CurrencyRate])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
@@ -485,6 +471,51 @@ class CoreDataService{
             debugPrint("Could not fetch currency rate by base \(base) and pair \(pair) and date \(date)\(error.localizedDescription)")
         }
     }
+    
+    //Places
+    func savePlace(id: String, name: String, address: String, latitude: Double, longitude: Double, complition: @escaping (Bool)->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let place = Place(context: managedContext)
+        place.id = id
+        place.name = name
+        place.address = address
+        place.latitude = latitude
+        place.longitude = longitude
+        do{
+            try managedContext.save()
+            complition(true)
+        } catch {
+            complition(false)
+            debugPrint("Could not save transaction: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchPlacesByLocationRegion(startLatitude: Double, endLatitude: Double, startLongitude: Double, endLongitude: Double, complition: @escaping ([Place])->()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Place")
+        let predicate = NSPredicate(format: "latitude < %f AND latitude > %f AND longitude > %f AND longitude < %f", startLatitude, endLatitude, startLongitude, endLongitude)
+        fetchRequest.predicate = predicate
+        do{
+            let place = try managedContext.fetch(fetchRequest) as! [Place]
+            complition(place)
+        } catch {
+            debugPrint("Could not fetch place by region\(error.localizedDescription)")
+        }
+    }
+    
+    func fetchPlaceById(id: String,complition: @escaping ([Place])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Place")
+        let predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = predicate
+        do{
+            let place = try managedContext.fetch(fetchRequest) as! [Place]
+            complition(place)
+        } catch {
+            debugPrint("Could not fetch place by id \(id)\(error.localizedDescription)")
+        }
+    }
+    
     
     // General
     func update(complition: (_ complete: Bool)-> ()) {
