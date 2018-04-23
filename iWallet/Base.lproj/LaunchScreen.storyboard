@@ -18,10 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WalletBG" translatesAutoresizingMaskIntoConstraints="NO" id="cNB-FG-evr">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WalletBGLight" translatesAutoresizingMaskIntoConstraints="NO" id="cNB-FG-evr">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Wallet" translatesAutoresizingMaskIntoConstraints="NO" id="3EE-QQ-yT1">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WalletIconDarkTransparancy" translatesAutoresizingMaskIntoConstraints="NO" id="3EE-QQ-yT1">
                                 <rect key="frame" x="123" y="98" width="128" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="IIq-zP-jpZ"/>
@@ -74,7 +74,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Wallet" width="514" height="512"/>
-        <image name="WalletBG" width="1242" height="2208"/>
+        <image name="WalletBGLight" width="1242" height="2208"/>
+        <image name="WalletIconDarkTransparancy" width="1024" height="1024"/>
     </resources>
 </document>

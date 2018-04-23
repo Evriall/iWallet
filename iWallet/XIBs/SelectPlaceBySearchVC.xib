@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectPlaceBySearchVC" customModule="iWallet" customModuleProvider="target">
+            <connections>
+                <outlet property="bgView" destination="u2s-Nc-QvC" id="V5Q-tK-PHB"/>
+                <outlet property="searchBar" destination="ZnH-YP-mja" id="d0o-zr-0eZ"/>
+                <outlet property="tableView" destination="W8F-7z-BnF" id="UoG-R7-ek9"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VF7-dp-e4X" customClass="GradientView" customModule="iWallet" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3h-wR-Dw0">
+                            <rect key="frame" x="8" y="21" width="359" height="56"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="ZnH-YP-mja">
+                                    <rect key="frame" x="0.0" y="0.0" width="299" height="56"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="searchField.textColor">
+                                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </searchBar>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IML-Gv-pVg">
+                                    <rect key="frame" x="299" y="0.0" width="60" height="56"/>
+                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                    <state key="normal" title="Cancel">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="cancelBtnPressed:" destination="-1" eventType="touchUpInside" id="bJH-3O-CYa"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="BIz-lP-qaz"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="T3h-wR-Dw0" secondAttribute="trailing" constant="8" id="HZS-HF-HJW"/>
+                        <constraint firstAttribute="bottom" secondItem="T3h-wR-Dw0" secondAttribute="bottom" id="kYr-o1-6PK"/>
+                        <constraint firstAttribute="height" constant="77" id="o3V-Mf-AQU"/>
+                        <constraint firstItem="T3h-wR-Dw0" firstAttribute="leading" secondItem="VF7-dp-e4X" secondAttribute="leading" constant="8" id="pxT-VV-5cE"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="topColor">
+                            <color key="value" red="0.0" green="0.56862745100000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="buttomColor">
+                            <color key="value" red="0.0" green="0.85490196080000003" blue="0.87450980389999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view alpha="0.30000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u2s-Nc-QvC">
+                    <rect key="frame" x="0.0" y="77" width="375" height="590"/>
+                    <subviews>
+                        <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W8F-7z-BnF">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="590"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="W8F-7z-BnF" firstAttribute="leading" secondItem="u2s-Nc-QvC" secondAttribute="leading" id="0Ja-Uw-GOj"/>
+                        <constraint firstAttribute="trailing" secondItem="W8F-7z-BnF" secondAttribute="trailing" id="8Mj-wF-6gD"/>
+                        <constraint firstItem="W8F-7z-BnF" firstAttribute="top" secondItem="u2s-Nc-QvC" secondAttribute="top" id="iRV-XY-WVD"/>
+                        <constraint firstAttribute="bottom" secondItem="W8F-7z-BnF" secondAttribute="bottom" id="pDv-Ij-igm"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="VF7-dp-e4X" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Rjf-hU-Cbf"/>
+                <constraint firstItem="u2s-Nc-QvC" firstAttribute="top" secondItem="VF7-dp-e4X" secondAttribute="bottom" id="Vxq-oe-dCX"/>
+                <constraint firstItem="u2s-Nc-QvC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ftm-5p-yFr"/>
+                <constraint firstItem="u2s-Nc-QvC" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="gG5-BR-GKK"/>
+                <constraint firstItem="VF7-dp-e4X" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="svl-W6-spK"/>
+                <constraint firstItem="u2s-Nc-QvC" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="wsv-Xj-7n4"/>
+                <constraint firstItem="VF7-dp-e4X" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="y16-Qs-eXO"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="39.5" y="53.5"/>
+        </view>
+    </objects>
+</document>

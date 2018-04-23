@@ -29,6 +29,22 @@ class FourSquareService {
       
     }
     
+    func getPlacesByName(name: String, longitude: Double, latitude: Double, complition: @escaping (Bool)->()) {
+        Alamofire.request("\(Constants.URL_FOURSQUARE)ll=\(latitude),\(longitude)&client_id=\(Constants.API_CLIENT_ID_FOURSQUARE)&client_secret=\(Constants.API_CLIENT_SECRET_FOURSQUARE)&quary=\(name)&v=\(Date().fourSquareStr())", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: Constants.HEADER).responseJSON { (response) in
+            if response.result.error == nil {
+                guard let data = response.data else {return}
+                self.savePlaces(data: data, complition: { (success) in
+                    complition(success)
+                })
+            } else {
+                debugPrint(response.result.error as Any)
+                complition(false)
+            }
+        }
+        
+        
+    }
+    
     func savePlaces(data: Data,complition:@escaping  (Bool)->()) {
         let json = JSON(data)
         if let jsonResponse = json["response"].dictionary {

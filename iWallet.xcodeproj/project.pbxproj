@@ -35,6 +35,8 @@
 		9A73000F2073C4FF002F84F6 /* BriefProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */; };
 		9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73002E207602AF002F84F6 /* SelectAccountVC.swift */; };
 		9A730031207602AF002F84F6 /* SelectAccountVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A73002F207602AF002F84F6 /* SelectAccountVC.xib */; };
+		9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */; };
+		9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */; };
 		9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */; };
 		9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */; };
 		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
@@ -117,6 +119,8 @@
 		9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BriefProtocol.swift; sourceTree = "<group>"; };
 		9A73002E207602AF002F84F6 /* SelectAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAccountVC.swift; sourceTree = "<group>"; };
 		9A73002F207602AF002F84F6 /* SelectAccountVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountVC.xib; sourceTree = "<group>"; };
+		9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlaceBySearchVC.swift; sourceTree = "<group>"; };
+		9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPlaceBySearchVC.xib; sourceTree = "<group>"; };
 		9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				9AF34A04208A1C74005A94C7 /* SelectPlaceVC.xib */,
+				9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */,
 				9A9D2D582068FA1300CC7DE0 /* SelectParentCategoryVC.xib */,
 				9A9D2D5C2068FDA800CC7DE0 /* CategoryCell.xib */,
 				9A659821206BDC2000519722 /* AccountCell.xib */,
@@ -342,6 +347,7 @@
 				9AEEDBAB207A951600BB9925 /* LaunchVC.swift */,
 				9A4A531C208790AA00E90EEA /* PhotoVC.swift */,
 				9AF34A03208A1C74005A94C7 /* SelectPlaceVC.swift */,
+				9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -446,6 +452,7 @@
 				9A538FCC2083C1B200107B31 /* TagCell.xib in Resources */,
 				9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */,
 				9AE093C42087550A00CF43E6 /* PhotoCell.xib in Resources */,
+				9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */,
 				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
@@ -561,6 +568,7 @@
 				9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */,
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
+				9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */,
 				9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,

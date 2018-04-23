@@ -481,6 +481,7 @@ class CoreDataService{
         place.address = address
         place.latitude = latitude
         place.longitude = longitude
+        place.date = Date()
         do{
             try managedContext.save()
             complition(true)
@@ -516,6 +517,34 @@ class CoreDataService{
         }
     }
     
+    func fetchPlace(ByName name: String,complition: @escaping ([Place])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Place")
+        let predicate = NSPredicate(format: "name contains[c] %@", name)
+        fetchRequest.predicate = predicate
+        do{
+            let place = try managedContext.fetch(fetchRequest) as! [Place]
+            complition(place)
+        } catch {
+            debugPrint("Could not fetch places\(error.localizedDescription)")
+        }
+    }
+    
+    func fetchLastPlaces(limit: Int = 15,complition: @escaping ([Place])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Place")
+        let predicate = NSPredicate(format: "ANY transactions != nil")
+        let sortDescriptor = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptor
+        fetchRequest.fetchLimit = limit
+        do{
+            let place = try managedContext.fetch(fetchRequest) as! [Place]
+            complition(place)
+        } catch {
+            debugPrint("Could not fetch last places \(error.localizedDescription)")
+        }
+    }
     
     // General
     func update(complition: (_ complete: Bool)-> ()) {

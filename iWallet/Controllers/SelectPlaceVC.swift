@@ -20,6 +20,9 @@ class SelectPlaceVC: UIViewController {
     var lastPlaces = [Place]()
     var showNearestPlaces = true
     
+    @IBOutlet weak var nearestPlacesBtn: UIButton!
+    @IBOutlet weak var lastPlacesBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -36,7 +39,59 @@ class SelectPlaceVC: UIViewController {
     @IBAction func closeBtnPressed(_ sender: Any) {
         dismissDetail()
     }
+    @IBAction func nearestPlacesBtnPressed(_ sender: Any) {
+        nearestPlacesBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
+        lastPlacesBtn.setImage(nil, for: .normal)
+        nearestPlacesBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
+        lastPlacesBtn.setTitleColor(#colorLiteral(red: 0, green: 0.5803921569, blue: 0.5882352941, alpha: 1), for: .normal)
+        nearestPlacesBtn.isEnabled = false
+        lastPlacesBtn.isEnabled = true
+        if nearestPlaces.count == 0 {
+            if let location = self.location {
+                let (start, stop) = FourSquareService.instance.calculateCoordinatesWithRegion(location: location, distanceSpan: Double(Constants.REGION_SIZE_FOURSQUARE))
+                CoreDataService.instance.fetchPlacesByLocationRegion(startLatitude: start.latitude, endLatitude: stop.latitude, startLongitude: start.longitude, endLongitude: stop.longitude, complition: { (places) in
+                    self.nearestPlaces = places
+                })
+            }
+        }
+        showNearestPlaces = true
+        tableView.reloadData()
+        
+    }
+    @IBAction func lastPlacesBtnPressed(_ sender: Any) {
+        lastPlacesBtn.setImage(UIImage(named:  "checkmark-round_yellow16_16"), for: .normal)
+        nearestPlacesBtn.setImage(nil, for: .normal)
+        lastPlacesBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
+        nearestPlacesBtn.setTitleColor(#colorLiteral(red: 0, green: 0.5803921569, blue: 0.5882352941, alpha: 1), for: .normal)
+        nearestPlacesBtn.isEnabled = true
+        lastPlacesBtn.isEnabled = false
+        
+        
+        if lastPlaces.count == 0 {
+            CoreDataService.instance.fetchLastPlaces { (places) in
+                self.lastPlaces = places
+            }
+        }
+        showNearestPlaces = false
+        tableView.reloadData()
+    }
+    @IBAction func searchBtnPressed(_ sender: Any) {
+        let selectPlaceBySearchVC = SelectPlaceBySearchVC()
+        selectPlaceBySearchVC.modalPresentationStyle = .custom
+        selectPlaceBySearchVC.delegate = self
+        selectPlaceBySearchVC.location = self.location
+        presentDetail(selectPlaceBySearchVC)
+    }
     
+}
+
+extension SelectPlaceVC: PlaceProtocol {
+    func handlePlace(_ place: Place) {
+        delegate?.handlePlace(place)
+        DispatchQueue.main.async {
+            self.dismissDetail()
+        }
+    }
 }
 
 extension SelectPlaceVC: UITableViewDelegate, UITableViewDataSource{
@@ -66,6 +121,16 @@ extension SelectPlaceVC: UITableViewDelegate, UITableViewDataSource{
         delegate?.handlePlace(place)
         dismissDetail()
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let place = showNearestPlaces ? nearestPlaces[indexPath.row] : lastPlaces[indexPath.row]
+        if let address = place.address, !address.isEmpty
+        {
+            return CGFloat(50)
+        }
+        return CGFloat(30)
+       
+    }
 }
 
 extension SelectPlaceVC: CLLocationManagerDelegate {
@@ -73,15 +138,12 @@ extension SelectPlaceVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             self.location = location
-            print(location.coordinate.latitude)
-            print(location.coordinate.longitude)
             locationManager.stopUpdatingLocation()
             if NetworkReachabilityManager()!.isReachable {
                 FourSquareService.instance.getPlacesByCoordinates(longitude: location.coordinate.longitude, latitude: location.coordinate.latitude, radius: Constants.REGION_SIZE_FOURSQUARE ) { (success) in
                     if success {
                         let (start, stop) = FourSquareService.instance.calculateCoordinatesWithRegion(location: location, distanceSpan: Double(Constants.REGION_SIZE_FOURSQUARE))
                         CoreDataService.instance.fetchPlacesByLocationRegion(startLatitude: start.latitude, endLatitude: stop.latitude, startLongitude: start.longitude, endLongitude: stop.longitude, complition: { (places) in
-                            print("CoreData: ", places.count)
                             self.nearestPlaces = places
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()

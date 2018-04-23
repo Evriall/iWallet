@@ -71,7 +71,7 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCale
     func preliminaryView(viewOnDayView dayView: DayView) -> UIView {
         let circleView = CVAuxiliaryView(dayView: dayView, rect: dayView.frame, shape: CVShape.circle)
         circleView.fillColor = .colorFromCode(0xCCCCCC)
-        guard let date = dayView.date.convertedDate()?.startOfDay() else {return circleView}
+        guard let date = dayView.date?.convertedDate()?.startOfDay() else {return circleView}
         if date == currentDate.startOfDay() {
           circleView.fillColor = .colorFromCode(0x00DADF)
         }
@@ -79,7 +79,8 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCale
     }
     
     func preliminaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
-        guard let date = dayView.date.convertedDate()?.startOfDay() else {return false}
+        
+        guard let date = dayView.date?.convertedDate()?.startOfDay() else {return false}
         if (dayView.isCurrentDay || date == currentDate.startOfDay()) {
             return true
         }

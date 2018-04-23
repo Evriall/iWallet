@@ -184,6 +184,7 @@ class AddTransactionVC: UIViewController {
         photosCollectionView?.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCell")
         photosCollectionView?.showsVerticalScrollIndicator = false
         photosCollectionView?.showsHorizontalScrollIndicator = false
+        selectPlaceBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         if transaction == nil {
             typeBtn.setTitle(TransactionHelper.instance.currentType, for: .normal)
             setCategory()
@@ -473,7 +474,12 @@ class AddTransactionVC: UIViewController {
         guard let type = typeBtn.titleLabel?.text else {return}
         guard let accountFrom = self.accountFrom else {return}
         guard let category = self.category else {return}
-        
+        if let place = self.place {
+            place.date = Date()
+            CoreDataService.instance.update { (success) in
+                if success {}
+            }
+        }
          if transaction == nil {
             TransactionHelper.instance.currentType = type
             if type == TransactionType.transfer.rawValue {
@@ -543,6 +549,7 @@ class AddTransactionVC: UIViewController {
                 transaction.desc = descriptionTxt.text
                 transaction.date = date
                 transaction.account = accountFrom
+                transaction.place = self.place
                 CoreDataService.instance.update { (success) in
                     if success {
                         saveTransactionTags(transaction: transaction, tags: self.tags)

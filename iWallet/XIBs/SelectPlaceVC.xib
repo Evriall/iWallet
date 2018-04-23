@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectPlaceVC" customModule="iWallet" customModuleProvider="target">
             <connections>
+                <outlet property="lastPlacesBtn" destination="0ou-Fy-GKK" id="c4m-AR-PBS"/>
+                <outlet property="nearestPlacesBtn" destination="WuV-m9-tvQ" id="ewv-p6-iWi"/>
                 <outlet property="tableView" destination="mZO-Ns-qzX" id="lAf-F5-4kW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -30,7 +32,7 @@
                                 <constraint firstAttribute="width" constant="24" id="10w-5Y-vdk"/>
                                 <constraint firstAttribute="height" constant="18" id="dAE-oY-evG"/>
                             </constraints>
-                            <state key="normal" image="close"/>
+                            <state key="normal" image="back"/>
                             <connections>
                                 <action selector="closeBtnPressed:" destination="-1" eventType="touchUpInside" id="6PG-oo-Ofq"/>
                             </connections>
@@ -41,10 +43,23 @@
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fb-nI-bLu">
+                            <rect key="frame" x="343" y="48" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="gxR-NX-nod"/>
+                                <constraint firstAttribute="width" constant="24" id="irf-H4-E6c"/>
+                            </constraints>
+                            <state key="normal" image="searchIcon"/>
+                            <connections>
+                                <action selector="searchBtnPressed:" destination="-1" eventType="touchUpInside" id="iv0-he-rvC"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="0Fb-nI-bLu" secondAttribute="bottom" constant="5" id="220-DR-KUS"/>
                         <constraint firstAttribute="height" constant="77" id="2sD-9N-47H"/>
+                        <constraint firstAttribute="trailing" secondItem="0Fb-nI-bLu" secondAttribute="trailing" constant="8" id="CSP-2p-6vI"/>
                         <constraint firstAttribute="bottom" secondItem="cZB-hJ-pJB" secondAttribute="bottom" constant="8" id="c8v-uH-AYv"/>
                         <constraint firstItem="cZB-hJ-pJB" firstAttribute="leading" secondItem="Omw-mG-2XH" secondAttribute="leading" constant="8" id="dQJ-2G-XHC"/>
                         <constraint firstAttribute="bottom" secondItem="G5e-eG-OEW" secondAttribute="bottom" constant="7.5" id="ffk-og-77c"/>
@@ -62,17 +77,25 @@
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JXx-9g-d2u">
                     <rect key="frame" x="0.0" y="77" width="375" height="40"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuV-m9-tvQ">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuV-m9-tvQ">
                             <rect key="frame" x="0.0" y="0.0" width="187.5" height="40"/>
-                            <state key="normal" title="Nearest">
-                                <color key="titleColor" red="0.0" green="0.58039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
+                            <state key="normal" title="Nearest" image="checkmark-round_yellow16_16">
+                                <color key="titleColor" red="1" green="0.83137254900000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="nearestPlacesBtnPressed:" destination="-1" eventType="touchUpInside" id="9Ib-YZ-Qz9"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ou-Fy-GKK">
                             <rect key="frame" x="187.5" y="0.0" width="187.5" height="40"/>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
                             <state key="normal" title="Last">
-                                <color key="titleColor" red="1" green="0.83137254900000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleColor" red="0.0" green="0.58039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="lastPlacesBtnPressed:" destination="-1" eventType="touchUpInside" id="rva-mu-ibv"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>
@@ -102,6 +125,8 @@
         </view>
     </objects>
     <resources>
-        <image name="close" width="22" height="20"/>
+        <image name="back" width="14" height="25"/>
+        <image name="checkmark-round_yellow16_16" width="16" height="16"/>
+        <image name="searchIcon" width="300" height="300"/>
     </resources>
 </document>

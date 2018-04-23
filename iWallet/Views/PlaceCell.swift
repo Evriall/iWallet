@@ -23,6 +23,16 @@ class PlaceCell: UITableViewCell {
     
     func configureCell(title: String?, subtitle: String?) {
         self.titleLbl.text = title
-        self.subTitleLbl.text = subtitle
+        if let subtitle = subtitle {
+            if subtitle.isEmpty {
+               self.subTitleLbl.isHidden = true
+            } else {
+                self.subTitleLbl.text = subtitle
+            }
+        } else {
+            self.subTitleLbl.isHidden = true
+        }
+        
+        
     }
 }
