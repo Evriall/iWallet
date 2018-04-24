@@ -117,6 +117,19 @@ class CoreDataService{
         }
     }
     
+    func fetchAccount(byName name: String, complition: (_ complete: [Account])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        let predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = predicate
+        do{
+            let account = try managedContext.fetch(fetchRequest) as! [Account]
+            complition(account)
+        } catch {
+            debugPrint("Could not fetch account by description \(name) \(error.localizedDescription)")
+        }
+    }
+    
     func fetchAccount(ByObjectID id: String, complition: (_ complete: Account)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
@@ -296,6 +309,59 @@ class CoreDataService{
             debugPrint("Could not remove transaction: \(error.localizedDescription)")
         }
     }
+    
+    func fetchAccountsIncome(ByDate date: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .doubleAttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["account.name"]
+        fetchRequest.propertiesToFetch = ["account.name", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.income.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
+            fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchAccountsExpance(ByDate date: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .doubleAttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["account.name"]
+        fetchRequest.propertiesToFetch = ["account.name", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.expance.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
     
     func evaluateAllIncome(byAccount: Account? = nil, complition: (Double)->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}

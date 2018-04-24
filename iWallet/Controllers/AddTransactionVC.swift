@@ -805,15 +805,20 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
         self.selectPlaceBtn.setTitle(place.name, for: .normal)
     }
     
-    func handleCarrency(_ currency: String, currencyRate: Double) {
+    func setUIByCarrency(_ currency: String, currencyRate: Double, showCurrencyRate: Bool = true) {
         guard let accountCurrency = accountFrom?.currency else {return}
         self.currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
         self.currencyForExchange = currency
         self.currencyRateForExchange = currencyRate
         self.amountForAccountCurrency = amount * currencyRate
-         self.amountForAccountCurrency =  self.amountForAccountCurrency.roundTo(places: 2)
+        self.amountForAccountCurrency =  self.amountForAccountCurrency.roundTo(places: 2)
         self.currencyRateLbl.text = self.createDescriptionForCurrencyRate(baseCurrencyCode: currency, pairCurrencyCode: accountCurrency, rate: currencyRate, amount: amountForAccountCurrency)
-        self.currencyRateLbl.isHidden = false
+        self.currencyRateLbl.isHidden = !showCurrencyRate
+        
+    }
+    
+    func handleCarrency(_ currency: String, currencyRate: Double) {
+        setUIByCarrency(currency, currencyRate: currencyRate)
         
     }
 
@@ -825,6 +830,8 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
     func handleAccountFrom(_ account: Account) {
         self.accountFrom = account
         accountFromBtn.setTitle(account.name, for: .normal)
+        guard let currency = accountFrom?.currency else {return}
+        setUIByCarrency(currency, currencyRate: 1.0, showCurrencyRate: false)
     }
     
     func handleAccountTo(_ account: Account) {

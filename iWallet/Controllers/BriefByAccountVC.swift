@@ -136,7 +136,7 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
-        headerView.backgroundColor = #colorLiteral(red: 0, green: 0.8549019608, blue: 0.8745098039, alpha: 0.25)
+        headerView.backgroundColor = #colorLiteral(red: 0.7568627451, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         let dateLabel = UILabel(frame: CGRect(x: 16, y: 0, width: 64, height: 32))
         dateLabel.text = sections[section].date
         dateLabel.font = UIFont(name: "Avenir-Heavy", size: 17)

@@ -40,12 +40,7 @@ class AddCategoryVC: UIViewController {
             categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: category.color)
             collectionView.isHidden = true
         }
-//        self.saveCategoryBtn.bindToKeyBoard()
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(AddCategoryVC.handleTap))
-//        self.view.addGestureRecognizer(tap)
-//        categoryNameTxt.inputAccessoryView = saveCategoryBtn
         saveCategoryBtn.isEnabled = false
-        saveCategoryBtn.setDeselectedColor()
     }
     
     @objc func handleTap() {
@@ -91,10 +86,8 @@ class AddCategoryVC: UIViewController {
         guard let text = categoryNameTxt.text else {return}
         if text.isEmpty {
             saveCategoryBtn.isEnabled = false
-            saveCategoryBtn.setDeselectedColor()
         } else {
             saveCategoryBtn.isEnabled = true
-            saveCategoryBtn.setSelectedColor()
         }
     }
     @IBAction func backBtnPressed(_ sender: Any) {
@@ -128,7 +121,6 @@ extension AddCategoryVC: CategoryProtocol, UITextFieldDelegate {
         collectionView.isHidden = true
         if let text = categoryNameTxt.text, text != ""{
             saveCategoryBtn.isEnabled = true
-            saveCategoryBtn.setSelectedColor()
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -37,6 +37,8 @@
 		9A730031207602AF002F84F6 /* SelectAccountVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A73002F207602AF002F84F6 /* SelectAccountVC.xib */; };
 		9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */; };
 		9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */; };
+		9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B6208F32FB0048D82B /* WalletCell.swift */; };
+		9A8044B9208F32FB0048D82B /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A8044B7208F32FB0048D82B /* WalletCell.xib */; };
 		9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */; };
 		9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */; };
 		9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */; };
@@ -121,6 +123,8 @@
 		9A73002F207602AF002F84F6 /* SelectAccountVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountVC.xib; sourceTree = "<group>"; };
 		9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlaceBySearchVC.swift; sourceTree = "<group>"; };
 		9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPlaceBySearchVC.xib; sourceTree = "<group>"; };
+		9A8044B6208F32FB0048D82B /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
+		9A8044B7208F32FB0048D82B /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
 		9A9D2D3A206548F300CC7DE0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		9A9D2D3B206548F300CC7DE0 /* UIViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		9A9D2D3C206548F300CC7DE0 /* UIButtonExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExt.swift; sourceTree = "<group>"; };
@@ -259,6 +263,7 @@
 				9AE093C22087550A00CF43E6 /* PhotoCell.xib */,
 				9A4A531D208790AA00E90EEA /* PhotoVC.xib */,
 				9A3853FB208A3F59008B804D /* PlaceCell.xib */,
+				9A8044B7208F32FB0048D82B /* WalletCell.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 				9AE093C12087550A00CF43E6 /* PhotoCell.swift */,
 				9A4A53222088604700E90EEA /* ScrollViewWithTopAndBottomFixedViews.swift */,
 				9A3853FA208A3F59008B804D /* PlaceCell.swift */,
+				9A8044B6208F32FB0048D82B /* WalletCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -444,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */,
+				9A8044B9208F32FB0048D82B /* WalletCell.xib in Resources */,
 				9A65982D206BFB3100519722 /* Main.storyboard in Resources */,
 				9A730031207602AF002F84F6 /* SelectAccountVC.xib in Resources */,
 				9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */,
@@ -565,6 +572,7 @@
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
 				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
+				9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */,
 				9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */,
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
