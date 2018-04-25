@@ -16,18 +16,25 @@ class MainVC: UIViewController {
     @IBOutlet weak var cardsTableView: UITableView!
     @IBOutlet weak var menuBtn: UIButton!
     @IBOutlet weak var monthLbl: UILabel!
+    @IBOutlet weak var expanceBtn: UIButton!
+    @IBOutlet weak var incomeBtn: UIButton!
     
     var cards = [(name: String, expance: String, income: String)]()
     var cash = [(name: String, expance: String, income: String)]()
     var accounts = [(name: String, expance: String, income: String)]()
     var date = Date()
     private var currentCalendar: Calendar?
-    
+    var selectedCardsRow: Int?
+    var selectedCashRow: Int?
     @IBAction func openAddTransactionBtnPressed(_ sender: Any) {
         let addTransaction = AddTransactionVC()
         addTransaction.modalPresentationStyle = .custom
         addTransaction.delegate = self
         presentDetail(addTransaction)
+    }
+    @IBAction func expanceBtnPressed(_ sender: Any) {
+    }
+    @IBAction func incomeBtnPressed(_ sender: Any) {
     }
     
     override func awakeFromNib() {
@@ -147,13 +154,13 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             if tableView == cashTableView {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as? WalletCell{
                     let cash = self.cash[indexPath.row]
-                    cell.configureCell(name: cash.name, expance: cash.expance, income: cash.income, card: false)
+                    cell.configureCell(name: cash.name, expance: cash.expance, income: cash.income, selected: selectedCashRow == indexPath.row, card: false)
                     return cell
                 }
             } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as? WalletCell{
                     let card = self.cards[indexPath.row]
-                    cell.configureCell(name: card.name, expance: card.expance, income: card.income, card: true, cardNumber: indexPath.row)
+                    cell.configureCell(name: card.name, expance: card.expance, income: card.income, selected: selectedCardsRow == indexPath.row, card: true, cardNumber: indexPath.row)
                     return cell
                 }
             }
@@ -163,9 +170,17 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-        
+        if tableView == cashTableView {
+            selectedCashRow = indexPath.row
+            selectedCardsRow = nil
+        } else {
+            selectedCashRow = nil
+            selectedCardsRow = indexPath.row
+        }
+        cashTableView.reloadData()
+        cardsTableView.reloadData()
     }
+    
+   
 }
 
