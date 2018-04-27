@@ -336,7 +336,7 @@ class CoreDataService{
         }
     }
     
-    func fetchAccountsExpance(ByDate date: Date, complition: ([NSDictionary])->()){
+    func fetchAccountsCosts(ByDate date: Date, complition: ([NSDictionary])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
         
@@ -351,7 +351,7 @@ class CoreDataService{
         fetchRequest.propertiesToGroupBy = ["account.name"]
         fetchRequest.propertiesToFetch = ["account.name", sumDesc]
         fetchRequest.resultType = .dictionaryResultType
-        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.expance.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
+        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.costs.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
         fetchRequest.predicate = predicate
         do{
             if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
@@ -418,7 +418,7 @@ class CoreDataService{
             fetchRequest.propertiesToFetch = [sumDesc]
             fetchRequest.resultType = .dictionaryResultType
             if let account = byAccount {
-                let predicate = NSPredicate(format: "account == %@ AND account.external == %@ AND type == %@", account, NSNumber(value: false), TransactionType.expance.rawValue)
+                let predicate = NSPredicate(format: "account == %@ AND account.external == %@ AND type == %@", account, NSNumber(value: false), TransactionType.costs.rawValue)
                 fetchRequest.predicate = predicate
             } else {
                 let predicate = NSPredicate(format: "account.external == %@ AND type == %@", NSNumber(value: false), TransactionType.income.rawValue)

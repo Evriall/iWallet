@@ -453,7 +453,7 @@ class AddTransactionVC: UIViewController {
     
     func saveTransferTransactions(amount: Double, amountWithCurrencyRate: Double, accountFrom: Account, accountTo: Account, category: Category){
         
-        CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.expance.rawValue , date: self.date, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+        CoreDataService.instance.saveTransaction(amount: amount, desc: self.descriptionTxt.text, type: TransactionType.costs.rawValue , date: self.date, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
             saveTransactionTags(transaction: transaction, tags: self.tags)
             saveTransactionPhotos(transaction: transaction, photos: self.photos)
             

@@ -30,12 +30,12 @@ class TransactionCell: UITableViewCell {
         categoryNameLbl.lineBreakMode = .byWordWrapping
         categoryNameLbl.text = CategoryHelper.instance.textNameCategory(category: transaction.category)
         guard let transactionType = transaction.type else {return}
-        amountLbl.text = transactionType == TransactionType.expance.rawValue ? "-" + transaction.amount.description : transaction.amount.description
+        amountLbl.text = transactionType == TransactionType.costs.rawValue ? "-" + transaction.amount.description : transaction.amount.description
         var description = ""
         if let transfer = transaction.transfer {
             guard let nameTransactionFrom = transaction.account?.name else {return}
             guard let nameTransactionTo = transfer.account?.name else {return}
-            if transactionType == TransactionType.expance.rawValue {
+            if transactionType == TransactionType.costs.rawValue {
                 description = "\(nameTransactionFrom) → \(nameTransactionTo)"
             } else {
                 description = "\(nameTransactionTo) → \(nameTransactionFrom)"

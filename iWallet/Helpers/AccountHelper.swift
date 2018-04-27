@@ -54,8 +54,8 @@ class AccountHelper{
     
     func evaluateBalance(byAccount: Account? = nil, complition: (Double)->()){
         CoreDataService.instance.evaluateAllIncome(byAccount: byAccount) { (incomeSum) in
-            CoreDataService.instance.evaluateAllExpanse(byAccount: byAccount, complition: { (expanceSum) in
-                complition(incomeSum - expanceSum)
+            CoreDataService.instance.evaluateAllExpanse(byAccount: byAccount, complition: { (costsSum) in
+                complition(incomeSum - costsSum)
             })
         }
         

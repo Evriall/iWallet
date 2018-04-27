@@ -101,7 +101,7 @@ class BriefByAccountVC: UIViewController {
                     tempDate = transactionDate
                 }
                 transactionsByDay.append(item)
-                sumByDay += transactionType == TransactionType.expance.rawValue ? -item.amount : item.amount
+                sumByDay += transactionType == TransactionType.costs.rawValue ? -item.amount : item.amount
             }
             if transactionsByDay.count > 0 {
                 sections.append(("\(tempDate)", "\(sumByDay)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))"))

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
+		9A1849222093913C0083E13E /* ViewWithBottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1849212093913C0083E13E /* ViewWithBottomButton.swift */; };
 		9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */; };
 		9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853FA208A3F59008B804D /* PlaceCell.swift */; };
 		9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A3853FB208A3F59008B804D /* PlaceCell.xib */; };
@@ -66,6 +67,7 @@
 		9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD7820716AC4001AA162 /* ColorsConfig.swift */; };
 		9AB9841220921BED008E84D9 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB9841020921BED008E84D9 /* CoinCell.swift */; };
 		9AB9841320921BED008E84D9 /* CoinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AB9841120921BED008E84D9 /* CoinCell.xib */; };
+		9AB9841520934FEE008E84D9 /* CircularLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB9841420934FEE008E84D9 /* CircularLabel.swift */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
 		9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */; };
@@ -96,6 +98,7 @@
 /* Begin PBXFileReference section */
 		1F0844252092F4D146C20B7B /* Pods-iWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.release.xcconfig"; sourceTree = "<group>"; };
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
+		9A1849212093913C0083E13E /* ViewWithBottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithBottomButton.swift; sourceTree = "<group>"; };
 		9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceProtocol.swift; sourceTree = "<group>"; };
 		9A3853FA208A3F59008B804D /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		9A3853FB208A3F59008B804D /* PlaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 		9AABAD7820716AC4001AA162 /* ColorsConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsConfig.swift; sourceTree = "<group>"; };
 		9AB9841020921BED008E84D9 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
 		9AB9841120921BED008E84D9 /* CoinCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinCell.xib; sourceTree = "<group>"; };
+		9AB9841420934FEE008E84D9 /* CircularLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLabel.swift; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9ABA9AF92063DB4500ADA34E /* iWallet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iWallet.xcdatamodel; sourceTree = "<group>"; };
@@ -376,9 +380,11 @@
 				9A538FC92083C1B200107B31 /* TagCell.swift */,
 				9AE093C12087550A00CF43E6 /* PhotoCell.swift */,
 				9A4A53222088604700E90EEA /* ScrollViewWithTopAndBottomFixedViews.swift */,
+				9A1849212093913C0083E13E /* ViewWithBottomButton.swift */,
 				9A3853FA208A3F59008B804D /* PlaceCell.swift */,
 				9A8044B6208F32FB0048D82B /* WalletCell.swift */,
 				9AB9841020921BED008E84D9 /* CoinCell.swift */,
+				9AB9841420934FEE008E84D9 /* CircularLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -598,6 +604,7 @@
 				9ADCC8BB2080BAEB00F446E4 /* SelectCurrencyVC.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
 				9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */,
+				9AB9841520934FEE008E84D9 /* CircularLabel.swift in Sources */,
 				9A4A531B20878D9400E90EEA /* ImageHelper.swift in Sources */,
 				9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */,
 				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,
@@ -605,6 +612,7 @@
 				9A65983E206D46DD00519722 /* TypeAndCurrencyCell.swift in Sources */,
 				9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */,
 				9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */,
+				9A1849222093913C0083E13E /* ViewWithBottomButton.swift in Sources */,
 				9A73000D2073A0A3002F84F6 /* TransactionCell.swift in Sources */,
 				9A659839206D41F200519722 /* AccountProtocol.swift in Sources */,
 				9A4A53232088604700E90EEA /* ScrollViewWithTopAndBottomFixedViews.swift in Sources */,

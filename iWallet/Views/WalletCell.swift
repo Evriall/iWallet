@@ -10,7 +10,7 @@ import UIKit
 
 class WalletCell: UITableViewCell {
     @IBOutlet weak var accountNameLbl: UILabel!
-    @IBOutlet weak var expanceLbl: UILabel!
+    @IBOutlet weak var costsLbl: UILabel!
     @IBOutlet weak var incomeLbl: UILabel!
     @IBOutlet weak var imgViewTop: UIImageView!
     @IBOutlet weak var imgViewBottom: UIImageView!
@@ -26,9 +26,9 @@ class WalletCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(name: String, expance: String, income: String, selected: Bool, card: Bool, cardNumber: Int = 0){
+    func configureCell(name: String, costs: String, income: String, selected: Bool, card: Bool, cardNumber: Int = 0){
         accountNameLbl.text = name
-        expanceLbl.text = expance
+        costsLbl.text = costs
         incomeLbl.text = income
         if card {
             imgViewTop.image = UIImage(named: "CardIconTop" + "\(cardNumber % 2)")
