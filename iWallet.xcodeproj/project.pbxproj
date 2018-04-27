@@ -64,6 +64,8 @@
 		9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD6F207147E8001AA162 /* CalendarVC.swift */; };
 		9AABAD7720716716001AA162 /* CalendarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD7620716716001AA162 /* CalendarProtocol.swift */; };
 		9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD7820716AC4001AA162 /* ColorsConfig.swift */; };
+		9AB9841220921BED008E84D9 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB9841020921BED008E84D9 /* CoinCell.swift */; };
+		9AB9841320921BED008E84D9 /* CoinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AB9841120921BED008E84D9 /* CoinCell.xib */; };
 		9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */; };
 		9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9AF82063DB4500ADA34E /* iWallet.xcdatamodeld */; };
 		9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA9AFB2063DB4500ADA34E /* Assets.xcassets */; };
@@ -151,6 +153,8 @@
 		9AABAD7420714CCF001AA162 /* CVCalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CVCalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AABAD7620716716001AA162 /* CalendarProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarProtocol.swift; sourceTree = "<group>"; };
 		9AABAD7820716AC4001AA162 /* ColorsConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsConfig.swift; sourceTree = "<group>"; };
+		9AB9841020921BED008E84D9 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
+		9AB9841120921BED008E84D9 /* CoinCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinCell.xib; sourceTree = "<group>"; };
 		9ABA9AEE2063DB4500ADA34E /* iWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABA9AF12063DB4500ADA34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9ABA9AF92063DB4500ADA34E /* iWallet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iWallet.xcdatamodel; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 				9AE093C22087550A00CF43E6 /* PhotoCell.xib */,
 				9A4A531D208790AA00E90EEA /* PhotoVC.xib */,
 				9A3853FB208A3F59008B804D /* PlaceCell.xib */,
+				9AB9841120921BED008E84D9 /* CoinCell.xib */,
 				9A8044B7208F32FB0048D82B /* WalletCell.xib */,
 			);
 			path = XIBs;
@@ -373,6 +378,7 @@
 				9A4A53222088604700E90EEA /* ScrollViewWithTopAndBottomFixedViews.swift */,
 				9A3853FA208A3F59008B804D /* PlaceCell.swift */,
 				9A8044B6208F32FB0048D82B /* WalletCell.swift */,
+				9AB9841020921BED008E84D9 /* CoinCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -459,6 +465,7 @@
 				9A538FCC2083C1B200107B31 /* TagCell.xib in Resources */,
 				9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */,
 				9AE093C42087550A00CF43E6 /* PhotoCell.xib in Resources */,
+				9AB9841320921BED008E84D9 /* CoinCell.xib in Resources */,
 				9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */,
 				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
@@ -580,6 +587,7 @@
 				9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,
+				9AB9841220921BED008E84D9 /* CoinCell.swift in Sources */,
 				9AF34A05208A1C74005A94C7 /* SelectPlaceVC.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
