@@ -50,8 +50,28 @@ class MainVC: UIViewController {
     var selectedParentCategory: Int?
 
     @IBAction func costsBtnPressed(_ sender: Any) {
+        if let cardsRow = selectedCardsRow {
+            fetchCategoriesCostsData(account: cards[cardsRow].name)
+        }
+        if let cashRow = selectedCashRow {
+            fetchCategoriesCostsData(account: cash[cashRow].name)
+        }
+        incomeBtn.isEnabled = true
+        costsBtn.isEnabled = false
+        incomeBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)
+        costsBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1)
     }
     @IBAction func incomeBtnPressed(_ sender: Any) {
+        if let cardsRow = selectedCardsRow {
+            fetchCategoriesIncomeData(account: cards[cardsRow].name)
+        }
+        if let cashRow = selectedCashRow {
+            fetchCategoriesIncomeData(account: cash[cashRow].name)
+        }
+        incomeBtn.isEnabled = false
+        costsBtn.isEnabled = true
+        incomeBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1)
+        costsBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)
     }
     
     override func awakeFromNib() {
@@ -136,7 +156,6 @@ class MainVC: UIViewController {
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
         setMonthLabel()
         fetchData()
-        selectedParentCategory = 0
         setCategoryContentWidth()
     }
     func setCategoryHeight(){
@@ -164,7 +183,181 @@ class MainVC: UIViewController {
         parentCategoryScrollView.contentSize = CGSize(width: CGFloat(widthParent), height: CGFloat(parentCategoryHeight))
         childCategoryScrollView.contentSize = CGSize(width: CGFloat(widthChild), height: CGFloat(childCategoryHeight))
     }
+    
+    func fetchCategoriesCostsData(account: String){
+        selectedParentCategory = nil
+        parentCategories = []
+        childCategories = []
+        CoreDataService.instance.fetchCategoriesCosts(ByAccount: account, WithDate: date, complition: { (results) in
+            var parentIterator = ""
+            var parentSum = 0.0
+            var parentIndex = 0
+            var parentColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            for arrayItem in results {
+                
+                if let category = arrayItem["category.name"] as? String, let sum = arrayItem["sum"] as? Double {
+                    if let parent = arrayItem["category.parent.name"] as? String {
+                        if parent != parentIterator {
+                            if parentIterator.isEmpty {
+                                CoreDataService.instance.fetchCategory(ByName: parent, complition: { (fetchedParent) in
+                                    for item in fetchedParent {
+                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                                    }
+                                })
+                                childCategories.append([])
+                                parentIterator = parent
+                            } else {
+                                CoreDataService.instance.fetchCategory(ByName: parentIterator, complition: { (fetchedParent) in
+                                    for item in fetchedParent {
+                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                                    }
+                                    childCategories.append([])
+                                    parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
+                                    parentIterator = parent
+                                    parentIndex += 1
+                                    parentSum = 0.0
+                                })
+                            }
+                        }
+                        childCategories[parentIndex].append(CoinCategory(name: category, amount: sum, color: parentColor))
+                        parentSum += sum
+                    } else {
+                        if parentIterator.isEmpty {
+                            CoreDataService.instance.fetchCategory(ByName: category, complition: { (fetchedParent) in
+                                for item in fetchedParent {
+                                    parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                                }
+                            })
+                            childCategories.append([])
+                            parentIterator = category
+                        } else {
+                            if category != parentIterator {
+                                CoreDataService.instance.fetchCategory(ByName: parentIterator, complition: { (fetchedParent) in
+                                    for item in fetchedParent {
+                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                                    }
+                                    childCategories.append([])
+                                    if !parentIterator.isEmpty{
+                                        parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
+                                    }
+                                    parentIterator = category
+                                    parentIndex += 1
+                                    parentSum = 0.0
+                                })
+                            }
+                        }
+                        parentSum += sum
+                    }
+                    
+                }
+            }
+            if !parentIterator.isEmpty {
+                parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
+            }
+        })
+        if parentCategories.count > 0 {
+            selectedParentCategory = 0
+        }
+        parentCategoryCollectionView?.reloadData()
+        childCategoryCollectionView?.reloadData()
+    }
+    
+    func fetchCategoriesIncomeData(account: String){
+        selectedParentCategory = nil
+        parentCategories = []
+        childCategories = []
+        CoreDataService.instance.fetchCategoriesIncome(ByAccount: account, WithDate: date, complition: { (results) in
+            var parentIterator = ""
+            var parentSum = 0.0
+            var parentIndex = 0
+            var parentColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            for arrayItem in results {
+                
+                if let category = arrayItem["category.name"] as? String, let sum = arrayItem["sum"] as? Double {
+                    if let parent = arrayItem["category.parent.name"] as? String {
+                        if parent != parentIterator {
+                            if parentIterator.isEmpty {
+                                CoreDataService.instance.fetchCategory(ByName: parent, complition: { (fetchedParent) in
+                                    for item in fetchedParent {
+                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                                    }
+                                })
+                                childCategories.append([])
+                                parentIterator = parent
+                            } else {
+                                CoreDataService.instance.fetchCategory(ByName: parentIterator, complition: { (fetchedParent) in
+                                    for item in fetchedParent {
+                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                                    }
+                                    childCategories.append([])
+                                    parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
+                                    parentIterator = parent
+                                    parentIndex += 1
+                                    parentSum = 0.0
+                                })
+                            }
+                        }
+                        childCategories[parentIndex].append(CoinCategory(name: category, amount: sum, color: parentColor))
+                        parentSum += sum
+                    } else {
+                        if parentIterator.isEmpty {
+                            CoreDataService.instance.fetchCategory(ByName: category, complition: { (fetchedParent) in
+                                for item in fetchedParent {
+                                    parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                                }
+                            })
+                            childCategories.append([])
+                            parentIterator = category
+                        } else {
+                            if category != parentIterator {
+                                CoreDataService.instance.fetchCategory(ByName: parentIterator, complition: { (fetchedParent) in
+                                    for item in fetchedParent {
+                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
+                                    }
+                                    childCategories.append([])
+                                    if !parentIterator.isEmpty{
+                                        parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
+                                    }
+                                    parentIterator = category
+                                    parentIndex += 1
+                                    parentSum = 0.0
+                                })
+                            }
+                        }
+                         parentSum += sum
+                    }
+                    
+                }
+            }
+            if !parentIterator.isEmpty {
+                parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
+            }
+        })
+        if parentCategories.count > 0 {
+            selectedParentCategory = 0
+        }
+        parentCategoryCollectionView?.reloadData()
+        childCategoryCollectionView?.reloadData()
+    }
 
+    func fetchCategoryData(ByAccount account: (name: String, costs: String, income: String)){
+        let costs = Double(account.costs) ?? 0.0
+        let income = Double(account.income[0..<account.income.count-1]) ?? 0.0
+        if income > costs {
+           fetchCategoriesIncomeData(account: account.name)
+           incomeBtn.isEnabled = false
+            costsBtn.isEnabled = true
+            incomeBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1)
+            costsBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)
+        } else {
+           fetchCategoriesCostsData(account: account.name)
+            incomeBtn.isEnabled = true
+            costsBtn.isEnabled = false
+            incomeBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)
+            costsBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1)
+        }
+    }
+    
     func fetchData(){
         cash = []
         cards = []
@@ -193,18 +386,42 @@ class MainVC: UIViewController {
                                 }
                         }
                 }
-                for accountItem in accounts {
+                accounts.sort(by: { (arg0, arg1) -> Bool in
+                    let (_, costs0, income0) = arg0
+                    let (_, costs1, income1) = arg1
+                    let sum0 = (Double(costs0) ?? 0.0)  + (Double(income0) ?? 0.0)
+                    let sum1 = (Double(costs1) ?? 0.0 ) + (Double(income1) ?? 0.0)
+                    return sum0 > sum1
+                })
+                
+                for (index, accountItem) in accounts.enumerated() {
                     CoreDataService.instance.fetchAccount(byName: accountItem.name, complition: { (fetchedAccounts) in
                         for fetchedAccount in fetchedAccounts {
                             guard let type = fetchedAccount.type, let currency = fetchedAccount.currency else {continue}
                             if  type == AccountType.Cash.rawValue {
+                                if index == 0 {
+                                    selectedCashRow = 0
+                                }
                                 cash.append((name: accountItem.name, costs: accountItem.costs, income: accountItem.income  + AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)))
                             } else {
+                                if index == 0 {
+                                    selectedCardsRow = 0
+                                }
                                  cards.append((name: accountItem.name, costs: accountItem.costs , income: accountItem.income + AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)))
                             }
                         }
                     })
                 }
+                if accounts.count > 0 {
+                    fetchCategoryData(ByAccount: accounts[0])
+                } else {
+                    parentCategories = []
+                    childCategories = []
+                    selectedParentCategory = nil
+                    parentCategoryCollectionView?.reloadData()
+                    childCategoryCollectionView?.reloadData()
+                }
+                
                 cardsTableView.reloadData()
                 cashTableView.reloadData()
             })
@@ -341,9 +558,11 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         if tableView == cashTableView {
             selectedCashRow = indexPath.row
             selectedCardsRow = nil
+            fetchCategoryData(ByAccount: (name: cash[indexPath.row].name, costs: cash[indexPath.row].costs, income: cash[indexPath.row].income))
         } else {
             selectedCashRow = nil
             selectedCardsRow = indexPath.row
+            fetchCategoryData(ByAccount: (name: cards[indexPath.row].name, costs: cards[indexPath.row].costs, income: cards[indexPath.row].income))
         }
         cashTableView.reloadData()
         cardsTableView.reloadData()
