@@ -72,6 +72,32 @@ class CoreDataService{
         }
     }
     
+    func fetchCategory(ByName name: String, WithParent parent: String, complition: (_ complete: [Category])-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        let predicate = NSPredicate(format: "name == %@ AND parent.name == %@", name)
+        fetchRequest.predicate = predicate
+        do{
+            let category = try managedContext.fetch(fetchRequest) as! [Category]
+            complition(category)
+        } catch {
+            debugPrint("Could not fetch category by name \(name) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchCategoryParent(ByName name: String, complition: (_ complete: [Category])-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        let predicate = NSPredicate(format: "name == %@ AND parent == nil", name)
+        fetchRequest.predicate = predicate
+        do{
+            let category = try managedContext.fetch(fetchRequest) as! [Category]
+            complition(category)
+        } catch {
+            debugPrint("Could not fetch category by name \(name) \(error.localizedDescription)")
+        }
+    }
+    
     func fetchCategory(ByObjectID id: String, complition: (_ complete: Category)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")

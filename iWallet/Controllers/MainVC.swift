@@ -50,28 +50,30 @@ class MainVC: UIViewController {
     var selectedParentCategory: Int?
 
     @IBAction func costsBtnPressed(_ sender: Any) {
+        incomeBtn.isEnabled = true
+        costsBtn.isEnabled = false
+        incomeBtn.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75), for: .normal)
+        costsBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
         if let cardsRow = selectedCardsRow {
             fetchCategoriesCostsData(account: cards[cardsRow].name)
         }
         if let cashRow = selectedCashRow {
             fetchCategoriesCostsData(account: cash[cashRow].name)
         }
-        incomeBtn.isEnabled = true
-        costsBtn.isEnabled = false
-        incomeBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)
-        costsBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1)
+        
     }
+    
     @IBAction func incomeBtnPressed(_ sender: Any) {
+        incomeBtn.isEnabled = false
+        costsBtn.isEnabled = true
+        incomeBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
+        costsBtn.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75), for: .normal)
         if let cardsRow = selectedCardsRow {
             fetchCategoriesIncomeData(account: cards[cardsRow].name)
         }
         if let cashRow = selectedCashRow {
             fetchCategoriesIncomeData(account: cash[cashRow].name)
         }
-        incomeBtn.isEnabled = false
-        costsBtn.isEnabled = true
-        incomeBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1)
-        costsBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)
     }
     
     override func awakeFromNib() {
@@ -120,7 +122,7 @@ class MainVC: UIViewController {
         parentCategoryCollectionView?.showsHorizontalScrollIndicator = false
         parentCategoryCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
-        childCategoryCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: Double(self.view.frame.width), height: childCategoryHeight), collectionViewLayout: layoutCCV)
+        childCategoryCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: Double(self.coinView.frame.width), height: childCategoryHeight), collectionViewLayout: layoutCCV)
         childCategoryCollectionView?.delegate = self
         childCategoryCollectionView?.dataSource = self
         childCategoryCollectionView?.register(UINib(nibName: "CoinCell", bundle: nil), forCellWithReuseIdentifier: "CoinCell")
@@ -140,17 +142,7 @@ class MainVC: UIViewController {
         childCategoryScrollView?.showsHorizontalScrollIndicator = false
         childCategoryScrollView?.delegate = self
         childCategoryScrollView?.addSubview(childCategoryCollectionView!)
-        
-        
-        parentCategories.append(CoinCategory(name: "Bank", amount: 10000.0, color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)))
-        parentCategories.append(CoinCategory(name: "Communication", amount: 1000.0, color: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)))
-        parentCategories.append(CoinCategory(name: "Transport", amount: 100.0, color: #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)))
-        parentCategories.append(CoinCategory(name: "Bank", amount: 10000.0, color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)))
-        parentCategories.append(CoinCategory(name: "Communication", amount: 1000.0, color: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)))
-        parentCategories.append(CoinCategory(name: "Transport", amount: 100.0, color: #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)))
-        childCategories.append([CoinCategory(name: "Bank", amount: 10000.0, color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)),CoinCategory(name: "Bank", amount: 10000.0, color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)),CoinCategory(name: "Bank", amount: 10000.0, color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)), CoinCategory(name: "Bank", amount: 10000.0, color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)),CoinCategory(name: "Bank", amount: 10000.0, color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)),CoinCategory(name: "Bank", amount: 10000.0, color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1))])
-        childCategories.append([CoinCategory(name: "Communication", amount: 1000.0, color: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1))])
-        childCategories.append([CoinCategory(name: "Transport", amount: 100.0, color: #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1))])
+    
         menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
@@ -177,9 +169,8 @@ class MainVC: UIViewController {
                 widthChild += Double(childCategories[selectedParent].count) * (childCategoryHeight + 8)
                 widthChild -= 8
         }
-        
-        parentCategoryCollectionView?.frame = CGRect(x: 0, y: 0, width: widthParent, height: parentCategoryHeight)
-        childCategoryCollectionView?.frame = CGRect(x: 0, y: 0, width: widthChild, height: childCategoryHeight)
+        parentCategoryCollectionView?.frame = CGRect(x: 0, y: 0, width: widthParent < (parentCategoryHeight + 16) ? (parentCategoryHeight + 16) : widthParent, height: parentCategoryHeight)
+        childCategoryCollectionView?.frame = CGRect(x: 0, y: 0, width: widthChild < (childCategoryHeight + 16) ? (childCategoryHeight + 16) : widthChild, height: childCategoryHeight)
         parentCategoryScrollView.contentSize = CGSize(width: CGFloat(widthParent), height: CGFloat(parentCategoryHeight))
         childCategoryScrollView.contentSize = CGSize(width: CGFloat(widthChild), height: CGFloat(childCategoryHeight))
     }
@@ -199,7 +190,7 @@ class MainVC: UIViewController {
                     if let parent = arrayItem["category.parent.name"] as? String {
                         if parent != parentIterator {
                             if parentIterator.isEmpty {
-                                CoreDataService.instance.fetchCategory(ByName: parent, complition: { (fetchedParent) in
+                                CoreDataService.instance.fetchCategoryParent(ByName: parent, complition: { (fetchedParent) in
                                     for item in fetchedParent {
                                         parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
                                     }
@@ -207,7 +198,7 @@ class MainVC: UIViewController {
                                 childCategories.append([])
                                 parentIterator = parent
                             } else {
-                                CoreDataService.instance.fetchCategory(ByName: parentIterator, complition: { (fetchedParent) in
+                                CoreDataService.instance.fetchCategoryParent(ByName: parentIterator, complition: { (fetchedParent) in
                                     for item in fetchedParent {
                                         parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
                                     }
@@ -223,7 +214,7 @@ class MainVC: UIViewController {
                         parentSum += sum
                     } else {
                         if parentIterator.isEmpty {
-                            CoreDataService.instance.fetchCategory(ByName: category, complition: { (fetchedParent) in
+                            CoreDataService.instance.fetchCategoryParent(ByName: category, complition: { (fetchedParent) in
                                 for item in fetchedParent {
                                     parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
                                 }
@@ -232,7 +223,7 @@ class MainVC: UIViewController {
                             parentIterator = category
                         } else {
                             if category != parentIterator {
-                                CoreDataService.instance.fetchCategory(ByName: parentIterator, complition: { (fetchedParent) in
+                                CoreDataService.instance.fetchCategoryParent(ByName: parentIterator, complition: { (fetchedParent) in
                                     for item in fetchedParent {
                                         parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
                                     }
@@ -257,6 +248,17 @@ class MainVC: UIViewController {
         })
         if parentCategories.count > 0 {
             selectedParentCategory = 0
+        }
+        setCategoryContentWidth()
+        parentCategories.sort { (arg0, arg1) -> Bool in
+            return arg0.amount > arg1.amount
+        }
+        for (index, item) in childCategories.enumerated() {
+            var childArray = item
+            childArray.sort { (arg0, arg1) -> Bool in
+                return arg0.amount > arg1.amount
+            }
+            childCategories[index] = childArray
         }
         parentCategoryCollectionView?.reloadData()
         childCategoryCollectionView?.reloadData()
@@ -336,6 +338,17 @@ class MainVC: UIViewController {
         if parentCategories.count > 0 {
             selectedParentCategory = 0
         }
+        setCategoryContentWidth()
+        parentCategories.sort { (arg0, arg1) -> Bool in
+            return arg0.amount > arg1.amount
+        }
+        for (index, item) in childCategories.enumerated() {
+            var childArray = item
+            childArray.sort { (arg0, arg1) -> Bool in
+                return arg0.amount > arg1.amount
+            }
+            childCategories[index] = childArray
+        }
         parentCategoryCollectionView?.reloadData()
         childCategoryCollectionView?.reloadData()
     }
@@ -347,14 +360,14 @@ class MainVC: UIViewController {
            fetchCategoriesIncomeData(account: account.name)
            incomeBtn.isEnabled = false
             costsBtn.isEnabled = true
-            incomeBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1)
-            costsBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)
+            incomeBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
+            costsBtn.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75), for: .normal)
         } else {
            fetchCategoriesCostsData(account: account.name)
             incomeBtn.isEnabled = true
             costsBtn.isEnabled = false
-            incomeBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75)
-            costsBtn.titleLabel?.textColor = #colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1)
+            incomeBtn.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.75), for: .normal)
+            costsBtn.setTitleColor(#colorLiteral(red: 1, green: 0.831372549, blue: 0.02352941176, alpha: 1), for: .normal)
         }
     }
     
@@ -362,6 +375,8 @@ class MainVC: UIViewController {
         cash = []
         cards = []
         accounts = []
+        selectedCashRow = nil
+        selectedCardsRow = nil
         CoreDataService.instance.fetchAccountsIncome(ByDate: date) { (accountsArray) in
             for arrayItem in accountsArray {
                     if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double {
@@ -489,7 +504,7 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             if collectionView == parentCategoryCollectionView {
                 if let cell = parentCategoryCollectionView?.dequeueReusableCell(withReuseIdentifier: "CoinCell", for: indexPath) as? CoinCell {
                     let category = parentCategories[indexPath.row]
-                    cell.configureCell(name: category.name, amount: category.amount, color: category.color, currencySymbol: "$",dimensionRate: getDimensionParentCategoryCell(index: indexPath.row) / baseCategoryHeight, parent: true)
+                    cell.configureCell(name: category.name, amount: category.amount, color: category.color, currencySymbol: "$",dimensionRate: getDimensionParentCategoryCell(index: indexPath.row) / baseCategoryHeight, parent: true, selected: selectedParentCategory == indexPath.row)
                     return cell
                 }
             } else {
@@ -516,6 +531,7 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         if collectionView == parentCategoryCollectionView {
             selectedParentCategory = indexPath.row
             setCategoryContentWidth()
+            parentCategoryCollectionView?.reloadData()
             childCategoryCollectionView?.reloadData()
         }
     }

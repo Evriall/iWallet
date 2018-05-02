@@ -22,12 +22,16 @@ class CalendarVC: UIViewController {
     @IBAction func closeBtnPressed(_ sender: Any) {
         dismissDetail()
     }
-    override func awakeFromNib() {
+
+    func setUPCalendar(){
         let timeZoneBias = 480 // (UTC+08:00)
         currentCalendar = Calendar(identifier: .gregorian)
         currentCalendar?.locale = Locale(identifier: "eng_ENG")
         if let timeZone = TimeZone(secondsFromGMT: -timeZoneBias * 60) {
             currentCalendar?.timeZone = timeZone
+        }
+        if let calendar = currentCalendar {
+            monthLbl.text = CVDate(date: Date(), calendar: calendar).globalDescription
         }
     }
     
@@ -36,11 +40,8 @@ class CalendarVC: UIViewController {
         menuView.menuViewDelegate = self
         calendarView.calendarDelegate = self
         calendarView.calendarAppearanceDelegate = self
-        if let currentCalendar = currentCalendar {
-            monthLbl.text = CVDate(date: Date(), calendar: currentCalendar).globalDescription
-        }
+        setUPCalendar()
         calendarView.contentController.refreshPresentedMonth()
-//        calendarView.toggleViewWithDate(currentDate)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -123,8 +124,4 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCale
         default: return nil
         }
     }
-    
-//    func didShowNextMonthView(_ date: Date) {
-////        calendarView.contentController.refreshPresentedMonth()
-//    }
 }

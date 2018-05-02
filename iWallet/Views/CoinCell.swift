@@ -21,12 +21,16 @@ class CoinCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func configureCell(name: String, amount: Double, color: UIColor, currencySymbol: String, dimensionRate: Double = 1.0, parent: Bool){
+    func configureCell(name: String, amount: Double, color: UIColor, currencySymbol: String, dimensionRate: Double = 1.0, parent: Bool, selected: Bool = false){
        
         categoryLbl.text = name
         amountLbl.text = "\(amount)"
         currencyLbl.text = currencySymbol
-        imgView.image = UIImage(named: parent ? "CoinIconGold" : "CoinIconSilver")
+        if selected {
+           imgView.image = UIImage(named: parent ? "CoinIconGoldSelected" : "CoinIconSilverSelected")
+        } else {
+            imgView.image = UIImage(named: parent ? "CoinIconGold" : "CoinIconSilver")
+        }
         imgView.backgroundColor = color
         amountLeadingConstraint.constant *= CGFloat(dimensionRate)
         amountTrailingConstraint.constant *= CGFloat(dimensionRate)
