@@ -38,7 +38,7 @@ class AccountHelper{
     
     func getCurrencySymbol(byCurrencyCode currencyCode: String) -> String {
         let currSymbol = Locale.availableIdentifiers.map{ Locale(identifier: $0)}.filter { return currencyCode == $0.currencyCode }.map { ($0.identifier, $0.currencySymbol) }.flatMap {$0}.first
-        return currSymbol?.1 ?? ""
+        return currSymbol?.1 ?? currencyCode
     }
     
     func initPersonalAccount(_ complition: (Bool)->()){

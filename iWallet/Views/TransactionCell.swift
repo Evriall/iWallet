@@ -28,23 +28,15 @@ class TransactionCell: UITableViewCell {
     
     func configureCell(transaction: Transaction){
         categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: transaction.category?.color)
+        categoryImg.isHidden = false
         categoryNameLbl.lineBreakMode = .byWordWrapping
         categoryNameLbl.text = CategoryHelper.instance.textNameCategory(category: transaction.category)
         guard let transactionType = transaction.type else {return}
         amountLbl.text = transactionType == TransactionType.costs.rawValue ? "-" + transaction.amount.description : transaction.amount.description
-        var description = ""
-        if let transfer = transaction.transfer {
-            guard let nameTransactionFrom = transaction.account?.name else {return}
-            guard let nameTransactionTo = transfer.account?.name else {return}
-            if transactionType == TransactionType.costs.rawValue {
-                description = "\(nameTransactionFrom) → \(nameTransactionTo)"
-            } else {
-                description = "\(nameTransactionTo) → \(nameTransactionFrom)"
-            }
-        } else if let place = transaction.place {
-            description = place.name ?? ""
-        }
+        let description = TransactionHelper.instance.getTransactionDescription(transaction: transaction)
         infoLbl.text = description
+        infoLbl.isHidden = description.isEmpty
+        self.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
     
     func configureCell(name: String, amount: String, dark: Bool) {

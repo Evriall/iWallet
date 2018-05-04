@@ -9,20 +9,17 @@
 import UIKit
 
 class Detail {
-    let name: String
-    init(name: String) {
-        self.name = name
-    }
 }
 
 class AccountDetail: Detail {
     var amount: Double = 0.0
-    override init(name: String) {
-        super.init(name: name)
+    var name: String
+    init(name: String) {
+        self.name = name
     }
-    init(name: String, amount: Double) {
+    convenience init(name: String, amount: Double) {
+        self.init(name: name)
         self.amount = amount
-        super.init(name: name)
     }
     
 }
@@ -30,12 +27,10 @@ class DateDetail: AccountDetail {
     
 }
 
-class TransactionDetail: AccountDetail {
-    var description: String
-    init(name: String, amount: Double, description: String) {
-        self.description = description
-        super.init(name: name, amount: amount)
-        
+class TransactionDetail: Detail {
+    var transaction: Transaction
+    init(transaction: Transaction) {
+        self.transaction = transaction
     }
 }
 
@@ -43,23 +38,26 @@ class TagVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
    
     @IBOutlet weak var menuBtn: UIButton!
-    var tags = [String]()
+    var searchKeys = [String]()
     var tagsTableView: UITableView?
+    var tagSC: UISegmentedControl?
     var tagsView: UIView?
-    var tagTextField: UITextField?
+    var searchTextField: UITextField?
     var details = [Detail]()
     var accounts = [AccountDetail]()
     var dates = [[DateDetail]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(AddTransactionVC.handleTap))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(TagVC.handleTap))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
-        let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 30.0))
+        let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 61.0))
+        let separatorView = UIView(frame: CGRect(x: 0.0, y: 60.0, width: tableView.frame.width, height: 1.0))
+        separatorView.backgroundColor = #colorLiteral(red: 0.7529411765, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
         tagsView = UIView(frame: CGRect(x: 32.0, y: 30.0 + 77.0, width: self.view.frame.width - 64.0, height: 0.0))
         tagsView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         tagsTableView = UITableView(frame: CGRect(x: -8.0, y: 0.0, width: (tagsView?.frame.width)! - 40.0, height: 0.0))
@@ -68,21 +66,37 @@ class TagVC: UIViewController {
         tagsTableView?.rowHeight = 60
         tagsTableView?.separatorStyle = .none
         tagsTableView?.sectionIndexColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        tagsTableView?.isScrollEnabled = false
         tagsTableView?.register(UINib(nibName: "TypeAndCurrencyCell", bundle: nil), forCellReuseIdentifier: "TypeAndCurrencyCell")
         tagsView?.addSubview(tagsTableView!)
         tagsView?.isHidden = true
-        tagTextField = UITextField(frame: CGRect(x: 40.0, y: 0.0, width: tableView.frame.width, height: 30.0))
-        tagTextField?.delegate = self
-        tagTextField?.font = UIFont(name: "Avenir-Heavy", size: 20.0)
-        tagTextField?.placeholder = "Search"
-        tagTextField?.addTarget(self, action: #selector(TagVC.textFieldDidChange), for: UIControlEvents.editingChanged)
-        let searchGlassImageView = UIImageView(frame: CGRect(x: 8.0, y: 3.0, width: 24.0, height: 24.0))
+        
+        tagSC = UISegmentedControl(items: ["TAG","DESCRIPTION"])
+        tagSC?.selectedSegmentIndex = 0
+        tagSC?.tintColor = #colorLiteral(red: 0, green: 0.568627451, blue: 0.5764705882, alpha: 1)
+        tagSC?.addTarget(self, action: #selector(TagVC.handleSegmentChanged), for: .valueChanged)
+        tagSC?.frame = CGRect(x: -4.0, y: 0.0, width: tableView.frame.width + 8, height: 30.0)
+        
+        searchTextField = UITextField(frame: CGRect(x: 40.0, y: 30.0, width: tableView.frame.width - 64, height: 30.0))
+        searchTextField?.delegate = self
+        searchTextField?.font = UIFont(name: "Avenir-Heavy", size: 20.0)
+        searchTextField?.placeholder = "TAG"
+        searchTextField?.addTarget(self, action: #selector(TagVC.textFieldDidChange), for: UIControlEvents.editingChanged)
+        let closeBtn = UIButton(frame: CGRect(x: headerView.frame.width - 26.0, y: 36.0, width: 18.0, height: 18.0))
+        closeBtn.addTarget(self, action: #selector(TagVC.closeBtnPressed), for: .touchUpInside)
+        closeBtn.setTitle("", for: .normal)
+        closeBtn.setImage(UIImage(named: "CloseTagGrey"), for: .normal)
+        let searchGlassImageView = UIImageView(frame: CGRect(x: 8.0, y: 36.0, width: 18.0, height: 18.0))
         searchGlassImageView.image = UIImage(named: "searchIconDark")
-        headerView.addSubview(tagTextField!)
+        headerView.addSubview(closeBtn)
+        headerView.addSubview(tagSC!)
+        headerView.addSubview(searchTextField!)
         headerView.addSubview(searchGlassImageView)
+        headerView.addSubview(separatorView)
         tableView.tableHeaderView = headerView
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
         tableView?.register(UINib(nibName: "TransactionCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
         self.view.addSubview(tagsView!)
         details.append(AccountDetail(name: "Privat", amount: 1000.0))
@@ -90,25 +104,77 @@ class TagVC: UIViewController {
         
     }
     
+    @objc func closeBtnPressed() {
+        details = []
+        searchKeys = []
+        searchTextField?.text = ""
+        tagsView?.isHidden = true
+        tagsTableView?.reloadData()
+        tableView.reloadData()
+    }
+    @objc func handleSegmentChanged(){
+        if tagSC?.selectedSegmentIndex == 0 {
+            fetchTags()
+             searchTextField?.placeholder = "TAG"
+        } else if tagSC?.selectedSegmentIndex == 1 {
+            fetchDescripitions()
+             searchTextField?.placeholder = "DESCRIPTION"
+        }
+        details = []
+        tableView.reloadData()
+    }
+    
     func fetchTags(){
-        if let tag = tagTextField?.text, !tag.isEmpty {
+        if let tag = searchTextField?.text, !tag.isEmpty {
             CoreDataService.instance.fetchPopularTagsName(ByStr: tag) { (tags) in
-                self.tags = tags
-                setTagsTableViewHeight()
+                self.searchKeys = tags
+                setSearchTableViewHeight()
                 tagsTableView?.reloadData()
             }
         } else {
-            tags = []
-            setTagsTableViewHeight()
+            searchKeys = []
+            setSearchTableViewHeight()
             tagsTableView?.reloadData()
         }
     }
-    @objc func textFieldDidChange(){
-        fetchTags()
+    
+    func fetchTransactionsByDescription(description: String){
+        details = []
+        if !description.isEmpty {
+            CoreDataService.instance.fetchTransactions(ByDescription: description) { (transactions) in
+                for item in transactions {
+                    details.append(TransactionDetail(transaction: item))
+                }
+                self.tableView.reloadData()
+            }
+        }
+        
     }
-    func setTagsTableViewHeight(){
-        let height = CGFloat(tags.count * 60)
-        tagsView?.frame = CGRect(x: 32.0, y: 30.0 + 77.0, width: self.view.frame.width - 64.0, height: height >= self.view.frame.size.height ? self.view.frame.size.height - (60 + 77 + 30): height)
+    
+    func fetchDescripitions(){
+        if let tag = searchTextField?.text, !tag.isEmpty {
+            CoreDataService.instance.fetchTransactionsDescriptions(ByStr: tag) { (desc) in
+                self.searchKeys = desc
+                setSearchTableViewHeight()
+                tagsTableView?.reloadData()
+            }
+        } else {
+            searchKeys = []
+            setSearchTableViewHeight()
+            tagsTableView?.reloadData()
+        }
+    }
+    
+    @objc func textFieldDidChange(){
+        if tagSC?.selectedSegmentIndex == 0 {
+            fetchTags()
+        } else {
+            fetchDescripitions()
+        }
+    }
+    func setSearchTableViewHeight(){
+        let height = CGFloat(searchKeys.count * 44)
+        tagsView?.frame = CGRect(x: 32.0, y: 30.0 + 30.0 + 77.0, width: self.view.frame.width - 64.0, height: height >= self.view.frame.size.height ? self.view.frame.size.height - (60 + 77 + 30): height)
         tagsTableView?.frame = CGRect(x: -8.0, y: 0.0, width: (tagsView?.frame.width)! - 8.0, height: height >= self.view.frame.size.height ? self.view.frame.size.height - (60 + 77 + 30): height)
     }
     
@@ -117,15 +183,41 @@ class TagVC: UIViewController {
         tagsView?.isHidden = true
     }
 }
+extension TagVC: BriefProtocol {
+    func handleTransaction() {
+        if tagSC?.selectedSegmentIndex == 1 {
+            if searchKeys.count > 0 {
+                fetchTransactionsByDescription(description: searchKeys[0])
+            }
+        }
+    }
+    
+    
+}
+
 extension TagVC:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if tagSC?.selectedSegmentIndex == 0 {
+            if searchKeys.count > 0 {
+                searchTextField?.text = searchKeys[0]
+            }
+        } else {
+            if searchKeys.count > 0 {
+                searchTextField?.text = searchKeys[0]
+                fetchTransactionsByDescription(description: searchKeys[0])
+            }
+        }
+        tagsView?.isHidden = true
         self.view.endEditing(true)
         return true
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        fetchTags()
         tagsView?.isHidden = false
-        
+        if tagSC?.selectedSegmentIndex == 0 {
+            fetchTags()
+        } else {
+            fetchDescripitions()
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -140,7 +232,7 @@ extension TagVC: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tagsTableView {
-            return tags.count
+            return searchKeys.count
         } else {
             return details.count
         }
@@ -149,7 +241,7 @@ extension TagVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == tagsTableView {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "TypeAndCurrencyCell", for: indexPath) as? TypeAndCurrencyCell {
-                cell.configureCell(item: tags[indexPath.row])
+                cell.configureCell(item: searchKeys[indexPath.row])
                 return cell
             }
         } else {
@@ -166,6 +258,13 @@ extension TagVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
             
+            if let detail = details[indexPath.row] as? TransactionDetail{
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath) as? TransactionCell {
+                    cell.configureCell(transaction: detail.transaction)
+                    return cell
+                }
+            }
+            
         }
         return UITableViewCell()
     }
@@ -175,9 +274,18 @@ extension TagVC: UITableViewDelegate, UITableViewDataSource {
         if tableView == tagsTableView {
             tagsView?.isHidden = true
             tableView.deselectRow(at: indexPath, animated: false)
-            tagTextField?.text = tags[indexPath.row]
+            searchTextField?.text = searchKeys[indexPath.row]
+            fetchTransactionsByDescription(description: searchKeys[indexPath.row])
         } else {
             tagsView?.isHidden = true
+            if let detail  = details[indexPath.row] as? TransactionDetail {
+                let addTransaction = AddTransactionVC()
+                addTransaction.delegate = self
+                addTransaction.transaction = detail.transaction
+                addTransaction.modalPresentationStyle = .custom
+                presentDetail(addTransaction)
+                
+            }
         }
     }
 
@@ -185,6 +293,14 @@ extension TagVC: UITableViewDelegate, UITableViewDataSource {
         if tableView == self.tableView {
             if details[indexPath.row] is AccountDetail || details[indexPath.row] is DateDetail {
                 return 30.0
+            } else {
+                if let detail = details[indexPath.row] as? TransactionDetail {
+                    if TransactionHelper.instance.getTransactionDescription(transaction: detail.transaction).isEmpty {
+                        return 30.0
+                    } else {
+                        return 50.0
+                    }
+                }
             }
         }
         return 44.0

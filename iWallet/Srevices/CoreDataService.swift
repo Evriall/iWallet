@@ -349,6 +349,35 @@ class CoreDataService{
         }
     }
     
+    //Description
+    
+    func fetchTransactionsDescriptions(ByStr str: String, complition: ([String])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        let sortDescriptor = [NSSortDescriptor(key: "desc", ascending: true)]
+        fetchRequest.sortDescriptors = sortDescriptor
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToFetch = ["desc"]
+        fetchRequest.propertiesToGroupBy = ["desc"]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "desc contains[c] %@", str)
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchLimit = 6
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                var descArray = [String]()
+                for item in resultArray{
+                    if let value = item["desc"] as? String {
+                        descArray.append(value)
+                    }
+                }
+                complition(descArray )
+            }
+        } catch {
+            debugPrint("Could not fetch descriptions \(error.localizedDescription)")
+        }
+    }
+    
     //Photo
     
     func savePhoto(name: String, image: UIImage, transaction: Transaction) {
@@ -434,6 +463,21 @@ class CoreDataService{
             complition(transaction)
         } catch {
             debugPrint("Could not fetch transactions for account \(account.name) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchTransactions(ByDescription description: String, complition: ([Transaction])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        let predicate = NSPredicate(format: "desc == %@", description)
+        let sortDescriptor = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptor
+        do{
+            let transaction = try managedContext.fetch(fetchRequest) as! [Transaction]
+            complition(transaction)
+        } catch {
+            debugPrint("Could not fetch transactions by description \(description) \(error.localizedDescription)")
         }
     }
     

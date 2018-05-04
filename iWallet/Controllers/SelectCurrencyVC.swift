@@ -39,6 +39,7 @@ class SelectCurrencyVC: UIViewController {
                             for currency in currencies {
                                 self.fetchCurrencyRate(baseCode: currency, pairCode: self.pairCurrency, date: dateToFetch)
                             }
+                            self.tableView.reloadData()
                         }
                     })
                 } else {
@@ -47,6 +48,7 @@ class SelectCurrencyVC: UIViewController {
                             for currency in currencies {
                                 self.fetchCurrencyRate(baseCode: currency, pairCode: self.pairCurrency, date: dateToFetch)
                             }
+                            self.tableView.reloadData()
                         }
                     })
                 }
@@ -90,6 +92,7 @@ class SelectCurrencyVC: UIViewController {
         view.addGestureRecognizer(tap)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(UINib(nibName: "TypeAndCurrencyCell", bundle: nil), forCellReuseIdentifier: "TypeAndCurrencyCell")
         
         searchBar.placeholder = "Search currency"
@@ -168,7 +171,10 @@ extension SelectCurrencyVC: UISearchBarDelegate {
             filteredCurrencies = currencies.filter { currency in
                 return currency.code.lowercased().contains(searchText.lowercased()) || currency.name.lowercased().contains(searchText.lowercased())
             }
-        tableView.reloadData()
         }
+        tableView.reloadData()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
     }
 }

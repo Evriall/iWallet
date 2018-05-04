@@ -555,6 +555,7 @@ class AddTransactionVC: UIViewController {
                     if success {
                         saveTransactionTags(transaction: transaction, tags: self.tags)
                         saveTransactionPhotos(transaction: transaction, photos: self.photos)
+                        delegate?.handleTransaction()
                         dismissDetail()
                     }
                 }

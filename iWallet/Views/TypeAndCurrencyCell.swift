@@ -18,7 +18,9 @@ class TypeAndCurrencyCell: UITableViewCell {
     }
     
     func configureCell(pairCode: String, currencyRate: String = ""){
-        let pairName = Locale.current.localizedString(forCurrencyCode: pairCode) ?? ""
+       
+        print(pairCode, " : ", Locale.current.localizedString(forCurrencyCode: pairCode))
+        let pairName = Locale.current.localizedString(forCurrencyCode: pairCode) ?? pairCode
         titleLbl.text = pairName
         if !currencyRate.isEmpty {
             descriptionLbl.text = currencyRate
