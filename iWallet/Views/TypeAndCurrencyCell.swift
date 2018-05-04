@@ -10,8 +10,8 @@ import UIKit
 
 class TypeAndCurrencyCell: UITableViewCell {
 
-    @IBOutlet weak var Lbl: UILabel!
-    @IBOutlet weak var currencyRateLbl: UILabel!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var descriptionLbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,15 +19,17 @@ class TypeAndCurrencyCell: UITableViewCell {
     
     func configureCell(pairCode: String, currencyRate: String = ""){
         let pairName = Locale.current.localizedString(forCurrencyCode: pairCode) ?? ""
-        Lbl.text = pairName
+        titleLbl.text = pairName
         if !currencyRate.isEmpty {
-            currencyRateLbl.text = currencyRate
-            currencyRateLbl.isHidden = false
+            descriptionLbl.text = currencyRate
+            descriptionLbl.isHidden = false
         }
+//        let bgView = UIView(frame: CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: self.frame.height))
+//        bgView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        self.selectedBackgroundView = bgView
     }
     
     func configureCell(item: String){
-        Lbl.text = item
+        titleLbl.text = item
     }
-
 }

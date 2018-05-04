@@ -14,6 +14,10 @@ class SlideVC: UIViewController {
     
     var accounts = [Account]()
     
+    @IBAction func openTagBtnPresed(_ sender: Any) {
+        let tagVC = storyboard?.instantiateViewController(withIdentifier: "TagVC")
+        revealViewController().pushFrontViewController(tagVC, animated: true)
+    }
     @IBAction func openMainBtnPressed(_ sender: Any) {
         let mainVC = storyboard?.instantiateViewController(withIdentifier: "MainVC")
         revealViewController().pushFrontViewController(mainVC, animated: true)

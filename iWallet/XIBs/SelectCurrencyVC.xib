@@ -33,23 +33,44 @@
                             <rect key="frame" x="0.0" y="56" width="382" height="520"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="wuY-BD-pqN">
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXr-bc-ImO">
                             <rect key="frame" x="0.0" y="0.0" width="382" height="56"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="wuY-BD-pqN">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="56"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="56" id="wfU-U5-OQk"/>
+                                    </constraints>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="toC-Z7-JpF">
+                                    <rect key="frame" x="-16" y="0.0" width="55" height="56"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="55" id="qSZ-C2-Fux"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                    <state key="normal" title="Close">
+                                        <color key="titleColor" red="0.0" green="0.56862745100000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="closeBtnPressed:" destination="-1" eventType="touchUpInside" id="whG-PP-GDA"/>
+                                    </connections>
+                                </button>
+                            </subviews>
                             <constraints>
-                                <constraint firstAttribute="height" constant="56" id="wfU-U5-OQk"/>
+                                <constraint firstAttribute="height" constant="56" id="iVc-Cw-U7U"/>
                             </constraints>
-                            <textInputTraits key="textInputTraits"/>
-                        </searchBar>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="wuY-BD-pqN" firstAttribute="top" secondItem="f0T-Oj-q8G" secondAttribute="top" id="6r5-CW-YLE"/>
-                        <constraint firstAttribute="bottom" secondItem="zBX-m7-ce6" secondAttribute="bottom" id="Ewp-3J-9R6"/>
-                        <constraint firstItem="zBX-m7-ce6" firstAttribute="leading" secondItem="f0T-Oj-q8G" secondAttribute="leading" id="K8i-2c-XF3"/>
-                        <constraint firstItem="zBX-m7-ce6" firstAttribute="top" secondItem="wuY-BD-pqN" secondAttribute="bottom" id="RYD-iN-sd2"/>
-                        <constraint firstAttribute="trailing" secondItem="zBX-m7-ce6" secondAttribute="trailing" id="Sn3-If-uJc"/>
-                        <constraint firstAttribute="trailing" secondItem="wuY-BD-pqN" secondAttribute="trailing" id="Zl8-Bf-BQV"/>
-                        <constraint firstItem="wuY-BD-pqN" firstAttribute="leading" secondItem="f0T-Oj-q8G" secondAttribute="leading" id="fdf-0l-zYx"/>
+                        <constraint firstItem="fXr-bc-ImO" firstAttribute="top" secondItem="f0T-Oj-q8G" secondAttribute="top" id="7kK-K9-moH"/>
+                        <constraint firstItem="zBX-m7-ce6" firstAttribute="top" secondItem="fXr-bc-ImO" secondAttribute="bottom" id="CH1-en-lCb"/>
+                        <constraint firstAttribute="trailing" secondItem="fXr-bc-ImO" secondAttribute="trailing" id="IDv-0K-V6B"/>
+                        <constraint firstAttribute="trailing" secondItem="zBX-m7-ce6" secondAttribute="trailing" id="dHs-Q8-fFL"/>
+                        <constraint firstAttribute="bottom" secondItem="zBX-m7-ce6" secondAttribute="bottom" id="miV-zB-JqX"/>
+                        <constraint firstItem="fXr-bc-ImO" firstAttribute="leading" secondItem="f0T-Oj-q8G" secondAttribute="leading" id="qhm-4k-eRA"/>
+                        <constraint firstItem="zBX-m7-ce6" firstAttribute="leading" secondItem="f0T-Oj-q8G" secondAttribute="leading" id="sP1-ve-ge8"/>
                     </constraints>
                 </view>
             </subviews>

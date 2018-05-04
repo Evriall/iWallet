@@ -14,6 +14,7 @@ class TransactionCell: UITableViewCell {
     @IBOutlet weak var categoryNameLbl: UILabel!
     @IBOutlet weak var amountLbl: UILabel!
     @IBOutlet weak var infoLbl: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -44,6 +45,18 @@ class TransactionCell: UITableViewCell {
             description = place.name ?? ""
         }
         infoLbl.text = description
+    }
+    
+    func configureCell(name: String, amount: String, dark: Bool) {
+        categoryImg.isHidden = true
+        categoryNameLbl.text = name
+        amountLbl.text = amount
+        infoLbl.isHidden = true
+        if dark {
+            self.backgroundColor = #colorLiteral(red: 0, green: 0.8549019608, blue: 0.8745098039, alpha: 1)
+        } else {
+            self.backgroundColor = #colorLiteral(red: 0.7568627451, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
+        }
     }
 
 }

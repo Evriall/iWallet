@@ -267,6 +267,65 @@ class CoreDataService{
         }
     }
     
+//    func fetchPlace(ByName name: String,complition: @escaping ([Place])->()){
+//        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Place")
+//        let predicate = NSPredicate(format: "name contains[c] %@", name)
+//        fetchRequest.predicate = predicate
+//        do{
+//            let place = try managedContext.fetch(fetchRequest) as! [Place]
+//            complition(place)
+//        } catch {
+//            debugPrint("Could not fetch places\(error.localizedDescription)")
+//        }
+//    }
+    
+    func fetchPopularTagsName(ByStr str: String, complition: ([String])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Tag")
+        
+        let keypathExp = NSExpression(forKeyPath: "transaction")
+        let expression = NSExpression(forFunction: "count:", arguments: [keypathExp])
+        
+        let countDesc = NSExpressionDescription()
+        countDesc.expression = expression
+        countDesc.name = "count"
+        countDesc.expressionResultType = .integer64AttributeType
+        
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["name"]
+        fetchRequest.propertiesToFetch = ["name", countDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "name contains[c] %@", str)
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchLimit = 6
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                var sortedResult = resultArray
+                var tagArray = [String]()
+                sortedResult.sort { (arg0, arg1) -> Bool in
+                    var sum0 = 0
+                    var sum1 = 0
+                    if let value = arg0["count"] as? Int {
+                        sum0 += value
+                    }
+                    if let value = arg1["count"] as? Int {
+                        sum1 += value
+                    }
+                    return sum0 > sum1
+                }
+                for item in sortedResult{
+                   if let value = item["name"] as? String {
+                            tagArray.append(value)
+                    }
+                }
+                complition(tagArray)
+            }
+        } catch {
+            debugPrint("Could not fetch tags \(error.localizedDescription)")
+        }
+    }
+    
     func fetchTags(transaction: Transaction, complition: (_ complete: [Tag])-> ()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Tag")
@@ -398,7 +457,7 @@ class CoreDataService{
         let sumDesc = NSExpressionDescription()
         sumDesc.expression = expression
         sumDesc.name = "sum"
-        sumDesc.expressionResultType = .doubleAttributeType
+        sumDesc.expressionResultType = .integer64AttributeType
         fetchRequest.returnsObjectsAsFaults = false
         fetchRequest.propertiesToGroupBy = ["account.name"]
         fetchRequest.propertiesToFetch = ["account.name", sumDesc]

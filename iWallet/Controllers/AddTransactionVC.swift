@@ -107,7 +107,8 @@ class AddTransactionVC: UIViewController {
         selectCurrency.modalPresentationStyle = .custom
         selectCurrency.pairCurrency = currencyCode
         selectCurrency.delegate = self
-        presentDetail(selectCurrency)
+//        presentDetail(selectCurrency)
+        present(selectCurrency , animated: false, completion: nil)
     }
     
     func setUpUIElements(){
@@ -817,7 +818,7 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
         
     }
     
-    func handleCarrency(_ currency: String, currencyRate: Double) {
+    func handleCurrency(_ currency: String, currencyRate: Double) {
         setUIByCarrency(currency, currencyRate: currencyRate)
         
     }

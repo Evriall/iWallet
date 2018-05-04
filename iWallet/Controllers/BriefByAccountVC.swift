@@ -46,6 +46,7 @@ class BriefByAccountVC: UIViewController {
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
         tableView.delegate = self
         tableView.dataSource = self
+        tableView?.register(UINib(nibName: "TransactionCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
         self.tableView.sectionHeaderHeight = 32
         CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID) { (account) in
             self.account = account

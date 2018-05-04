@@ -64,7 +64,7 @@ class AddAccountVC: UIViewController {
 }
 
 extension AddAccountVC: UITextFieldDelegate, AccountProtocol {
-    func handleCarrency(_ currency: String, currencyRate: Double) {
+    func handleCurrency(_ currency: String, currencyRate: Double) {
         currencyAccountBtn.setTitle(currency, for: .normal)
     }
 

@@ -9,6 +9,6 @@
 import Foundation
 
 protocol AccountProtocol {
-    func handleCarrency(_ currency: String, currencyRate: Double)
+    func handleCurrency(_ currency: String, currencyRate: Double)
     func handleAccountType(_ type: String)
 }

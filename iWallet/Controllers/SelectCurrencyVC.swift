@@ -16,59 +16,61 @@ class SelectCurrencyVC: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     var delegate: AccountProtocol?
-    var filteredCurrencies = [(code: String, rate: Double)]()
-    var currencies = [(code: String, rate: Double)]()
+    var filteredCurrencies = [(code: String, name: String, rate: Double)]()
+    var currencies = [(code: String, name: String, rate: Double)]()
     var date: Date = Date()
     var pairCurrency = ""
     
-    func fetchCurrencyRate(baseCode: String, pairCode: String, date: Date){
+    func fetchCurrenciesRate(currencies: [String]){
+        let dateToFetch = date >= Date().startOfDay() ? Date().startOfDay() : date
+        var flagNotFetchedCurrencyRate = false
+        for currency in currencies {
+            if !fetchCurrencyRate(baseCode: currency, pairCode: pairCurrency, date: dateToFetch) {
+                flagNotFetchedCurrencyRate = true
+                self.currencies = []
+                break
+            }
+        }
+        if flagNotFetchedCurrencyRate {
+            if NetworkReachabilityManager()!.isReachable {
+                if  Date().startOfDay() == dateToFetch {
+                    ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
+                        if success {
+                            for currency in currencies {
+                                self.fetchCurrencyRate(baseCode: currency, pairCode: self.pairCurrency, date: dateToFetch)
+                            }
+                        }
+                    })
+                } else {
+                    ExchangeService.instance.getHistoricalCurrencyRate(date: date, complition: { (success) in
+                        if success {
+                            for currency in currencies {
+                                self.fetchCurrencyRate(baseCode: currency, pairCode: self.pairCurrency, date: dateToFetch)
+                            }
+                        }
+                    })
+                }
+            } else {
+                self.showAlert()
+            }
+        }
+        self.tableView.reloadData()
+    }
+    
+    func fetchCurrencyRate(baseCode: String, pairCode: String, date: Date) -> (Bool){
+        var flag = false
         CoreDataService.instance.fetchCurrencyRate(base: baseCode, pair: pairCode, date: date) { (currencyRates) in
             if currencyRates.count > 0 {
                 if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: baseCode, pair: pairCode, rates: currencyRates) {
-                    self.currencies.append((code: baseCode, rate: currencyRate))
-                    self.tableView.reloadData()
+                    self.currencies.append((code: baseCode,name: Locale.current.localizedString(forCurrencyCode: baseCode) ?? "", rate: currencyRate))
+                    flag = true
                 } else {
                     print("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
                 }
             } else {
-                if NetworkReachabilityManager()!.isReachable {
-                    if  Date().startOfDay() <= date {
-                        ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
-                            if success {
-                                CoreDataService.instance.fetchCurrencyRate(base: baseCode, pair: pairCode, date: date) { (currencyRates) in
-                                    if currencyRates.count > 0 {
-                                        if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: baseCode, pair: pairCode, rates: currencyRates) {
-                                            self.currencies.append((code: baseCode, rate: currencyRate))
-                                            self.tableView.reloadData()
-                                        } else {
-                                            print("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
-                                        }
-                                    }
-                                }
-                                
-                            }
-                        })
-                    } else {
-                        ExchangeService.instance.getHistoricalCurrencyRate(date: date, complition: { (success) in
-                            if success {
-                                CoreDataService.instance.fetchCurrencyRate(base: baseCode, pair: pairCode, date: date) { (currencyRates) in
-                                    if currencyRates.count > 0 {
-                                        if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: baseCode, pair: pairCode, rates: currencyRates) {
-                                            self.currencies.append((code: baseCode, rate: currencyRate))
-                                            self.tableView.reloadData()
-                                        } else {
-                                            print("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
-                                        }
-                                    }
-                                }
-                            }
-                        })
-                    }
-                } else {
-                    self.showAlert()
-                }
             }
         }
+        return flag
     }
     
     func showAlert(){
@@ -83,6 +85,9 @@ class SelectCurrencyVC: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SelectCurrencyVC.handleTap))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "TypeAndCurrencyCell", bundle: nil), forCellReuseIdentifier: "TypeAndCurrencyCell")
@@ -91,35 +96,22 @@ class SelectCurrencyVC: UIViewController {
         searchBar.delegate = self
         
         CoreDataService.instance.fetchCurrenciesFromCurrencyRate { (currencies) in
-            if currencies.count > 0 {
-                
+            if pairCurrency.isEmpty {
                 for item in currencies {
-                    if pairCurrency.isEmpty {
-                        self.currencies.append((code: item, rate: 1.0))
-                    } else {
-                        fetchCurrencyRate(baseCode: item, pairCode: pairCurrency, date: date)
-                    }
+                    self.currencies.append((code: item, name: Locale.current.localizedString(forCurrencyCode: item) ?? "", rate: 1.0))
                 }
             } else {
-                if NetworkReachabilityManager()!.isReachable {
-                    ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
-                        if success {
-                            CoreDataService.instance.fetchCurrenciesFromCurrencyRate(complition: { (currencies) in
-                                for item in currencies {
-                                    if self.pairCurrency.isEmpty {
-                                        self.currencies.append((code: item, rate: 1.0))
-                                    } else {
-                                        self.fetchCurrencyRate(baseCode: item, pairCode: self.pairCurrency, date: self.date)
-                                    }
-                                }
-                            })
-                        }
-                    })
-                } else {
-                    showAlert()
-                }
+                fetchCurrenciesRate(currencies: currencies)
             }
         }
+    }
+    
+    @IBAction func closeBtnPressed(_ sender: Any) {
+        dismissDetail()
+    }
+    @objc func handleTap(){
+//        dismissDetail()
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -151,8 +143,9 @@ extension SelectCurrencyVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currency = selectCurrency(index: indexPath.row)
-        delegate?.handleCarrency(currency.code, currencyRate: currency.rate)
-        dismissDetail()
+        delegate?.handleCurrency(currency.code, currencyRate: currency.rate)
+//        dismissDetail()
+        dismiss(animated: true, completion: nil)
     }
 
     func isFiltering() -> Bool {
@@ -160,7 +153,7 @@ extension SelectCurrencyVC: UITableViewDataSource, UITableViewDelegate {
         return !text.isEmpty
     }
     
-    func selectCurrency(index: Int) -> (code: String, rate: Double) {
+    func selectCurrency(index: Int) -> (code: String, name: String, rate: Double) {
         if isFiltering() {
             return filteredCurrencies[index]
         } else {
@@ -173,7 +166,7 @@ extension SelectCurrencyVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let searchText = searchBar.text, !searchText.isEmpty {
             filteredCurrencies = currencies.filter { currency in
-                return currency.code.lowercased().contains(searchText.lowercased())
+                return currency.code.lowercased().contains(searchText.lowercased()) || currency.name.lowercased().contains(searchText.lowercased())
             }
         tableView.reloadData()
         }
