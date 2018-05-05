@@ -435,7 +435,7 @@ class AddTransactionVC: UIViewController {
         for item in tags {
             CoreDataService.instance.fetchTag(name: item.name, transaction: transaction) { (tag) in
                 if tag.count == 0 {
-                     CoreDataService.instance.saveTag(name: item.name, transaction: transaction)
+                     CoreDataService.instance.saveTag(name: item.name.lowercased().trimmingCharacters(in: .whitespacesAndNewlines), transaction: transaction)
                 }
             }
         }

@@ -10,7 +10,7 @@
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
 		9A1849222093913C0083E13E /* ViewWithBottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1849212093913C0083E13E /* ViewWithBottomButton.swift */; };
 		9A1EAE6C209B8D6100E56D33 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */; };
-		9A36663C2099F1D8005F6F4D /* TagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36663B2099F1D8005F6F4D /* TagVC.swift */; };
+		9A36663C2099F1D8005F6F4D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36663B2099F1D8005F6F4D /* SearchVC.swift */; };
 		9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */; };
 		9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853FA208A3F59008B804D /* PlaceCell.swift */; };
 		9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A3853FB208A3F59008B804D /* PlaceCell.xib */; };
@@ -102,7 +102,7 @@
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		9A1849212093913C0083E13E /* ViewWithBottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithBottomButton.swift; sourceTree = "<group>"; };
 		9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionCell.xib; sourceTree = "<group>"; };
-		9A36663B2099F1D8005F6F4D /* TagVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagVC.swift; sourceTree = "<group>"; };
+		9A36663B2099F1D8005F6F4D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceProtocol.swift; sourceTree = "<group>"; };
 		9A3853FA208A3F59008B804D /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		9A3853FB208A3F59008B804D /* PlaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
@@ -367,7 +367,7 @@
 				9A4A531C208790AA00E90EEA /* PhotoVC.swift */,
 				9AF34A03208A1C74005A94C7 /* SelectPlaceVC.swift */,
 				9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */,
-				9A36663B2099F1D8005F6F4D /* TagVC.swift */,
+				9A36663B2099F1D8005F6F4D /* SearchVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -587,7 +587,7 @@
 				9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */,
 				9A73000F2073C4FF002F84F6 /* BriefProtocol.swift in Sources */,
 				9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */,
-				9A36663C2099F1D8005F6F4D /* TagVC.swift in Sources */,
+				9A36663C2099F1D8005F6F4D /* SearchVC.swift in Sources */,
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,
 				9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */,
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,

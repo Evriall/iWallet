@@ -442,6 +442,8 @@ class CoreDataService{
         transaction.account = account
         transaction.category = category
         transaction.transfer = transfer
+        transaction.id = transaction.objectID.uriRepresentation().absoluteString
+        print(transaction.id)
         do{
             try managedContext.save()
             complition(transaction)
@@ -516,6 +518,37 @@ class CoreDataService{
             debugPrint("Could not evaluate income \(error.localizedDescription)")
         }
     }
+    
+    func fetchTransactions(ByTag tag: String, complition: ([Transaction])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Tag")
+        let predicate = NSPredicate(format: "name == %@", tag)
+        fetchRequest.propertiesToFetch = ["transaction.id"]
+        fetchRequest.resultType = .dictionaryResultType
+        fetchRequest.predicate = predicate
+        
+        do{
+            if let resultArrayID = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                var transactionIDs = [String]()
+                for item in resultArrayID {
+                    if let transactionID = item["transaction.id"] as? String{
+                        transactionIDs.append(transactionID)
+                    }
+                }
+                let fetchRequest2 = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+                let predicate2 = NSPredicate(format: "ANY id IN %@", transactionIDs)
+                let sortDescriptor = [NSSortDescriptor(key: "account.name", ascending: true), NSSortDescriptor(key: "date", ascending: false)]
+                fetchRequest2.sortDescriptors = sortDescriptor
+                fetchRequest2.predicate = predicate2
+                if let resultArray = try managedContext.fetch(fetchRequest2) as? [Transaction] {
+                    complition(resultArray)
+                }
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
     
     func fetchAccountsCosts(ByDate date: Date, complition: ([NSDictionary])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
