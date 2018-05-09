@@ -84,6 +84,24 @@ class ExchangeService{
         
     }
     
+    func fetchLastCurrencyRate(baseCode: String, pairCode: String, complition: @escaping (Double)->()){
+        let result = 1.0
+        CoreDataService.instance.fetchLastCurrencyRate(base: baseCode, pair: pairCode) { (currencyRates) in
+            if currencyRates.count > 0 {
+                if let currencyRate = self.evaluateCurrencyRate(base: baseCode, pair: pairCode, rates: currencyRates) {
+                    complition(currencyRate)
+                } else {
+                    print("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
+                    complition(result)
+                }
+            } else {
+                complition(result)
+            }
+        }
+    }
+    
+    
+    
     func evaluateCurrencyRate(base: String, pair: String, rates: [CurrencyRate]) -> (Double?){
         var baseRate = 0.0
         var pairRate = 0.0

@@ -20,6 +20,7 @@ class CoreDataService{
         category.systemName = system ? name : ""
         category.color = EncodeDecodeService.instance.fromUIColorToStr(color: color)
         category.parent = parent
+        category.id = category.objectID.uriRepresentation().absoluteString
         do{
             try managedContext.save()
             complition(true)
@@ -101,12 +102,12 @@ class CoreDataService{
     func fetchCategory(ByObjectID id: String, complition: (_ complete: Category)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        let predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = predicate
         do{
             let categories = try managedContext.fetch(fetchRequest) as! [Category]
             for item in categories {
-                if item.objectID.uriRepresentation().absoluteString == id {
-                    complition(item)
-                }
+                complition(item)
             }
         } catch {
             debugPrint("Could not fetch categories\(error.localizedDescription)")
@@ -211,12 +212,12 @@ class CoreDataService{
     func fetchAccount(ByObjectID id: String, complition: (_ complete: Account)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        let predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = predicate
         do{
             let accounts = try managedContext.fetch(fetchRequest) as! [Account]
             for item in accounts {
-                if item.objectID.uriRepresentation().absoluteString == id {
-                    complition(item)
-                }
+                complition(item)
             }
         } catch {
             debugPrint("Could not fetch account\(error.localizedDescription)")
@@ -232,6 +233,7 @@ class CoreDataService{
         account.currency = currency
         account.external = external
         account.systemName = external ? name : ""
+        account.id = account.objectID.uriRepresentation().absoluteString
         do{
             try managedContext.save()
             complition(true)
@@ -360,7 +362,7 @@ class CoreDataService{
         fetchRequest.propertiesToFetch = ["desc"]
         fetchRequest.propertiesToGroupBy = ["desc"]
         fetchRequest.resultType = .dictionaryResultType
-        let predicate = NSPredicate(format: "desc contains[c] %@", str)
+        let predicate = NSPredicate(format: "account.external == %@ AND desc contains[c] %@", NSNumber(value: false), str)
         fetchRequest.predicate = predicate
         fetchRequest.fetchLimit = 6
         do{
@@ -443,7 +445,6 @@ class CoreDataService{
         transaction.category = category
         transaction.transfer = transfer
         transaction.id = transaction.objectID.uriRepresentation().absoluteString
-        print(transaction.id)
         do{
             try managedContext.save()
             complition(transaction)
@@ -471,7 +472,7 @@ class CoreDataService{
     func fetchTransactions(ByDescription description: String, complition: ([Transaction])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
-        let predicate = NSPredicate(format: "desc == %@", description)
+        let predicate = NSPredicate(format: "account.external == %@ AND desc == %@", NSNumber(value: false), description)
         let sortDescriptor = [NSSortDescriptor(key: "date", ascending: false)]
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = sortDescriptor
@@ -522,7 +523,7 @@ class CoreDataService{
     func fetchTransactions(ByTag tag: String, complition: ([Transaction])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Tag")
-        let predicate = NSPredicate(format: "name == %@", tag)
+        let predicate = NSPredicate(format: "transaction.account.external == %@ AND name == %@", NSNumber(value: false),tag)
         fetchRequest.propertiesToFetch = ["transaction.id"]
         fetchRequest.resultType = .dictionaryResultType
         fetchRequest.predicate = predicate
@@ -738,6 +739,20 @@ class CoreDataService{
         }
     }
     
+    func fetchLastCurrencyRate(base: String, pair: String, complition: @escaping ([CurrencyRate])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrencyRate")
+        let predicate = NSPredicate(format: "(pair == %@ || pair == %@)", base, pair)
+        let sortDescriptor = [NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptor
+        do{
+            let currencyRate = try managedContext.fetch(fetchRequest) as! [CurrencyRate]
+            complition(currencyRate)
+        } catch {
+            debugPrint("Could not fetch currency rate by base \(base) and pair \(pair) \(error.localizedDescription)")
+        }
+    }
     
     func fetchCurrencyRate(base: String, pair: String, date: Date, complition: @escaping ([CurrencyRate])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
@@ -823,6 +838,70 @@ class CoreDataService{
             complition(place)
         } catch {
             debugPrint("Could not fetch last places \(error.localizedDescription)")
+        }
+    }
+    
+    //Places
+    
+    func fetchPlacesIncome(ByDate date: Date, complition: ([(place: String, amount: Double, latitude: Double, longitude: Double, currency: String)])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .integer64AttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["place.name", "place.latitude", "place.longitude", "account.currency"]
+        fetchRequest.propertiesToFetch = ["place.name", "place.latitude", "place.longitude", "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND place != nil AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.income.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                var places = [(place: String, amount: Double, latitude: Double, longitude: Double, currency: String)]()
+                for resultDict in resultArray {
+                    guard let place = resultDict["place.name"] as? String, let amount = resultDict["sum"] as? Double, let currency = resultDict["account.currency"] as? String, let longitude = resultDict["place.longitude"] as? Double, let latitude = resultDict["place.latitude"] as? Double else {continue}
+                    places.append((place: place, amount: amount, latitude: latitude, longitude: longitude, currency: currency))
+                }
+                complition(places)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchPlacesCosts(ByDate date: Date, complition: ([(place: String, amount: Double, latitude: Double, longitude: Double, currency: String)])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .integer64AttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["place.name", "place.latitude", "place.longitude", "account.currency"]
+        fetchRequest.propertiesToFetch = ["place.name", "place.latitude", "place.longitude", "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND place != nil AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.costs.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                var places = [(place: String, amount: Double, latitude: Double, longitude: Double, currency: String)]()
+                for resultDict in resultArray {
+                    guard let place = resultDict["place.name"] as? String, let amount = resultDict["sum"] as? Double, let currency = resultDict["account.currency"] as? String, let longitude = resultDict["place.longitude"] as? Double, let latitude = resultDict["place.latitude"] as? Double else {continue}
+                    places.append((place: place, amount: amount, latitude: latitude, longitude: longitude, currency: currency))
+                }
+                complition(places)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
         }
     }
     

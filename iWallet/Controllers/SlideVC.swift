@@ -51,6 +51,10 @@ class SlideVC: UIViewController {
         let addAccountVC = AddAccountVC()
         presentDetail(addAccountVC)
     }
+    @IBAction func mapBtnPressed(_ sender: Any) {
+        let mapVC = storyboard?.instantiateViewController(withIdentifier: "MapVC")
+        revealViewController().pushFrontViewController(mapVC, animated: true)
+    }
     
 }
 
@@ -72,7 +76,7 @@ extension SlideVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        AccountHelper.instance.currentAccount = accounts[indexPath.row].objectID.uriRepresentation().absoluteString
+        AccountHelper.instance.currentAccount = accounts[indexPath.row].id
         let brief = storyboard?.instantiateViewController(withIdentifier: "BriefByAccountVC")
         revealViewController().pushFrontViewController(brief, animated: true)
     }

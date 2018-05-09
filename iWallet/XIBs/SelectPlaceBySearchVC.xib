@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectPlaceBySearchVC" customModule="iWallet" customModuleProvider="target">
             <connections>
+                <outlet property="activity" destination="wjC-fh-WtQ" id="ggY-qm-HFn"/>
                 <outlet property="bgView" destination="u2s-Nc-QvC" id="V5Q-tK-PHB"/>
                 <outlet property="searchBar" destination="ZnH-YP-mja" id="d0o-zr-0eZ"/>
                 <outlet property="tableView" destination="W8F-7z-BnF" id="UoG-R7-ek9"/>
@@ -78,12 +79,17 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="wjC-fh-WtQ">
+                            <rect key="frame" x="169" y="277" width="37" height="37"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="W8F-7z-BnF" firstAttribute="leading" secondItem="u2s-Nc-QvC" secondAttribute="leading" id="0Ja-Uw-GOj"/>
                         <constraint firstAttribute="trailing" secondItem="W8F-7z-BnF" secondAttribute="trailing" id="8Mj-wF-6gD"/>
+                        <constraint firstItem="wjC-fh-WtQ" firstAttribute="centerY" secondItem="u2s-Nc-QvC" secondAttribute="centerY" id="KCk-OZ-lOB"/>
                         <constraint firstItem="W8F-7z-BnF" firstAttribute="top" secondItem="u2s-Nc-QvC" secondAttribute="top" id="iRV-XY-WVD"/>
+                        <constraint firstItem="wjC-fh-WtQ" firstAttribute="centerX" secondItem="u2s-Nc-QvC" secondAttribute="centerX" id="on6-xH-Qtu"/>
                         <constraint firstAttribute="bottom" secondItem="W8F-7z-BnF" secondAttribute="bottom" id="pDv-Ij-igm"/>
                     </constraints>
                 </view>

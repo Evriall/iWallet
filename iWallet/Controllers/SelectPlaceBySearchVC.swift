@@ -14,10 +14,12 @@ class SelectPlaceBySearchVC: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var activity: UIActivityIndicatorView!
     
     var location: CLLocation?
     var places = [Place]()
     var delegate : PlaceProtocol?
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,13 @@ class SelectPlaceBySearchVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "PlaceCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+        activity.startAnimating()
     }
     @IBAction func cancelBtnPressed(_ sender: Any) {
         dismissDetail()
@@ -60,10 +69,8 @@ extension SelectPlaceBySearchVC: UITableViewDelegate, UITableViewDataSource {
         return CGFloat(30)
         
     }
-}
-
-extension SelectPlaceBySearchVC: UISearchBarDelegate{
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    
+    func fetchData(){
         if let searchText = searchBar.text, !searchText.isEmpty {
             tableView.isHidden = false
             bgView.alpha = 1
@@ -96,5 +103,73 @@ extension SelectPlaceBySearchVC: UISearchBarDelegate{
             bgView.alpha = 0.3
             tableView.reloadData()
         }
+    }
+}
+
+extension SelectPlaceBySearchVC: UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+       fetchData()
+    }
+}
+
+extension SelectPlaceBySearchVC: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            self.location = location
+            locationManager.stopUpdatingLocation()
+            activity.stopAnimating()
+            activity.isHidden = true
+            fetchData()
+        }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if(status == CLAuthorizationStatus.denied) {
+            showLocationDisabledPopUp()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    func showInternetConnectionIsNotReachable() {
+        let alertController = UIAlertController(title: "No Internet connection",
+                                                message: "Try to reconnect",
+                                                preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        let openAction = UIAlertAction(title: "Open WIFI Settings", style: .default) { (action) in
+            if let url = URL(string: "prefs:root=WIFI") {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+        alertController.addAction(openAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    // Show the popup to the user if we have been deined access
+    func showLocationDisabledPopUp() {
+        let alertController = UIAlertController(title: "Location Access Disabled",
+                                                message: "In order to fetch places we need your location",
+                                                preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        let openAction = UIAlertAction(title: "Open Settings", style: .default) { (action) in
+            if let url = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+        alertController.addAction(openAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }

@@ -18,13 +18,13 @@ class TypeAndCurrencyCell: UITableViewCell {
     }
     
     func configureCell(pairCode: String, currencyRate: String = ""){
-       
-        print(pairCode, " : ", Locale.current.localizedString(forCurrencyCode: pairCode))
         let pairName = Locale.current.localizedString(forCurrencyCode: pairCode) ?? pairCode
         titleLbl.text = pairName
         if !currencyRate.isEmpty {
             descriptionLbl.text = currencyRate
             descriptionLbl.isHidden = false
+        } else {
+            descriptionLbl.isHidden = true
         }
 //        let bgView = UIView(frame: CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: self.frame.height))
 //        bgView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -33,5 +33,6 @@ class TypeAndCurrencyCell: UITableViewCell {
     
     func configureCell(item: String){
         titleLbl.text = item
+        descriptionLbl.isHidden = true
     }
 }

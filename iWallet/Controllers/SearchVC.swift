@@ -429,13 +429,15 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == self.tableView {
             if details[indexPath.row] is AccountDetail || details[indexPath.row] is DateDetail {
-                return 30.0
+                return 36.0
             } else {
                 if let detail = details[indexPath.row] as? TransactionDetail {
-                    if TransactionHelper.instance.getTransactionDescription(transaction: detail.transaction).isEmpty {
-                        return 30.0
-                    } else {
+                    if TransactionHelper.instance.getTransactionDescription(transaction: detail.transaction).isEmpty  && detail.transaction.category?.parent == nil {
+                        return 36.0
+                    } else if TransactionHelper.instance.getTransactionDescription(transaction: detail.transaction).isEmpty  || detail.transaction.category?.parent == nil{
                         return 50.0
+                    } else {
+                        return 74.0
                     }
                 }
             }

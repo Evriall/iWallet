@@ -18,12 +18,12 @@ class SelectCurrencyVC: UIViewController {
     var delegate: AccountProtocol?
     var filteredCurrencies = [(code: String, name: String, rate: Double)]()
     var currencies = [(code: String, name: String, rate: Double)]()
-    var date: Date = Date()
+    var date = Date()
     var pairCurrency = ""
     
     func fetchCurrenciesRate(currencies: [String]){
         let dateToFetch = date >= Date().startOfDay() ? Date().startOfDay() : date
-        var flagNotFetchedCurrencyRate = false
+        var flagNotFetchedCurrencyRate = currencies.count == 0 ? true:  false
         for currency in currencies {
             if !fetchCurrencyRate(baseCode: currency, pairCode: pairCurrency, date: dateToFetch) {
                 flagNotFetchedCurrencyRate = true
@@ -36,19 +36,31 @@ class SelectCurrencyVC: UIViewController {
                 if  Date().startOfDay() == dateToFetch {
                     ExchangeService.instance.getCurrencyRateByAPILatest(complition: { (success) in
                         if success {
-                            for currency in currencies {
-                                self.fetchCurrencyRate(baseCode: currency, pairCode: self.pairCurrency, date: dateToFetch)
-                            }
-                            self.tableView.reloadData()
+                            CoreDataService.instance.fetchCurrenciesFromCurrencyRate(complition: { (fetchedCurrencies) in
+                                for currency in fetchedCurrencies {
+                                    if self.pairCurrency.isEmpty {
+                                        self.currencies.append((code: currency, name: Locale.current.localizedString(forCurrencyCode: currency) ?? currency, rate: 1.0))
+                                    } else {
+                                        self.fetchCurrencyRate(baseCode: currency, pairCode: self.pairCurrency, date: dateToFetch)
+                                    }
+                                }
+                                self.tableView.reloadData()
+                            })
                         }
                     })
                 } else {
                     ExchangeService.instance.getHistoricalCurrencyRate(date: date, complition: { (success) in
                         if success {
-                            for currency in currencies {
-                                self.fetchCurrencyRate(baseCode: currency, pairCode: self.pairCurrency, date: dateToFetch)
-                            }
-                            self.tableView.reloadData()
+                            CoreDataService.instance.fetchCurrenciesFromCurrencyRate(complition: { (fetchedCurrencies) in
+                                for currency in fetchedCurrencies {
+                                    if self.pairCurrency.isEmpty {
+                                        self.currencies.append((code: currency, name: Locale.current.localizedString(forCurrencyCode: currency) ?? currency, rate: 1.0))
+                                    } else {
+                                        self.fetchCurrencyRate(baseCode: currency, pairCode: self.pairCurrency, date: dateToFetch)
+                                    }
+                                }
+                                self.tableView.reloadData()
+                            })
                         }
                     })
                 }
@@ -70,6 +82,7 @@ class SelectCurrencyVC: UIViewController {
                     print("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
                 }
             } else {
+                flag = false
             }
         }
         return flag
@@ -99,12 +112,16 @@ class SelectCurrencyVC: UIViewController {
         searchBar.delegate = self
         
         CoreDataService.instance.fetchCurrenciesFromCurrencyRate { (currencies) in
-            if pairCurrency.isEmpty {
-                for item in currencies {
-                    self.currencies.append((code: item, name: Locale.current.localizedString(forCurrencyCode: item) ?? "", rate: 1.0))
-                }
-            } else {
+            if currencies.count == 0 {
                 fetchCurrenciesRate(currencies: currencies)
+            } else {
+                if pairCurrency.isEmpty {
+                    for item in currencies {
+                        self.currencies.append((code: item, name: Locale.current.localizedString(forCurrencyCode: item) ?? item, rate: 1.0))
+                    }
+                } else {
+                    fetchCurrenciesRate(currencies: currencies)
+                }
             }
         }
     }

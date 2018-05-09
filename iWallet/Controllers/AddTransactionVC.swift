@@ -104,6 +104,7 @@ class AddTransactionVC: UIViewController {
     @objc func selectCurrency(){
         guard let currencyCode = accountFrom?.currency else {return}
         let selectCurrency = SelectCurrencyVC()
+        selectCurrency.date = date
         selectCurrency.modalPresentationStyle = .custom
         selectCurrency.pairCurrency = currencyCode
         selectCurrency.delegate = self
@@ -857,7 +858,7 @@ extension AddTransactionVC: UITextFieldDelegate, TransactionProtocol, CategoryPr
         categoryBtn.setTitle(CategoryHelper.instance.textNameCategory(category: category), for: .normal)
         categoryImg.backgroundColor = EncodeDecodeService.instance.returnUIColor(components: category.color)
         if category.systemName != Constants.CATEGORY_TRANSFER {
-            CategoryHelper.instance.currentCAtegory = category.objectID.uriRepresentation().absoluteString
+            CategoryHelper.instance.currentCAtegory = category.id
         }
     }
     

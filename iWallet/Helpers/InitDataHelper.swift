@@ -24,7 +24,7 @@ class InitDataHelper {
                     if success {
                         CoreDataService.instance.fetchAccounts(complition: { (accounts) in
                             for item in accounts {
-                                AccountHelper.instance.currentAccount = item.objectID.uriRepresentation().absoluteString
+                                AccountHelper.instance.currentAccount = item.id
                             }
                         })
                     }
