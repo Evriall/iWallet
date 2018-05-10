@@ -520,6 +520,25 @@ class CoreDataService{
         }
     }
     
+    
+    func fetchTransactions(latitude: Double, longitude: Double, date: Date, complition: ([Transaction])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        let delta = 0.000002
+        let predicate = NSPredicate(format: "date >= %@ AND date <= %@ AND account.external == %@ AND place.latitude >= %f AND place.latitude <= %f AND place.longitude >= %f AND place.longitude <= %f", date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg, NSNumber(value: false), latitude - delta, latitude + delta, longitude - delta, longitude + delta)
+        let sortDescriptor = [NSSortDescriptor(key: "account.name", ascending: true), NSSortDescriptor(key: "date", ascending: false)]
+        fetchRequest.sortDescriptors = sortDescriptor
+        fetchRequest.predicate = predicate
+        
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [Transaction] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
     func fetchTransactions(ByTag tag: String, complition: ([Transaction])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Tag")
@@ -776,6 +795,7 @@ class CoreDataService{
         place.address = address
         place.latitude = latitude
         place.longitude = longitude
+       
         place.date = Date()
         do{
             try managedContext.save()

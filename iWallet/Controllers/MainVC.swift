@@ -463,7 +463,7 @@ class MainVC: UIViewController {
 }
 
 extension MainVC : BriefProtocol{
-    func handleTransaction() {
+    func handleTransaction(date: Date) {
         fetchData()
     }
 }

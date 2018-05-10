@@ -43,12 +43,12 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnr-XR-fFJ">
-                            <rect key="frame" x="8" y="51" width="24" height="18"/>
+                            <rect key="frame" x="8" y="43.5" width="24" height="24"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="18" id="3cG-IR-JDj"/>
+                                <constraint firstAttribute="height" constant="24" id="3cG-IR-JDj"/>
                                 <constraint firstAttribute="width" constant="24" id="3tn-8Q-zVO"/>
                             </constraints>
-                            <state key="normal" image="back"/>
+                            <state key="normal" image="BackIconLight"/>
                             <connections>
                                 <action selector="backBtnPressed:" destination="-1" eventType="touchUpInside" id="vgX-p6-diA"/>
                             </connections>
@@ -60,7 +60,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHR-QS-Yty">
-                            <rect key="frame" x="343" y="45" width="24" height="24"/>
+                            <rect key="frame" x="343" y="43.5" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="24" id="Bpv-VI-rqo"/>
                                 <constraint firstAttribute="height" constant="24" id="eWR-An-IRt"/>
@@ -74,10 +74,10 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="bbC-JN-Ung" secondAttribute="bottom" constant="8" id="0Od-92-PKo"/>
-                        <constraint firstAttribute="bottom" secondItem="hnr-XR-fFJ" secondAttribute="bottom" constant="8" id="4ur-Gj-khp"/>
                         <constraint firstAttribute="height" constant="77" id="8yv-dO-OAD"/>
-                        <constraint firstAttribute="bottom" secondItem="FHR-QS-Yty" secondAttribute="bottom" constant="8" id="A3z-Oz-zoB"/>
+                        <constraint firstItem="hnr-XR-fFJ" firstAttribute="centerY" secondItem="bbC-JN-Ung" secondAttribute="centerY" id="CU7-Bu-SY4"/>
                         <constraint firstItem="bbC-JN-Ung" firstAttribute="centerX" secondItem="3p2-Q0-47p" secondAttribute="centerX" id="UVP-90-GKU"/>
+                        <constraint firstItem="FHR-QS-Yty" firstAttribute="centerY" secondItem="bbC-JN-Ung" secondAttribute="centerY" id="VDR-aV-zyS"/>
                         <constraint firstAttribute="trailing" secondItem="FHR-QS-Yty" secondAttribute="trailing" constant="8" id="hio-cw-dje"/>
                         <constraint firstItem="hnr-XR-fFJ" firstAttribute="leading" secondItem="3p2-Q0-47p" secondAttribute="leading" constant="8" id="ogM-Zz-Fg0"/>
                     </constraints>
@@ -86,7 +86,7 @@
                             <color key="value" red="0.0" green="0.56862745098039214" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="buttomColor">
-                            <color key="value" red="0.0" green="0.85669371139999995" blue="0.87303848640000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="value" red="0.0" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
@@ -427,9 +427,9 @@
         </view>
     </objects>
     <resources>
+        <image name="BackIconLight" width="40" height="40"/>
         <image name="PinMapIcon32_32" width="32" height="32"/>
         <image name="arrowOepn" width="32" height="32"/>
-        <image name="back" width="14" height="25"/>
         <image name="checkmark-round" width="512" height="512"/>
         <image name="checkmark-round_yellow16_16" width="16" height="16"/>
         <image name="photoCameraIcon copy32_32" width="32" height="32"/>

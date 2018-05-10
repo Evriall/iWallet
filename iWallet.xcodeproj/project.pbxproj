@@ -25,9 +25,9 @@
 		9A59A49020A1AB6F00B35E70 /* MapPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A59A48F20A1AB6F00B35E70 /* MapPlace.swift */; };
 		9A59A49220A1CD4800B35E70 /* MapPlaceMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A59A49120A1CD4800B35E70 /* MapPlaceMarkerView.swift */; };
 		9A59A49420A217B700B35E70 /* MapPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A59A49320A217B700B35E70 /* MapPlaceView.swift */; };
-		9A59A49620A2ED1300B35E70 /* ButtonWithRoundCoreners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A59A49520A2ED1300B35E70 /* ButtonWithRoundCoreners.swift */; };
 		9A59A49920A2F23800B35E70 /* PlaceDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A59A49720A2F23800B35E70 /* PlaceDetailsVC.swift */; };
 		9A59A49A20A2F23800B35E70 /* PlaceDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */; };
+		9A59A49C20A434C700B35E70 /* Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A59A49B20A434C700B35E70 /* Detail.swift */; };
 		9A659822206BDC2000519722 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A659820206BDC2000519722 /* AccountCell.swift */; };
 		9A659823206BDC2000519722 /* AccountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A659821206BDC2000519722 /* AccountCell.xib */; };
 		9A65982D206BFB3100519722 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A65982B206BFB3100519722 /* Main.storyboard */; };
@@ -124,9 +124,9 @@
 		9A59A48F20A1AB6F00B35E70 /* MapPlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPlace.swift; sourceTree = "<group>"; };
 		9A59A49120A1CD4800B35E70 /* MapPlaceMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPlaceMarkerView.swift; sourceTree = "<group>"; };
 		9A59A49320A217B700B35E70 /* MapPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPlaceView.swift; sourceTree = "<group>"; };
-		9A59A49520A2ED1300B35E70 /* ButtonWithRoundCoreners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithRoundCoreners.swift; sourceTree = "<group>"; };
 		9A59A49720A2F23800B35E70 /* PlaceDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsVC.swift; sourceTree = "<group>"; };
 		9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceDetailsVC.xib; sourceTree = "<group>"; };
+		9A59A49B20A434C700B35E70 /* Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Detail.swift; sourceTree = "<group>"; };
 		9A659820206BDC2000519722 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		9A659821206BDC2000519722 /* AccountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountCell.xib; sourceTree = "<group>"; };
 		9A65982C206BFB3100519722 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -254,6 +254,7 @@
 				9AE6D567206E93C700886F73 /* TransactionHelper.swift */,
 				9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */,
 				9A4A531A20878D9400E90EEA /* ImageHelper.swift */,
+				9A59A49B20A434C700B35E70 /* Detail.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -411,7 +412,6 @@
 				9A59A48F20A1AB6F00B35E70 /* MapPlace.swift */,
 				9A59A49120A1CD4800B35E70 /* MapPlaceMarkerView.swift */,
 				9A59A49320A217B700B35E70 /* MapPlaceView.swift */,
-				9A59A49520A2ED1300B35E70 /* ButtonWithRoundCoreners.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -618,6 +618,7 @@
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
 				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
+				9A59A49C20A434C700B35E70 /* Detail.swift in Sources */,
 				9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */,
 				9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */,
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
@@ -627,7 +628,6 @@
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,
 				9AB9841220921BED008E84D9 /* CoinCell.swift in Sources */,
-				9A59A49620A2ED1300B35E70 /* ButtonWithRoundCoreners.swift in Sources */,
 				9AF34A05208A1C74005A94C7 /* SelectPlaceVC.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,

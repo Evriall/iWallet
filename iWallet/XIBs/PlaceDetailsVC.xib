@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlaceDetailsVC" customModule="iWallet" customModuleProvider="target">
             <connections>
+                <outlet property="monthLbl" destination="cHn-c1-xdF" id="bdg-1x-nD8"/>
+                <outlet property="tableView" destination="D99-GD-jYk" id="aJS-o5-0YR"/>
                 <outlet property="titleLbl" destination="75O-Zr-pA2" id="uAM-Td-HFN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -25,9 +27,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugi-w9-8gG">
-                            <rect key="frame" x="8" y="51" width="24" height="18"/>
+                            <rect key="frame" x="8" y="43" width="24" height="24"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="18" id="Xxd-IK-Ac2"/>
+                                <constraint firstAttribute="height" constant="24" id="Xxd-IK-Ac2"/>
                                 <constraint firstAttribute="width" constant="24" id="o60-hO-sFd"/>
                             </constraints>
                             <state key="normal" image="back"/>
@@ -36,7 +38,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75O-Zr-pA2">
-                            <rect key="frame" x="40" y="41.5" width="295" height="28"/>
+                            <rect key="frame" x="40" y="41" width="295" height="28"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="28" id="OKZ-MC-q0O"/>
                             </constraints>
@@ -49,7 +51,7 @@
                     <constraints>
                         <constraint firstItem="ugi-w9-8gG" firstAttribute="leading" secondItem="ouf-LO-yAo" secondAttribute="leading" constant="8" id="584-nr-eQR"/>
                         <constraint firstAttribute="bottom" secondItem="75O-Zr-pA2" secondAttribute="bottom" constant="8" id="AN1-Zr-V1b"/>
-                        <constraint firstAttribute="bottom" secondItem="ugi-w9-8gG" secondAttribute="bottom" constant="8" id="fPQ-GT-TNm"/>
+                        <constraint firstItem="ugi-w9-8gG" firstAttribute="centerY" secondItem="75O-Zr-pA2" secondAttribute="centerY" id="dF7-Vp-54B"/>
                         <constraint firstAttribute="trailing" secondItem="75O-Zr-pA2" secondAttribute="trailing" constant="40" id="ghG-bI-94S"/>
                         <constraint firstAttribute="height" constant="77" id="oIT-kS-mqJ"/>
                         <constraint firstItem="75O-Zr-pA2" firstAttribute="leading" secondItem="ugi-w9-8gG" secondAttribute="trailing" constant="8" id="pyT-AZ-cQQ"/>
@@ -63,17 +65,48 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="D99-GD-jYk">
+                    <rect key="frame" x="0.0" y="79" width="375" height="588"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HrM-19-SeX">
+                    <rect key="frame" x="0.0" y="77" width="375" height="2"/>
+                    <subviews>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="April, 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cHn-c1-xdF">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="cHn-c1-xdF" firstAttribute="leading" secondItem="HrM-19-SeX" secondAttribute="leading" id="16u-55-Mp0"/>
+                        <constraint firstAttribute="trailing" secondItem="cHn-c1-xdF" secondAttribute="trailing" id="3qd-FG-BEI"/>
+                        <constraint firstItem="cHn-c1-xdF" firstAttribute="top" secondItem="HrM-19-SeX" secondAttribute="top" id="Sfc-6c-LpR"/>
+                        <constraint firstAttribute="height" constant="2" id="UKo-YR-53y"/>
+                        <constraint firstAttribute="bottom" secondItem="cHn-c1-xdF" secondAttribute="bottom" id="ojl-um-Fh0"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="HrM-19-SeX" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2zR-XI-BsQ"/>
+                <constraint firstItem="D99-GD-jYk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3kq-LC-3dl"/>
+                <constraint firstItem="HrM-19-SeX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5Lb-SC-cUc"/>
                 <constraint firstItem="ouf-LO-yAo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="84G-eR-d6Y"/>
                 <constraint firstItem="ouf-LO-yAo" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="XtS-sT-EAB"/>
+                <constraint firstItem="D99-GD-jYk" firstAttribute="top" secondItem="HrM-19-SeX" secondAttribute="bottom" id="gbL-34-hfW"/>
+                <constraint firstItem="D99-GD-jYk" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="pPs-1s-ukn"/>
+                <constraint firstItem="D99-GD-jYk" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="xSd-EW-hfB"/>
+                <constraint firstItem="HrM-19-SeX" firstAttribute="top" secondItem="ouf-LO-yAo" secondAttribute="bottom" id="zXq-Dy-wWQ"/>
                 <constraint firstItem="ouf-LO-yAo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zcj-gK-QqC"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
     <resources>
-        <image name="back" width="14" height="25"/>
+        <image name="back" width="42" height="75"/>
     </resources>
 </document>

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol BriefProtocol {
-    func handleTransaction()
+    func handleTransaction(date: Date)
 }

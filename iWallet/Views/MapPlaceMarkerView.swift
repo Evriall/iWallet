@@ -35,9 +35,9 @@ class MapPlaceMarkerView: MKMarkerAnnotationView {
             
            detailCalloutAccessoryView = subtitleView
             
-            let mapsButton = ButtonWithRoundCoreners(frame: CGRect(origin: CGPoint.zero,
+            let mapsButton = UIButton(frame: CGRect(origin: CGPoint.zero,
                                                     size: CGSize(width: 30, height: 30)))
-            mapsButton.setBackgroundImage(UIImage(named: "WalletIcon"), for: UIControlState())
+            mapsButton.setBackgroundImage(UIImage(named: "InfoIcon"), for: UIControlState())
             rightCalloutAccessoryView = mapsButton
         }
     }

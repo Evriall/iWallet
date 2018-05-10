@@ -462,7 +462,7 @@ class AddTransactionVC: UIViewController {
             CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.descriptionTxt.text, type: TransactionType.income.rawValue , date: self.date, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
                 saveTransactionTags(transaction: transferTransaction, tags: self.tags)
                 saveTransactionPhotos(transaction: transferTransaction, photos: self.photos)
-                self.delegate?.handleTransaction()
+                self.delegate?.handleTransaction(date: self.date)
                 self.dismissDetail()
             }
             
@@ -539,7 +539,7 @@ class AddTransactionVC: UIViewController {
                 CoreDataService.instance.saveTransaction(amount: amount, desc: descriptionTxt.text, type: type, date: date, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
                     saveTransactionTags(transaction: transaction, tags: self.tags)
                     saveTransactionPhotos(transaction: transaction, photos: self.photos)
-                    delegate?.handleTransaction()
+                    delegate?.handleTransaction(date: self.date)
                     dismissDetail()
                 }
             }
@@ -556,7 +556,7 @@ class AddTransactionVC: UIViewController {
                     if success {
                         saveTransactionTags(transaction: transaction, tags: self.tags)
                         saveTransactionPhotos(transaction: transaction, photos: self.photos)
-                        delegate?.handleTransaction()
+                        delegate?.handleTransaction(date: self.date)
                         dismissDetail()
                     }
                 }

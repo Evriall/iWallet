@@ -38,6 +38,7 @@ class TransactionCell: UITableViewCell {
         infoLbl.text = description
         infoLbl.isHidden = description.isEmpty
         self.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.selectionStyle = .none
     }
     
     func configureCell(name: String, amount: String, dark: Bool) {
@@ -50,6 +51,7 @@ class TransactionCell: UITableViewCell {
         } else {
             self.backgroundColor = #colorLiteral(red: 0.7568627451, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         }
+        self.selectionStyle = .none
     }
 
 }

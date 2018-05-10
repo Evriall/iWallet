@@ -32,7 +32,7 @@
                                 <constraint firstAttribute="width" constant="24" id="10w-5Y-vdk"/>
                                 <constraint firstAttribute="height" constant="18" id="dAE-oY-evG"/>
                             </constraints>
-                            <state key="normal" image="back"/>
+                            <state key="normal" image="BackIconLight"/>
                             <connections>
                                 <action selector="closeBtnPressed:" destination="-1" eventType="touchUpInside" id="6PG-oo-Ofq"/>
                             </connections>
@@ -125,7 +125,7 @@
         </view>
     </objects>
     <resources>
-        <image name="back" width="14" height="25"/>
+        <image name="BackIconLight" width="40" height="40"/>
         <image name="checkmark-round_yellow16_16" width="16" height="16"/>
         <image name="searchIcon" width="300" height="300"/>
     </resources>

@@ -8,39 +8,6 @@
 
 import UIKit
 
-class Detail {
-}
-
-class DateDetail: Detail {
-    var amount: Double = 0.0
-    var name: String
-    init(name: String) {
-        self.name = name
-    }
-    init(name: String, amount: Double) {
-        self.name = name
-        self.amount = amount
-    }
-    
-}
-class AccountDetail : Detail{
-    var amount: Double = 0.0
-    var name: String
-    var currencySymbol: String
-    init(name: String, amount: Double, currencySymbol: String){
-        self.currencySymbol = currencySymbol
-        self.name = name
-        self.amount = amount
-    }
-}
-
-class TransactionDetail: Detail {
-    var transaction: Transaction
-    init(transaction: Transaction) {
-        self.transaction = transaction
-    }
-}
-
 class SearchVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
    
@@ -248,7 +215,7 @@ class SearchVC: UIViewController {
     }
 }
 extension SearchVC: BriefProtocol {
-    func handleTransaction() {
+    func handleTransaction(date: Date) {
         if tagSC?.selectedSegmentIndex == 1 {
             if searchKeys.count  > selectedSearchKeyIndex {
                 fetchTransactionsByDescription(description: searchKeys[selectedSearchKeyIndex])
@@ -258,10 +225,7 @@ extension SearchVC: BriefProtocol {
                 fetchTransactions(ByTag: searchKeys[selectedSearchKeyIndex])
             }
         }
-        
     }
-    
-    
 }
 
 extension SearchVC:UITextFieldDelegate{

@@ -130,6 +130,7 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         let transactionVC = AddTransactionVC()
         transactionVC.transaction = transactions[indexPath.section][indexPath.row]
         presentDetail(transactionVC)
@@ -138,12 +139,12 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
         headerView.backgroundColor = #colorLiteral(red: 0.7568627451, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
-        let dateLabel = UILabel(frame: CGRect(x: 16, y: 0, width: 64, height: 32))
+        let dateLabel = UILabel(frame: CGRect(x: 24, y: 0, width: 64, height: 32))
         dateLabel.text = sections[section].date
         dateLabel.font = UIFont(name: "Avenir-Heavy", size: 17)
         dateLabel.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         
-        let sumLabel = UILabel(frame: CGRect(x: tableView.frame.size.width - 200, y: 0, width: 184, height: 32))
+        let sumLabel = UILabel(frame: CGRect(x: tableView.frame.size.width - 200, y: 0, width: 192, height: 32))
         sumLabel.text = sections[section].sum
         sumLabel.font = UIFont(name: "Avenir-Heavy", size: 17)
         sumLabel.textAlignment = .right
@@ -180,7 +181,7 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension BriefByAccountVC: BriefProtocol {
-    func handleTransaction() {
+    func handleTransaction(date: Date) {
         fetchTransactions()
     }
 }

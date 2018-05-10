@@ -16,11 +16,15 @@ class MapPlace: NSObject, MKAnnotation{
     var costs: [String]
     var evaluationOfTurnoverAtExchangeRate = 0.0
     var number = 0
+    var latitude: Double
+    var longitude: Double
     
     init(place: String, income: [String], costs: [String], latitude: Double, longitude: Double, turnover: Double) {
         self.place = place
         self.income = income
         self.costs = costs
+        self.latitude = latitude
+        self.longitude = longitude
         self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         self.evaluationOfTurnoverAtExchangeRate = turnover
         super.init()

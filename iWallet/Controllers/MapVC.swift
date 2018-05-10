@@ -43,10 +43,6 @@ class MapVC: UIViewController {
         fetchData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        fetchData()
-    }
-    
     
     func fetchData(){
         places = []
@@ -150,11 +146,11 @@ class MapVC: UIViewController {
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.centerMapOnLocation()
         self.mapView.addAnnotations(self.places)
-        for item in self.mapView.annotations{
-            if let annotation = item as? MapPlace, annotation.number == 1 {
-                self.mapView.selectAnnotation(item, animated: true)
-            }
-        }
+//        for item in self.mapView.annotations{
+//            if let annotation = item as? MapPlace, annotation.number == 1 {
+//                self.mapView.selectAnnotation(item, animated: true)
+//            }
+//        }
     }
     
     func centerMapOnLocation() {
@@ -213,6 +209,16 @@ class MapVC: UIViewController {
     }
 }
 
+extension MapVC: BriefProtocol {
+    func handleTransaction(date: Date) {
+        if date.startOfMonth() == self.date.startOfMonth() {
+            fetchData()
+        }
+    }
+    
+    
+}
+
 extension MapVC: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
@@ -221,6 +227,8 @@ extension MapVC: MKMapViewDelegate {
             let placeDetailsVC = PlaceDetailsVC()
             placeDetailsVC .modalPresentationStyle = .custom
             placeDetailsVC.mapPlace = location
+            placeDetailsVC.date = self.date
+            placeDetailsVC.mapVC = self
             presentDetail(placeDetailsVC)
         }
         
