@@ -27,18 +27,18 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugi-w9-8gG">
-                            <rect key="frame" x="8" y="43" width="24" height="24"/>
+                            <rect key="frame" x="8" y="40" width="30" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="24" id="Xxd-IK-Ac2"/>
-                                <constraint firstAttribute="width" constant="24" id="o60-hO-sFd"/>
+                                <constraint firstAttribute="height" constant="30" id="Xxd-IK-Ac2"/>
+                                <constraint firstAttribute="width" constant="30" id="o60-hO-sFd"/>
                             </constraints>
-                            <state key="normal" image="back"/>
+                            <state key="normal" image="BackIconLight"/>
                             <connections>
                                 <action selector="backBtnPressed:" destination="-1" eventType="touchUpInside" id="LVJ-TD-doh"/>
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75O-Zr-pA2">
-                            <rect key="frame" x="40" y="41" width="295" height="28"/>
+                            <rect key="frame" x="46" y="41" width="289" height="28"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="28" id="OKZ-MC-q0O"/>
                             </constraints>
@@ -107,6 +107,6 @@
         </view>
     </objects>
     <resources>
-        <image name="back" width="42" height="75"/>
+        <image name="BackIconLight" width="40" height="40"/>
     </resources>
 </document>

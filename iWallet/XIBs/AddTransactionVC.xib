@@ -43,10 +43,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnr-XR-fFJ">
-                            <rect key="frame" x="8" y="43.5" width="24" height="24"/>
+                            <rect key="frame" x="8" y="40.5" width="30" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="24" id="3cG-IR-JDj"/>
-                                <constraint firstAttribute="width" constant="24" id="3tn-8Q-zVO"/>
+                                <constraint firstAttribute="height" constant="30" id="3cG-IR-JDj"/>
+                                <constraint firstAttribute="width" constant="30" id="3tn-8Q-zVO"/>
                             </constraints>
                             <state key="normal" image="BackIconLight"/>
                             <connections>
@@ -60,12 +60,12 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHR-QS-Yty">
-                            <rect key="frame" x="343" y="43.5" width="24" height="24"/>
+                            <rect key="frame" x="337" y="40.5" width="30" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="24" id="Bpv-VI-rqo"/>
-                                <constraint firstAttribute="height" constant="24" id="eWR-An-IRt"/>
+                                <constraint firstAttribute="width" constant="30" id="Bpv-VI-rqo"/>
+                                <constraint firstAttribute="height" constant="30" id="eWR-An-IRt"/>
                             </constraints>
-                            <state key="normal" title="Button" image="checkmark-round"/>
+                            <state key="normal" title="Button" image="CheckMarkLight"/>
                             <connections>
                                 <action selector="saveTransactionBtnPressed:" destination="-1" eventType="touchUpInside" id="fbp-BE-glY"/>
                             </connections>
@@ -138,66 +138,8 @@
                                 <constraint firstAttribute="height" constant="16" id="K40-yT-NOR"/>
                             </constraints>
                         </view>
-                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKl-GE-xkl">
-                            <rect key="frame" x="0.0" y="56" width="375" height="40"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTW-N8-vv5">
-                                    <rect key="frame" x="0.0" y="0.0" width="8" height="40"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="8" id="jQt-jl-nMv"/>
-                                    </constraints>
-                                    <viewLayoutGuide key="safeArea" id="pfx-SF-TiJ"/>
-                                </view>
-                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyT-Ht-vdI">
-                                    <rect key="frame" x="8" y="0.0" width="367" height="40"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgp-zO-d9K" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="100" id="UvL-jt-Pq1"/>
-                                                <constraint firstAttribute="height" constant="40" id="f40-8j-taN"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
-                                            <state key="normal" title="Expense" image="arrowOepn">
-                                                <color key="titleColor" red="1" green="0.82991328220000005" blue="0.022163973029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="openTypeBtnPressed:" destination="-1" eventType="touchUpInside" id="M90-Mh-dcB"/>
-                                            </connections>
-                                        </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="19C-yz-j9B">
-                                            <rect key="frame" x="100" y="0.0" width="8" height="40"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="8" id="DkL-fy-ybe"/>
-                                            </constraints>
-                                        </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wtB-PR-vux" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
-                                            <rect key="frame" x="108" y="0.0" width="259" height="40"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="Xjf-Kv-Vy1"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                            <state key="normal" title="Select category" image="arrowOepn">
-                                                <color key="titleColor" red="0.47450980390000003" green="0.47450980390000003" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="openCategoryBtnPressed:" destination="-1" eventType="touchUpInside" id="R0k-lO-77C"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                </stackView>
-                            </subviews>
-                        </stackView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K5o-5u-cWh">
-                            <rect key="frame" x="0.0" y="96" width="375" height="16"/>
-                            <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="16" id="DvT-WG-wOm"/>
-                            </constraints>
-                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="buU-1z-Km0">
-                            <rect key="frame" x="0.0" y="112" width="375" height="30"/>
+                            <rect key="frame" x="0.0" y="56" width="375" height="30"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZO9-Ub-D5D">
                                     <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
@@ -231,6 +173,72 @@
                                 </button>
                             </subviews>
                         </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K5o-5u-cWh">
+                            <rect key="frame" x="0.0" y="86" width="375" height="16"/>
+                            <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="16" id="DvT-WG-wOm"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKl-GE-xkl">
+                            <rect key="frame" x="0.0" y="102" width="375" height="40"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b8t-pj-Rax">
+                                    <rect key="frame" x="0.0" y="0.0" width="4" height="40"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="4" id="ZKw-3j-7kc"/>
+                                    </constraints>
+                                    <viewLayoutGuide key="safeArea" id="jCt-ta-BLD"/>
+                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyT-Ht-vdI">
+                                    <rect key="frame" x="4" y="0.0" width="371" height="40"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgp-zO-d9K" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="120" id="UvL-jt-Pq1"/>
+                                                <constraint firstAttribute="height" constant="40" id="f40-8j-taN"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
+                                            <state key="normal" title="Expense" image="arrowOepn">
+                                                <color key="titleColor" red="1" green="0.82991328220000005" blue="0.022163973029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="openTypeBtnPressed:" destination="-1" eventType="touchUpInside" id="M90-Mh-dcB"/>
+                                            </connections>
+                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTW-N8-vv5">
+                                            <rect key="frame" x="120" y="0.0" width="8" height="40"/>
+                                            <color key="backgroundColor" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="8" id="jQt-jl-nMv"/>
+                                            </constraints>
+                                            <viewLayoutGuide key="safeArea" id="pfx-SF-TiJ"/>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="19C-yz-j9B">
+                                            <rect key="frame" x="128" y="0.0" width="8" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="8" id="DkL-fy-ybe"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wtB-PR-vux" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
+                                            <rect key="frame" x="136" y="0.0" width="235" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="Xjf-Kv-Vy1"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                            <state key="normal" title="Select category" image="arrowOepn">
+                                                <color key="titleColor" red="0.47450980390000003" green="0.47450980390000003" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="openCategoryBtnPressed:" destination="-1" eventType="touchUpInside" id="R0k-lO-77C"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KWa-42-mgk">
                             <rect key="frame" x="0.0" y="142" width="375" height="16"/>
                             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
@@ -242,18 +250,18 @@
                             <rect key="frame" x="0.0" y="158" width="375" height="40"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ahb-ii-rPH">
-                                    <rect key="frame" x="0.0" y="0.0" width="8" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="4" height="40"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="8" id="YWT-eP-QTt"/>
+                                        <constraint firstAttribute="width" constant="4" id="YWT-eP-QTt"/>
                                     </constraints>
                                     <viewLayoutGuide key="safeArea" id="L6S-gT-R8d"/>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Rgn-Ji-hTG">
-                                    <rect key="frame" x="8" y="0.0" width="367" height="40"/>
+                                    <rect key="frame" x="4" y="0.0" width="371" height="40"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UrK-wT-sQ9" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="183.5" height="40"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="185.5" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="0V8-2e-nIv"/>
                                             </constraints>
@@ -266,7 +274,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0GQ-i0-11r" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
-                                            <rect key="frame" x="183.5" y="0.0" width="183.5" height="40"/>
+                                            <rect key="frame" x="185.5" y="0.0" width="185.5" height="40"/>
                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                             <state key="normal" title="Withdraw" image="arrowOepn">
                                                 <color key="titleColor" red="0.29157040039999998" green="0.29157040039999998" blue="0.29157040039999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -428,9 +436,9 @@
     </objects>
     <resources>
         <image name="BackIconLight" width="40" height="40"/>
+        <image name="CheckMarkLight" width="40" height="40"/>
         <image name="PinMapIcon32_32" width="32" height="32"/>
-        <image name="arrowOepn" width="32" height="32"/>
-        <image name="checkmark-round" width="512" height="512"/>
+        <image name="arrowOepn" width="64" height="64"/>
         <image name="checkmark-round_yellow16_16" width="16" height="16"/>
         <image name="photoCameraIcon copy32_32" width="32" height="32"/>
     </resources>

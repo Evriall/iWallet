@@ -27,10 +27,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZB-hJ-pJB">
-                            <rect key="frame" x="8" y="51" width="24" height="18"/>
+                            <rect key="frame" x="8" y="39" width="30" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="24" id="10w-5Y-vdk"/>
-                                <constraint firstAttribute="height" constant="18" id="dAE-oY-evG"/>
+                                <constraint firstAttribute="width" constant="30" id="10w-5Y-vdk"/>
+                                <constraint firstAttribute="height" constant="30" id="dAE-oY-evG"/>
                             </constraints>
                             <state key="normal" image="BackIconLight"/>
                             <connections>
@@ -44,10 +44,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fb-nI-bLu">
-                            <rect key="frame" x="343" y="48" width="24" height="24"/>
+                            <rect key="frame" x="337" y="39" width="30" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="24" id="gxR-NX-nod"/>
-                                <constraint firstAttribute="width" constant="24" id="irf-H4-E6c"/>
+                                <constraint firstAttribute="height" constant="30" id="gxR-NX-nod"/>
+                                <constraint firstAttribute="width" constant="30" id="irf-H4-E6c"/>
                             </constraints>
                             <state key="normal" image="searchIcon"/>
                             <connections>
@@ -57,7 +57,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="0Fb-nI-bLu" secondAttribute="bottom" constant="5" id="220-DR-KUS"/>
+                        <constraint firstAttribute="bottom" secondItem="0Fb-nI-bLu" secondAttribute="bottom" constant="8" id="220-DR-KUS"/>
                         <constraint firstAttribute="height" constant="77" id="2sD-9N-47H"/>
                         <constraint firstAttribute="trailing" secondItem="0Fb-nI-bLu" secondAttribute="trailing" constant="8" id="CSP-2p-6vI"/>
                         <constraint firstAttribute="bottom" secondItem="cZB-hJ-pJB" secondAttribute="bottom" constant="8" id="c8v-uH-AYv"/>

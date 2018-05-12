@@ -203,9 +203,10 @@ class AddTransactionVC: UIViewController {
                 accountFromBtn.setTitle(accountFrom?.name, for: .normal)
                 
                 if let currency = self.accountFrom?.currency {
-                    currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width - 32, y: 0, width: 32, height: 40))
+                    currencyBtn = UIButton(frame: CGRect(x: amountTxt.frame.width, y: 0, width: 32, height: 40))
                     currencyBtn?.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
                     currencyBtn?.setTitleColor(#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), for: .normal)
+                    currencyBtn?.titleLabel?.textAlignment = .right
                     currencyBtn?.titleLabel?.adjustsFontSizeToFitWidth = true
                     currencyBtn?.addTarget(self, action: #selector(AddTransactionVC.selectCurrency), for: .touchUpInside)
                     currencyBtn?.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 24)
