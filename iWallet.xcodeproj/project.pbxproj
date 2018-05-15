@@ -14,6 +14,8 @@
 		9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */; };
 		9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853FA208A3F59008B804D /* PlaceCell.swift */; };
 		9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A3853FB208A3F59008B804D /* PlaceCell.xib */; };
+		9A3C1C3B20A9F7F200B2865E /* GradientViewWithCentralPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C3A20A9F7F200B2865E /* GradientViewWithCentralPoint.swift */; };
+		9A3C1C3D20AAE2A900B2865E /* ButtonWithRoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C3C20AAE2A900B2865E /* ButtonWithRoundedCorner.swift */; };
 		9A4A531B20878D9400E90EEA /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4A531A20878D9400E90EEA /* ImageHelper.swift */; };
 		9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4A531C208790AA00E90EEA /* PhotoVC.swift */; };
 		9A4A531F208790AA00E90EEA /* PhotoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A4A531D208790AA00E90EEA /* PhotoVC.xib */; };
@@ -28,6 +30,8 @@
 		9A59A49920A2F23800B35E70 /* PlaceDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A59A49720A2F23800B35E70 /* PlaceDetailsVC.swift */; };
 		9A59A49A20A2F23800B35E70 /* PlaceDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */; };
 		9A59A49C20A434C700B35E70 /* Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A59A49B20A434C700B35E70 /* Detail.swift */; };
+		9A5D9E8120A96D51001217CB /* AddTransactionAdditionalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5D9E7F20A96D51001217CB /* AddTransactionAdditionalVC.swift */; };
+		9A5D9E8220A96D51001217CB /* AddTransactionAdditionalVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A5D9E8020A96D51001217CB /* AddTransactionAdditionalVC.xib */; };
 		9A659822206BDC2000519722 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A659820206BDC2000519722 /* AccountCell.swift */; };
 		9A659823206BDC2000519722 /* AccountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A659821206BDC2000519722 /* AccountCell.xib */; };
 		9A65982D206BFB3100519722 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A65982B206BFB3100519722 /* Main.storyboard */; };
@@ -69,7 +73,7 @@
 		9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA7FF34206BA7F70093D0DE /* AccountHelper.swift */; };
 		9AABAD6B2070DB87001AA162 /* SelectTransactionTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */; };
 		9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */; };
-		9AABAD6E2070E0BB001AA162 /* TransactioProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */; };
+		9AABAD6E2070E0BB001AA162 /* TransactionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD6D2070E0BB001AA162 /* TransactionProtocol.swift */; };
 		9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AABAD70207147E9001AA162 /* CalendarVC.xib */; };
 		9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD6F207147E8001AA162 /* CalendarVC.swift */; };
 		9AABAD7720716716001AA162 /* CalendarProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABAD7620716716001AA162 /* CalendarProtocol.swift */; };
@@ -96,7 +100,6 @@
 		9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */; };
 		9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */; };
 		9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D567206E93C700886F73 /* TransactionHelper.swift */; };
-		9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE6D569206E9D5300886F73 /* ButtonWithLeftImage.swift */; };
 		9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEEDBAB207A951600BB9925 /* LaunchVC.swift */; };
 		9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF349FF2088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift */; };
 		9AF34A022089E9E9005A94C7 /* FourSquareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF34A012089E9E9005A94C7 /* FourSquareService.swift */; };
@@ -113,6 +116,8 @@
 		9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceProtocol.swift; sourceTree = "<group>"; };
 		9A3853FA208A3F59008B804D /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		9A3853FB208A3F59008B804D /* PlaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
+		9A3C1C3A20A9F7F200B2865E /* GradientViewWithCentralPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientViewWithCentralPoint.swift; sourceTree = "<group>"; };
+		9A3C1C3C20AAE2A900B2865E /* ButtonWithRoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithRoundedCorner.swift; sourceTree = "<group>"; };
 		9A4A531A20878D9400E90EEA /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		9A4A531C208790AA00E90EEA /* PhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
 		9A4A531D208790AA00E90EEA /* PhotoVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoVC.xib; sourceTree = "<group>"; };
@@ -127,6 +132,8 @@
 		9A59A49720A2F23800B35E70 /* PlaceDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsVC.swift; sourceTree = "<group>"; };
 		9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceDetailsVC.xib; sourceTree = "<group>"; };
 		9A59A49B20A434C700B35E70 /* Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Detail.swift; sourceTree = "<group>"; };
+		9A5D9E7F20A96D51001217CB /* AddTransactionAdditionalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionAdditionalVC.swift; sourceTree = "<group>"; };
+		9A5D9E8020A96D51001217CB /* AddTransactionAdditionalVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionAdditionalVC.xib; sourceTree = "<group>"; };
 		9A659820206BDC2000519722 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		9A659821206BDC2000519722 /* AccountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountCell.xib; sourceTree = "<group>"; };
 		9A65982C206BFB3100519722 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -168,7 +175,7 @@
 		9AA7FF34206BA7F70093D0DE /* AccountHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHelper.swift; sourceTree = "<group>"; };
 		9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTransactionTypeVC.swift; sourceTree = "<group>"; };
 		9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectTransactionTypeVC.xib; sourceTree = "<group>"; };
-		9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactioProtocol.swift; sourceTree = "<group>"; };
+		9AABAD6D2070E0BB001AA162 /* TransactionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionProtocol.swift; sourceTree = "<group>"; };
 		9AABAD6F207147E8001AA162 /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		9AABAD70207147E9001AA162 /* CalendarVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarVC.xib; sourceTree = "<group>"; };
 		9AABAD7420714CCF001AA162 /* CVCalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CVCalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,7 +207,6 @@
 		9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionVC.swift; sourceTree = "<group>"; };
 		9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionVC.xib; sourceTree = "<group>"; };
 		9AE6D567206E93C700886F73 /* TransactionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHelper.swift; sourceTree = "<group>"; };
-		9AE6D569206E9D5300886F73 /* ButtonWithLeftImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithLeftImage.swift; sourceTree = "<group>"; };
 		9AEEDBAB207A951600BB9925 /* LaunchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
 		9AF349FF2088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectedPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		9AF34A012089E9E9005A94C7 /* FourSquareService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourSquareService.swift; sourceTree = "<group>"; };
@@ -283,6 +289,7 @@
 				9A65983D206D46DD00519722 /* TypeAndCurrencyCell.xib */,
 				9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */,
 				9AABAD6A2070DB87001AA162 /* SelectTransactionTypeVC.xib */,
+				9A5D9E8020A96D51001217CB /* AddTransactionAdditionalVC.xib */,
 				9AE6D564206E8A5500886F73 /* AddTransactionVC.xib */,
 				9AABAD70207147E9001AA162 /* CalendarVC.xib */,
 				9A73002F207602AF002F84F6 /* SelectAccountVC.xib */,
@@ -303,7 +310,7 @@
 			children = (
 				9A9D2D602069111E00CC7DE0 /* CategoryProtocol.swift */,
 				9A659838206D41F200519722 /* AccountProtocol.swift */,
-				9AABAD6D2070E0BB001AA162 /* TransactioProtocol.swift */,
+				9AABAD6D2070E0BB001AA162 /* TransactionProtocol.swift */,
 				9AABAD7620716716001AA162 /* CalendarProtocol.swift */,
 				9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */,
 				9A4A53202087A95800E90EEA /* PhotoProtocol.swift */,
@@ -375,6 +382,7 @@
 				9A659834206D413A00519722 /* SelectAccountTypeVC.swift */,
 				9ADCC8BA2080BAEB00F446E4 /* SelectCurrencyVC.swift */,
 				9AE6D563206E8A5500886F73 /* AddTransactionVC.swift */,
+				9A5D9E7F20A96D51001217CB /* AddTransactionAdditionalVC.swift */,
 				9AABAD692070DB87001AA162 /* SelectTransactionTypeVC.swift */,
 				9AABAD6F207147E8001AA162 /* CalendarVC.swift */,
 				9A73000820727DF6002F84F6 /* BriefByAccountVC.swift */,
@@ -394,12 +402,13 @@
 			isa = PBXGroup;
 			children = (
 				9A659832206D063400519722 /* ButtonWithRightImage.swift */,
+				9A3C1C3C20AAE2A900B2865E /* ButtonWithRoundedCorner.swift */,
 				9ABA9B112063E18800ADA34E /* GradientView.swift */,
+				9A3C1C3A20A9F7F200B2865E /* GradientViewWithCentralPoint.swift */,
 				9A9D2D502066C34E00CC7DE0 /* ColorCell.swift */,
 				9A9D2D5B2068FDA800CC7DE0 /* CategoryCell.swift */,
 				9A659820206BDC2000519722 /* AccountCell.swift */,
 				9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */,
-				9AE6D569206E9D5300886F73 /* ButtonWithLeftImage.swift */,
 				9A73000C2073A0A3002F84F6 /* TransactionCell.swift */,
 				9A538FC92083C1B200107B31 /* TagCell.swift */,
 				9AE093C12087550A00CF43E6 /* PhotoCell.swift */,
@@ -508,6 +517,7 @@
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
 				9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */,
 				9ABA9AFF2063DB4500ADA34E /* LaunchScreen.storyboard in Resources */,
+				9A5D9E8220A96D51001217CB /* AddTransactionAdditionalVC.xib in Resources */,
 				9A4A531F208790AA00E90EEA /* PhotoVC.xib in Resources */,
 				9AF34A06208A1C74005A94C7 /* SelectPlaceVC.xib in Resources */,
 				9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */,
@@ -591,7 +601,8 @@
 				9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */,
 				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,
 				9AABAD6B2070DB87001AA162 /* SelectTransactionTypeVC.swift in Sources */,
-				9AABAD6E2070E0BB001AA162 /* TransactioProtocol.swift in Sources */,
+				9A3C1C3B20A9F7F200B2865E /* GradientViewWithCentralPoint.swift in Sources */,
+				9AABAD6E2070E0BB001AA162 /* TransactionProtocol.swift in Sources */,
 				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */,
@@ -623,6 +634,7 @@
 				9A9D2D612069111E00CC7DE0 /* CategoryProtocol.swift in Sources */,
 				9A9D2D412065558700CC7DE0 /* ReportVC.swift in Sources */,
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
+				9A3C1C3D20AAE2A900B2865E /* ButtonWithRoundedCorner.swift in Sources */,
 				9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */,
 				9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
@@ -640,7 +652,7 @@
 				9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */,
 				9AB9841520934FEE008E84D9 /* CircularLabel.swift in Sources */,
 				9A4A531B20878D9400E90EEA /* ImageHelper.swift in Sources */,
-				9AE6D56A206E9D5300886F73 /* ButtonWithLeftImage.swift in Sources */,
+				9A5D9E8120A96D51001217CB /* AddTransactionAdditionalVC.swift in Sources */,
 				9A59A49920A2F23800B35E70 /* PlaceDetailsVC.swift in Sources */,
 				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,
 				9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */,

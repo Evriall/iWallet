@@ -542,7 +542,7 @@
                                             <constraint firstAttribute="height" constant="30" id="AvG-za-yhF"/>
                                             <constraint firstAttribute="width" constant="30" id="kk6-qx-avW"/>
                                         </constraints>
-                                        <state key="normal" image="BackIconLight"/>
+                                        <state key="normal" image="BackRoundedDarkIcon"/>
                                         <connections>
                                             <action selector="backBtnPressed:" destination="eF0-ql-BhU" eventType="touchUpInside" id="7LR-F0-M9S"/>
                                         </connections>
@@ -559,7 +559,7 @@
                                             <constraint firstAttribute="height" constant="30" id="4Ke-qX-EWT"/>
                                             <constraint firstAttribute="width" constant="30" id="I8u-Go-AKr"/>
                                         </constraints>
-                                        <state key="normal" image="CheckMarkLight">
+                                        <state key="normal" image="CheckMarkRoundedDark">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
@@ -862,7 +862,7 @@
                                             <constraint firstAttribute="width" constant="30" id="Dol-VH-nM0"/>
                                             <constraint firstAttribute="height" constant="30" id="gk1-qF-7DU"/>
                                         </constraints>
-                                        <state key="normal" image="BackIconLight"/>
+                                        <state key="normal" image="BackRoundedDarkIcon"/>
                                         <connections>
                                             <action selector="backBtnPressed:" destination="5aX-oQ-TTo" eventType="touchUpInside" id="PmP-tU-12n"/>
                                         </connections>
@@ -879,7 +879,7 @@
                                             <constraint firstAttribute="height" constant="30" id="p1D-6G-HpS"/>
                                             <constraint firstAttribute="width" constant="30" id="wML-tR-dLg"/>
                                         </constraints>
-                                        <state key="normal" image="AddIconLight"/>
+                                        <state key="normal" image="AddRoundDarkIcon"/>
                                         <connections>
                                             <action selector="openAddCategoryBtnPressed:" destination="5aX-oQ-TTo" eventType="touchUpInside" id="s2W-fw-hzz"/>
                                         </connections>
@@ -1278,9 +1278,10 @@
     <resources>
         <image name="AddIcon" width="86" height="86"/>
         <image name="AddIconLight" width="40" height="40"/>
+        <image name="AddRoundDarkIcon" width="40" height="40"/>
         <image name="BackIconDark" width="40" height="40"/>
-        <image name="BackIconLight" width="40" height="40"/>
-        <image name="CheckMarkLight" width="40" height="40"/>
+        <image name="BackRoundedDarkIcon" width="40" height="40"/>
+        <image name="CheckMarkRoundedDark" width="40" height="40"/>
         <image name="ForwardIconDark" width="40" height="40"/>
         <image name="OpenedWallet" width="640" height="250"/>
         <image name="PinIconLight" width="128" height="128"/>

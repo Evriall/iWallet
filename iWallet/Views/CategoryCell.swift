@@ -27,6 +27,7 @@ class CategoryCell: UITableViewCell {
         categoryImg.backgroundColor = bgColor
         categoryNameLbl.text = category.name
         CtgNameLeadingConstraint.constant = 8
+        selectionStyle = .none
         if category.parent != nil {
             CtgNameLeadingConstraint.constant = 24
             self.openChildrenCategoriesBtn.isHidden = true

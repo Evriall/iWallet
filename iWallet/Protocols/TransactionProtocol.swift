@@ -12,4 +12,5 @@ protocol TransactionProtocol {
     func handleTransactionType(_ type: String)
     func handleAccountFrom(_ account: Account)
     func handleAccountTo(_ account: Account)
+    func handleAdditionalInfo(place: Place?, desc: String, date: Date, tags: [(name: String, selected: Bool)], photos: [[String: UIImage]])
 }

@@ -49,7 +49,7 @@
                                 <constraint firstAttribute="height" constant="30" id="MPQ-Ff-nKa"/>
                                 <constraint firstAttribute="width" constant="30" id="YC8-6q-yqa"/>
                             </constraints>
-                            <state key="normal" image="close"/>
+                            <state key="normal" image="CloseRoundedDarkIcon"/>
                             <connections>
                                 <action selector="closeBtnPressed:" destination="-1" eventType="touchUpInside" id="B0U-my-esA"/>
                             </connections>
@@ -97,6 +97,6 @@
         </view>
     </objects>
     <resources>
-        <image name="close" width="22" height="20"/>
+        <image name="CloseRoundedDarkIcon" width="40" height="40"/>
     </resources>
 </document>

@@ -32,7 +32,7 @@
                                 <constraint firstAttribute="height" constant="30" id="Xxd-IK-Ac2"/>
                                 <constraint firstAttribute="width" constant="30" id="o60-hO-sFd"/>
                             </constraints>
-                            <state key="normal" image="BackIconLight"/>
+                            <state key="normal" image="BackRoundedDarkIcon"/>
                             <connections>
                                 <action selector="backBtnPressed:" destination="-1" eventType="touchUpInside" id="LVJ-TD-doh"/>
                             </connections>
@@ -107,6 +107,6 @@
         </view>
     </objects>
     <resources>
-        <image name="BackIconLight" width="40" height="40"/>
+        <image name="BackRoundedDarkIcon" width="40" height="40"/>
     </resources>
 </document>
