@@ -130,11 +130,7 @@ class AddTransactionAdditionalVC: UIViewController {
     
     @IBAction func backBtnPressed(_ sender: Any) {
         delegate?.handleAdditionalInfo(place: place, desc: descriptionTV.text, date: date, tags: tags, photos: photos)
-        rootViewController?.disableInteractivePlayerTransitioning = true
-        self.dismissDetailAnimated(animated: true){ success in
-            self.rootViewController?.disableInteractivePlayerTransitioning = false
-        }
-//        dismissDetail()
+        self.dismissDetail()
     }
     
     @IBAction func yesterdayBtnPressed(_ sender: Any) {

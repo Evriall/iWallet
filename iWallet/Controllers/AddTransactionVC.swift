@@ -25,10 +25,7 @@ class AddTransactionVC: UIViewController {
         addTransactionAdditionalVC.tags = self.tags
         addTransactionAdditionalVC.place = self.place
         addTransactionAdditionalVC.modalPresentationStyle = .custom
-        disableInteractivePlayerTransitioning = true
-        self.presentDetail(nextViewController, animated: true) { (success) in
-            self.disableInteractivePlayerTransitioning = false
-        }
+        self.presentDetail(nextViewController!, animated: true)
 //        presentDetail(addTransactionAdditionalVC)
     }
     
@@ -71,11 +68,11 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var accountToTypeImgView: UIImageView!
     @IBOutlet weak var currencyBtn: UIButton!
     
-    
-    var disableInteractivePlayerTransitioning = false
-    var nextViewController: AddTransactionAdditionalVC!
-    var presentInteractor: MiniToLargeViewInteractive!
-    var dismissInteractor: MiniToLargeViewInteractive!
+    var isPresenting: Bool = true
+    var interactiveTransition: UIPercentDrivenInteractiveTransition!
+    var nextViewController: AddTransactionAdditionalVC?
+    var shouldComplete = false
+    var lastProgress: CGFloat?
     
     var place: Place?
     var desc: String = ""
@@ -269,18 +266,59 @@ class AddTransactionVC: UIViewController {
             }
         }
         nextViewController = AddTransactionAdditionalVC()
-        nextViewController.rootViewController = self
-        nextViewController.transitioningDelegate = self
-        nextViewController.modalPresentationStyle = .fullScreen
-        
-        
-        presentInteractor = MiniToLargeViewInteractive()
-        self.transitioningDelegate = self
-        presentInteractor.attachToViewController(viewController: self, withView: infoBtn, presentViewController: nextViewController)
-        dismissInteractor = MiniToLargeViewInteractive()
-        dismissInteractor.attachToViewController(viewController: nextViewController, withView: nextViewController.view, presentViewController: nil)
+        nextViewController?.transitioningDelegate = self
+        nextViewController?.modalPresentationStyle = .custom
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(self.onPan(pan:)))
+        infoBtn.addGestureRecognizer(pan)
     }
    
+    @objc func onPan(pan: UIPanGestureRecognizer) {
+        let translation = pan.translation(in: pan.view?.superview)
+        
+        //Represents the percentage of the transition that must be completed before allowing to complete.
+        let percentThreshold: CGFloat = 0.2
+        //Represents the difference between progress that is required to trigger the completion of the transition.
+        let automaticOverrideThreshold: CGFloat = 0.03
+        
+        let screenWidth: CGFloat = UIScreen.main.bounds.size.width - infoBtn.frame.width
+        let dragAmount: CGFloat = (nextViewController == nil) ? screenWidth : -screenWidth
+        var progress: CGFloat = 1.0 * translation.x  / dragAmount
+        progress = fmax(progress, 0)
+        progress = fmin(progress, 1)
+        
+        switch pan.state {
+        case .began:
+            present(nextViewController!, animated: true, completion: nil)
+//            performSegue(withIdentifier: "show", sender: self)
+        case .changed:
+            guard let lastProgress = lastProgress else {return}
+            
+            // When swiping back
+            if lastProgress > progress {
+                shouldComplete = false
+                // When swiping quick to the right
+            } else if progress > lastProgress + automaticOverrideThreshold {
+                shouldComplete = true
+            } else {
+                // Normal behavior
+                shouldComplete = progress > percentThreshold
+            }
+            interactiveTransition.update(progress)
+            
+        case .ended, .cancelled:
+            if pan.state == .cancelled || shouldComplete == false {
+                interactiveTransition.cancel()
+            } else {
+                interactiveTransition.finish()
+            }
+            
+        default:
+            break
+        }
+        
+        lastProgress = progress
+    }
+    
     func setCategory() {
         switch typeSG.selectedSegmentIndex {
         case 2 :
@@ -684,29 +722,61 @@ extension AddTransactionVC: TransactionProtocol, CategoryProtocol, AccountProtoc
     }
 }
 
-extension AddTransactionVC: UIViewControllerTransitioningDelegate {
-    
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = MiniToLargeViewAnimator()
-        animator.initialX = infoBtn.frame.width
-        animator.transitionType = .Present
-        return animator
+extension AddTransactionVC: UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
+
+    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        interactiveTransition = UIPercentDrivenInteractiveTransition()
+        //Setting the completion speed gets rid of a weird bounce effect bug when transitions complete
+        interactiveTransition.completionSpeed = 0.99
+        return interactiveTransition
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = MiniToLargeViewAnimator()
-        animator.initialX = infoBtn.frame.width
-        animator.transitionType = .Dismiss
-        return animator
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        isPresenting = true
+        return self
     }
     
-    func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        guard !disableInteractivePlayerTransitioning else { return nil }
-        return presentInteractor
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        isPresenting = false
+        return self
     }
     
-    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        guard !disableInteractivePlayerTransitioning else { return nil }
-        return dismissInteractor
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 0.4
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+        guard let toVC = transitionContext.viewController(forKey: .to),
+            let fromVC = transitionContext.viewController(forKey: .from) else {
+                return
+        }
+        
+        if (isPresenting) {
+            let fromRect = transitionContext.initialFrame(for: fromVC)
+            var toRect = fromRect
+            toRect.origin.x = toRect.size.width - infoBtn.frame.width
+            toVC.view.frame = toRect
+            containerView.addSubview(toVC.view)
+            //            toVC.view.alpha = 0
+            UIView.animate(withDuration: 0.4, animations: {
+                toVC.view.frame = fromRect
+                //                toVC.view.alpha = 1
+            }, completion: { _ in
+                if transitionContext.transitionWasCancelled {
+                    transitionContext.completeTransition(false)
+                } else {
+                    transitionContext.completeTransition(true)
+                }
+            })
+        } else {
+            UIView.animate(withDuration: 0.4, animations: {
+                fromVC.view.alpha = 0
+            }, completion: { _ in
+                
+                transitionContext.completeTransition(true)
+                fromVC.view.removeFromSuperview()
+            })
+        }
     }
 }

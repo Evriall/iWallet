@@ -17,4 +17,12 @@ class ReportVC: UIViewController {
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
     }
+    
+    @IBAction func openPieChart(_ sender: Any) {
+        let pieChart = PieChartViewController()
+        pieChart.modalPresentationStyle = .custom
+        presentDetail(pieChart, animated: false)
+        
+    }
+    
 }

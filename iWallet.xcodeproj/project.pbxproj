@@ -10,15 +10,15 @@
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
 		9A1849222093913C0083E13E /* ViewWithBottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1849212093913C0083E13E /* ViewWithBottomButton.swift */; };
 		9A1EAE6C209B8D6100E56D33 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */; };
+		9A2A28D620AD7EF500F826EA /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A28D520AD7EF500F826EA /* PieChartViewController.swift */; };
+		9A2A28D820AD7F0F00F826EA /* PieChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */; };
+		9A2A28DC20AD82E100F826EA /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */; };
 		9A36663C2099F1D8005F6F4D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36663B2099F1D8005F6F4D /* SearchVC.swift */; };
 		9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */; };
 		9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853FA208A3F59008B804D /* PlaceCell.swift */; };
 		9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A3853FB208A3F59008B804D /* PlaceCell.xib */; };
 		9A3C1C3B20A9F7F200B2865E /* GradientViewWithCentralPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C3A20A9F7F200B2865E /* GradientViewWithCentralPoint.swift */; };
 		9A3C1C3D20AAE2A900B2865E /* ButtonWithRoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C3C20AAE2A900B2865E /* ButtonWithRoundedCorner.swift */; };
-		9A3C1C4220AC8F8B00B2865E /* MiniToLargeViewInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C3F20AC8F8B00B2865E /* MiniToLargeViewInteractive.swift */; };
-		9A3C1C4320AC8F8B00B2865E /* BaseAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C4020AC8F8B00B2865E /* BaseAnimator.swift */; };
-		9A3C1C4420AC8F8B00B2865E /* MiniToLargeViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C4120AC8F8B00B2865E /* MiniToLargeViewAnimator.swift */; };
 		9A4A531B20878D9400E90EEA /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4A531A20878D9400E90EEA /* ImageHelper.swift */; };
 		9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4A531C208790AA00E90EEA /* PhotoVC.swift */; };
 		9A4A531F208790AA00E90EEA /* PhotoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A4A531D208790AA00E90EEA /* PhotoVC.xib */; };
@@ -115,15 +115,15 @@
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		9A1849212093913C0083E13E /* ViewWithBottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithBottomButton.swift; sourceTree = "<group>"; };
 		9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionCell.xib; sourceTree = "<group>"; };
+		9A2A28D520AD7EF500F826EA /* PieChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
+		9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PieChartViewController.xib; sourceTree = "<group>"; };
+		9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoBaseViewController.swift; sourceTree = "<group>"; };
 		9A36663B2099F1D8005F6F4D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceProtocol.swift; sourceTree = "<group>"; };
 		9A3853FA208A3F59008B804D /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		9A3853FB208A3F59008B804D /* PlaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
 		9A3C1C3A20A9F7F200B2865E /* GradientViewWithCentralPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientViewWithCentralPoint.swift; sourceTree = "<group>"; };
 		9A3C1C3C20AAE2A900B2865E /* ButtonWithRoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithRoundedCorner.swift; sourceTree = "<group>"; };
-		9A3C1C3F20AC8F8B00B2865E /* MiniToLargeViewInteractive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniToLargeViewInteractive.swift; sourceTree = "<group>"; };
-		9A3C1C4020AC8F8B00B2865E /* BaseAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAnimator.swift; sourceTree = "<group>"; };
-		9A3C1C4120AC8F8B00B2865E /* MiniToLargeViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniToLargeViewAnimator.swift; sourceTree = "<group>"; };
 		9A4A531A20878D9400E90EEA /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		9A4A531C208790AA00E90EEA /* PhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
 		9A4A531D208790AA00E90EEA /* PhotoVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoVC.xib; sourceTree = "<group>"; };
@@ -242,16 +242,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9A3C1C3E20AC8F5A00B2865E /* Transition Animators */ = {
-			isa = PBXGroup;
-			children = (
-				9A3C1C4020AC8F8B00B2865E /* BaseAnimator.swift */,
-				9A3C1C4120AC8F8B00B2865E /* MiniToLargeViewAnimator.swift */,
-				9A3C1C3F20AC8F8B00B2865E /* MiniToLargeViewInteractive.swift */,
-			);
-			path = "Transition Animators";
-			sourceTree = "<group>";
-		};
 		9A9D2D39206548D800CC7DE0 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +306,7 @@
 				9AB9841120921BED008E84D9 /* CoinCell.xib */,
 				9A8044B7208F32FB0048D82B /* WalletCell.xib */,
 				9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */,
+				9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */,
 				9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */,
 			);
 			path = XIBs;
@@ -356,7 +347,6 @@
 		9ABA9AF02063DB4500ADA34E /* iWallet */ = {
 			isa = PBXGroup;
 			children = (
-				9A3C1C3E20AC8F5A00B2865E /* Transition Animators */,
 				9A9D2D5F2069110700CC7DE0 /* Protocols */,
 				9A9D2D562068DCC300CC7DE0 /* XIBs */,
 				9A9D2D49206663B500CC7DE0 /* Srevices */,
@@ -395,6 +385,7 @@
 				9A9D2D4C2066674800CC7DE0 /* AddCategoryVC.swift */,
 				9A9D2D572068FA1300CC7DE0 /* SelectParentCategoryVC.swift */,
 				9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */,
+				9A2A28D520AD7EF500F826EA /* PieChartViewController.swift */,
 				9A65982E206CFD3500519722 /* AddAccountVC.swift */,
 				9A659834206D413A00519722 /* SelectAccountTypeVC.swift */,
 				9ADCC8BA2080BAEB00F446E4 /* SelectCurrencyVC.swift */,
@@ -427,6 +418,7 @@
 				9A659820206BDC2000519722 /* AccountCell.swift */,
 				9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */,
 				9A73000C2073A0A3002F84F6 /* TransactionCell.swift */,
+				9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */,
 				9A538FC92083C1B200107B31 /* TagCell.swift */,
 				9AE093C12087550A00CF43E6 /* PhotoCell.swift */,
 				9A4A53222088604700E90EEA /* ScrollViewWithTopAndBottomFixedViews.swift */,
@@ -463,7 +455,6 @@
 				9ABA9AEB2063DB4500ADA34E /* Frameworks */,
 				9ABA9AEC2063DB4500ADA34E /* Resources */,
 				42F074F9D1E772804B796560 /* [CP] Embed Pods Frameworks */,
-				36B70393AD3496212BB0F81E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -530,6 +521,7 @@
 				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
+				9A2A28D820AD7F0F00F826EA /* PieChartViewController.xib in Resources */,
 				9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */,
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
 				9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */,
@@ -545,21 +537,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		36B70393AD3496212BB0F81E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iWallet/Pods-iWallet-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		42F074F9D1E772804B796560 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -569,6 +546,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-iWallet/Pods-iWallet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CVCalendar/CVCalendar.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/Expression/Expression.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -576,6 +554,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CVCalendar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Expression.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -626,7 +605,6 @@
 				9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
-				9A3C1C4420AC8F8B00B2865E /* MiniToLargeViewAnimator.swift in Sources */,
 				9A59A48E20A0508F00B35E70 /* MapVC.swift in Sources */,
 				9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */,
 				9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */,
@@ -645,7 +623,6 @@
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,
 				9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */,
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
-				9A3C1C4320AC8F8B00B2865E /* BaseAnimator.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
 				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
 				9A59A49C20A434C700B35E70 /* Detail.swift in Sources */,
@@ -655,6 +632,7 @@
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9A3C1C3D20AAE2A900B2865E /* ButtonWithRoundedCorner.swift in Sources */,
 				9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */,
+				9A2A28D620AD7EF500F826EA /* PieChartViewController.swift in Sources */,
 				9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,
@@ -666,8 +644,8 @@
 				9A4A53212087A95800E90EEA /* PhotoProtocol.swift in Sources */,
 				9AF34A022089E9E9005A94C7 /* FourSquareService.swift in Sources */,
 				9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */,
-				9A3C1C4220AC8F8B00B2865E /* MiniToLargeViewInteractive.swift in Sources */,
 				9ADCC8BB2080BAEB00F446E4 /* SelectCurrencyVC.swift in Sources */,
+				9A2A28DC20AD82E100F826EA /* DemoBaseViewController.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
 				9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */,
 				9AB9841520934FEE008E84D9 /* CircularLabel.swift in Sources */,
