@@ -16,6 +16,9 @@
 		9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A3853FB208A3F59008B804D /* PlaceCell.xib */; };
 		9A3C1C3B20A9F7F200B2865E /* GradientViewWithCentralPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C3A20A9F7F200B2865E /* GradientViewWithCentralPoint.swift */; };
 		9A3C1C3D20AAE2A900B2865E /* ButtonWithRoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C3C20AAE2A900B2865E /* ButtonWithRoundedCorner.swift */; };
+		9A3C1C4220AC8F8B00B2865E /* MiniToLargeViewInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C3F20AC8F8B00B2865E /* MiniToLargeViewInteractive.swift */; };
+		9A3C1C4320AC8F8B00B2865E /* BaseAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C4020AC8F8B00B2865E /* BaseAnimator.swift */; };
+		9A3C1C4420AC8F8B00B2865E /* MiniToLargeViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C1C4120AC8F8B00B2865E /* MiniToLargeViewAnimator.swift */; };
 		9A4A531B20878D9400E90EEA /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4A531A20878D9400E90EEA /* ImageHelper.swift */; };
 		9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4A531C208790AA00E90EEA /* PhotoVC.swift */; };
 		9A4A531F208790AA00E90EEA /* PhotoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A4A531D208790AA00E90EEA /* PhotoVC.xib */; };
@@ -118,6 +121,9 @@
 		9A3853FB208A3F59008B804D /* PlaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
 		9A3C1C3A20A9F7F200B2865E /* GradientViewWithCentralPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientViewWithCentralPoint.swift; sourceTree = "<group>"; };
 		9A3C1C3C20AAE2A900B2865E /* ButtonWithRoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithRoundedCorner.swift; sourceTree = "<group>"; };
+		9A3C1C3F20AC8F8B00B2865E /* MiniToLargeViewInteractive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniToLargeViewInteractive.swift; sourceTree = "<group>"; };
+		9A3C1C4020AC8F8B00B2865E /* BaseAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAnimator.swift; sourceTree = "<group>"; };
+		9A3C1C4120AC8F8B00B2865E /* MiniToLargeViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniToLargeViewAnimator.swift; sourceTree = "<group>"; };
 		9A4A531A20878D9400E90EEA /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		9A4A531C208790AA00E90EEA /* PhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
 		9A4A531D208790AA00E90EEA /* PhotoVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoVC.xib; sourceTree = "<group>"; };
@@ -236,6 +242,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9A3C1C3E20AC8F5A00B2865E /* Transition Animators */ = {
+			isa = PBXGroup;
+			children = (
+				9A3C1C4020AC8F8B00B2865E /* BaseAnimator.swift */,
+				9A3C1C4120AC8F8B00B2865E /* MiniToLargeViewAnimator.swift */,
+				9A3C1C3F20AC8F8B00B2865E /* MiniToLargeViewInteractive.swift */,
+			);
+			path = "Transition Animators";
+			sourceTree = "<group>";
+		};
 		9A9D2D39206548D800CC7DE0 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +356,7 @@
 		9ABA9AF02063DB4500ADA34E /* iWallet */ = {
 			isa = PBXGroup;
 			children = (
+				9A3C1C3E20AC8F5A00B2865E /* Transition Animators */,
 				9A9D2D5F2069110700CC7DE0 /* Protocols */,
 				9A9D2D562068DCC300CC7DE0 /* XIBs */,
 				9A9D2D49206663B500CC7DE0 /* Srevices */,
@@ -609,6 +626,7 @@
 				9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
+				9A3C1C4420AC8F8B00B2865E /* MiniToLargeViewAnimator.swift in Sources */,
 				9A59A48E20A0508F00B35E70 /* MapVC.swift in Sources */,
 				9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */,
 				9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */,
@@ -627,6 +645,7 @@
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,
 				9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */,
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
+				9A3C1C4320AC8F8B00B2865E /* BaseAnimator.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
 				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
 				9A59A49C20A434C700B35E70 /* Detail.swift in Sources */,
@@ -647,6 +666,7 @@
 				9A4A53212087A95800E90EEA /* PhotoProtocol.swift in Sources */,
 				9AF34A022089E9E9005A94C7 /* FourSquareService.swift in Sources */,
 				9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */,
+				9A3C1C4220AC8F8B00B2865E /* MiniToLargeViewInteractive.swift in Sources */,
 				9ADCC8BB2080BAEB00F446E4 /* SelectCurrencyVC.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
 				9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */,

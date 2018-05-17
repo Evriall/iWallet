@@ -25,10 +25,15 @@ class AddTransactionVC: UIViewController {
         addTransactionAdditionalVC.tags = self.tags
         addTransactionAdditionalVC.place = self.place
         addTransactionAdditionalVC.modalPresentationStyle = .custom
-        presentDetail(addTransactionAdditionalVC)
+        disableInteractivePlayerTransitioning = true
+        self.presentDetail(nextViewController, animated: true) { (success) in
+            self.disableInteractivePlayerTransitioning = false
+        }
+//        presentDetail(addTransactionAdditionalVC)
     }
     
 
+    @IBOutlet weak var infoBtn: UIButton!
     @IBOutlet weak var openParentheseBtn: UIButton!
     @IBOutlet weak var closeParentheseBtn: UIButton!
     @IBOutlet weak var addSignBtn: UIButton!
@@ -67,6 +72,10 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var currencyBtn: UIButton!
     
     
+    var disableInteractivePlayerTransitioning = false
+    var nextViewController: AddTransactionAdditionalVC!
+    var presentInteractor: MiniToLargeViewInteractive!
+    var dismissInteractor: MiniToLargeViewInteractive!
     
     var place: Place?
     var desc: String = ""
@@ -161,9 +170,7 @@ class AddTransactionVC: UIViewController {
                 accountToBtn.isEnabled = false
             }
         }
-        
-//
-//        selectPlaceBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+    
         if transaction == nil {
             typeSG.selectedSegmentIndex = 0
             setCategory()
@@ -185,15 +192,11 @@ class AddTransactionVC: UIViewController {
                     currencyBtn.setTitle(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency), for: .normal)
                 }
             }
-        
-           
-//
         } else {
             guard let transaction = self.transaction, let date = transaction.date, let description = transaction.desc, let category = transaction.category else {return}
             guard let account = transaction.account, let currency = account.currency else {return}
             self.expressionStr = "\(transaction.amount)"
             self.desc = description
-//            self.descriptionTxt.text = description
             self.category = category
             self.place = transaction.place
             
@@ -237,9 +240,6 @@ class AddTransactionVC: UIViewController {
                 dotSignBtn.isEnabled = false
                 deleteSignBtn.isEnabled = false
                 currencyBtn.isEnabled = false
-//                yesterdayBtn.isEnabled = false
-//                todayBtn.isEnabled = false
-//                otherDateBtn.isEnabled = false
             } else {
                accountToBtn.isHidden = true
             }
@@ -268,6 +268,17 @@ class AddTransactionVC: UIViewController {
                 }
             }
         }
+        nextViewController = AddTransactionAdditionalVC()
+        nextViewController.rootViewController = self
+        nextViewController.transitioningDelegate = self
+        nextViewController.modalPresentationStyle = .fullScreen
+        
+        
+        presentInteractor = MiniToLargeViewInteractive()
+        self.transitioningDelegate = self
+        presentInteractor.attachToViewController(viewController: self, withView: infoBtn, presentViewController: nextViewController)
+        dismissInteractor = MiniToLargeViewInteractive()
+        dismissInteractor.attachToViewController(viewController: nextViewController, withView: nextViewController.view, presentViewController: nil)
     }
    
     func setCategory() {
@@ -670,5 +681,32 @@ extension AddTransactionVC: TransactionProtocol, CategoryProtocol, AccountProtoc
         if category.systemName != Constants.CATEGORY_TRANSFER {
             CategoryHelper.instance.currentCAtegory = category.id
         }
+    }
+}
+
+extension AddTransactionVC: UIViewControllerTransitioningDelegate {
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = MiniToLargeViewAnimator()
+        animator.initialX = infoBtn.frame.width
+        animator.transitionType = .Present
+        return animator
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = MiniToLargeViewAnimator()
+        animator.initialX = infoBtn.frame.width
+        animator.transitionType = .Dismiss
+        return animator
+    }
+    
+    func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        guard !disableInteractivePlayerTransitioning else { return nil }
+        return presentInteractor
+    }
+    
+    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        guard !disableInteractivePlayerTransitioning else { return nil }
+        return dismissInteractor
     }
 }

@@ -29,6 +29,7 @@
                 <outlet property="expressionLbl" destination="cgQ-hg-4gS" id="ARg-St-WNp"/>
                 <outlet property="fiveDigitBtn" destination="S7R-Xj-dVF" id="pY7-xj-zk7"/>
                 <outlet property="fourDigitBtn" destination="7My-SO-B3P" id="3Mw-PU-B6f"/>
+                <outlet property="infoBtn" destination="FA2-wa-xJU" id="Hep-ZY-iyI"/>
                 <outlet property="minusSignBtn" destination="EcG-X8-Esn" id="n0V-vo-3n5"/>
                 <outlet property="multiplySignBtn" destination="0MG-ms-CoE" id="Apb-2f-xe0"/>
                 <outlet property="nineDigitBtn" destination="g3d-e5-dVP" id="nEQ-yH-Qkl"/>
@@ -118,15 +119,15 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m76-9D-q33">
                                     <rect key="frame" x="327" y="83.5" width="48" height="90"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FA2-wa-xJU">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aV0-ep-FR6">
                                             <rect key="frame" x="0.0" y="0.0" width="48" height="90"/>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FA2-wa-xJU">
+                                            <rect key="frame" x="0.0" y="-0.5" width="48" height="90"/>
                                             <connections>
                                                 <action selector="infoBtnPressed:" destination="-1" eventType="touchUpInside" id="OA0-Zo-ocz"/>
                                             </connections>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aV0-ep-FR6">
-                                            <rect key="frame" x="0.0" y="0.0" width="48" height="90"/>
-                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>

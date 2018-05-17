@@ -17,6 +17,7 @@ class AddTransactionAdditionalVC: UIViewController {
     @IBOutlet weak var photosCollectionView: UICollectionView!
     @IBOutlet weak var selectPlaceBtn: UIButton!
     
+    var rootViewController: AddTransactionVC?
     var delegate: TransactionProtocol?
     var addTransactionVC: AddTransactionVC?
     var place: Place?
@@ -129,7 +130,11 @@ class AddTransactionAdditionalVC: UIViewController {
     
     @IBAction func backBtnPressed(_ sender: Any) {
         delegate?.handleAdditionalInfo(place: place, desc: descriptionTV.text, date: date, tags: tags, photos: photos)
-        dismissDetail()
+        rootViewController?.disableInteractivePlayerTransitioning = true
+        self.dismissDetailAnimated(animated: true){ success in
+            self.rootViewController?.disableInteractivePlayerTransitioning = false
+        }
+//        dismissDetail()
     }
     
     @IBAction func yesterdayBtnPressed(_ sender: Any) {
