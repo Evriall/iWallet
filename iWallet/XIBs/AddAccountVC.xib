@@ -38,8 +38,8 @@
                                 <action selector="backBtnPressed:" destination="-1" eventType="touchUpInside" id="tsG-PS-V1e"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="ACCOUNT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4k-18-MbR">
-                            <rect key="frame" x="138" y="41.5" width="101" height="27.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACCOUNT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4k-18-MbR">
+                            <rect key="frame" x="137.5" y="41.5" width="100.5" height="27.5"/>
                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -59,6 +59,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="FQ3-HN-FT2" firstAttribute="centerY" secondItem="v4k-18-MbR" secondAttribute="centerY" id="10K-He-bUP"/>
+                        <constraint firstItem="v4k-18-MbR" firstAttribute="centerX" secondItem="Ufn-mJ-du6" secondAttribute="centerX" id="GsN-P2-FAQ"/>
                         <constraint firstItem="FQ3-HN-FT2" firstAttribute="leading" secondItem="Ufn-mJ-du6" secondAttribute="leading" constant="8" id="Nb5-Sc-ize"/>
                         <constraint firstAttribute="trailing" secondItem="WaK-XH-ifz" secondAttribute="trailing" constant="8" id="jaL-p0-GxL"/>
                         <constraint firstItem="WaK-XH-ifz" firstAttribute="centerY" secondItem="v4k-18-MbR" secondAttribute="centerY" id="o6X-mz-bzX"/>

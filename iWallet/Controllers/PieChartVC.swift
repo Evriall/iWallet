@@ -19,6 +19,7 @@ class PieChartVC: UIViewController {
     @IBOutlet weak var startDateBtn: UIButton!
     @IBOutlet weak var endDateBtn: UIButton!
     @IBOutlet weak var belowOptionView: UIView!
+    @IBOutlet weak var InfoLbl: UILabel!
     
     var startDate = Date()
     var endDate = Date()
@@ -30,6 +31,9 @@ class PieChartVC: UIViewController {
     var reportLabel = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(SearchVC.handleTap))
+//        tap.cancelsTouchesInView = false
+//        view.addGestureRecognizer(tap)
         reportTypeSegmentView.selectedSegmentIndex = 0
         transactionTypeSegmentView.selectedSegmentIndex = 0
         periodSegmentView.selectedSegmentIndex = 0
@@ -43,6 +47,13 @@ class PieChartVC: UIViewController {
         fetchData()
     }
     
+//    @objc func handleTap(){
+//        if !optionSV.isHidden {
+//            optionSV.isHidden = true
+//            belowOptionView.isHidden = true
+//        }
+//    }
+    
     func fetchData() {
         fetchedData = []
         entries = []
@@ -53,22 +64,27 @@ class PieChartVC: UIViewController {
             if transactionTypeSegmentView.selectedSegmentIndex == 0 {
                 reportLabel += " turnover"
                 CoreDataService.instance.fetchAccountsTurnover(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
-                    for (index, arrayItem) in accountsArray.enumerated() {
-                        if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
-                            if currency != "USD"{
-                                ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
-                                    let valueAtExchangeRate = sum * rate
-                                    self.totalSum += valueAtExchangeRate
-                                    self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                    if accountsArray.count == 0 {
+                        InfoLbl.isHidden = false
+                        chartView.isHidden = true
+                    } else {
+                        for (index, arrayItem) in accountsArray.enumerated() {
+                            if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
+                                if currency != "USD"{
+                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
+                                        let valueAtExchangeRate = sum * rate
+                                        self.totalSum += valueAtExchangeRate
+                                        self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                                        if index == accountsArray.count - 1 {
+                                            self.setUpChart()
+                                        }
+                                    })
+                                } else {
+                                    self.fetchedData.append((name: account, value: sum, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                                    totalSum += sum
                                     if index == accountsArray.count - 1 {
                                         self.setUpChart()
                                     }
-                                })
-                            } else {
-                                self.fetchedData.append((name: account, value: sum, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
-                                totalSum += sum
-                                if index == accountsArray.count - 1 {
-                                    self.setUpChart()
                                 }
                             }
                         }
@@ -77,22 +93,27 @@ class PieChartVC: UIViewController {
             } else if transactionTypeSegmentView.selectedSegmentIndex == 1{
                 reportLabel += " income"
                 CoreDataService.instance.fetchAccountsIncome(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
-                    for (index, arrayItem) in accountsArray.enumerated() {
-                        if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
-                            if currency != "USD"{
-                                ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
-                                    let valueAtExchangeRate = sum * rate
-                                    self.totalSum += valueAtExchangeRate
-                                    self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                    if accountsArray.count == 0 {
+                        InfoLbl.isHidden = false
+                        chartView.isHidden = true
+                    } else {
+                        for (index, arrayItem) in accountsArray.enumerated() {
+                            if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
+                                if currency != "USD"{
+                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
+                                        let valueAtExchangeRate = sum * rate
+                                        self.totalSum += valueAtExchangeRate
+                                        self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                                        if index == accountsArray.count - 1 {
+                                            self.setUpChart()
+                                        }
+                                    })
+                                } else {
+                                    self.fetchedData.append((name: account, value: sum, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                                    totalSum += sum
                                     if index == accountsArray.count - 1 {
                                         self.setUpChart()
                                     }
-                                })
-                            } else {
-                                self.fetchedData.append((name: account, value: sum, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
-                                totalSum += sum
-                                if index == accountsArray.count - 1 {
-                                    self.setUpChart()
                                 }
                             }
                         }
@@ -101,22 +122,27 @@ class PieChartVC: UIViewController {
             } else {
                 reportLabel += " costs"
                 CoreDataService.instance.fetchAccountsCosts(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
-                    for (index, arrayItem) in accountsArray.enumerated() {
-                        if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
-                            if currency != "USD"{
-                                ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
-                                    let valueAtExchangeRate = sum * rate
-                                    self.totalSum += valueAtExchangeRate
-                                    self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                    if accountsArray.count == 0 {
+                        InfoLbl.isHidden = false
+                        chartView.isHidden = true
+                    } else {
+                        for (index, arrayItem) in accountsArray.enumerated() {
+                            if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
+                                if currency != "USD"{
+                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
+                                        let valueAtExchangeRate = sum * rate
+                                        self.totalSum += valueAtExchangeRate
+                                        self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                                        if index == accountsArray.count - 1 {
+                                            self.setUpChart()
+                                        }
+                                    })
+                                } else {
+                                    self.fetchedData.append((name: account, value: sum, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                                    totalSum += sum
                                     if index == accountsArray.count - 1 {
                                         self.setUpChart()
                                     }
-                                })
-                            } else {
-                                self.fetchedData.append((name: account, value: sum, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
-                                totalSum += sum
-                                if index == accountsArray.count - 1 {
-                                    self.setUpChart()
                                 }
                             }
                         }
@@ -129,6 +155,8 @@ class PieChartVC: UIViewController {
     }
     
     func setUpChart(){
+        InfoLbl.isHidden = true
+        chartView.isHidden = false
         fetchedData.sort { (arg0, arg1) -> Bool in
             arg0.value > arg1.value
         }
@@ -159,7 +187,6 @@ class PieChartVC: UIViewController {
         
         data.setValueFont(.systemFont(ofSize: 11, weight: .medium))
         data.setValueTextColor(.white)
-        
         chartView.data = data
         chartView.chartDescription?.text = ""
         chartView.highlightValues(nil)
@@ -188,9 +215,21 @@ class PieChartVC: UIViewController {
         fetchData()
     }
     @IBAction func startDateBtnPressed(_ sender: Any) {
+        let calendarVC = CalendarVC()
+        calendarVC.delegate = self
+        calendarVC.currentDate = startDate
+        calendarVC.start = true
+        calendarVC.modalPresentationStyle = .custom
+        presentDetail(calendarVC )
     }
     
     @IBAction func endDateBtnPressed(_ sender: Any) {
+        let calendarVC = CalendarVC()
+        calendarVC.delegate = self
+        calendarVC.currentDate = endDate
+        calendarVC.start = false
+        calendarVC.modalPresentationStyle = .custom
+        presentDetail(calendarVC )
     }
     @IBAction func closeBtnPressed(_ sender: Any) {
         dismissDetail()
@@ -199,5 +238,20 @@ class PieChartVC: UIViewController {
         optionSV.isHidden = !optionSV.isHidden
         belowOptionView.isHidden = !belowOptionView.isHidden
     }
+    
+}
+
+extension PieChartVC: CalendarProtocol {
+    func handleDate(_ date: Date, start: Bool) {
+        if start {
+           startDate = date
+            startDateBtn.setTitle(startDate.ChartStr(), for: .normal)
+        } else {
+            endDate = date
+            endDateBtn.setTitle(endDate.ChartStr(), for: .normal)
+        }
+        fetchData()
+    }
+    
     
 }

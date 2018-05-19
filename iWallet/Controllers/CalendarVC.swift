@@ -19,6 +19,7 @@ class CalendarVC: UIViewController {
     private var currentCalendar: Calendar?
     var delegate: CalendarProtocol?
     var currentDate = Date()
+    var start = true
     @IBAction func closeBtnPressed(_ sender: Any) {
         dismissDetail()
     }
@@ -31,7 +32,7 @@ class CalendarVC: UIViewController {
             currentCalendar?.timeZone = timeZone
         }
         if let calendar = currentCalendar {
-            monthLbl.text = CVDate(date: Date(), calendar: calendar).globalDescription
+            monthLbl.text = CVDate(date: currentDate, calendar: calendar).globalDescription
         }
     }
     
@@ -41,6 +42,7 @@ class CalendarVC: UIViewController {
         calendarView.calendarDelegate = self
         calendarView.calendarAppearanceDelegate = self
         setUPCalendar()
+        calendarView.toggleViewWithDate(currentDate)
         calendarView.contentController.refreshPresentedMonth()
     }
     override func viewDidLayoutSubviews() {
@@ -53,6 +55,7 @@ class CalendarVC: UIViewController {
 }
 
 extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCalendarViewAppearanceDelegate{
+    
     func presentationMode() -> CalendarMode {
         return .monthView
     }
@@ -65,7 +68,7 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCale
         guard let selectedDate = dayView.date.convertedDate() else {
             return
         }
-        delegate?.handleDate(selectedDate)
+        delegate?.handleDate(selectedDate, start: start)
         dismissDetail()
     }
     
@@ -87,7 +90,6 @@ extension CalendarVC: CVCalendarViewDelegate, CVCalendarMenuViewDelegate, CVCale
         }
         return false
     }
-    
     
     func presentedDateUpdated(_ date: CVDate) {
         monthLbl.text = date.globalDescription

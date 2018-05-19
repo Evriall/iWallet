@@ -54,72 +54,152 @@ class AddTransactionAdditionalVC: UIViewController {
     @objc func handleTap(){
         self.view.endEditing(true)
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(AddTransactionAdditionalVC.handleTap))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        descriptionTV.text = desc
-        descriptionTV.delegate = self
-        placeholderLabel = UILabel()
-        placeholderLabel?.text = "Description"
-        placeholderLabel?.font = UIFont(name: (descriptionTV.font?.fontName)!, size: (descriptionTV.font?.pointSize)!)
-        placeholderLabel?.sizeToFit()
-        descriptionTV.addSubview(placeholderLabel!)
-        placeholderLabel?.frame.origin = CGPoint(x: 0, y: (descriptionTV.font?.pointSize)! / 2)
-        placeholderLabel?.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        placeholderLabel?.isHidden = !descriptionTV.text.isEmpty
-        
-        
-        if date.startOfDay() == Date().startOfDay() {
-            setToday()
-        } else if date.startOfDay() == (Date() - 86400).startOfDay() {
-            setYesterday()
-        } else {
-            setOtherDay()
-            otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
-        }
-        
-        let contentWidth = getTagsWith()
-        tagsCollectionView = UICollectionView(frame: CGRect(x: 0, y: 3, width: contentWidth, height: 24), collectionViewLayout: layoutCV)
-        tagsCollectionView?.dataSource = self
-        tagsCollectionView?.delegate = self
-        tagsCollectionView?.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "TagCell")
-        tagsCollectionView?.showsVerticalScrollIndicator = false
-        tagsCollectionView?.showsHorizontalScrollIndicator = false
-        tagsCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        
-        tagImageView.frame = CGRect(x: 4, y: 3, width: 32, height: 24)
-        tagTxt.frame = CGRect(x: contentWidth, y: 3, width: contentWidth > (0.5*scrollView.frame.width) ? (0.5*scrollView.frame.width): scrollView.frame.width - contentWidth, height: 24)
-        tagTxt.returnKeyType = .done
-        tagTxt.leftView = tagImageView
-        tagTxt.leftViewMode = .unlessEditing
-        tagTxt.delegate = self
-        scrollView.delegate = self
-        scrollView.contentSize = CGSize(width: contentWidth + tagTxt.frame.width, height: 30)
-        scrollView.addSubview(tagsCollectionView!)
-        scrollView.addSubview(tagTxt)
-        
-        layoutCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layoutCV.minimumInteritemSpacing = 8
-        layoutCV.minimumLineSpacing = 8
-
-        layoutPCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layoutPCV.itemSize = CGSize(width: 100, height: 100)
-        layoutPCV.minimumInteritemSpacing = 10
-        layoutPCV.minimumLineSpacing = 10
-
-
-        photosCollectionView?.delegate = self
-        photosCollectionView?.dataSource = self
-        photosCollectionView?.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCell")
-        photosCollectionView?.showsVerticalScrollIndicator = false
-        photosCollectionView?.showsHorizontalScrollIndicator = false
-        
-        selectPlaceBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        selectPlaceBtn.setTitle(self.place?.name ?? "Select place" , for: .normal)
     }
+    override func viewWillAppear(_ animated: Bool) {
+       setUpView()
+    }
+//    override func loadViewIfNeeded() {
+////        setUpView()
+//    }
+    func setUpView(){
+                descriptionTV.text = desc
+                descriptionTV.delegate = self
+                placeholderLabel = UILabel()
+                placeholderLabel?.text = "Description"
+                placeholderLabel?.font = UIFont(name: (descriptionTV.font?.fontName)!, size: (descriptionTV.font?.pointSize)!)
+                placeholderLabel?.sizeToFit()
+                descriptionTV.addSubview(placeholderLabel!)
+                placeholderLabel?.frame.origin = CGPoint(x: 0, y: (descriptionTV.font?.pointSize)! / 2)
+                placeholderLabel?.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                placeholderLabel?.isHidden = !descriptionTV.text.isEmpty
+        
+        
+                if date.startOfDay() == Date().startOfDay() {
+                    setToday()
+                } else if date.startOfDay() == (Date() - 86400).startOfDay() {
+                    setYesterday()
+                } else {
+                    setOtherDay()
+                    otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
+                }
+        
+                let contentWidth = getTagsWith()
+                tagsCollectionView = UICollectionView(frame: CGRect(x: 0, y: 3, width: contentWidth, height: 24), collectionViewLayout: layoutCV)
+                tagsCollectionView?.dataSource = self
+                tagsCollectionView?.delegate = self
+                tagsCollectionView?.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "TagCell")
+                tagsCollectionView?.showsVerticalScrollIndicator = false
+                tagsCollectionView?.showsHorizontalScrollIndicator = false
+                tagsCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+                tagImageView.frame = CGRect(x: 4, y: 3, width: 32, height: 24)
+                tagTxt.frame = CGRect(x: contentWidth, y: 3, width: contentWidth > (0.5*scrollView.frame.width) ? (0.5*scrollView.frame.width): scrollView.frame.width - contentWidth, height: 24)
+                tagTxt.returnKeyType = .done
+                tagTxt.leftView = tagImageView
+                tagTxt.leftViewMode = .unlessEditing
+                tagTxt.delegate = self
+                scrollView.delegate = self
+                scrollView.contentSize = CGSize(width: contentWidth + tagTxt.frame.width, height: 30)
+                scrollView.addSubview(tagsCollectionView!)
+                scrollView.addSubview(tagTxt)
+        
+                layoutCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                layoutCV.minimumInteritemSpacing = 8
+                layoutCV.minimumLineSpacing = 8
+        
+                layoutPCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                layoutPCV.itemSize = CGSize(width: 100, height: 100)
+                layoutPCV.minimumInteritemSpacing = 10
+                layoutPCV.minimumLineSpacing = 10
+        
+        
+                photosCollectionView?.delegate = self
+                photosCollectionView?.dataSource = self
+                photosCollectionView?.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCell")
+                photosCollectionView?.showsVerticalScrollIndicator = false
+                photosCollectionView?.showsHorizontalScrollIndicator = false
+        
+                selectPlaceBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+                selectPlaceBtn.setTitle(self.place?.name ?? "Select place" , for: .normal)
+            }
+    
+//    func setUpView(addTransactionVC: AddTransactionVC, delegate: TransactionProtocol, amount: Double, place: Place?, desc: String, date: Date, tags: [(name: String, selected: Bool)], photos: [[String : UIImage]]){
+//        self.amount = amount
+//        self.place = place
+//        self.date = date
+//        self.tags = tags
+//        self.photos = photos
+//        self.delegate = delegate
+//        self.addTransactionVC = addTransactionVC
+//
+//        descriptionTV.text = desc
+//        descriptionTV.delegate = self
+//        placeholderLabel = UILabel()
+//        placeholderLabel?.text = "Description"
+//        placeholderLabel?.font = UIFont(name: (descriptionTV.font?.fontName)!, size: (descriptionTV.font?.pointSize)!)
+//        placeholderLabel?.sizeToFit()
+//        descriptionTV.addSubview(placeholderLabel!)
+//        placeholderLabel?.frame.origin = CGPoint(x: 0, y: (descriptionTV.font?.pointSize)! / 2)
+//        placeholderLabel?.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//        placeholderLabel?.isHidden = !descriptionTV.text.isEmpty
+//
+//
+//        if date.startOfDay() == Date().startOfDay() {
+//            setToday()
+//        } else if date.startOfDay() == (Date() - 86400).startOfDay() {
+//            setYesterday()
+//        } else {
+//            setOtherDay()
+//            otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
+//        }
+//
+//        let contentWidth = getTagsWith()
+//        tagsCollectionView = UICollectionView(frame: CGRect(x: 0, y: 3, width: contentWidth, height: 24), collectionViewLayout: layoutCV)
+//        tagsCollectionView?.dataSource = self
+//        tagsCollectionView?.delegate = self
+//        tagsCollectionView?.register(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "TagCell")
+//        tagsCollectionView?.showsVerticalScrollIndicator = false
+//        tagsCollectionView?.showsHorizontalScrollIndicator = false
+//        tagsCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//
+//        tagImageView.frame = CGRect(x: 4, y: 3, width: 32, height: 24)
+//        tagTxt.frame = CGRect(x: contentWidth, y: 3, width: contentWidth > (0.5*scrollView.frame.width) ? (0.5*scrollView.frame.width): scrollView.frame.width - contentWidth, height: 24)
+//        tagTxt.returnKeyType = .done
+//        tagTxt.leftView = tagImageView
+//        tagTxt.leftViewMode = .unlessEditing
+//        tagTxt.delegate = self
+//        scrollView.delegate = self
+//        scrollView.contentSize = CGSize(width: contentWidth + tagTxt.frame.width, height: 30)
+//        scrollView.addSubview(tagsCollectionView!)
+//        scrollView.addSubview(tagTxt)
+//
+//        layoutCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        layoutCV.minimumInteritemSpacing = 8
+//        layoutCV.minimumLineSpacing = 8
+//
+//        layoutPCV.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        layoutPCV.itemSize = CGSize(width: 100, height: 100)
+//        layoutPCV.minimumInteritemSpacing = 10
+//        layoutPCV.minimumLineSpacing = 10
+//
+//
+//        photosCollectionView?.delegate = self
+//        photosCollectionView?.dataSource = self
+//        photosCollectionView?.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCell")
+//        photosCollectionView?.showsVerticalScrollIndicator = false
+//        photosCollectionView?.showsHorizontalScrollIndicator = false
+//
+//        selectPlaceBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+//        selectPlaceBtn.setTitle(self.place?.name ?? "Select place" , for: .normal)
+//    }
+    
     @IBAction func saveBtnPressed(_ sender: Any) {
         if amount == 0 {return}
         delegate?.handleAdditionalInfo(place: place, desc: descriptionTV.text, date: date, tags: tags, photos: photos)
@@ -218,12 +298,12 @@ class AddTransactionAdditionalVC: UIViewController {
 }
 
 extension AddTransactionAdditionalVC: CalendarProtocol, UITextViewDelegate, UITextFieldDelegate{
-    func handleDate(_ date: Date) {
+    func handleDate(_ date: Date, start: Bool) {
         self.date = date
         otherDateBtn.setTitle(date.formatDateToStr(), for: .normal)
         setOtherDay()
     }
-    
+
     func textViewDidChange(_ textView: UITextView) {
         if let text = descriptionTV.text {
             placeholderLabel?.isHidden = !text.isEmpty

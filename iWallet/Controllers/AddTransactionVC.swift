@@ -275,9 +275,9 @@ class AddTransactionVC: UIViewController {
         infoBtn.addGestureRecognizer(pan)
     }
    
+    
     @objc func onPan(pan: UIPanGestureRecognizer) {
         let translation = pan.translation(in: pan.view?.superview)
-        
         //Represents the percentage of the transition that must be completed before allowing to complete.
         let percentThreshold: CGFloat = 0.2
         //Represents the difference between progress that is required to trigger the completion of the transition.
@@ -291,6 +291,15 @@ class AddTransactionVC: UIViewController {
         
         switch pan.state {
         case .began:
+            self.nextViewController?.delegate = self
+            self.nextViewController?.addTransactionVC = self
+            self.nextViewController?.amount = amountForAccountCurrency
+            self.nextViewController?.date = self.date
+            self.nextViewController?.desc = self.desc
+            self.nextViewController?.transaction = self.transaction
+            self.nextViewController?.photos = self.photos
+            self.nextViewController?.tags = self.tags
+            self.nextViewController?.place = self.place
             present(nextViewController!, animated: true, completion: nil)
 //            performSegue(withIdentifier: "show", sender: self)
         case .changed:
@@ -640,6 +649,20 @@ class AddTransactionVC: UIViewController {
         return currencyRateDesc
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let nextVC = segue.destination as?  AddTransactionAdditionalVC {
+            nextVC.delegate = self
+            nextVC.addTransactionVC = self
+            nextVC.amount = self.amountForAccountCurrency
+            nextVC.date = self.date
+            nextVC.desc = self.desc
+            nextVC.transaction = self.transaction
+            nextVC.photos = self.photos
+            nextVC.tags = self.tags
+            nextVC.place = self.place
+        }
+    }
 }
 
 

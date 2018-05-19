@@ -10,8 +10,6 @@
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
 		9A1849222093913C0083E13E /* ViewWithBottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1849212093913C0083E13E /* ViewWithBottomButton.swift */; };
 		9A1EAE6C209B8D6100E56D33 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */; };
-		9A2A28D620AD7EF500F826EA /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A28D520AD7EF500F826EA /* PieChartViewController.swift */; };
-		9A2A28D820AD7F0F00F826EA /* PieChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */; };
 		9A2A28DC20AD82E100F826EA /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */; };
 		9A305B1220AECE9C00DD79FF /* PieChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B1020AECE9C00DD79FF /* PieChartVC.swift */; };
 		9A305B1320AECE9C00DD79FF /* PieChartVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B1120AECE9C00DD79FF /* PieChartVC.xib */; };
@@ -117,8 +115,6 @@
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		9A1849212093913C0083E13E /* ViewWithBottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithBottomButton.swift; sourceTree = "<group>"; };
 		9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionCell.xib; sourceTree = "<group>"; };
-		9A2A28D520AD7EF500F826EA /* PieChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
-		9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PieChartViewController.xib; sourceTree = "<group>"; };
 		9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoBaseViewController.swift; sourceTree = "<group>"; };
 		9A305B1020AECE9C00DD79FF /* PieChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartVC.swift; sourceTree = "<group>"; };
 		9A305B1120AECE9C00DD79FF /* PieChartVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PieChartVC.xib; sourceTree = "<group>"; };
@@ -310,7 +306,6 @@
 				9AB9841120921BED008E84D9 /* CoinCell.xib */,
 				9A8044B7208F32FB0048D82B /* WalletCell.xib */,
 				9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */,
-				9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */,
 				9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */,
 				9A305B1120AECE9C00DD79FF /* PieChartVC.xib */,
 			);
@@ -390,7 +385,6 @@
 				9A9D2D4C2066674800CC7DE0 /* AddCategoryVC.swift */,
 				9A9D2D572068FA1300CC7DE0 /* SelectParentCategoryVC.swift */,
 				9AA7FF2C206A74E10093D0DE /* SettingsVC.swift */,
-				9A2A28D520AD7EF500F826EA /* PieChartViewController.swift */,
 				9A65982E206CFD3500519722 /* AddAccountVC.swift */,
 				9A659834206D413A00519722 /* SelectAccountTypeVC.swift */,
 				9ADCC8BA2080BAEB00F446E4 /* SelectCurrencyVC.swift */,
@@ -528,7 +522,6 @@
 				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
-				9A2A28D820AD7F0F00F826EA /* PieChartViewController.xib in Resources */,
 				9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */,
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
 				9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */,
@@ -639,7 +632,6 @@
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9A3C1C3D20AAE2A900B2865E /* ButtonWithRoundedCorner.swift in Sources */,
 				9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */,
-				9A2A28D620AD7EF500F826EA /* PieChartViewController.swift in Sources */,
 				9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,

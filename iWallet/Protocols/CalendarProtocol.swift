@@ -8,5 +8,5 @@
 
 import Foundation
 protocol CalendarProtocol {
-    func handleDate(_ date: Date)
+    func handleDate(_ date: Date, start: Bool)
 }

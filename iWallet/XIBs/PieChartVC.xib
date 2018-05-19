@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PieChartVC" customModule="iWallet" customModuleProvider="target">
             <connections>
+                <outlet property="InfoLbl" destination="Y3M-cg-wSP" id="adh-V7-45X"/>
                 <outlet property="belowOptionView" destination="B9c-u6-NGG" id="OHZ-nY-1qu"/>
                 <outlet property="chartView" destination="ivc-Z4-047" id="LV2-8I-iej"/>
                 <outlet property="endDateBtn" destination="zsz-S9-P5u" id="PFz-Xv-wJY"/>
@@ -31,126 +32,132 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ivc-Z4-047" customClass="PieChartView" customModule="Charts">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no any data for specified period" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3M-cg-wSP">
+                    <rect key="frame" x="16" y="252.5" width="343" height="262.5"/>
+                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="48"/>
+                    <color key="textColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9c-u6-NGG">
+                    <rect key="frame" x="8" y="105" width="359" height="100"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="I75-zE-ZJM">
+                    <rect key="frame" x="8" y="105" width="359" height="100"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-PQ-VkY">
-                            <rect key="frame" x="8" y="40" width="30" height="30"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="30" id="0x4-vi-OrF"/>
-                                <constraint firstAttribute="width" constant="30" id="50p-Pp-zgQ"/>
-                            </constraints>
-                            <state key="normal" image="CloseRoundedDarkIcon"/>
-                            <connections>
-                                <action selector="closeBtnPressed:" destination="-1" eventType="touchUpInside" id="jSB-f9-rog"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDo-Ju-x45">
-                            <rect key="frame" x="337" y="40" width="30" height="30"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="30" id="1e9-ZX-1dT"/>
-                                <constraint firstAttribute="width" constant="30" id="V5Z-Ea-lpj"/>
-                            </constraints>
-                            <state key="normal" image="SettingsRoundedDarkIcon"/>
-                            <connections>
-                                <action selector="optionBtnPressed:" destination="-1" eventType="touchUpInside" id="Vgt-ZD-NGq"/>
-                            </connections>
-                        </button>
-                        <view hidden="YES" alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9c-u6-NGG">
-                            <rect key="frame" x="8" y="78" width="359" height="100"/>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="0xe-8C-epD">
+                            <rect key="frame" x="0.0" y="0.0" width="359" height="29"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </view>
-                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="I75-zE-ZJM">
-                            <rect key="frame" x="8" y="78" width="359" height="100"/>
+                            <segments>
+                                <segment title="Account"/>
+                                <segment title="Category"/>
+                            </segments>
+                            <color key="tintColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="segmentValueChanged:" destination="-1" eventType="valueChanged" id="1pY-dE-cSd"/>
+                            </connections>
+                        </segmentedControl>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mRX-Et-P3w">
+                            <rect key="frame" x="0.0" y="36" width="359" height="29"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <segments>
+                                <segment title="Turnover"/>
+                                <segment title="Income"/>
+                                <segment title="Costs"/>
+                            </segments>
+                            <color key="tintColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="segmentValueChanged:" destination="-1" eventType="valueChanged" id="pHV-SG-QVx"/>
+                            </connections>
+                        </segmentedControl>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bdf-WK-RMg">
+                            <rect key="frame" x="0.0" y="72" width="359" height="29"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <segments>
+                                <segment title="Week"/>
+                                <segment title="Month"/>
+                                <segment title="Year"/>
+                                <segment title="Period"/>
+                            </segments>
+                            <color key="tintColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="segmentValueChanged:" destination="-1" eventType="valueChanged" id="EKr-rj-g46"/>
+                            </connections>
+                        </segmentedControl>
+                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OKE-80-hjS">
+                            <rect key="frame" x="0.0" y="100" width="359" height="0.0"/>
                             <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="0xe-8C-epD">
-                                    <rect key="frame" x="0.0" y="0.0" width="359" height="29"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xcs-nb-pnP">
+                                    <rect key="frame" x="0.0" y="0.0" width="179.5" height="0.0"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <segments>
-                                        <segment title="Account"/>
-                                        <segment title="Category"/>
-                                    </segments>
-                                    <color key="tintColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" title="Start">
+                                        <color key="titleColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
                                     <connections>
-                                        <action selector="segmentValueChanged:" destination="-1" eventType="valueChanged" id="1pY-dE-cSd"/>
+                                        <action selector="startDateBtnPressed:" destination="-1" eventType="touchUpInside" id="MT5-SO-yxs"/>
                                     </connections>
-                                </segmentedControl>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mRX-Et-P3w">
-                                    <rect key="frame" x="0.0" y="36" width="359" height="29"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsz-S9-P5u">
+                                    <rect key="frame" x="179.5" y="0.0" width="179.5" height="0.0"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <segments>
-                                        <segment title="Turnover"/>
-                                        <segment title="Income"/>
-                                        <segment title="Costs"/>
-                                    </segments>
-                                    <color key="tintColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" title="End">
+                                        <color key="titleColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
                                     <connections>
-                                        <action selector="segmentValueChanged:" destination="-1" eventType="valueChanged" id="pHV-SG-QVx"/>
+                                        <action selector="endDateBtnPressed:" destination="-1" eventType="touchUpInside" id="QpX-2b-vDI"/>
                                     </connections>
-                                </segmentedControl>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bdf-WK-RMg">
-                                    <rect key="frame" x="0.0" y="72" width="359" height="29"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <segments>
-                                        <segment title="Week"/>
-                                        <segment title="Month"/>
-                                        <segment title="Year"/>
-                                        <segment title="Period"/>
-                                    </segments>
-                                    <color key="tintColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <connections>
-                                        <action selector="segmentValueChanged:" destination="-1" eventType="valueChanged" id="EKr-rj-g46"/>
-                                    </connections>
-                                </segmentedControl>
-                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OKE-80-hjS">
-                                    <rect key="frame" x="0.0" y="100" width="359" height="0.0"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xcs-nb-pnP">
-                                            <rect key="frame" x="0.0" y="0.0" width="179.5" height="0.0"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" title="Start">
-                                                <color key="titleColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="startDateBtnPressed:" destination="-1" eventType="touchUpInside" id="MT5-SO-yxs"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsz-S9-P5u">
-                                            <rect key="frame" x="179.5" y="0.0" width="179.5" height="0.0"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" title="End">
-                                                <color key="titleColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="endDateBtnPressed:" destination="-1" eventType="touchUpInside" id="QpX-2b-vDI"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                </stackView>
+                                </button>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-PQ-VkY">
+                    <rect key="frame" x="8" y="59" width="30" height="30"/>
                     <constraints>
-                        <constraint firstItem="B9c-u6-NGG" firstAttribute="top" secondItem="I75-zE-ZJM" secondAttribute="top" id="1bi-n9-NJn"/>
-                        <constraint firstItem="R5e-PQ-VkY" firstAttribute="top" secondItem="ivc-Z4-047" secondAttribute="top" constant="40" id="38G-fl-JCG"/>
-                        <constraint firstItem="B9c-u6-NGG" firstAttribute="leading" secondItem="I75-zE-ZJM" secondAttribute="leading" id="8Rc-Lx-ltC"/>
-                        <constraint firstAttribute="trailing" secondItem="eDo-Ju-x45" secondAttribute="trailing" constant="8" id="EpR-BS-NP5"/>
-                        <constraint firstAttribute="trailing" secondItem="I75-zE-ZJM" secondAttribute="trailing" constant="8" id="bvs-w0-D38"/>
-                        <constraint firstItem="B9c-u6-NGG" firstAttribute="bottom" secondItem="I75-zE-ZJM" secondAttribute="bottom" id="hKD-tI-qmo"/>
-                        <constraint firstItem="I75-zE-ZJM" firstAttribute="leading" secondItem="ivc-Z4-047" secondAttribute="leading" constant="8" id="ipF-ZZ-xzA"/>
-                        <constraint firstItem="B9c-u6-NGG" firstAttribute="trailing" secondItem="I75-zE-ZJM" secondAttribute="trailing" id="k7A-Lu-8L9"/>
-                        <constraint firstItem="eDo-Ju-x45" firstAttribute="top" secondItem="ivc-Z4-047" secondAttribute="top" constant="40" id="uZL-2c-7nv"/>
-                        <constraint firstItem="R5e-PQ-VkY" firstAttribute="leading" secondItem="ivc-Z4-047" secondAttribute="leading" constant="8" id="udb-CL-emZ"/>
-                        <constraint firstItem="I75-zE-ZJM" firstAttribute="top" secondItem="R5e-PQ-VkY" secondAttribute="bottom" constant="8" id="xGf-77-vce"/>
+                        <constraint firstAttribute="height" constant="30" id="0x4-vi-OrF"/>
+                        <constraint firstAttribute="width" constant="30" id="50p-Pp-zgQ"/>
                     </constraints>
-                </view>
+                    <state key="normal" image="CloseRoundedDarkIcon"/>
+                    <connections>
+                        <action selector="closeBtnPressed:" destination="-1" eventType="touchUpInside" id="jSB-f9-rog"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDo-Ju-x45">
+                    <rect key="frame" x="337" y="59" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="Dgt-mA-5dG"/>
+                        <constraint firstAttribute="height" constant="30" id="ofd-4Z-HuG"/>
+                    </constraints>
+                    <state key="normal" image="SettingsRoundedDarkIcon"/>
+                    <connections>
+                        <action selector="optionBtnPressed:" destination="-1" eventType="touchUpInside" id="Vgt-ZD-NGq"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ivc-Z4-047" secondAttribute="trailing" id="0MZ-KL-4Qo"/>
+                <constraint firstItem="eDo-Ju-x45" firstAttribute="centerY" secondItem="R5e-PQ-VkY" secondAttribute="centerY" id="8hF-kA-Pmg"/>
+                <constraint firstItem="B9c-u6-NGG" firstAttribute="bottom" secondItem="I75-zE-ZJM" secondAttribute="bottom" id="I8b-kS-Fs7"/>
+                <constraint firstItem="B9c-u6-NGG" firstAttribute="leading" secondItem="I75-zE-ZJM" secondAttribute="leading" id="IEE-Ds-Z5K"/>
+                <constraint firstItem="R5e-PQ-VkY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="LHz-kT-WpF"/>
+                <constraint firstItem="Y3M-cg-wSP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="MX8-D2-qDx"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="I75-zE-ZJM" secondAttribute="trailing" constant="8" id="Pg4-Vj-5bl"/>
+                <constraint firstItem="B9c-u6-NGG" firstAttribute="top" secondItem="I75-zE-ZJM" secondAttribute="top" id="R8C-bb-EDT"/>
+                <constraint firstAttribute="trailing" secondItem="Y3M-cg-wSP" secondAttribute="trailing" constant="16" id="TwH-Lh-JFk"/>
                 <constraint firstItem="ivc-Z4-047" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Yuf-cu-Ib5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eDo-Ju-x45" secondAttribute="trailing" constant="8" id="Zrs-ag-mku"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ivc-Z4-047" secondAttribute="bottom" id="bLE-fD-zNk"/>
+                <constraint firstItem="I75-zE-ZJM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="cyY-dF-nGi"/>
+                <constraint firstItem="Y3M-cg-wSP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="eQY-y5-ugO"/>
+                <constraint firstItem="I75-zE-ZJM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="85" id="gtv-ik-hAX"/>
                 <constraint firstItem="ivc-Z4-047" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="hhp-wv-efP"/>
+                <constraint firstItem="Y3M-cg-wSP" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="50" id="nGs-Kd-3jA"/>
+                <constraint firstItem="B9c-u6-NGG" firstAttribute="trailing" secondItem="I75-zE-ZJM" secondAttribute="trailing" id="sez-YS-M9C"/>
+                <constraint firstItem="R5e-PQ-VkY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="39" id="zNH-hO-vtu"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="65.5" y="139.5"/>
