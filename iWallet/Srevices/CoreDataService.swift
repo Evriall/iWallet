@@ -494,7 +494,7 @@ class CoreDataService{
         }
     }
     
-    func fetchAccountsIncome(ByDate date: Date, complition: ([NSDictionary])->()){
+    func fetchAccountsTurnover(WithStartDate startDate: Date, WithEndDate endDate: Date, complition: ([NSDictionary])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
         
@@ -506,10 +506,36 @@ class CoreDataService{
         sumDesc.name = "sum"
         sumDesc.expressionResultType = .integer64AttributeType
         fetchRequest.returnsObjectsAsFaults = false
-        fetchRequest.propertiesToGroupBy = ["account.name"]
-        fetchRequest.propertiesToFetch = ["account.name", sumDesc]
+        fetchRequest.propertiesToGroupBy = ["account.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["account.name", "account.currency", sumDesc]
         fetchRequest.resultType = .dictionaryResultType
-        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.income.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
+        let predicate = NSPredicate(format: "account.external == %@AND date >= %@ AND date <= %@", NSNumber(value: false), startDate as CVarArg, endDate as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchAccountsIncome(WithStartDate startDate: Date, WithEndDate endDate: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .integer64AttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["account.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["account.name", "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.income.rawValue, startDate as CVarArg, endDate as CVarArg)
             fetchRequest.predicate = predicate
         do{
             if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
@@ -570,7 +596,7 @@ class CoreDataService{
     }
     
     
-    func fetchAccountsCosts(ByDate date: Date, complition: ([NSDictionary])->()){
+    func fetchAccountsCosts(WithStartDate startDate: Date, WithEndDate endDate: Date, complition: ([NSDictionary])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
         
@@ -582,10 +608,10 @@ class CoreDataService{
         sumDesc.name = "sum"
         sumDesc.expressionResultType = .doubleAttributeType
         fetchRequest.returnsObjectsAsFaults = false
-        fetchRequest.propertiesToGroupBy = ["account.name"]
-        fetchRequest.propertiesToFetch = ["account.name", sumDesc]
+        fetchRequest.propertiesToGroupBy = ["account.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["account.name", "account.currency", sumDesc]
         fetchRequest.resultType = .dictionaryResultType
-        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.costs.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg)
+        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.costs.rawValue, startDate as CVarArg, endDate as CVarArg)
         fetchRequest.predicate = predicate
         do{
             if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
@@ -637,7 +663,7 @@ class CoreDataService{
     }
     
 
-    func evaluateAllExpanse(byAccount: Account? = nil, complition: (Double)->()){
+    func evaluateAllCosts(byAccount: Account? = nil, complition: (Double)->()){
             guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
             

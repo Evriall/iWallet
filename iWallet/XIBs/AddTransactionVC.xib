@@ -18,6 +18,8 @@
                 <outlet property="accountToTypeImgView" destination="3l1-tf-ToJ" id="7NS-kr-vkY"/>
                 <outlet property="addSignBtn" destination="Zot-PU-XX9" id="Qm2-d5-801"/>
                 <outlet property="amountLbl" destination="3B9-oR-15E" id="IT4-MF-uBW"/>
+                <outlet property="amountView" destination="FYF-d2-APM" id="FVM-C9-wV5"/>
+                <outlet property="bookmarkView" destination="m76-9D-q33" id="wBA-D6-ZC0"/>
                 <outlet property="categoryBtn" destination="wtB-PR-vux" id="CL2-bN-hPO"/>
                 <outlet property="closeParentheseBtn" destination="8gK-DD-Wov" id="VuR-cL-RRC"/>
                 <outlet property="currencyBtn" destination="b9L-nw-66t" id="TSA-NV-xbp"/>

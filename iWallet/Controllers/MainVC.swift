@@ -377,13 +377,13 @@ class MainVC: UIViewController {
         accounts = []
         selectedCashRow = nil
         selectedCardsRow = nil
-        CoreDataService.instance.fetchAccountsIncome(ByDate: date) { (accountsArray) in
+        CoreDataService.instance.fetchAccountsIncome(WithStartDate: date.startOfMonth(), WithEndDate: date.endOfMonth()){ (accountsArray) in
             for arrayItem in accountsArray {
                     if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double {
                             accounts.append((name: account, costs: "0.0", income: "\(sum.roundTo(places: 2))"))
                     }
             }
-            CoreDataService.instance.fetchAccountsCosts(ByDate: date, complition: { (accountsArray) in
+            CoreDataService.instance.fetchAccountsCosts(WithStartDate: date.startOfMonth(), WithEndDate: date.endOfMonth(), complition: { (accountsArray) in
                 for arrayItem in accountsArray {
                         if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double {
                             var flagExist = false

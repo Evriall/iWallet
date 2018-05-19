@@ -13,6 +13,8 @@
 		9A2A28D620AD7EF500F826EA /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A28D520AD7EF500F826EA /* PieChartViewController.swift */; };
 		9A2A28D820AD7F0F00F826EA /* PieChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */; };
 		9A2A28DC20AD82E100F826EA /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */; };
+		9A305B1220AECE9C00DD79FF /* PieChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B1020AECE9C00DD79FF /* PieChartVC.swift */; };
+		9A305B1320AECE9C00DD79FF /* PieChartVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B1120AECE9C00DD79FF /* PieChartVC.xib */; };
 		9A36663C2099F1D8005F6F4D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36663B2099F1D8005F6F4D /* SearchVC.swift */; };
 		9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */; };
 		9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853FA208A3F59008B804D /* PlaceCell.swift */; };
@@ -118,6 +120,8 @@
 		9A2A28D520AD7EF500F826EA /* PieChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
 		9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PieChartViewController.xib; sourceTree = "<group>"; };
 		9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoBaseViewController.swift; sourceTree = "<group>"; };
+		9A305B1020AECE9C00DD79FF /* PieChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartVC.swift; sourceTree = "<group>"; };
+		9A305B1120AECE9C00DD79FF /* PieChartVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PieChartVC.xib; sourceTree = "<group>"; };
 		9A36663B2099F1D8005F6F4D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceProtocol.swift; sourceTree = "<group>"; };
 		9A3853FA208A3F59008B804D /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 				9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */,
 				9A2A28D720AD7F0F00F826EA /* PieChartViewController.xib */,
 				9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */,
+				9A305B1120AECE9C00DD79FF /* PieChartVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 				9A36663B2099F1D8005F6F4D /* SearchVC.swift */,
 				9A59A48D20A0508F00B35E70 /* MapVC.swift */,
 				9A59A49720A2F23800B35E70 /* PlaceDetailsVC.swift */,
+				9A305B1020AECE9C00DD79FF /* PieChartVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -505,6 +511,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A305B1320AECE9C00DD79FF /* PieChartVC.xib in Resources */,
 				9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */,
 				9A8044B9208F32FB0048D82B /* WalletCell.xib in Resources */,
 				9A65982D206BFB3100519722 /* Main.storyboard in Resources */,
@@ -651,6 +658,7 @@
 				9AB9841520934FEE008E84D9 /* CircularLabel.swift in Sources */,
 				9A4A531B20878D9400E90EEA /* ImageHelper.swift in Sources */,
 				9A5D9E8120A96D51001217CB /* AddTransactionAdditionalVC.swift in Sources */,
+				9A305B1220AECE9C00DD79FF /* PieChartVC.swift in Sources */,
 				9A59A49920A2F23800B35E70 /* PlaceDetailsVC.swift in Sources */,
 				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,
 				9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */,

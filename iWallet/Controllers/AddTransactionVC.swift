@@ -26,7 +26,6 @@ class AddTransactionVC: UIViewController {
         addTransactionAdditionalVC.place = self.place
         addTransactionAdditionalVC.modalPresentationStyle = .custom
         self.presentDetail(nextViewController!, animated: true)
-//        presentDetail(addTransactionAdditionalVC)
     }
     
 
@@ -67,6 +66,10 @@ class AddTransactionVC: UIViewController {
     @IBOutlet weak var accountFromTypeImgView: UIImageView!
     @IBOutlet weak var accountToTypeImgView: UIImageView!
     @IBOutlet weak var currencyBtn: UIButton!
+    @IBOutlet weak var amountView: UIView!
+    @IBOutlet weak var bookmarkView: UIView!
+    
+    
     
     var isPresenting: Bool = true
     var interactiveTransition: UIPercentDrivenInteractiveTransition!
@@ -751,18 +754,22 @@ extension AddTransactionVC: UIViewControllerTransitioningDelegate, UIViewControl
             let fromVC = transitionContext.viewController(forKey: .from) else {
                 return
         }
+        let fakeBookmarkImgView = UIImageView(frame: CGRect(x: 0, y: amountView.frame.origin.y + bookmarkView.frame.origin.y, width: bookmarkView.frame.width, height: bookmarkView.frame.height))
+        fakeBookmarkImgView.image = UIImage(named: "BookmarkIcon")
         
         if (isPresenting) {
             let fromRect = transitionContext.initialFrame(for: fromVC)
             var toRect = fromRect
-            toRect.origin.x = toRect.size.width - infoBtn.frame.width
+            toRect.origin.x = toRect.size.width
             toVC.view.frame = toRect
+            fakeBookmarkImgView.frame.origin.x = toRect.origin.x - infoBtn.frame.width
+            containerView.addSubview(fakeBookmarkImgView)
             containerView.addSubview(toVC.view)
-            //            toVC.view.alpha = 0
             UIView.animate(withDuration: 0.4, animations: {
                 toVC.view.frame = fromRect
-                //                toVC.view.alpha = 1
+                fakeBookmarkImgView.frame.origin.x = fromRect.origin.x - self.infoBtn.frame.width
             }, completion: { _ in
+                fakeBookmarkImgView.removeFromSuperview()
                 if transitionContext.transitionWasCancelled {
                     transitionContext.completeTransition(false)
                 } else {

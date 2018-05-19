@@ -9,43 +9,22 @@
 import Foundation
 
 extension Date {
-//    func startOfMonth() -> Date {
-//        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-//        calendar.timeZone = NSTimeZone(name: "UTC")! as TimeZone
-//        return calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
-//    }
-//
-//    func startOfDay() -> Date {
-//        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-//        calendar.timeZone = NSTimeZone(name: "UTC")! as TimeZone
-//        return calendar.date(from: calendar.dateComponents([.day,.year, .month], from: calendar.startOfDay(for: self)))!
-//    }
-//
-//    func isToday() -> Bool {
-//        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-//        calendar.timeZone = NSTimeZone(name: "UTC")! as TimeZone
-//        return calendar.isDateInToday(self)
-//    }
-//
-//
-//    func endOfMonth() -> Date {
-//        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-//        calendar.timeZone = NSTimeZone(name: "UTC")! as TimeZone
-//        return calendar.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
-//    }
-//    func previousMonth() -> Date {
-//        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-//        calendar.timeZone = NSTimeZone(name: "UTC")! as TimeZone
-//        return calendar.date(byAdding: DateComponents(month: -1, day: 0), to: self)!
-//    }
-//    func nextMonth() -> Date {
-//        var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-//        calendar.timeZone = NSTimeZone(name: "UTC")! as TimeZone
-//        return calendar.date(byAdding: DateComponents(month: 1, day: 0), to: self)!
-//    }
-    
+
     func startOfMonth() -> Date {
         return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
+    }
+    
+    func startOfYear() -> Date {
+        return Calendar.current.date(from: Calendar.current.dateComponents([.year], from: Calendar.current.startOfDay(for: self)))!
+    }
+    
+    func dayNumberOfWeek() -> Int? {
+        return Calendar.current.dateComponents([.weekday], from: self).weekday
+    }
+    
+    func startOfWeek() -> Date {
+        let dayNumber = -((self.dayNumberOfWeek() ?? 2) - 2)
+        return Calendar.current.date(byAdding: DateComponents(day: dayNumber), to: self.startOfDay())!
     }
     
     func startOfDay() -> Date {
@@ -60,6 +39,15 @@ extension Date {
     func endOfMonth() -> Date {
         return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
     }
+    
+    func endOfWeek() -> Date {
+        return Calendar.current.date(byAdding: DateComponents(day: -1, weekOfYear: 1), to: self.startOfWeek())!
+    }
+    
+    func endOfYear() -> Date {
+        return Calendar.current.date(byAdding: DateComponents(year: 1, day: -1), to: self.startOfYear())!
+    }
+    
     func previousMonth() -> Date {
         return Calendar.current.date(byAdding: DateComponents(month: -1, day: 0), to: self)!
     }
@@ -70,6 +58,12 @@ extension Date {
     func formatDateToStr() -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM"
+        return dateFormatter.string(from: self)
+    }
+    
+    func ChartStr() -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
         return dateFormatter.string(from: self)
     }
     

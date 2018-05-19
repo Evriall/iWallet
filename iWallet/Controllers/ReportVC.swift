@@ -19,7 +19,7 @@ class ReportVC: UIViewController {
     }
     
     @IBAction func openPieChart(_ sender: Any) {
-        let pieChart = PieChartViewController()
+        let pieChart = PieChartVC()
         pieChart.modalPresentationStyle = .custom
         presentDetail(pieChart, animated: false)
         
