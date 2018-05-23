@@ -114,6 +114,84 @@ class CoreDataService{
         }
     }
     
+    func fetchCategoriesTurnover(WithStartDate startDate: Date, AndEndDate endDate: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .doubleAttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["category.name", "category.color", "category.parent.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["category.name", "category.color", "category.parent.name",  "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND date >= %@ AND date <= %@", NSNumber(value: false),startDate.startOfDay() as CVarArg, endDate.endOfDay() as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchCategoriesIncome(WithStartDate startDate: Date, AndEndDate endDate: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .doubleAttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["category.name", "category.color", "category.parent.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["category.name", "category.color", "category.parent.name",  "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.income.rawValue, startDate.startOfDay() as CVarArg, endDate.endOfDay() as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchCategoriesCosts(WithStartDate startDate: Date, AndEndDate endDate: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .doubleAttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["category.name", "category.color", "category.parent.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["category.name", "category.color", "category.parent.name",  "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.costs.rawValue, startDate.startOfDay() as CVarArg, endDate.endOfDay() as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
     func fetchCategoriesIncome(ByAccount account: String, WithDate date: Date, complition: ([NSDictionary])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
@@ -493,6 +571,91 @@ class CoreDataService{
             debugPrint("Could not remove transaction: \(error.localizedDescription)")
         }
     }
+    
+    func fetchAccountsTurnoverGroupedByDate(WithStartDate startDate: Date, WithEndDate endDate: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .integer64AttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["date","account.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["date","account.name", "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@AND date >= %@ AND date <= %@", NSNumber(value: false), startDate as CVarArg, endDate as CVarArg)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = [NSSortDescriptor(key: "account.name", ascending: true), NSSortDescriptor(key: "date", ascending: true)]
+        fetchRequest.sortDescriptors = sortDescriptor
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchAccountsIncomeGroupedByDate(WithStartDate startDate: Date, WithEndDate endDate: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .integer64AttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["date","account.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["date","account.name", "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@  AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.income.rawValue, startDate as CVarArg, endDate as CVarArg)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = [NSSortDescriptor(key: "account.name", ascending: true), NSSortDescriptor(key: "date", ascending: true)]
+        fetchRequest.sortDescriptors = sortDescriptor
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchAccountsCostsGroupedByDate(WithStartDate startDate: Date, WithEndDate endDate: Date, complition: ([NSDictionary])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "amount") // can be any column
+        let expression = NSExpression(forFunction: "sum:", arguments: [keypathExp])
+        
+        let sumDesc = NSExpressionDescription()
+        sumDesc.expression = expression
+        sumDesc.name = "sum"
+        sumDesc.expressionResultType = .integer64AttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToGroupBy = ["date","account.name", "account.currency"]
+        fetchRequest.propertiesToFetch = ["date","account.name", "account.currency", sumDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account.external == %@ AND type == %@ AND date >= %@ AND date <= %@", NSNumber(value: false), TransactionType.costs.rawValue, startDate as CVarArg, endDate as CVarArg)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = [NSSortDescriptor(key: "account.name", ascending: true), NSSortDescriptor(key: "date", ascending: true)]
+        fetchRequest.sortDescriptors = sortDescriptor
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                complition(resultArray)
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
     
     func fetchAccountsTurnover(WithStartDate startDate: Date, WithEndDate endDate: Date, complition: ([NSDictionary])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}

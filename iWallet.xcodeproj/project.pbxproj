@@ -10,9 +10,25 @@
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
 		9A1849222093913C0083E13E /* ViewWithBottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1849212093913C0083E13E /* ViewWithBottomButton.swift */; };
 		9A1EAE6C209B8D6100E56D33 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */; };
-		9A2A28DC20AD82E100F826EA /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */; };
 		9A305B1220AECE9C00DD79FF /* PieChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B1020AECE9C00DD79FF /* PieChartVC.swift */; };
 		9A305B1320AECE9C00DD79FF /* PieChartVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B1120AECE9C00DD79FF /* PieChartVC.xib */; };
+		9A305B1820B4152900DD79FF /* BarChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B1720B4152900DD79FF /* BarChartViewController.swift */; };
+		9A305B1A20B4153400DD79FF /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B1920B4153400DD79FF /* DemoBaseViewController.swift */; };
+		9A305B1C20B4185900DD79FF /* BarChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B1B20B4185900DD79FF /* BarChartViewController.xib */; };
+		9A305B1E20B4194A00DD79FF /* DayAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B1D20B4194A00DD79FF /* DayAxisValueFormatter.swift */; };
+		9A305B2220B419EB00DD79FF /* XYMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B2120B419EB00DD79FF /* XYMarkerView.swift */; };
+		9A305B2420B41AB800DD79FF /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B2320B41AB700DD79FF /* BalloonMarker.swift */; };
+		9A305B2820B4350400DD79FF /* LineChart1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B2620B4350400DD79FF /* LineChart1ViewController.swift */; };
+		9A305B2920B4350400DD79FF /* LineChart2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B2720B4350400DD79FF /* LineChart2ViewController.swift */; };
+		9A305B2C20B4351D00DD79FF /* LineChartTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B2A20B4351D00DD79FF /* LineChartTimeViewController.swift */; };
+		9A305B2D20B4351D00DD79FF /* LineChartFilledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B2B20B4351D00DD79FF /* LineChartFilledViewController.swift */; };
+		9A305B3220B435A000DD79FF /* LineChartFilledViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B2E20B435A000DD79FF /* LineChartFilledViewController.xib */; };
+		9A305B3320B435A000DD79FF /* LineChart1ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B2F20B435A000DD79FF /* LineChart1ViewController.xib */; };
+		9A305B3420B435A000DD79FF /* LineChart2ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B3020B435A000DD79FF /* LineChart2ViewController.xib */; };
+		9A305B3520B435A000DD79FF /* LineChartTimeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B3120B435A000DD79FF /* LineChartTimeViewController.xib */; };
+		9A305B3720B435F200DD79FF /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B3620B435F100DD79FF /* DateValueFormatter.swift */; };
+		9A305B3A20B43ACC00DD79FF /* LineChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B3820B43ACC00DD79FF /* LineChartVC.swift */; };
+		9A305B3B20B43ACC00DD79FF /* LineChartVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B3920B43ACC00DD79FF /* LineChartVC.xib */; };
 		9A36663C2099F1D8005F6F4D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36663B2099F1D8005F6F4D /* SearchVC.swift */; };
 		9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */; };
 		9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3853FA208A3F59008B804D /* PlaceCell.swift */; };
@@ -115,9 +131,25 @@
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		9A1849212093913C0083E13E /* ViewWithBottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithBottomButton.swift; sourceTree = "<group>"; };
 		9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionCell.xib; sourceTree = "<group>"; };
-		9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoBaseViewController.swift; sourceTree = "<group>"; };
 		9A305B1020AECE9C00DD79FF /* PieChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartVC.swift; sourceTree = "<group>"; };
 		9A305B1120AECE9C00DD79FF /* PieChartVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PieChartVC.xib; sourceTree = "<group>"; };
+		9A305B1720B4152900DD79FF /* BarChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChartViewController.swift; sourceTree = "<group>"; };
+		9A305B1920B4153400DD79FF /* DemoBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoBaseViewController.swift; sourceTree = "<group>"; };
+		9A305B1B20B4185900DD79FF /* BarChartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BarChartViewController.xib; sourceTree = "<group>"; };
+		9A305B1D20B4194A00DD79FF /* DayAxisValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayAxisValueFormatter.swift; sourceTree = "<group>"; };
+		9A305B2120B419EB00DD79FF /* XYMarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XYMarkerView.swift; sourceTree = "<group>"; };
+		9A305B2320B41AB700DD79FF /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
+		9A305B2620B4350400DD79FF /* LineChart1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart1ViewController.swift; sourceTree = "<group>"; };
+		9A305B2720B4350400DD79FF /* LineChart2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart2ViewController.swift; sourceTree = "<group>"; };
+		9A305B2A20B4351D00DD79FF /* LineChartTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartTimeViewController.swift; sourceTree = "<group>"; };
+		9A305B2B20B4351D00DD79FF /* LineChartFilledViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartFilledViewController.swift; sourceTree = "<group>"; };
+		9A305B2E20B435A000DD79FF /* LineChartFilledViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LineChartFilledViewController.xib; sourceTree = "<group>"; };
+		9A305B2F20B435A000DD79FF /* LineChart1ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LineChart1ViewController.xib; sourceTree = "<group>"; };
+		9A305B3020B435A000DD79FF /* LineChart2ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LineChart2ViewController.xib; sourceTree = "<group>"; };
+		9A305B3120B435A000DD79FF /* LineChartTimeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LineChartTimeViewController.xib; sourceTree = "<group>"; };
+		9A305B3620B435F100DD79FF /* DateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateValueFormatter.swift; sourceTree = "<group>"; };
+		9A305B3820B43ACC00DD79FF /* LineChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartVC.swift; sourceTree = "<group>"; };
+		9A305B3920B43ACC00DD79FF /* LineChartVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LineChartVC.xib; sourceTree = "<group>"; };
 		9A36663B2099F1D8005F6F4D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceProtocol.swift; sourceTree = "<group>"; };
 		9A3853FA208A3F59008B804D /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
@@ -242,6 +274,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9A305B1620B4151700DD79FF /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				9A305B1920B4153400DD79FF /* DemoBaseViewController.swift */,
+				9A305B1720B4152900DD79FF /* BarChartViewController.swift */,
+				9A305B2320B41AB700DD79FF /* BalloonMarker.swift */,
+				9A305B2F20B435A000DD79FF /* LineChart1ViewController.xib */,
+				9A305B3020B435A000DD79FF /* LineChart2ViewController.xib */,
+				9A305B2E20B435A000DD79FF /* LineChartFilledViewController.xib */,
+				9A305B3120B435A000DD79FF /* LineChartTimeViewController.xib */,
+				9A305B2B20B4351D00DD79FF /* LineChartFilledViewController.swift */,
+				9A305B2A20B4351D00DD79FF /* LineChartTimeViewController.swift */,
+				9A305B3620B435F100DD79FF /* DateValueFormatter.swift */,
+				9A305B2120B419EB00DD79FF /* XYMarkerView.swift */,
+				9A305B2620B4350400DD79FF /* LineChart1ViewController.swift */,
+				9A305B2720B4350400DD79FF /* LineChart2ViewController.swift */,
+				9A305B1B20B4185900DD79FF /* BarChartViewController.xib */,
+				9A305B1D20B4194A00DD79FF /* DayAxisValueFormatter.swift */,
+			);
+			path = Chart;
+			sourceTree = "<group>";
+		};
 		9A9D2D39206548D800CC7DE0 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +362,7 @@
 				9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */,
 				9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */,
 				9A305B1120AECE9C00DD79FF /* PieChartVC.xib */,
+				9A305B3920B43ACC00DD79FF /* LineChartVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -347,6 +402,7 @@
 		9ABA9AF02063DB4500ADA34E /* iWallet */ = {
 			isa = PBXGroup;
 			children = (
+				9A305B1620B4151700DD79FF /* Chart */,
 				9A9D2D5F2069110700CC7DE0 /* Protocols */,
 				9A9D2D562068DCC300CC7DE0 /* XIBs */,
 				9A9D2D49206663B500CC7DE0 /* Srevices */,
@@ -402,6 +458,7 @@
 				9A59A48D20A0508F00B35E70 /* MapVC.swift */,
 				9A59A49720A2F23800B35E70 /* PlaceDetailsVC.swift */,
 				9A305B1020AECE9C00DD79FF /* PieChartVC.swift */,
+				9A305B3820B43ACC00DD79FF /* LineChartVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -418,7 +475,6 @@
 				9A659820206BDC2000519722 /* AccountCell.swift */,
 				9A65983C206D46DD00519722 /* TypeAndCurrencyCell.swift */,
 				9A73000C2073A0A3002F84F6 /* TransactionCell.swift */,
-				9A2A28DB20AD82E100F826EA /* DemoBaseViewController.swift */,
 				9A538FC92083C1B200107B31 /* TagCell.swift */,
 				9AE093C12087550A00CF43E6 /* PhotoCell.swift */,
 				9A4A53222088604700E90EEA /* ScrollViewWithTopAndBottomFixedViews.swift */,
@@ -507,24 +563,30 @@
 			files = (
 				9A305B1320AECE9C00DD79FF /* PieChartVC.xib in Resources */,
 				9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */,
+				9A305B3320B435A000DD79FF /* LineChart1ViewController.xib in Resources */,
 				9A8044B9208F32FB0048D82B /* WalletCell.xib in Resources */,
 				9A65982D206BFB3100519722 /* Main.storyboard in Resources */,
 				9A730031207602AF002F84F6 /* SelectAccountVC.xib in Resources */,
 				9A65983F206D46DD00519722 /* TypeAndCurrencyCell.xib in Resources */,
+				9A305B1C20B4185900DD79FF /* BarChartViewController.xib in Resources */,
 				9A9D2D5E2068FDA800CC7DE0 /* CategoryCell.xib in Resources */,
 				9A1EAE6C209B8D6100E56D33 /* TransactionCell.xib in Resources */,
+				9A305B3420B435A000DD79FF /* LineChart2ViewController.xib in Resources */,
 				9ABEB6BC206E25AE00F817BD /* SelectCurrencyVC.xib in Resources */,
 				9A538FCC2083C1B200107B31 /* TagCell.xib in Resources */,
 				9AABAD6C2070DB87001AA162 /* SelectTransactionTypeVC.xib in Resources */,
 				9AE093C42087550A00CF43E6 /* PhotoCell.xib in Resources */,
 				9AB9841320921BED008E84D9 /* CoinCell.xib in Resources */,
+				9A305B3520B435A000DD79FF /* LineChartTimeViewController.xib in Resources */,
 				9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */,
 				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
+				9A305B3B20B43ACC00DD79FF /* LineChartVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
 				9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */,
 				9A659823206BDC2000519722 /* AccountCell.xib in Resources */,
 				9AE6D566206E8A5500886F73 /* AddTransactionVC.xib in Resources */,
+				9A305B3220B435A000DD79FF /* LineChartFilledViewController.xib in Resources */,
 				9ABA9AFF2063DB4500ADA34E /* LaunchScreen.storyboard in Resources */,
 				9A5D9E8220A96D51001217CB /* AddTransactionAdditionalVC.xib in Resources */,
 				9A4A531F208790AA00E90EEA /* PhotoVC.xib in Resources */,
@@ -589,12 +651,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A9D2D4B206663D400CC7DE0 /* CoreDataService.swift in Sources */,
+				9A305B2D20B4351D00DD79FF /* LineChartFilledViewController.swift in Sources */,
 				9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */,
 				9A59A49020A1AB6F00B35E70 /* MapPlace.swift in Sources */,
 				9A73000B207384E7002F84F6 /* DateExt.swift in Sources */,
 				9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */,
+				9A305B2820B4350400DD79FF /* LineChart1ViewController.swift in Sources */,
 				9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */,
 				9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */,
+				9A305B3720B435F200DD79FF /* DateValueFormatter.swift in Sources */,
 				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,
 				9AABAD6B2070DB87001AA162 /* SelectTransactionTypeVC.swift in Sources */,
 				9A3C1C3B20A9F7F200B2865E /* GradientViewWithCentralPoint.swift in Sources */,
@@ -602,6 +667,8 @@
 				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
 				9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */,
+				9A305B1820B4152900DD79FF /* BarChartViewController.swift in Sources */,
+				9A305B2220B419EB00DD79FF /* XYMarkerView.swift in Sources */,
 				9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
 				9AA7FF35206BA7F70093D0DE /* AccountHelper.swift in Sources */,
@@ -609,6 +676,7 @@
 				9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */,
 				9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */,
 				9AABAD7720716716001AA162 /* CalendarProtocol.swift in Sources */,
+				9A305B1A20B4153400DD79FF /* DemoBaseViewController.swift in Sources */,
 				9A73000920727DF6002F84F6 /* BriefByAccountVC.swift in Sources */,
 				9A59A49220A1CD4800B35E70 /* MapPlaceMarkerView.swift in Sources */,
 				9A659833206D063400519722 /* ButtonWithRightImage.swift in Sources */,
@@ -617,12 +685,15 @@
 				9A538FCB2083C1B200107B31 /* TagCell.swift in Sources */,
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
 				9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */,
+				9A305B2C20B4351D00DD79FF /* LineChartTimeViewController.swift in Sources */,
 				9A73000F2073C4FF002F84F6 /* BriefProtocol.swift in Sources */,
 				9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */,
 				9A36663C2099F1D8005F6F4D /* SearchVC.swift in Sources */,
+				9A305B2920B4350400DD79FF /* LineChart2ViewController.swift in Sources */,
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,
 				9A9D2D592068FA1300CC7DE0 /* SelectParentCategoryVC.swift in Sources */,
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
+				9A305B3A20B43ACC00DD79FF /* LineChartVC.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
 				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
 				9A59A49C20A434C700B35E70 /* Detail.swift in Sources */,
@@ -632,6 +703,7 @@
 				9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */,
 				9A3C1C3D20AAE2A900B2865E /* ButtonWithRoundedCorner.swift in Sources */,
 				9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */,
+				9A305B1E20B4194A00DD79FF /* DayAxisValueFormatter.swift in Sources */,
 				9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,
@@ -644,7 +716,6 @@
 				9AF34A022089E9E9005A94C7 /* FourSquareService.swift in Sources */,
 				9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */,
 				9ADCC8BB2080BAEB00F446E4 /* SelectCurrencyVC.swift in Sources */,
-				9A2A28DC20AD82E100F826EA /* DemoBaseViewController.swift in Sources */,
 				9A659836206D413A00519722 /* SelectAccountTypeVC.swift in Sources */,
 				9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */,
 				9AB9841520934FEE008E84D9 /* CircularLabel.swift in Sources */,
@@ -654,6 +725,7 @@
 				9A59A49920A2F23800B35E70 /* PlaceDetailsVC.swift in Sources */,
 				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,
 				9A659830206CFD3500519722 /* AddAccountVC.swift in Sources */,
+				9A305B2420B41AB800DD79FF /* BalloonMarker.swift in Sources */,
 				9A65983E206D46DD00519722 /* TypeAndCurrencyCell.swift in Sources */,
 				9AE6D565206E8A5500886F73 /* AddTransactionVC.swift in Sources */,
 				9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */,

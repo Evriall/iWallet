@@ -89,7 +89,7 @@
                         </subviews>
                     </stackView>
                 </subviews>
-                <color key="backgroundColor" red="0.0" green="0.56862745100000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="VuH-Me-qe2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="SbD-rx-nFA"/>
                     <constraint firstAttribute="trailing" secondItem="VuH-Me-qe2" secondAttribute="trailing" id="Yfx-OQ-7PD"/>
@@ -100,6 +100,7 @@
                     <constraint firstItem="bVf-1V-qVd" firstAttribute="bottom" secondItem="ndn-nm-11g" secondAttribute="bottom" id="xlm-Zq-eLz"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="accountNameLbl" destination="297-NM-5rV" id="dDT-VJ-53z"/>

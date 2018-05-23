@@ -24,5 +24,10 @@ class ReportVC: UIViewController {
         presentDetail(pieChart, animated: false)
         
     }
+    @IBAction func openBarChart(_ sender: Any) {
+        let barChart = LineChartVC()
+        barChart.modalPresentationStyle = .custom
+        presentDetail(barChart)
+    }
     
 }

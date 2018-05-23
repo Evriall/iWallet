@@ -30,7 +30,7 @@ class MainVC: UIViewController {
     
     var cards = [(name: String, costs: String, income: String)]()
     var cash = [(name: String, costs: String, income: String)]()
-    var accounts = [(name: String, costs: String, income: String)]()
+    var accounts = [(name: String, costs: String, income: String, rate: Double)]()
     var date = Date()
     var parentCategories = [CoinCategory]()
     var childCategories = [[CoinCategory]]()
@@ -353,9 +353,9 @@ class MainVC: UIViewController {
         childCategoryCollectionView?.reloadData()
     }
 
-    func fetchCategoryData(ByAccount account: (name: String, costs: String, income: String)){
+    func fetchCategoryData(ByAccount account: (name: String, costs: String, income: String, rate: Double)){
         let costs = Double(account.costs) ?? 0.0
-        let income = Double(account.income[0..<account.income.count-1]) ?? 0.0
+        let income = Double(account.income) ?? Double(account.income[1..<account.income.count]) ?? 0.0
         if income > costs {
            fetchCategoriesIncomeData(account: account.name)
            incomeBtn.isEnabled = false
@@ -371,75 +371,105 @@ class MainVC: UIViewController {
         }
     }
     
+    func fetchAccountsIncome(complition: @escaping (Bool)->()) {
+        CoreDataService.instance.fetchAccountsIncome(WithStartDate: date.startOfMonth(), WithEndDate: date.endOfMonth()){ (accountsArray) in
+            if accountsArray.count == 0 {
+                complition(false)
+            } else {
+                for (index, arrayItem) in accountsArray.enumerated() {
+                    if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency = arrayItem["account.currency"] as? String {
+                        ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: "USD", complition: { (rate) in
+                            self.accounts.append((name: account, costs: "0.0", income: "\(sum.roundTo(places: 2))", rate: rate))
+                            if index == accountsArray.count - 1 {
+                                complition(true)
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+    
+    func fetchAccountsCosts(complition: @escaping (Bool)->()){
+        CoreDataService.instance.fetchAccountsCosts(WithStartDate: self.date.startOfMonth(), WithEndDate: self.date.endOfMonth(), complition: { (accountsArray) in
+            if accountsArray.count == 0 {
+                complition(false)
+            } else {
+                for (indexOfFetchedData, arrayItem) in accountsArray.enumerated() {
+                    if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency = arrayItem["account.currency"] as? String {
+                        var flagExist = false
+                        for (index, item) in accounts.enumerated() {
+                            if item.name == account {
+                                accounts.remove(at: index)
+                                accounts.append((name: item.name, costs: "\(sum.roundTo(places: 2))", income: item.income, rate: item.rate))
+                                flagExist = true
+                                if indexOfFetchedData == accountsArray.count - 1 {
+                                    complition(true)
+                                }
+                            }
+                        }
+                        if !flagExist {
+                            ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: "USD", complition: { (rate) in
+                                self.accounts.append((name: account, costs: "\(sum.roundTo(places: 2))", income: "0.0", rate: rate))
+                                if indexOfFetchedData == accountsArray.count - 1 {
+                                    complition(true)
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
     func fetchData(){
         cash = []
         cards = []
         accounts = []
         selectedCashRow = nil
         selectedCardsRow = nil
-        CoreDataService.instance.fetchAccountsIncome(WithStartDate: date.startOfMonth(), WithEndDate: date.endOfMonth()){ (accountsArray) in
-            for arrayItem in accountsArray {
-                    if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double {
-                            accounts.append((name: account, costs: "0.0", income: "\(sum.roundTo(places: 2))"))
-                    }
-            }
-            CoreDataService.instance.fetchAccountsCosts(WithStartDate: date.startOfMonth(), WithEndDate: date.endOfMonth(), complition: { (accountsArray) in
-                for arrayItem in accountsArray {
-                        if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double {
-                            var flagExist = false
-                                for (index, item) in accounts.enumerated() {
-                                    if item.name == account {
-                                        let name = item.name
-                                        let income = item.income
-                                        accounts.remove(at: index)
-                                        accounts.append((name: item.name, costs: "\(sum.roundTo(places: 2))", income: item.income))
-                                        flagExist = true
-                                    }
-                                }
-                                if !flagExist {
-                                    accounts.append((name: account, costs: "\(sum.roundTo(places: 2))", income: "0.0"))
-                                }
-                        }
-                }
-                accounts.sort(by: { (arg0, arg1) -> Bool in
-                    let (_, costs0, income0) = arg0
-                    let (_, costs1, income1) = arg1
-                    let sum0 = (Double(costs0) ?? 0.0)  + (Double(income0) ?? 0.0)
-                    let sum1 = (Double(costs1) ?? 0.0 ) + (Double(income1) ?? 0.0)
-                    return sum0 > sum1
-                })
-                
-                for (index, accountItem) in accounts.enumerated() {
-                    CoreDataService.instance.fetchAccount(byName: accountItem.name, complition: { (fetchedAccounts) in
-                        for fetchedAccount in fetchedAccounts {
-                            guard let type = fetchedAccount.type, let currency = fetchedAccount.currency else {continue}
-                            if  type == AccountType.Cash.rawValue {
-                                if index == 0 {
-                                    selectedCashRow = 0
-                                }
-                                cash.append((name: accountItem.name, costs: accountItem.costs, income: accountItem.income  + AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)))
-                            } else {
-                                if index == 0 {
-                                    selectedCardsRow = 0
-                                }
-                                 cards.append((name: accountItem.name, costs: accountItem.costs , income: accountItem.income + AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)))
-                            }
-                        }
+        self.fetchAccountsIncome { (succes) in
+            self.fetchAccountsCosts(complition: { (success) in
+                self.accounts.sort(by: { (arg0, arg1) -> Bool in
+                        let (name0, costs0, income0, rate0) = arg0
+                        let (name1, costs1, income1, rate1) = arg1
+                        let sum0 = (Double(costs0) ?? 0.0) * rate0  + (Double(income0) ?? 0.0) * rate0
+                        let sum1 = (Double(costs1) ?? 0.0 ) * rate1 + (Double(income1) ?? 0.0) * rate1
+
+                        return sum0 > sum1
                     })
-                }
-                if accounts.count > 0 {
-                    fetchCategoryData(ByAccount: accounts[0])
-                } else {
-                    parentCategories = []
-                    childCategories = []
-                    selectedParentCategory = nil
-                    parentCategoryCollectionView?.reloadData()
-                    childCategoryCollectionView?.reloadData()
-                }
-                
-                cardsTableView.reloadData()
-                cashTableView.reloadData()
-            })
+            
+                for (index, accountItem) in self.accounts.enumerated() {
+                        CoreDataService.instance.fetchAccount(byName: accountItem.name, complition: { (fetchedAccounts) in
+                            for fetchedAccount in fetchedAccounts {
+                                guard let type = fetchedAccount.type, let currency = fetchedAccount.currency else {continue}
+                                if  type == AccountType.Cash.rawValue {
+                                    if index == 0 {
+                                        self.selectedCashRow = 0
+                                    }
+                                    self.cash.append((name: accountItem.name, costs: accountItem.costs, income:  AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency) + accountItem.income))
+                                } else {
+                                    if index == 0 {
+                                        self.selectedCardsRow = 0
+                                    }
+                                     self.cards.append((name: accountItem.name, costs: accountItem.costs , income:  AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency) + accountItem.income))
+                                }
+                            }
+                        })
+                    }
+                    if self.accounts.count > 0 {
+                        self.fetchCategoryData(ByAccount: self.accounts[0])
+                    } else {
+                        self.parentCategories = []
+                        self.childCategories = []
+                        self.selectedParentCategory = nil
+                        self.parentCategoryCollectionView?.reloadData()
+                        self.childCategoryCollectionView?.reloadData()
+                    }
+            
+                    self.cardsTableView.reloadData()
+                    self.cashTableView.reloadData()
+                })
         }
     }
     func setMonthLabel(){
@@ -555,13 +585,13 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             if tableView == cashTableView {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as? WalletCell{
                     let cash = self.cash[indexPath.row]
-                    cell.configureCell(name: cash.name, costs: cash.costs, income: cash.income, selected: selectedCashRow == indexPath.row, card: false)
+                    cell.configureCell(name: cash.name, costs: cash.costs, income: cash.income, selected: selectedCashRow == indexPath.row, card: false, number: indexPath.row)
                     return cell
                 }
             } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as? WalletCell{
                     let card = self.cards[indexPath.row]
-                    cell.configureCell(name: card.name, costs: card.costs, income: card.income, selected: selectedCardsRow == indexPath.row, card: true, cardNumber: indexPath.row)
+                    cell.configureCell(name: card.name, costs: card.costs, income: card.income, selected: selectedCardsRow == indexPath.row, card: true, number: indexPath.row)
                     return cell
                 }
             }
@@ -574,11 +604,11 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         if tableView == cashTableView {
             selectedCashRow = indexPath.row
             selectedCardsRow = nil
-            fetchCategoryData(ByAccount: (name: cash[indexPath.row].name, costs: cash[indexPath.row].costs, income: cash[indexPath.row].income))
+            fetchCategoryData(ByAccount: (name: cash[indexPath.row].name, costs: cash[indexPath.row].costs, income: cash[indexPath.row].income, rate: 1.0))
         } else {
             selectedCashRow = nil
             selectedCardsRow = indexPath.row
-            fetchCategoryData(ByAccount: (name: cards[indexPath.row].name, costs: cards[indexPath.row].costs, income: cards[indexPath.row].income))
+            fetchCategoryData(ByAccount: (name: cards[indexPath.row].name, costs: cards[indexPath.row].costs, income: cards[indexPath.row].income, rate: 1.0))
         }
         cashTableView.reloadData()
         cardsTableView.reloadData()

@@ -25,7 +25,7 @@ class AddTransactionVC: UIViewController {
         addTransactionAdditionalVC.tags = self.tags
         addTransactionAdditionalVC.place = self.place
         addTransactionAdditionalVC.modalPresentationStyle = .custom
-        self.presentDetail(nextViewController!, animated: true)
+        self.presentDetail(addTransactionAdditionalVC, animated: true)
     }
     
 

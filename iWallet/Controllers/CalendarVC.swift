@@ -38,16 +38,19 @@ class CalendarVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUPCalendar()
         menuView.menuViewDelegate = self
         calendarView.calendarDelegate = self
         calendarView.calendarAppearanceDelegate = self
-        setUPCalendar()
-        calendarView.toggleViewWithDate(currentDate)
-        calendarView.contentController.refreshPresentedMonth()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        if !currentDate.isToday() {
+            calendarView.toggleViewWithDate(currentDate)
+            calendarView.contentController.refreshPresentedMonth()
+        }
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         menuView.commitMenuViewUpdate()
         calendarView.commitCalendarViewUpdate()
     }

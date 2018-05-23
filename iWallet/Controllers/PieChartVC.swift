@@ -31,9 +31,6 @@ class PieChartVC: UIViewController {
     var reportLabel = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(SearchVC.handleTap))
-//        tap.cancelsTouchesInView = false
-//        view.addGestureRecognizer(tap)
         reportTypeSegmentView.selectedSegmentIndex = 0
         transactionTypeSegmentView.selectedSegmentIndex = 0
         periodSegmentView.selectedSegmentIndex = 0
@@ -44,15 +41,9 @@ class PieChartVC: UIViewController {
         endDateBtn.layer.borderWidth = 1
         endDateBtn.layer.borderColor = #colorLiteral(red: 0.662745098, green: 0.662745098, blue: 0.662745098, alpha: 1)
         chartView.drawHoleEnabled = false
+        chartView.delegate = self
         fetchData()
     }
-    
-//    @objc func handleTap(){
-//        if !optionSV.isHidden {
-//            optionSV.isHidden = true
-//            belowOptionView.isHidden = true
-//        }
-//    }
     
     func fetchData() {
         fetchedData = []
@@ -71,7 +62,7 @@ class PieChartVC: UIViewController {
                         for (index, arrayItem) in accountsArray.enumerated() {
                             if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
                                 if currency != "USD"{
-                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
+                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: "USD", complition: { (rate) in
                                         let valueAtExchangeRate = sum * rate
                                         self.totalSum += valueAtExchangeRate
                                         self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
@@ -100,7 +91,7 @@ class PieChartVC: UIViewController {
                         for (index, arrayItem) in accountsArray.enumerated() {
                             if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
                                 if currency != "USD"{
-                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
+                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: "USD", complition: { (rate) in
                                         let valueAtExchangeRate = sum * rate
                                         self.totalSum += valueAtExchangeRate
                                         self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
@@ -129,7 +120,7 @@ class PieChartVC: UIViewController {
                         for (index, arrayItem) in accountsArray.enumerated() {
                             if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String{
                                 if currency != "USD"{
-                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: "USD", pairCode: currency, complition: { (rate) in
+                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: "USD", complition: { (rate) in
                                         let valueAtExchangeRate = sum * rate
                                         self.totalSum += valueAtExchangeRate
                                         self.fetchedData.append((name: account, value: valueAtExchangeRate, color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
@@ -151,15 +142,132 @@ class PieChartVC: UIViewController {
             }
         } else {
            reportLabel = "Category`s"
+            if transactionTypeSegmentView.selectedSegmentIndex == 0 {
+                reportLabel += " turnover"
+                CoreDataService.instance.fetchCategoriesTurnover(WithStartDate: startDate, AndEndDate: endDate) { (categoriesArray) in
+                        if categoriesArray.count == 0 {
+                            InfoLbl.isHidden = false
+                            chartView.isHidden = true
+                        } else {
+                            var categories = [(category: String, parent: String, color: String, sum: Double)]()
+                            for (index, arrayItem) in categoriesArray.enumerated() {
+                                if let category = arrayItem["category.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let color =  arrayItem["category.color"] as? String {
+                                    let parent =  arrayItem["category.parent.name"] as? String ?? ""
+                                    ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: "USD", complition: { (rate) in
+                                        let valueAtExchangeRate = sum * rate
+                                        self.totalSum += valueAtExchangeRate
+                                        if categories.contains(where: { (arg) -> Bool in
+                                           return arg.category == category && arg.color == color && arg.parent == parent
+                                        }) {
+                                            for (categoryIndex, categoryItem) in categories.enumerated() {
+                                                if categoryItem.category == category && categoryItem.parent == parent && categoryItem.color == color {
+                                                    categories[categoryIndex] = (category: category, parent: parent, color: color, sum: categoryItem.sum + valueAtExchangeRate)
+                                                }
+                                            }
+                                        } else {
+                                            categories.append((category: category, parent: parent, color: color, sum: valueAtExchangeRate))
+                                        }
+                                        if index == categoriesArray.count - 1 {
+                                            for categoryItem in categories {
+                                                self.fetchedData.append((name: categoryItem.category, value: categoryItem.sum, color: EncodeDecodeService.instance.returnUIColor(components: categoryItem.color)))
+                                                
+                                            }
+                                            self.setUpChart()
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                }
+                
+            } else if transactionTypeSegmentView.selectedSegmentIndex == 1 {
+                reportLabel += " income"
+                CoreDataService.instance.fetchCategoriesIncome(WithStartDate: startDate, AndEndDate: endDate) { (categoriesArray) in
+                    if categoriesArray.count == 0 {
+                        InfoLbl.isHidden = false
+                        chartView.isHidden = true
+                    } else {
+                        var categories = [(category: String, parent: String, color: String, sum: Double)]()
+                        for (index, arrayItem) in categoriesArray.enumerated() {
+                            if let category = arrayItem["category.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let color =  arrayItem["category.color"] as? String {
+                                let parent =  arrayItem["category.parent.name"] as? String ?? ""
+                                ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: "USD", complition: { (rate) in
+                                    let valueAtExchangeRate = sum * rate
+                                    self.totalSum += valueAtExchangeRate
+                                    if categories.contains(where: { (arg) -> Bool in
+                                        return arg.category == category && arg.color == color && arg.parent == parent
+                                    }) {
+                                        for (categoryIndex, categoryItem) in categories.enumerated() {
+                                            if categoryItem.category == category && categoryItem.parent == parent && categoryItem.color == color {
+                                                categories[categoryIndex] = (category: category, parent: parent, color: color, sum: categoryItem.sum + valueAtExchangeRate)
+                                            }
+                                        }
+                                    } else {
+                                        categories.append((category: category, parent: parent, color: color, sum: valueAtExchangeRate))
+                                    }
+                                    if index == categoriesArray.count - 1 {
+                                        for categoryItem in categories {
+                                            self.fetchedData.append((name: categoryItem.category, value: categoryItem.sum, color: EncodeDecodeService.instance.returnUIColor(components: categoryItem.color)))
+                                            
+                                        }
+                                        self.setUpChart()
+                                    }
+                                })
+                            }
+                        }
+                    }
+                }
+                
+            } else {
+                reportLabel += " costs"
+                CoreDataService.instance.fetchCategoriesCosts(WithStartDate: startDate, AndEndDate: endDate) { (categoriesArray) in
+                    if categoriesArray.count == 0 {
+                        InfoLbl.isHidden = false
+                        chartView.isHidden = true
+                    } else {
+                        var categories = [(category: String, parent: String, color: String, sum: Double)]()
+                        for (index, arrayItem) in categoriesArray.enumerated() {
+                            if let category = arrayItem["category.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let color =  arrayItem["category.color"] as? String {
+                                let parent =  arrayItem["category.parent.name"] as? String ?? ""
+                                ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: "USD", complition: { (rate) in
+                                    let valueAtExchangeRate = sum * rate
+                                    self.totalSum += valueAtExchangeRate
+                                    if categories.contains(where: { (arg) -> Bool in
+                                        return arg.category == category && arg.color == color && arg.parent == parent
+                                    }) {
+                                        for (categoryIndex, categoryItem) in categories.enumerated() {
+                                            if categoryItem.category == category && categoryItem.parent == parent && categoryItem.color == color {
+                                                categories[categoryIndex] = (category: category, parent: parent, color: color, sum: categoryItem.sum + valueAtExchangeRate)
+                                            }
+                                        }
+                                    } else {
+                                        categories.append((category: category, parent: parent, color: color, sum: valueAtExchangeRate))
+                                    }
+                                    if index == categoriesArray.count - 1 {
+                                        for categoryItem in categories {
+                                            self.fetchedData.append((name: categoryItem.category, value: categoryItem.sum, color: EncodeDecodeService.instance.returnUIColor(components: categoryItem.color)))
+                                            
+                                        }
+                                        self.setUpChart()
+                                    }
+                                })
+                            }
+                        }
+                    }
+                }
+               
+            }
         }
     }
     
     func setUpChart(){
         InfoLbl.isHidden = true
         chartView.isHidden = false
+        chartView.legend.resetCustom()
         fetchedData.sort { (arg0, arg1) -> Bool in
             arg0.value > arg1.value
         }
+
         for (index,item) in fetchedData.enumerated() {
             entries.append(PieChartDataEntry(value: ((item.value / totalSum ) * 100).roundTo(places: 2), label: item.name))
             if item.color == #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) {
@@ -190,6 +298,15 @@ class PieChartVC: UIViewController {
         chartView.data = data
         chartView.chartDescription?.text = ""
         chartView.highlightValues(nil)
+        for legendItem in chartView.legend.entries {
+            for (index,item) in entries.enumerated() {
+                if item.label == legendItem.label && colors[index] == legendItem.formColor {
+                    legendItem.label  = (legendItem.label ?? "") + " \(item.value)%"
+                }
+            }
+        }
+        chartView.legend.setCustom(entries: chartView.legend.entries)
+        chartView.notifyDataSetChanged()
     }
     
     @IBAction func segmentValueChanged(_ sender: UISegmentedControl) {
@@ -252,6 +369,11 @@ extension PieChartVC: CalendarProtocol {
         }
         fetchData()
     }
-    
-    
+
+}
+
+extension PieChartVC: ChartViewDelegate{
+    func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
+        print(scaleX, scaleY)
+    }
 }

@@ -31,7 +31,7 @@ class CategoryHelper {
     private let initParentCategories: Array<(String, UIColor, String?)> =
         [(name: "Without category", color: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), parent: nil),
           (name: "Car", color: #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1), parent: nil),
-          (name: "Bank", color: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), parent: nil),
+          (name: "Bank", color: #colorLiteral(red: 0.9254902005, green: 0.1473733577, blue: 0, alpha: 1), parent: nil),
           (name: "Business services", color: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), parent: nil),
           (name: "Charity", color: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), parent: nil),
           (name: "State", color: #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1), parent: nil),
@@ -42,7 +42,7 @@ class CategoryHelper {
           (name: "Beauty", color: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1), parent: nil),
           (name: "Mobile communication", color: #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), parent: nil),
           (name: "Clothes and footwear", color: #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1), parent: nil),
-          (name: "Education", color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), parent: nil),
+          (name: "Education", color: #colorLiteral(red: 0.2779290954, green: 0.0474625199, blue: 0.7476566407, alpha: 1), parent: nil),
           (name: "Other", color: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), parent: nil),
           (name: "Gifts", color: #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), parent: nil),
           (name: "Food", color: #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1), parent: nil),
@@ -102,8 +102,8 @@ class CategoryHelper {
          (name: "Adult", color: #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1), parent: "Clothes and footwear"),
          (name: "Children`s", color: #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1), parent: "Clothes and footwear"),
          
-         (name: "Books", color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), parent: "Education"),
-         (name: "Services", color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), parent: "Education"),
+         (name: "Books", color: #colorLiteral(red: 0.2779290954, green: 0.0474625199, blue: 0.7476566407, alpha: 1), parent: "Education"),
+         (name: "Services", color: #colorLiteral(red: 0.2779290954, green: 0.0474625199, blue: 0.7476566407, alpha: 1), parent: "Education"),
          
          (name: "Car rent", color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), parent: "Travels"),
          (name: "Tickets", color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), parent: "Travels"),

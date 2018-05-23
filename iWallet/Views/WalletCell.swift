@@ -26,16 +26,22 @@ class WalletCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(name: String, costs: String, income: String, selected: Bool, card: Bool, cardNumber: Int = 0){
+    func configureCell(name: String, costs: String, income: String, selected: Bool, card: Bool, number: Int = 0){
         accountNameLbl.text = name
         costsLbl.text = costs
         incomeLbl.text = income
         if card {
-            imgViewTop.image = UIImage(named: "CardIconTop" + "\(cardNumber % 2)")
-            imgViewBottom.image = UIImage(named: "CardIconBottom" + "\(cardNumber % 2)")
+            imgViewTop.image = UIImage(named: "CardIconTop" + "\(number % 3)")
+            imgViewBottom.image = UIImage(named: "CardIconBottom" + "\(number % 3)")
+            accountNameLbl.textColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+            costsLbl.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            incomeLbl.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         } else {
-            imgViewTop?.image = UIImage(named: "CashIconTop")
-            imgViewBottom?.image = UIImage(named: "CashIconBottom")
+            imgViewTop?.image = UIImage(named: "CashIconTop" + "\(number % 3)")
+            imgViewBottom?.image = UIImage(named: "CashIconBottom" + "\(number % 3)")
+            accountNameLbl.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            costsLbl.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            incomeLbl.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         }
         imgViewBottom.isHidden = !selected
         selectionStyle = .none
