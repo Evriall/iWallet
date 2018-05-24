@@ -51,9 +51,7 @@ class LineChartVC: UIViewController {
         } else {
             currency = "USD"
         }
-       
-//        chartView.delegate = self
-        
+
         chartView.chartDescription?.enabled = false
         
         chartView.dragEnabled = true
@@ -63,8 +61,7 @@ class LineChartVC: UIViewController {
         
         chartView.backgroundColor = .white
         chartView.extraLeftOffset = 8.0
-//        chartView.legend.enabled = false
-        
+
         let xAxis = chartView.xAxis
         xAxis.labelPosition = .topInside
         xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
@@ -73,7 +70,7 @@ class LineChartVC: UIViewController {
         xAxis.centerAxisLabelsEnabled = true
         xAxis.granularity = 3600
         xAxis.valueFormatter = DateValueFormatter()
-        xAxis.labelTextColor = #colorLiteral(red: 0.662745098, green: 0.662745098, blue: 0.662745098, alpha: 1)
+        xAxis.labelTextColor = #colorLiteral(red: 0.4705882353, green: 0.662745098, blue: 0.662745098, alpha: 1)
         xAxis.avoidFirstLastClippingEnabled = true
         
         let leftAxis = chartView.leftAxis
@@ -82,9 +79,7 @@ class LineChartVC: UIViewController {
         leftAxis.drawGridLinesEnabled = true
         leftAxis.granularityEnabled = true
         leftAxis.axisMinimum = 0
-//        leftAxis.axisMaximum = 170
-//        leftAxis.yOffset = -9
-        leftAxis.labelTextColor = #colorLiteral(red: 0.662745098, green: 0.662745098, blue: 0.662745098, alpha: 1)
+        leftAxis.labelTextColor = #colorLiteral(red: 0.4705882353, green: 0.662745098, blue: 0.662745098, alpha: 1)
         chartView.rightAxis.enabled = false
         chartView.legend.form = .line
         fetchData()

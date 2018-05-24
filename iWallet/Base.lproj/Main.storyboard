@@ -836,16 +836,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="167.5" height="167.5"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Money movements by Accounts / Categories" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6W-AM-cOG">
-                                        <rect key="frame" x="19" y="74" width="130" height="80"/>
+                                        <rect key="frame" x="19" y="68" width="130" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="PW1-PS-WUT"/>
                                             <constraint firstAttribute="width" constant="130" id="vDK-5Z-b18"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42s-mj-a9s">
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42s-mj-a9s">
                                         <rect key="frame" x="0.0" y="0.0" width="167.5" height="167.5"/>
                                         <connections>
                                             <action selector="openPieChart:" destination="lbp-Vr-ag5" eventType="touchUpInside" id="Feb-mc-U7E"/>
@@ -859,7 +859,7 @@
                                     <constraint firstAttribute="bottom" secondItem="42s-mj-a9s" secondAttribute="bottom" id="Meq-i6-Zjd"/>
                                     <constraint firstItem="Z6W-AM-cOG" firstAttribute="centerX" secondItem="gSs-t9-sdk" secondAttribute="centerX" id="RlR-zA-rkI"/>
                                     <constraint firstAttribute="trailing" secondItem="42s-mj-a9s" secondAttribute="trailing" id="YwM-Cn-ylQ"/>
-                                    <constraint firstItem="Z6W-AM-cOG" firstAttribute="centerY" secondItem="gSs-t9-sdk" secondAttribute="centerY" constant="30" id="eWW-gx-QTs"/>
+                                    <constraint firstItem="Z6W-AM-cOG" firstAttribute="centerY" secondItem="gSs-t9-sdk" secondAttribute="centerY" constant="24" id="eWW-gx-QTs"/>
                                     <constraint firstItem="W66-HP-Z4H" firstAttribute="leading" secondItem="gSs-t9-sdk" secondAttribute="leading" id="eao-VG-8cz"/>
                                     <constraint firstAttribute="trailing" secondItem="W66-HP-Z4H" secondAttribute="trailing" id="eot-Rp-05j"/>
                                     <constraint firstItem="W66-HP-Z4H" firstAttribute="top" secondItem="gSs-t9-sdk" secondAttribute="top" id="knV-ep-GVf"/>
@@ -870,7 +870,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vP6-kz-6Cy">
                                 <rect key="frame" x="191.5" y="93" width="167.5" height="167.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaV-T2-E1g">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LineChartIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ZQ3-Hu-97f">
+                                        <rect key="frame" x="0.0" y="0.0" width="167.5" height="167.5"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Money movements by dates" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zMC-XT-VvC">
+                                        <rect key="frame" x="28" y="38" width="80" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="g9o-1d-oNk"/>
+                                            <constraint firstAttribute="width" constant="80" id="ug9-Z9-hQR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="12"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaV-T2-E1g">
                                         <rect key="frame" x="0.0" y="0.0" width="167.5" height="167.5"/>
                                         <connections>
                                             <action selector="openBarChart:" destination="lbp-Vr-ag5" eventType="touchUpInside" id="sRW-EA-54i"/>
@@ -881,8 +894,14 @@
                                 <constraints>
                                     <constraint firstItem="GaV-T2-E1g" firstAttribute="leading" secondItem="vP6-kz-6Cy" secondAttribute="leading" id="3az-gy-Nxe"/>
                                     <constraint firstItem="GaV-T2-E1g" firstAttribute="top" secondItem="vP6-kz-6Cy" secondAttribute="top" id="FXt-uQ-sHM"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZQ3-Hu-97f" secondAttribute="trailing" id="Jgg-QO-pMQ"/>
+                                    <constraint firstItem="zMC-XT-VvC" firstAttribute="centerX" secondItem="vP6-kz-6Cy" secondAttribute="centerX" constant="-16" id="NIg-QV-M5S"/>
+                                    <constraint firstItem="zMC-XT-VvC" firstAttribute="centerY" secondItem="vP6-kz-6Cy" secondAttribute="centerY" constant="-16" id="O7X-Ev-Vc6"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZQ3-Hu-97f" secondAttribute="bottom" id="R59-gD-UYh"/>
                                     <constraint firstAttribute="bottom" secondItem="GaV-T2-E1g" secondAttribute="bottom" id="dGg-3Q-P0D"/>
                                     <constraint firstAttribute="width" secondItem="vP6-kz-6Cy" secondAttribute="height" multiplier="1:1" id="i1B-vD-8aT"/>
+                                    <constraint firstItem="ZQ3-Hu-97f" firstAttribute="top" secondItem="vP6-kz-6Cy" secondAttribute="top" id="rfu-gI-cfI"/>
+                                    <constraint firstItem="ZQ3-Hu-97f" firstAttribute="leading" secondItem="vP6-kz-6Cy" secondAttribute="leading" id="vJt-vA-AqS"/>
                                     <constraint firstAttribute="trailing" secondItem="GaV-T2-E1g" secondAttribute="trailing" id="vxa-Qb-ypw"/>
                                 </constraints>
                             </view>
@@ -1347,6 +1366,7 @@
         <image name="BriefIcon" width="80" height="100"/>
         <image name="CheckMarkRoundedDark" width="40" height="40"/>
         <image name="ForwardIconDark" width="40" height="40"/>
+        <image name="LineChartIcon" width="218" height="218"/>
         <image name="OpenedWallet" width="372" height="230"/>
         <image name="PieChartIcon" width="218" height="218"/>
         <image name="PinIconLight" width="128" height="128"/>
