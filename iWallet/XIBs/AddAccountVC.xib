@@ -152,7 +152,7 @@
                                                 <constraint firstAttribute="height" constant="40" id="Tl1-E0-6kh"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                                            <state key="normal" image="arrowOepn">
+                                            <state key="normal" image="ArrowOepn">
                                                 <color key="titleColor" red="0.47450980392156861" green="0.47450980392156861" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <connections>
@@ -204,7 +204,7 @@
                                                 <constraint firstAttribute="height" constant="40" id="Wkh-Ov-mNl"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                                            <state key="normal" image="arrowOepn">
+                                            <state key="normal" image="ArrowOepn">
                                                 <color key="titleColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <connections>
@@ -225,14 +225,26 @@
                         </stackView>
                     </subviews>
                 </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ybw-1R-eli">
+                    <rect key="frame" x="16" y="621" width="343" height="30"/>
+                    <state key="normal" title="Fetch accounts from financial provider">
+                        <color key="titleColor" red="0.66274509800000003" green="0.66274509800000003" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="fetchAccountsBtnPressed:" destination="-1" eventType="touchUpInside" id="hkR-69-sks"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Ufn-mJ-du6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="8hs-7w-0B4"/>
+                <constraint firstItem="Ybw-1R-eli" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="C8i-YJ-eUw"/>
                 <constraint firstItem="uy8-8k-Q1g" firstAttribute="top" secondItem="Ufn-mJ-du6" secondAttribute="bottom" constant="16" id="Ije-Sm-t2t"/>
                 <constraint firstItem="Ufn-mJ-du6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JI2-bi-Qpw"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uy8-8k-Q1g" secondAttribute="trailing" id="bVT-M0-kVD"/>
                 <constraint firstItem="Ufn-mJ-du6" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="fYb-bu-Bk5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ybw-1R-eli" secondAttribute="trailing" constant="16" id="iMZ-Ip-z0n"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ybw-1R-eli" secondAttribute="bottom" constant="16" id="kyS-Lp-6UH"/>
                 <constraint firstItem="uy8-8k-Q1g" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="t38-VW-l48"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -240,8 +252,8 @@
         </view>
     </objects>
     <resources>
+        <image name="ArrowOepn" width="64" height="64"/>
         <image name="CheckMarkRoundedDark" width="40" height="40"/>
-        <image name="arrowOepn" width="64" height="64"/>
         <image name="burger" width="40" height="40"/>
     </resources>
 </document>

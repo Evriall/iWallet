@@ -54,6 +54,12 @@
 		9A73000F2073C4FF002F84F6 /* BriefProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */; };
 		9A730030207602AF002F84F6 /* SelectAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73002E207602AF002F84F6 /* SelectAccountVC.swift */; };
 		9A730031207602AF002F84F6 /* SelectAccountVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A73002F207602AF002F84F6 /* SelectAccountVC.xib */; };
+		9A77003920B8411C000209D4 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77003820B8411C000209D4 /* LoginVC.swift */; };
+		9A77003C20B848EB000209D4 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77003A20B848EB000209D4 /* SignUpVC.swift */; };
+		9A77003D20B848EB000209D4 /* SignUpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A77003B20B848EB000209D4 /* SignUpVC.xib */; };
+		9A77003F20B860C5000209D4 /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77003E20B860C5000209D4 /* LoginHelper.swift */; };
+		9A77004220B87B3E000209D4 /* ConnectToSaltEdgeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77004020B87B3E000209D4 /* ConnectToSaltEdgeVC.swift */; };
+		9A77004320B87B3E000209D4 /* ConnectToSaltEdgeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A77004120B87B3E000209D4 /* ConnectToSaltEdgeVC.xib */; };
 		9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */; };
 		9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */; };
 		9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B6208F32FB0048D82B /* WalletCell.swift */; };
@@ -161,6 +167,12 @@
 		9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BriefProtocol.swift; sourceTree = "<group>"; };
 		9A73002E207602AF002F84F6 /* SelectAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAccountVC.swift; sourceTree = "<group>"; };
 		9A73002F207602AF002F84F6 /* SelectAccountVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectAccountVC.xib; sourceTree = "<group>"; };
+		9A77003820B8411C000209D4 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		9A77003A20B848EB000209D4 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		9A77003B20B848EB000209D4 /* SignUpVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpVC.xib; sourceTree = "<group>"; };
+		9A77003E20B860C5000209D4 /* LoginHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
+		9A77004020B87B3E000209D4 /* ConnectToSaltEdgeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToSaltEdgeVC.swift; sourceTree = "<group>"; };
+		9A77004120B87B3E000209D4 /* ConnectToSaltEdgeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectToSaltEdgeVC.xib; sourceTree = "<group>"; };
 		9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlaceBySearchVC.swift; sourceTree = "<group>"; };
 		9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPlaceBySearchVC.xib; sourceTree = "<group>"; };
 		9A8044B6208F32FB0048D82B /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
@@ -279,6 +291,7 @@
 				9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */,
 				9A4A531A20878D9400E90EEA /* ImageHelper.swift */,
 				9A59A49B20A434C700B35E70 /* Detail.swift */,
+				9A77003E20B860C5000209D4 /* LoginHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -297,6 +310,7 @@
 		9A9D2D562068DCC300CC7DE0 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				9A77003B20B848EB000209D4 /* SignUpVC.xib */,
 				9AF34A04208A1C74005A94C7 /* SelectPlaceVC.xib */,
 				9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */,
 				9A9D2D582068FA1300CC7DE0 /* SelectParentCategoryVC.xib */,
@@ -321,6 +335,7 @@
 				9A59A49820A2F23800B35E70 /* PlaceDetailsVC.xib */,
 				9A305B1120AECE9C00DD79FF /* PieChartVC.xib */,
 				9A305B3920B43ACC00DD79FF /* LineChartVC.xib */,
+				9A77004120B87B3E000209D4 /* ConnectToSaltEdgeVC.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -417,6 +432,9 @@
 				9A59A49720A2F23800B35E70 /* PlaceDetailsVC.swift */,
 				9A305B1020AECE9C00DD79FF /* PieChartVC.swift */,
 				9A305B3820B43ACC00DD79FF /* LineChartVC.swift */,
+				9A77003820B8411C000209D4 /* LoginVC.swift */,
+				9A77003A20B848EB000209D4 /* SignUpVC.swift */,
+				9A77004020B87B3E000209D4 /* ConnectToSaltEdgeVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -535,6 +553,7 @@
 				9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */,
 				9AABAD72207147E9001AA162 /* CalendarVC.xib in Resources */,
 				9A305B3B20B43ACC00DD79FF /* LineChartVC.xib in Resources */,
+				9A77003D20B848EB000209D4 /* SignUpVC.xib in Resources */,
 				9A659837206D413A00519722 /* SelectAccountTypeVC.xib in Resources */,
 				9A9D2D5A2068FA1300CC7DE0 /* SelectParentCategoryVC.xib in Resources */,
 				9A3853FD208A3F59008B804D /* PlaceCell.xib in Resources */,
@@ -544,6 +563,7 @@
 				9A5D9E8220A96D51001217CB /* AddTransactionAdditionalVC.xib in Resources */,
 				9A4A531F208790AA00E90EEA /* PhotoVC.xib in Resources */,
 				9AF34A06208A1C74005A94C7 /* SelectPlaceVC.xib in Resources */,
+				9A77004320B87B3E000209D4 /* ConnectToSaltEdgeVC.xib in Resources */,
 				9ABA9AFC2063DB4500ADA34E /* Assets.xcassets in Resources */,
 				9A59A49A20A2F23800B35E70 /* PlaceDetailsVC.xib in Resources */,
 			);
@@ -563,6 +583,8 @@
 				"${BUILT_PRODUCTS_DIR}/CVCalendar/CVCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/Expression/Expression.framework",
+				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SaltEdge-iOS-Swift/SaltEdge.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -571,6 +593,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CVCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Expression.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SaltEdge.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -617,6 +641,7 @@
 				9AABAD6E2070E0BB001AA162 /* TransactionProtocol.swift in Sources */,
 				9A9D2D5D2068FDA800CC7DE0 /* CategoryCell.swift in Sources */,
 				9A9D2D3D206548F300CC7DE0 /* UIViewControllerExt.swift in Sources */,
+				9A77003C20B848EB000209D4 /* SignUpVC.swift in Sources */,
 				9AEEDBAC207A951600BB9925 /* LaunchVC.swift in Sources */,
 				9A3853F9208A1E8C008B804D /* PlaceProtocol.swift in Sources */,
 				9A9D2D4D2066674800CC7DE0 /* AddCategoryVC.swift in Sources */,
@@ -625,6 +650,7 @@
 				9A4A531E208790AA00E90EEA /* PhotoVC.swift in Sources */,
 				9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */,
 				9AABAD7720716716001AA162 /* CalendarProtocol.swift in Sources */,
+				9A77003920B8411C000209D4 /* LoginVC.swift in Sources */,
 				9A73000920727DF6002F84F6 /* BriefByAccountVC.swift in Sources */,
 				9A59A49220A1CD4800B35E70 /* MapPlaceMarkerView.swift in Sources */,
 				9A659833206D063400519722 /* ButtonWithRightImage.swift in Sources */,
@@ -655,6 +681,7 @@
 				9AB9841220921BED008E84D9 /* CoinCell.swift in Sources */,
 				9AF34A05208A1C74005A94C7 /* SelectPlaceVC.swift in Sources */,
 				9ABA9B0A2063DCB500ADA34E /* SWRevealViewController.m in Sources */,
+				9A77004220B87B3E000209D4 /* ConnectToSaltEdgeVC.swift in Sources */,
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
 				9A4A53212087A95800E90EEA /* PhotoProtocol.swift in Sources */,
@@ -666,6 +693,7 @@
 				9AB9841520934FEE008E84D9 /* CircularLabel.swift in Sources */,
 				9A4A531B20878D9400E90EEA /* ImageHelper.swift in Sources */,
 				9A5D9E8120A96D51001217CB /* AddTransactionAdditionalVC.swift in Sources */,
+				9A77003F20B860C5000209D4 /* LoginHelper.swift in Sources */,
 				9A305B1220AECE9C00DD79FF /* PieChartVC.swift in Sources */,
 				9A59A49920A2F23800B35E70 /* PlaceDetailsVC.swift in Sources */,
 				9AA7FF2D206A74E10093D0DE /* SettingsVC.swift in Sources */,

@@ -62,6 +62,10 @@ struct Constants {
     static let dotSymbol = "."
     static let allowedMathSymbolsForEvaluationInExpression = ["(",")","+","-","*","/"]
     static let InvisibleSign = "\u{200B}"
+    
+    //Login
+    static let USERNAME = "username"
+    static let EMAIL = "email"
 }
 
 

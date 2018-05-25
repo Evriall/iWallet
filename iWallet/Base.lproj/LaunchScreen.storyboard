@@ -22,8 +22,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WalletBGLight" translatesAutoresizingMaskIntoConstraints="NO" id="cNB-FG-evr">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WalletInscription" translatesAutoresizingMaskIntoConstraints="NO" id="cJy-bC-Imr">
-                                <rect key="frame" x="64" y="68" width="192" height="32"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WalletInscription" translatesAutoresizingMaskIntoConstraints="NO" id="cJy-bC-Imr">
+                                <rect key="frame" x="64" y="78" width="192" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="cJy-bC-Imr" secondAttribute="height" multiplier="6:1" id="Tz7-T9-Dry"/>
                                 </constraints>
@@ -43,7 +43,7 @@
                             <constraint firstItem="cNB-FG-evr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dLG-hk-yk1"/>
                             <constraint firstItem="Wvi-LK-j5f" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="96" id="dl4-1U-NkJ"/>
                             <constraint firstItem="cNB-FG-evr" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="e5L-zg-qHM"/>
-                            <constraint firstItem="cJy-bC-Imr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="48" id="kqb-P2-7HO"/>
+                            <constraint firstItem="cJy-bC-Imr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="58" id="kqb-P2-7HO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Wvi-LK-j5f" secondAttribute="trailing" constant="96" id="oKQ-XI-3gS"/>
                             <constraint firstItem="cNB-FG-evr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rQl-yM-vIE"/>
                             <constraint firstItem="Wvi-LK-j5f" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="vtl-h3-pfY"/>

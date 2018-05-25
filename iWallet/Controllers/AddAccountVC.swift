@@ -44,6 +44,9 @@ class AddAccountVC: UIViewController {
         presentDetail(selectAccountCurrencyVC )
     }
     
+    @IBAction func fetchAccountsBtnPressed(_ sender: Any) {
+        
+    }
     
     @IBAction func typeAccountBtnPressed(_ sender: Any) {
         let selectTypeAccountVC = SelectAccountTypeVC()

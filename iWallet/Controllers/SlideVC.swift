@@ -11,6 +11,7 @@ import UIKit
 class SlideVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var usernameLbl: UILabel!
     
     var accounts = [Account]()
     
@@ -39,6 +40,7 @@ class SlideVC: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "AccountCell", bundle: nil), forCellReuseIdentifier: "AccountCell")
         self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 60
+        usernameLbl.text = LoginHelper.instance.username
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +56,14 @@ class SlideVC: UIViewController {
     @IBAction func mapBtnPressed(_ sender: Any) {
         let mapVC = storyboard?.instantiateViewController(withIdentifier: "MapVC")
         revealViewController().pushFrontViewController(mapVC, animated: true)
+    }
+    
+    
+    @IBAction func LogoutBtnPressed(_ sender: Any) {
+        let loginVC = LoginVC()
+        loginVC.modalPresentationStyle = .custom
+        presentSecondaryDetail(presentedViewController: self, viewControllerToPresent: loginVC)
+        
     }
     
 }
