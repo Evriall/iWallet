@@ -45,7 +45,9 @@ class AddAccountVC: UIViewController {
     }
     
     @IBAction func fetchAccountsBtnPressed(_ sender: Any) {
-        
+        let connectToSaltEdgeVC = ConnectToSaltEdgeVC()
+        connectToSaltEdgeVC.modalPresentationStyle = .custom
+        presentDetail(connectToSaltEdgeVC)
     }
     
     @IBAction func typeAccountBtnPressed(_ sender: Any) {
@@ -58,9 +60,13 @@ class AddAccountVC: UIViewController {
         guard let name = nameAccountTxt.text, !name.isEmpty else {return}
         guard let type = typeAccountBtn.titleLabel?.text else {return}
         guard let currency = currencyAccountBtn.titleLabel?.text else {return}
-        CoreDataService.instance.saveAccount(name: name, type: type, currency: currency) { (success) in
-            if success {
-             self.dismissDetail()
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
+            guard let user = user else {return}
+            CoreDataService.instance.saveAccount(name: name, type: type, currency: currency, user: user) { (success) in
+                if success {
+                    self.dismissDetail()
+                }
             }
         }
     }

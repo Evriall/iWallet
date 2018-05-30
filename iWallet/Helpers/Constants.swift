@@ -19,7 +19,8 @@ struct Constants {
     static let CURRENT_TRANSACTION_TYPE = "currentTransactionType"
     static let CURRENT_CATEGORY = "currentCategory"
 
-    static let CATEGORY_TRANSFER = "Transfer"
+    static let CATEGORY_TRANSFER = "transfer"
+    static let CATEGORY_UNCATEGORIZED = "uncategorized"
     static let NAME_FOR_EXTERNAL_ACCOUNT = "Withdraw"
     
     //URLs
@@ -27,11 +28,15 @@ struct Constants {
     static let URL_CURRENCY_EXCHANGE_RATE_HISTORICAL = "http://data.fixer.io/api/"
     
     static let URL_FOURSQUARE =  "https://api.foursquare.com/v2/venues/search?"
-    
+    static let URL_IWALLET = "saltedge-api-swift-demo://home.local"
+    static let URL_SE_CREATE_CUSTOMER = "https://www.saltedge.com/api/v4/customers/"
     //API keys
     static let API_KEY_CURRENCY_EXCHANGE_RATE = "a759f6dbbd30585e787b0e8c3ff662ef"
     static let API_CLIENT_ID_FOURSQUARE = "TZJQGNH0UMMAPQZIBM0JEDHRL42SK41AV3YI5CBWJAZMYUSE"
     static let API_CLIENT_SECRET_FOURSQUARE = "ACV3PKE5CEFPYQSXJ0J2YCDZLFTSQXOY1WSEIOYDBT24ZQ3A"
+    
+    static let APP_ID_SALTEDGE = ""
+    static let APP_SECRET_SALTEDGE = ""
     
     //Size
     static let  REGION_SIZE_FOURSQUARE = 1000
@@ -57,6 +62,15 @@ struct Constants {
         "Content-Type" : "application/json; charset = utf-8"
     ]
     
+    static let HEADER_SE = [
+        "Content-Type" : "application/json; charset = utf-8",
+        "Accept" : "application/json; charset = utf-8",
+        "App-id" : APP_ID_SALTEDGE,
+        "Secret" : APP_SECRET_SALTEDGE
+        
+    ]
+    
+    
     //Digits and allowed symbols
     static let allowedSDigits = ["0","1","2","3","4","5","6","7","8","9"]
     static let dotSymbol = "."
@@ -64,7 +78,7 @@ struct Constants {
     static let InvisibleSign = "\u{200B}"
     
     //Login
-    static let USERNAME = "username"
+    static let USERID = "userid"
     static let EMAIL = "email"
 }
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		20D63935E8CB4862B8459C86 /* Pods_iWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB2ECF79F9C0C4E2B19C8B3 /* Pods_iWallet.framework */; };
 		9A1849222093913C0083E13E /* ViewWithBottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1849212093913C0083E13E /* ViewWithBottomButton.swift */; };
+		9A1D47E120BABA84001FCDDD /* saltedge.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9A1D47E020BAB8F4001FCDDD /* saltedge.com.cer */; };
 		9A1EAE6C209B8D6100E56D33 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */; };
 		9A305B1220AECE9C00DD79FF /* PieChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B1020AECE9C00DD79FF /* PieChartVC.swift */; };
 		9A305B1320AECE9C00DD79FF /* PieChartVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B1120AECE9C00DD79FF /* PieChartVC.xib */; };
@@ -60,6 +61,7 @@
 		9A77003F20B860C5000209D4 /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77003E20B860C5000209D4 /* LoginHelper.swift */; };
 		9A77004220B87B3E000209D4 /* ConnectToSaltEdgeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77004020B87B3E000209D4 /* ConnectToSaltEdgeVC.swift */; };
 		9A77004320B87B3E000209D4 /* ConnectToSaltEdgeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A77004120B87B3E000209D4 /* ConnectToSaltEdgeVC.xib */; };
+		9A796E6A20B9A6FF0025FD2C /* SaltEdgeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A796E6920B9A6FF0025FD2C /* SaltEdgeService.swift */; };
 		9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */; };
 		9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */; };
 		9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B6208F32FB0048D82B /* WalletCell.swift */; };
@@ -122,6 +124,7 @@
 		1F0844252092F4D146C20B7B /* Pods-iWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.release.xcconfig"; sourceTree = "<group>"; };
 		353AAFB1B83E3A0724330F15 /* Pods-iWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWallet/Pods-iWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		9A1849212093913C0083E13E /* ViewWithBottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithBottomButton.swift; sourceTree = "<group>"; };
+		9A1D47E020BAB8F4001FCDDD /* saltedge.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = saltedge.com.cer; sourceTree = "<group>"; };
 		9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionCell.xib; sourceTree = "<group>"; };
 		9A305B1020AECE9C00DD79FF /* PieChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartVC.swift; sourceTree = "<group>"; };
 		9A305B1120AECE9C00DD79FF /* PieChartVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PieChartVC.xib; sourceTree = "<group>"; };
@@ -173,6 +176,7 @@
 		9A77003E20B860C5000209D4 /* LoginHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
 		9A77004020B87B3E000209D4 /* ConnectToSaltEdgeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToSaltEdgeVC.swift; sourceTree = "<group>"; };
 		9A77004120B87B3E000209D4 /* ConnectToSaltEdgeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectToSaltEdgeVC.xib; sourceTree = "<group>"; };
+		9A796E6920B9A6FF0025FD2C /* SaltEdgeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaltEdgeService.swift; sourceTree = "<group>"; };
 		9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlaceBySearchVC.swift; sourceTree = "<group>"; };
 		9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPlaceBySearchVC.xib; sourceTree = "<group>"; };
 		9A8044B6208F32FB0048D82B /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 				9A9D2D4E2066A47600CC7DE0 /* EncodeDecodeService.swift */,
 				9AD795DB2077583C00AFB3BE /* ExchangeService.swift */,
 				9AF34A012089E9E9005A94C7 /* FourSquareService.swift */,
+				9A796E6920B9A6FF0025FD2C /* SaltEdgeService.swift */,
 			);
 			path = Srevices;
 			sourceTree = "<group>";
@@ -397,6 +402,7 @@
 		9ABA9B062063DC9400ADA34E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9A1D47E020BAB8F4001FCDDD /* saltedge.com.cer */,
 				9ABA9B092063DCB500ADA34E /* SWRevealViewController.h */,
 				9ABA9B082063DCB500ADA34E /* SWRevealViewController.m */,
 				9ABA9B072063DCB500ADA34E /* iWallet-Bridging-Header.h */,
@@ -537,6 +543,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A1D47E120BABA84001FCDDD /* saltedge.com.cer in Resources */,
 				9A305B1320AECE9C00DD79FF /* PieChartVC.xib in Resources */,
 				9A659831206CFD3500519722 /* AddAccountVC.xib in Resources */,
 				9A8044B9208F32FB0048D82B /* WalletCell.xib in Resources */,
@@ -667,6 +674,7 @@
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
 				9A305B3A20B43ACC00DD79FF /* LineChartVC.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
+				9A796E6A20B9A6FF0025FD2C /* SaltEdgeService.swift in Sources */,
 				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
 				9A59A49C20A434C700B35E70 /* Detail.swift in Sources */,
 				9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */,

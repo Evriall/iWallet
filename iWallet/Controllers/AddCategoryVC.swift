@@ -51,7 +51,7 @@ class AddCategoryVC: UIViewController {
         collectionView.reloadData()
     }
     @IBAction func saveCategoryBtnPressed(_ sender: Any) {
-        guard let text = categoryNameTxt.text else {return}
+        guard let text = categoryNameTxt.text, let currentUser = LoginHelper.instance.currentUser else {return}
         if !text.isEmpty {
             if let category = categoryItem {
                 category.name = text
@@ -63,16 +63,20 @@ class AddCategoryVC: UIViewController {
                     }
                 })
             } else {
-                CoreDataService.instance.saveCategory(name: text, color: categoryImg.backgroundColor, parent: categoryParent) { (success) in
-                    if success {
-                        dismissDetail()
+                CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
+                    guard let user = user else {return}
+                    CoreDataService.instance.saveCategory(name: text, color: categoryImg.backgroundColor, parent: categoryParent, user: user) { (category) in
+                        if category != nil {
+                            dismissDetail()
+                        }
                     }
                 }
             }
         }
     }
     @IBAction func categoryParentBtnPressed(_ sender: Any) {
-        CoreDataService.instance.fetchCategoryParents { (categories) in
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        CoreDataService.instance.fetchCategoryParents(userID: currentUser) { (categories) in
             if categories.count > 0 {
                 let selectCategory = SelectParentCategoryVC()
                 selectCategory.delegate = self

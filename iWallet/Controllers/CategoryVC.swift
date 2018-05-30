@@ -28,7 +28,8 @@ class CategoryVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        CoreDataService.instance.fetchCategoryParents{ (categories) in
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        CoreDataService.instance.fetchCategoryParents(userID: currentUser){ (categories) in
             self.categories = categories
              CategoryHelper.instance.clear()
             self.tableView.reloadData()
@@ -72,9 +73,9 @@ extension CategoryVC : UITableViewDelegate, UITableViewDataSource {
     @objc func openChildrenCategories(sender: UIButton){
         var tag = sender.tag
         let parent = categories[tag]
-        guard let name = parent.name else {return}
+        guard let name = parent.name, let currentUser = LoginHelper.instance.currentUser else {return}
         CategoryHelper.instance.set(categoryName: name, isShown: true)
-        CoreDataService.instance.fetchCategoryChildrenByParent(parent) { (children) in
+        CoreDataService.instance.fetchCategoryChildrenByParent(parent, userID: currentUser) { (children) in
             if children.count > 0 {
                 categories.insert(contentsOf: children, at: tag + 1)
                 self.tableView.reloadData()
@@ -85,9 +86,9 @@ extension CategoryVC : UITableViewDelegate, UITableViewDataSource {
     @objc func closeChildrenCategories(sender: UIButton){
         var tag = sender.tag
         let parent = categories[tag]
-        guard let name = parent.name else {return}
+        guard let name = parent.name, let currentUser = LoginHelper.instance.currentUser else {return}
         CategoryHelper.instance.set(categoryName: name, isShown: false)
-        CoreDataService.instance.fetchCategoryChildrenByParent(parent) { (children) in
+        CoreDataService.instance.fetchCategoryChildrenByParent(parent, userID: currentUser) { (children) in
             if children.count > 0 {
                 tag += 1
                 for _ in children{

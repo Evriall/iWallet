@@ -20,7 +20,8 @@ class SelectParentCategoryVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
          tableView.register(UINib(nibName: "CategoryCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
-        CoreDataService.instance.fetchCategoryParents { (parentCategories) in
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        CoreDataService.instance.fetchCategoryParents(userID: currentUser) { (parentCategories) in
             self.parentCategories = parentCategories
         }
     }

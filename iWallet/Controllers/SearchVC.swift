@@ -171,8 +171,9 @@ class SearchVC: UIViewController {
     
     func fetchTransactionsByDescription(description: String){
         details = []
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
         if !description.isEmpty {
-            CoreDataService.instance.fetchTransactions(ByDescription: description) { (transactions) in
+            CoreDataService.instance.fetchTransactions(ByDescription: description, userID: currentUser) { (transactions) in
                 for item in transactions {
                     details.append(TransactionDetail(transaction: item))
                 }

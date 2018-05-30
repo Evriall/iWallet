@@ -11,22 +11,31 @@ import Foundation
 class LoginHelper {
     static let instance = LoginHelper()
     private let defaults  = UserDefaults.standard
-
-    var username: String?{
-        get {
-            return defaults.string(forKey: Constants.USERNAME)
-        }
-        set {
-            defaults.set(newValue, forKey: Constants.USERNAME)
-        }
-    }
     
-    var email: String?{
+    var currentUser: String?{
         get {
-            return defaults.string(forKey: Constants.EMAIL)
-        }
+                return defaults.string(forKey: Constants.USERID)
+            }
         set {
-            defaults.set(newValue, forKey: Constants.EMAIL)
-        }
+                defaults.set(newValue, forKey: Constants.USERID)
+            }
     }
+
+//    var username: String?{
+//        get {
+//            return defaults.string(forKey: Constants.USERNAME)
+//        }
+//        set {
+//            defaults.set(newValue, forKey: Constants.USERNAME)
+//        }
+//    }
+//
+//    var email: String?{
+//        get {
+//            return defaults.string(forKey: Constants.EMAIL)
+//        }
+//        set {
+//            defaults.set(newValue, forKey: Constants.EMAIL)
+//        }
+//    }
 }

@@ -158,12 +158,16 @@ class AddTransactionVC: UIViewController {
     
     
     func setUpUIElements(){
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        accountFromBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        accountToBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        categoryBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         amountLbl.text = "0"
         currencyBtn.titleLabel?.adjustsFontSizeToFitWidth = true
 
         categoryBtn.titleLabel?.numberOfLines = 0
         categoryBtn.titleLabel?.lineBreakMode = .byWordWrapping
-        CoreDataService.instance.fetchAccounts { (accounts) in
+        CoreDataService.instance.fetchAccounts(userID: currentUser) { (accounts) in
             accountsCount = accounts.count
             if accounts.count < 2 {
                 accountFromBtn.isEnabled = false
@@ -180,7 +184,7 @@ class AddTransactionVC: UIViewController {
             }
             
             
-            CoreDataService.instance.fetchAccount(ByObjectID: AccountHelper.instance.currentAccount ?? "") { (account) in
+            CoreDataService.instance.fetchAccount(ByObjectID: AccountHelper.instance.currentAccount ?? "", userID: currentUser) { (account) in
                 self.accountFrom = account
                 accountFromBtn.setTitle(accountFrom?.name, for: .normal)
                 if account.type == AccountType.Cash.rawValue {
@@ -332,9 +336,10 @@ class AddTransactionVC: UIViewController {
     }
     
     func setCategory() {
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
         switch typeSG.selectedSegmentIndex {
         case 2 :
-            CoreDataService.instance.fetchCategory(ByName: Constants.CATEGORY_TRANSFER, system: true) { (categories) in
+            CoreDataService.instance.fetchCategory(ByName: Constants.CATEGORY_TRANSFER, system: true, userID: currentUser) { (categories) in
                 for item in categories {
                     handleCategory(item)
                 }
@@ -345,7 +350,7 @@ class AddTransactionVC: UIViewController {
             transferImg.image = UIImage(named: "ArrowRightIcon")
             transferImg.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
             transferImg.layer.cornerRadius = 0
-            CoreDataService.instance.fetchAccount(bySystemName: Constants.NAME_FOR_EXTERNAL_ACCOUNT) { (externalAccounts) in
+            CoreDataService.instance.fetchAccount(bySystemName: Constants.NAME_FOR_EXTERNAL_ACCOUNT, userID: currentUser) { (externalAccounts) in
                 for item in externalAccounts {
                     self.accountTo = item
                     if item.type == AccountType.Cash.rawValue {
@@ -357,17 +362,21 @@ class AddTransactionVC: UIViewController {
                 }
             }
         default:
-            if let currentCategory = CategoryHelper.instance.currentCAtegory {
-                CoreDataService.instance.fetchCategory(ByObjectID: currentCategory) { (categoryFetched) in
-                    if categoryFetched.systemName == Constants.CATEGORY_TRANSFER {
-                        setWithoutCategory()
-                    } else {
-                        self.category = categoryFetched
-                        handleCategory(categoryFetched)
+            if let currentCategory = CategoryHelper.instance.currentCAtegory{
+                if currentCategory.isEmpty {
+                    setWithoutCategory(userID: currentUser)
+                } else {
+                    CoreDataService.instance.fetchCategory(ByObjectID: currentCategory, userID: currentUser) { (categoryFetched) in
+                        if categoryFetched.systemName == Constants.CATEGORY_TRANSFER {
+                            setWithoutCategory(userID: currentUser)
+                        } else {
+                            self.category = categoryFetched
+                            handleCategory(categoryFetched)
+                        }
                     }
                 }
             } else {
-                setWithoutCategory()
+                setWithoutCategory(userID: currentUser)
             }
             accountToBtn.isHidden = true
             accountToTypeImgView.isHidden = true
@@ -375,8 +384,8 @@ class AddTransactionVC: UIViewController {
         }
     }
     
-    func setWithoutCategory(){
-        CoreDataService.instance.fetchCategory(ByName: "Without category",system: true, complition: { (categories) in
+    func setWithoutCategory(userID: String){
+        CoreDataService.instance.fetchCategory(ByName: Constants.CATEGORY_UNCATEGORIZED, system: true, userID: userID, complition: { (categories) in
             for item in categories {
                 self.category = item
                 handleCategory(item)

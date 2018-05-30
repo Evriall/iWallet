@@ -29,14 +29,22 @@ class AccountCell: UITableViewCell {
         accountNameLbl.text = account.name
         accountNameLbl.textColor = colorText
         accountCurrencyLbl.textColor = colorText
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
         if let currency = account.currency {
             accountCurrencyLbl.text = AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)
         } else {
             accountCurrencyLbl.text = ""
         }
-        
-        AccountHelper.instance.evaluateBalance(byAccount: account) { (balance) in
-            accountCurrencyLbl.text = "\(balance)" + accountCurrencyLbl.text!
+        AccountHelper.instance.evaluateBalance(byAccount: account, userID: currentUser) { (balance) in
+            accountCurrencyLbl.text = accountCurrencyLbl.text! + "\(balance)"
         }
+    }
+    
+    func configureCell(title: String, subTitle: String) {
+        accountNameLbl.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        accountNameLbl.text = title
+        accountCurrencyLbl.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        accountCurrencyLbl.text = subTitle
+        
     }
 }

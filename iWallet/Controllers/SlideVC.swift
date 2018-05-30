@@ -40,11 +40,18 @@ class SlideVC: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "AccountCell", bundle: nil), forCellReuseIdentifier: "AccountCell")
         self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 60
-        usernameLbl.text = LoginHelper.instance.username
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
+            usernameLbl.text = user?.name
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        CoreDataService.instance.fetchAccounts { (accounts) in
+        guard let currentUser = LoginHelper.instance.currentUser else {
+            self.accounts = []
+            return
+        }
+        CoreDataService.instance.fetchAccounts(userID: currentUser) { (accounts) in
             self.accounts = accounts
         }
         tableView.reloadData()

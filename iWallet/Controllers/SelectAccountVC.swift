@@ -26,8 +26,8 @@ class SelectAccountVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "AccountCell", bundle: nil), forCellReuseIdentifier: "AccountCell")
-        guard  let direction = transactionDirection else { return }
-        CoreDataService.instance.fetchAccounts(withoutExternal: direction == TransactionDirection.from , complition: { (accounts) in
+        guard  let direction = transactionDirection, let currentUser = LoginHelper.instance.currentUser else { return }
+        CoreDataService.instance.fetchAccounts(withoutExternal: direction == TransactionDirection.from, userID: currentUser , complition: { (accounts) in
             for item in accounts {
                 if !hidenAccounts.contains(item) {
                     self.accounts.append(item)

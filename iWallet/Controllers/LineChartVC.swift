@@ -27,7 +27,7 @@ class LineChartVC: UIViewController {
     var endDate = Date()
     var reportLabel = ""
     var currency = ""
-    var fetchedData = [(name: String, value: Double, date: Date)]()
+    var fetchedData = [(name: String, id: String, value: Double, date: Date)]()
     var accountColors = [#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1), #colorLiteral(red: 1, green: 0.7843137255, blue: 0, alpha: 1), #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), #colorLiteral(red: 0.09019608051, green: 0, blue: 0.3019607961, alpha: 1), #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1), #colorLiteral(red: 0.7254902124, green: 0.4784313738, blue: 0.09803921729, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)]
     
     override func viewDidLoad() {
@@ -43,8 +43,8 @@ class LineChartVC: UIViewController {
         currencyBtn.layer.borderWidth = 1
         currencyBtn.layer.borderColor = #colorLiteral(red: 0.662745098, green: 0.662745098, blue: 0.662745098, alpha: 1)
         
-        if let currentAccountObjectID = AccountHelper.instance.currentAccount {
-            CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID) { (account) in
+        if let currentAccountObjectID = AccountHelper.instance.currentAccount, let currentUser = LoginHelper.instance.currentUser {
+            CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID, userID: currentUser) { (account) in
                 self.currency = account.currency ?? "USD"
                 currencyBtn.setTitle(self.currency, for: .normal)
             }
@@ -143,26 +143,27 @@ class LineChartVC: UIViewController {
     }
     func fetchData(){
         fetchedData = []
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
         reportLabel = "Account`s"
         if transactionTypeSegmentView.selectedSegmentIndex == 0 {
             reportLabel += " turnover in " + AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)
-            CoreDataService.instance.fetchAccountsTurnoverGroupedByDate(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
+            CoreDataService.instance.fetchAccountsTurnoverGroupedByDate(WithStartDate: startDate, WithEndDate: endDate, userID: currentUser) { (accountsArray) in
                 if accountsArray.count == 0 {
                     InfoLbl.isHidden = false
                     chartView.isHidden = true
                 } else {
                     for (index, arrayItem) in accountsArray.enumerated() {
-                        if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let date =  arrayItem["date"] as? Date{
+                        if let account = arrayItem["account.name"] as? String, let accountID = arrayItem["account.id"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let date =  arrayItem["date"] as? Date{
                             if currency != self.currency{
                                 ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: self.currency, complition: { (rate) in
                                     let valueAtExchangeRate = sum * rate
-                                    self.fetchedData.append((name: account, value: valueAtExchangeRate, date: date))
+                                    self.fetchedData.append((name: account, id: accountID, value: valueAtExchangeRate, date: date))
                                     if index == accountsArray.count - 1 {
                                         self.setUpChart()
                                     }
                                 })
                             } else {
-                                self.fetchedData.append((name: account, value: sum, date: date))
+                                self.fetchedData.append((name: account, id: accountID, value: sum, date: date))
                                 if index == accountsArray.count - 1 {
                                     self.setUpChart()
                                 }
@@ -173,23 +174,23 @@ class LineChartVC: UIViewController {
             }
         } else if transactionTypeSegmentView.selectedSegmentIndex == 1{
             reportLabel += " income in " + AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)
-            CoreDataService.instance.fetchAccountsIncomeGroupedByDate(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
+            CoreDataService.instance.fetchAccountsIncomeGroupedByDate(WithStartDate: startDate, WithEndDate: endDate, userID: currentUser) { (accountsArray) in
                 if accountsArray.count == 0 {
                     InfoLbl.isHidden = false
                     chartView.isHidden = true
                 } else {
                     for (index, arrayItem) in accountsArray.enumerated() {
-                        if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let date =  arrayItem["date"] as? Date{
+                        if let account = arrayItem["account.name"] as? String, let accountID = arrayItem["account.id"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let date =  arrayItem["date"] as? Date{
                             if currency != self.currency{
                                 ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: self.currency, complition: { (rate) in
                                     let valueAtExchangeRate = sum * rate
-                                    self.fetchedData.append((name: account, value: valueAtExchangeRate, date: date))
+                                    self.fetchedData.append((name: account, id: accountID, value: valueAtExchangeRate, date: date))
                                     if index == accountsArray.count - 1 {
                                         self.setUpChart()
                                     }
                                 })
                             } else {
-                                self.fetchedData.append((name: account, value: sum, date: date))
+                                self.fetchedData.append((name: account, id: accountID, value: sum, date: date))
                                 if index == accountsArray.count - 1 {
                                     self.setUpChart()
                                 }
@@ -201,23 +202,23 @@ class LineChartVC: UIViewController {
            
         } else {
             reportLabel += " costs in " + AccountHelper.instance.getCurrencySymbol(byCurrencyCode: currency)
-            CoreDataService.instance.fetchAccountsCostsGroupedByDate(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
+            CoreDataService.instance.fetchAccountsCostsGroupedByDate(WithStartDate: startDate, WithEndDate: endDate, userID: currentUser) { (accountsArray) in
                 if accountsArray.count == 0 {
                     InfoLbl.isHidden = false
                     chartView.isHidden = true
                 } else {
                     for (index, arrayItem) in accountsArray.enumerated() {
-                        if let account = arrayItem["account.name"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let date =  arrayItem["date"] as? Date{
+                        if let account = arrayItem["account.name"] as? String, let accountID = arrayItem["account.id"] as? String, let sum = arrayItem["sum"] as? Double, let currency =  arrayItem["account.currency"] as? String, let date =  arrayItem["date"] as? Date{
                             if currency != self.currency{
                                 ExchangeService.instance.fetchLastCurrencyRate(baseCode: currency, pairCode: self.currency, complition: { (rate) in
                                     let valueAtExchangeRate = sum * rate
-                                    self.fetchedData.append((name: account, value: valueAtExchangeRate, date: date))
+                                    self.fetchedData.append((name: account,  id: accountID, value: valueAtExchangeRate, date: date))
                                     if index == accountsArray.count - 1 {
                                         self.setUpChart()
                                     }
                                 })
                             } else {
-                                self.fetchedData.append((name: account, value: sum, date: date))
+                                self.fetchedData.append((name: account,  id: accountID, value: sum, date: date))
                                 if index == accountsArray.count - 1 {
                                     self.setUpChart()
                                 }
@@ -234,22 +235,25 @@ class LineChartVC: UIViewController {
         InfoLbl.isHidden = true
         chartView.isHidden = false
         chartView.resetZoom()
-        var currentAccount = ""
+        var currentAccountName = ""
+        var currentAccountID = ""
         var entries = [ChartDataEntry]()
         var sets = [LineChartDataSet]()
         var dateGrouped: Date?
         var sumByDate = 0.0
         for (index,item) in fetchedData.enumerated() {
-            if currentAccount.isEmpty {
-                currentAccount = item.name
-            } else if currentAccount != item.name {
+            if currentAccountID.isEmpty {
+                currentAccountName = item.name
+                currentAccountID = item.id
+            } else if currentAccountID != item.id {
                 entries.append(ChartDataEntry(x: (dateGrouped?.timeIntervalSince1970) ?? Date().timeIntervalSince1970, y: sumByDate))
-                let set = LineChartDataSet(values: entries, label: currentAccount)
+                let set = LineChartDataSet(values: entries, label: currentAccountName)
                 set.colors = [accountColors[sets.count % accountColors.count]]
                 set.setCircleColor(accountColors[sets.count % accountColors.count])
                 sets.append(set)
                 entries = []
-                currentAccount = item.name
+                currentAccountName = item.name
+                currentAccountID = item.id
                 dateGrouped = nil
                 sumByDate = 0.0
             }
@@ -266,7 +270,7 @@ class LineChartVC: UIViewController {
             
             if index == fetchedData.count - 1 {
                 entries.append(ChartDataEntry(x: (dateGrouped?.timeIntervalSince1970) ?? Date().timeIntervalSince1970, y: sumByDate))
-                let set = LineChartDataSet(values: entries, label: currentAccount)
+                let set = LineChartDataSet(values: entries, label: currentAccountName)
                 set.colors = [accountColors[sets.count % accountColors.count]]
                 set.setCircleColor(accountColors[sets.count % accountColors.count])
                 sets.append(set)

@@ -7,22 +7,26 @@
 //
 
 import UIKit
+import SaltEdge
+import PKHUD
 
 class LoginVC: UIViewController {
-    @IBOutlet weak var usernameTxt: UITextField!
+    @IBOutlet weak var email: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
     
+    @IBOutlet weak var signUpBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.handleTap))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        usernameTxt.delegate = self
+        email.delegate = self
         passwordTxt.delegate = self
+        signUpBtn.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        usernameTxt.text = ""
+        email.text = ""
         passwordTxt.text = ""
     }
     
@@ -34,13 +38,38 @@ class LoginVC: UIViewController {
         dismissDetail()
     }
     @IBAction func LoginBtnPressed(_ sender: Any) {
-        guard let username = usernameTxt.text else {return}
-        LoginHelper.instance.username = username
-        LoginHelper.instance.email = username + "@gmail.com"
+        guard let email = email.text else {return}
+        CoreDataService.instance.fetchUser(ByEmail: email) { (users) in
+            if users.count == 0 {
+                CoreDataService.instance.saveUser(name: "Test", email: email, complition: { (user) in
+                    guard let user = user else {return}
+                    LoginHelper.instance.currentUser = user.id
+                    InitDataHelper.instance.checkInitData(complition: { (success) in
+                        if success {
+                            self.showMainVC()
+                        } else {
+                            HUD.flash(.labeledError(title: "Error", subtitle: "Can`t initialize data"), delay: 3.0)
+                        }
+                    })
+                })
+            } else {
+                for user in users {
+                    LoginHelper.instance.currentUser = user.id
+                    showMainVC()
+                    break
+                }
+            }
+        }
+        
+        
+    }
+    
+    func showMainVC(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let sw = storyboard.instantiateViewController(withIdentifier: "SWRevealViewController")
         present(sw, animated: false, completion: nil)
     }
+    
     @IBAction func signUpBtnPressed(_ sender: Any) {
         let signUpVC = SignUpVC()
         signUpVC.modalPresentationStyle = .custom

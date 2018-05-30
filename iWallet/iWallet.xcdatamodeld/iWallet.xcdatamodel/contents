@@ -5,9 +5,12 @@
         <attribute name="external" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="se_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="systemName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="se_provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SEProvider" inverseName="account" inverseEntity="SEProvider" syncable="YES"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Transaction" inverseName="account" inverseEntity="Transaction" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="account" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
@@ -16,6 +19,7 @@
         <attribute name="systemName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" syncable="YES"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transaction" inverseName="category" inverseEntity="Transaction" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="category" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="CurrencyRate" representedClassName="CurrencyRate" syncable="YES" codeGenerationType="class">
         <attribute name="base" optional="YES" attributeType="String" syncable="YES"/>
@@ -37,6 +41,18 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Transaction" inverseName="place" inverseEntity="Transaction" syncable="YES"/>
     </entity>
+    <entity name="SECustomer" representedClassName="SECustomer" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="seprovider" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SEProvider" inverseName="secustomer" inverseEntity="SEProvider" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="se_customer" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="SEProvider" representedClassName="SEProvider" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="secret" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="account" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Account" inverseName="se_provider" inverseEntity="Account" syncable="YES"/>
+        <relationship name="secustomer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SECustomer" inverseName="seprovider" inverseEntity="SECustomer" syncable="YES"/>
+    </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="tags" inverseEntity="Transaction" syncable="YES"/>
@@ -46,6 +62,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="se_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="transactions" inverseEntity="Account" syncable="YES"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="transactions" inverseEntity="Category" syncable="YES"/>
@@ -54,13 +71,24 @@
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="transaction" inverseEntity="Tag" syncable="YES"/>
         <relationship name="transfer" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Transaction" inverseName="transfer" inverseEntity="Transaction" syncable="YES"/>
     </entity>
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="account" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Account" inverseName="user" inverseEntity="Account" syncable="YES"/>
+        <relationship name="category" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="user" inverseEntity="Category" syncable="YES"/>
+        <relationship name="se_customer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SECustomer" inverseName="user" inverseEntity="SECustomer" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Account" positionX="-18" positionY="108" width="128" height="150"/>
-        <element name="Category" positionX="-54" positionY="-9" width="128" height="135"/>
+        <element name="Account" positionX="-18" positionY="108" width="128" height="195"/>
+        <element name="Category" positionX="-54" positionY="-9" width="128" height="150"/>
         <element name="CurrencyRate" positionX="-45" positionY="108" width="128" height="105"/>
         <element name="Photo" positionX="-27" positionY="99" width="128" height="90"/>
         <element name="Place" positionX="-45" positionY="117" width="128" height="150"/>
+        <element name="SECustomer" positionX="-45" positionY="117" width="128" height="90"/>
+        <element name="SEProvider" positionX="-36" positionY="126" width="128" height="120"/>
         <element name="Tag" positionX="-36" positionY="81" width="128" height="75"/>
-        <element name="Transaction" positionX="-45" positionY="27" width="128" height="210"/>
+        <element name="Transaction" positionX="-45" positionY="27" width="128" height="225"/>
+        <element name="User" positionX="-27" positionY="144" width="128" height="135"/>
     </elements>
 </model>

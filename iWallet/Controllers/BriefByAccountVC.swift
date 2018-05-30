@@ -40,7 +40,7 @@ class BriefByAccountVC: UIViewController {
     }
     
     func setUpElements(){
-        guard let currentAccountObjectID = AccountHelper.instance.currentAccount else {return}
+        guard let currentAccountObjectID = AccountHelper.instance.currentAccount, let currentUser = LoginHelper.instance.currentUser else {return}
         menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
@@ -48,7 +48,7 @@ class BriefByAccountVC: UIViewController {
         tableView.dataSource = self
         tableView?.register(UINib(nibName: "TransactionCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
         self.tableView.sectionHeaderHeight = 32
-        CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID) { (account) in
+        CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID, userID: currentUser) { (account) in
             self.account = account
             titleLbl.text = account.name
         }
@@ -95,7 +95,7 @@ class BriefByAccountVC: UIViewController {
                 if transactionDate != tempDate {
                     if transactionsByDay.count > 0 {
                         transactions.append(transactionsByDay)
-                        sections.append(("\(tempDate)", "\(sumByDay)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))"))
+                        sections.append(("\(tempDate)", "\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))\(sumByDay)"))
                         sumByDay = 0
                         transactionsByDay = []
                     }
@@ -105,7 +105,7 @@ class BriefByAccountVC: UIViewController {
                 sumByDay += transactionType == TransactionType.costs.rawValue ? -item.amount : item.amount
             }
             if transactionsByDay.count > 0 {
-                sections.append(("\(tempDate)", "\(sumByDay)\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))"))
+                sections.append(("\(tempDate)", "\(AccountHelper.instance.getCurrencySymbol(byCurrencyCode: account.currency!))\(sumByDay)"))
                 transactions.append(transactionsByDay)
             }
         }

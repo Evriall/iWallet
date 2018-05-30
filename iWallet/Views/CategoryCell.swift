@@ -33,7 +33,8 @@ class CategoryCell: UITableViewCell {
             self.openChildrenCategoriesBtn.isHidden = true
             self.closeChildrenCategoriesBtn.isHidden = true
         } else if showChildren {
-            CoreDataService.instance.fetchCategoryChildrenByParent(category) { (children) in
+            guard let currentUser = LoginHelper.instance.currentUser else {return}
+            CoreDataService.instance.fetchCategoryChildrenByParent(category, userID: currentUser) { (children) in
                 if children.count > 0 {
                     guard let name = category.name else {return}
                     var childrenShown = CategoryHelper.instance.check(categoryName: name)

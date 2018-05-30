@@ -29,6 +29,7 @@ class PieChartVC: UIViewController {
     var colors = [UIColor]()
     var accountColors = [#colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1), #colorLiteral(red: 1, green: 0.7843137255, blue: 0, alpha: 1), #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), #colorLiteral(red: 0.09019608051, green: 0, blue: 0.3019607961, alpha: 1), #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1), #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1), #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1), #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1), #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)]
     var reportLabel = ""
+    var user: User?
     override func viewDidLoad() {
         super.viewDidLoad()
         reportTypeSegmentView.selectedSegmentIndex = 0
@@ -42,7 +43,15 @@ class PieChartVC: UIViewController {
         endDateBtn.layer.borderColor = #colorLiteral(red: 0.662745098, green: 0.662745098, blue: 0.662745098, alpha: 1)
         chartView.drawHoleEnabled = false
         chartView.delegate = self
-        fetchData()
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
+            guard let user = user else {
+                return
+            }
+            self.user = user
+            fetchData()
+        }
+        
     }
     
     func fetchData() {
@@ -50,11 +59,12 @@ class PieChartVC: UIViewController {
         entries = []
         colors = []
         totalSum = 0.0
+        guard let userID = user?.id else {return}
         if reportTypeSegmentView.selectedSegmentIndex == 0{
             reportLabel = "Account`s"
             if transactionTypeSegmentView.selectedSegmentIndex == 0 {
                 reportLabel += " turnover"
-                CoreDataService.instance.fetchAccountsTurnover(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
+                CoreDataService.instance.fetchAccountsTurnover(WithStartDate: startDate, WithEndDate: endDate, userID: userID) { (accountsArray) in
                     if accountsArray.count == 0 {
                         InfoLbl.isHidden = false
                         chartView.isHidden = true
@@ -83,7 +93,7 @@ class PieChartVC: UIViewController {
                 }
             } else if transactionTypeSegmentView.selectedSegmentIndex == 1{
                 reportLabel += " income"
-                CoreDataService.instance.fetchAccountsIncome(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
+                CoreDataService.instance.fetchAccountsIncome(WithStartDate: startDate, WithEndDate: endDate, userID: userID) { (accountsArray) in
                     if accountsArray.count == 0 {
                         InfoLbl.isHidden = false
                         chartView.isHidden = true
@@ -112,7 +122,7 @@ class PieChartVC: UIViewController {
                 }
             } else {
                 reportLabel += " costs"
-                CoreDataService.instance.fetchAccountsCosts(WithStartDate: startDate, WithEndDate: endDate) { (accountsArray) in
+                CoreDataService.instance.fetchAccountsCosts(WithStartDate: startDate, WithEndDate: endDate, userID: userID) { (accountsArray) in
                     if accountsArray.count == 0 {
                         InfoLbl.isHidden = false
                         chartView.isHidden = true
@@ -144,7 +154,7 @@ class PieChartVC: UIViewController {
            reportLabel = "Category`s"
             if transactionTypeSegmentView.selectedSegmentIndex == 0 {
                 reportLabel += " turnover"
-                CoreDataService.instance.fetchCategoriesTurnover(WithStartDate: startDate, AndEndDate: endDate) { (categoriesArray) in
+                CoreDataService.instance.fetchCategoriesTurnover(WithStartDate: startDate, AndEndDate: endDate, userID: userID) { (categoriesArray) in
                         if categoriesArray.count == 0 {
                             InfoLbl.isHidden = false
                             chartView.isHidden = true
@@ -182,7 +192,7 @@ class PieChartVC: UIViewController {
                 
             } else if transactionTypeSegmentView.selectedSegmentIndex == 1 {
                 reportLabel += " income"
-                CoreDataService.instance.fetchCategoriesIncome(WithStartDate: startDate, AndEndDate: endDate) { (categoriesArray) in
+                CoreDataService.instance.fetchCategoriesIncome(WithStartDate: startDate, AndEndDate: endDate, userID: userID) { (categoriesArray) in
                     if categoriesArray.count == 0 {
                         InfoLbl.isHidden = false
                         chartView.isHidden = true
@@ -220,7 +230,7 @@ class PieChartVC: UIViewController {
                 
             } else {
                 reportLabel += " costs"
-                CoreDataService.instance.fetchCategoriesCosts(WithStartDate: startDate, AndEndDate: endDate) { (categoriesArray) in
+                CoreDataService.instance.fetchCategoriesCosts(WithStartDate: startDate, AndEndDate: endDate, userID: userID) { (categoriesArray) in
                     if categoriesArray.count == 0 {
                         InfoLbl.isHidden = false
                         chartView.isHidden = true
