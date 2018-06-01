@@ -22,12 +22,8 @@ class ConnectToSaltEdgeVC: UIViewController {
     private var providers: [(name : String, id: String, countryCode: String)] = []
     private var filteredProviders: [(name : String, id: String, countryCode: String)] = []
     private let searchController = UISearchController(searchResultsController: nil)
-    let categoryReplacement = ["business_services":"services",
-                               "auto_and_transport":"transport",
-                               "bills_and_utilities":"utilities"]
+    
     private var customer: SECustomer?
-    private var secret: String = ""
-    private var loginID: String = ""
     private var user: User?
     
     var delegate: SettingsProtocol?
@@ -79,6 +75,7 @@ class ConnectToSaltEdgeVC: UIViewController {
         }
         infoLbl.isHidden = true
         webView.isHidden = false
+        continueBtn.isHidden = true
         
         guard let user = user else {return}
             if let customer = user.se_customer, let secret = user.se_customer?.id {
@@ -106,266 +103,6 @@ class ConnectToSaltEdgeVC: UIViewController {
                 }
             }
     }
-    func fetchSEAccounts(provider: SEProvider, complition: @escaping (_ completed: Bool)->()) {
-        guard let secret = provider.secret , let providerName = provider.name, let providerID = provider.id, let user = user, let userID = user.id else {
-            complition(false)
-            return
-        }
-        SERequestManager.shared.getAllAccounts(for: secret, params: nil) { [weak self] response in
-            switch response {
-            case .success(let value):
-                var number = 1
-                var status = true
-                for (index, item) in value.data.enumerated() {
-                    CoreDataService.instance.fetchAccount(bySE_ID: item.id, seProviderID: providerID, userID: userID, complition: { (accounts) in
-                        if accounts.count == 0 {
-                            var accountName = providerName
-                            if let cards = item.extra?.cards {
-                                for card in cards {
-                                    if card.count >= 4 {
-                                        accountName += " \(card[(card.count - 4)..<card.count])"
-                                        break
-                                    } else {
-                                        continue
-                                    }
-                                }
-                            }
-                            if accountName == providerName {
-                                accountName += " \(number)"
-                                number += 1
-                            }
-                                CoreDataService.instance.saveSEAccount(name: accountName, type: AccountType.DebitCard.rawValue, currency: item.currencyCode, external: false, seID: item.id, seProvider: provider, user: user, complition: { (account) in
-                                    if let account = account {
-                                        self?.fetchSETransactions(providerSecret: secret, account: account, complition: { success in
-                                            if !success {
-                                                status = false
-                                            }
-                                            if index == value.data.count - 1 {
-                                                complition(status)
-                                            }
-                                        })
-                                    } else {
-                                        if index == value.data.count - 1 {
-                                            complition(false)
-                                        }
-                                    }
-                                })
-                        } else {
-                            for account in accounts {
-                                var status = true
-                                self?.fetchSETransactions(providerSecret: secret, account: account, complition: { success in
-                                    if !success {
-                                        status = false
-                                    }
-                                    if index == value.data.count - 1 {
-                                        complition(status)
-                                    }
-                                })
-                            }
-                            if index == value.data.count - 1 {
-                                complition(true)
-                            }
-                        }
-                    })
-                    
-                }
-                HUD.hide(animated: true)
-            case .failure(let error):
-                HUD.flash(.labeledError(title: "Error", subtitle: error.localizedDescription), delay: 3.0)
-                complition(false)
-            }
-        }
-    }
-    
-    func fetchCategories(complition: @escaping (Bool)->()){
-        guard let user = user, let userID = user.id else {
-            complition(false)
-            return
-        }
-        SERequestManager.shared.getCategories(completion: { (responseCategories) in
-            switch responseCategories {
-            case .success(let value):
-                var index = 0
-                for (key, childArray) in value.data {
-                    let key  = self.categoryReplacement[key] ?? key
-                    CoreDataService.instance.fetchCategoryParent(ByName: key, system: true, userID: userID, complition: { (categories) in
-                        if categories.count == 0 {
-                            CoreDataService.instance.saveCategory(name: key.replacingOccurrences(of: "_", with: "  "), color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: nil,systemName: key, user: user, complition: { (parent) in
-                                if parent != nil {
-                                    if childArray.count == 0 {
-                                        if index == value.data.count - 1 {
-                                            complition(true)
-                                        }
-                                    } else {
-                                        for (indexChild, child) in childArray.enumerated() {
-                                            CoreDataService.instance.saveCategory(name: child.replacingOccurrences(of: "_", with: "  "), color:  #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: parent, user: user, complition: { (category) in
-                                                if index == value.data.count - 1 && indexChild == childArray.count - 1{
-                                                    complition(true)
-                                                }
-                                            })
-                                        }
-                                    }
-                                } else {
-                                    if index == value.data.count - 1 {
-                                        complition(true)
-                                    }
-                                }
-                            })
-                        } else {
-                            for parent in categories {
-                                if childArray.count == 0 {
-                                    if index == value.data.count - 1 {
-                                        complition(true)
-                                    }
-                                } else {
-                                    for (indexChild, child) in childArray.enumerated() {
-                                        CoreDataService.instance.fetchCategory(ByName: child, system: true, userID: userID, complition: { (childCategories) in
-                                            if childCategories.count == 0 {
-                                                CoreDataService.instance.saveCategory(name: child.replacingOccurrences(of: "_", with: "  "), color:  #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: parent, user: user, complition: { (category) in
-                                                    if index == value.data.count - 1 && indexChild == childArray.count - 1{
-                                                        complition(true)
-                                                    }
-                                                })
-                                            } else {
-                                                if index == value.data.count - 1 && indexChild == childArray.count - 1{
-                                                    complition(true)
-                                                }
-                                            }
-                                        })
-                                       
-                                    }
-                                }
-                            }
-                        }
-                    })
-                    
-                    index += 1
-                }
-                
-            case .failure(let error):
-                HUD.flash(.labeledError(title: "Error", subtitle: error.localizedDescription), delay: 3.0)
-                complition(false)
-            }
-        })
-    }
-    
-    func fetchSETransactions(providerSecret: String, account: Account, complition: @escaping (_ completed: Bool)->()){
-        guard let userID = user?.id else {
-            complition(false)
-            return
-        }
-        HUD.show(.labeledProgress(title: "Fetching Transactions", subtitle: nil))
-        let params = SETransactionParams(accountId: account.se_id)
-//        SERequestManager.shared.getAllTransactions(for: providerSecret) { [weak self] response in
-        SERequestManager.shared.getAllTransactions(for: providerSecret, params: params) { [weak self] response in
-            switch response {
-            case .success(let value):
-                for (index, item) in value.data.enumerated() {
-                    CoreDataService.instance.fetchTransactions(account: account, se_id: item.id, complition: { (transactions) in
-                        if transactions.count == 0 {
-                            CoreDataService.instance.fetchCategory(ByName: item.category, system: true, userID: userID, complition: { (categories) in
-                                if categories.count == 0 {
-                                    self?.fetchCategories(complition: { (success) in
-                                        if success {
-                                            CoreDataService.instance.fetchCategory(ByName: item.category, system: true, userID: userID, complition: { (categories) in
-                                                if categories.count == 0 {
-                                                    CoreDataService.instance.fetchCategory(ByName: Constants.CATEGORY_UNCATEGORIZED, system: true, userID: userID, complition: { (uncategorizedCategories) in
-                                                        for category in uncategorizedCategories {
-                                                            CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
-                                                                if index == value.data.count - 1 {
-                                                                    complition(true)
-                                                                }
-                                                            })
-                                                        }
-                                                    })
-                                                } else {
-                                                    for (categoryIndex, category) in categories.enumerated() {
-                                                        CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
-                                                            if index == value.data.count - 1 && categoryIndex == categories.count - 1 {
-                                                                complition(true)
-                                                            }
-                                                        })
-                                                    }
-                                                }
-                                            })
-                                        }
-                                    })
-                                } else {
-                                    for (categoryIndex, category) in categories.enumerated() {
-                                        CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
-                                            if index == value.data.count - 1 && categoryIndex == categories.count - 1 {
-                                                complition(true)
-                                            }
-                                        })
-                                    }
-                                }
-                            })
-                        }
-                    })
-                }
-                HUD.hide(animated: true)
-            case .failure(let error):
-                complition(false)
-                HUD.flash(.labeledError(title: "Error", subtitle: error.localizedDescription), delay: 3.0)
-            }
-        }
-    }
-    
-    func fetchRegisteredProviders(id: String, secret: String, complition: @escaping (_ completed: Bool)->()){
-        guard let customer = self.customer, let customerID = self.customer?.id else {
-            complition(false)
-            return
-        }
-                CoreDataService.instance.fetchSEProvider(ById: id, customerID: customerID) { (providers) in
-                    if providers.count == 0 {
-                        SERequestManager.shared.getLogin(with: secret) { (response) in
-                            switch response {
-                            case .success(let value):
-                                CoreDataService.instance.saveSEProvider(name: value.data.providerName, id: id, secret: secret, customer: customer, complition: { (provider) in
-                                    if let provider = provider {
-                                        self.fetchSEAccounts(provider: provider, complition: { success in
-                                            if success {
-                                                complition(true)
-                                            } else {
-                                                complition(false)
-                                            }
-                                        })
-                                    }
-                                })
-                            case .failure(let error):
-                                HUD.flash(.labeledError(title: "Error", subtitle: error.localizedDescription), delay: 3.0)
-                                complition(false)
-                            }
-                        }
-                    } else {
-                        for (index, item) in providers.enumerated() {
-                            if item.secret != secret || item.disabled {
-                                if item.secret != secret {
-                                    item.secret = secret
-                                }
-                                if item.disabled {
-                                    item.disabled = false
-                                }
-                                CoreDataService.instance.update(complition: { (success) in
-                                    if success {
-                                        fetchSEAccounts(provider: item, complition: { success in
-                                            if index == providers.count - 1 {
-                                                complition(success)
-                                            }
-                                        })
-                                    }
-                                })
-                            } else {
-                                fetchSEAccounts(provider: item, complition: { success in
-                                    if index == providers.count - 1 {
-                                        complition(success)
-                                    }
-                                })
-                            }
-                        }
-                    }
-                }
-    }
 }
 
 extension ConnectToSaltEdgeVC: SEWebViewDelegate {
@@ -374,29 +111,37 @@ extension ConnectToSaltEdgeVC: SEWebViewDelegate {
         switch response.stage {
         case .success:
             print("Fetched successfully")
+            if let secret = response.secret, let id = response.loginId {
+                guard let customer = self.customer else {
+                    HUD.flash(.labeledError(title: "Can`t fetch data", subtitle: nil), delay: 3.0)
+                    return
+                }
+                if !secret.isEmpty && !id.isEmpty {
+                    SaltEdgeHelper.instance.initialFetchData(Provider: id, ProviderSecret: secret, customer: customer) { (success) in
+                        if success {
+                            HUD.flash(.labeledSuccess(title: "Finished loading data", subtitle: ""))
+                        } else {
+                            HUD.flash(.labeledError(title: "Data loaded with errors", subtitle: ""))
+                        }
+                    }
+                }
+            }
 //            let mainVC = MainVC()
 //            mainVC.modalPresentationStyle = .custom
 //            presentDetail(mainVC)
-            if !self.secret.isEmpty && !self.loginID.isEmpty {
-                fetchRegisteredProviders(id: self.loginID, secret: self.secret, complition: { success in
-                    if success {
-                        DispatchQueue.main.async {
-                            HUD.flash(.labeledSuccess(title: "Finished loading data", subtitle: ""), delay: 2.0)
-                        }
-                    } else {
-                         DispatchQueue.main.async {
-                            HUD.flash(.labeledError(title: "Data loaded with errors", subtitle: ""), delay: 2.0)
-                        }
-                    }
-                })
-            }
         case .fetching:
-            if let secret = response.secret, let id = response.loginId {
-                self.secret = secret
-                self.loginID = id
-            }
+            print("Fetching data")
+//            if let secret = response.secret, let id = response.loginId {
+//                guard let customer = self.customer else {
+//                    HUD.flash(.labeledError(title: "Can`t fetch data", subtitle: nil), delay: 3.0)
+//                    return
+//                }
+//                if !secret.isEmpty && !id.isEmpty {
+//                    SaltEdgeHelper.instance.fetchSEProvider(id: id, secret: secret, customer: customer) { (success) in}
+//                }
+//            }
         case .error:
-            HUD.flash(.labeledError(title: "Cannot Fetch Login", subtitle: nil), delay: 3.0)
+            HUD.flash(.labeledError(title: "Can`t fetch login", subtitle: nil), delay: 3.0)
         }
     }
     

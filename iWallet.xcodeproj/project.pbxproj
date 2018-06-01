@@ -61,7 +61,6 @@
 		9A77003F20B860C5000209D4 /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77003E20B860C5000209D4 /* LoginHelper.swift */; };
 		9A77004220B87B3E000209D4 /* ConnectToSaltEdgeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77004020B87B3E000209D4 /* ConnectToSaltEdgeVC.swift */; };
 		9A77004320B87B3E000209D4 /* ConnectToSaltEdgeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A77004120B87B3E000209D4 /* ConnectToSaltEdgeVC.xib */; };
-		9A796E6A20B9A6FF0025FD2C /* SaltEdgeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A796E6920B9A6FF0025FD2C /* SaltEdgeService.swift */; };
 		9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */; };
 		9A8044B5208E057F0048D82B /* SelectPlaceBySearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */; };
 		9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8044B6208F32FB0048D82B /* WalletCell.swift */; };
@@ -103,6 +102,7 @@
 		9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0E2063E02500ADA34E /* MainVC.swift */; };
 		9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B112063E18800ADA34E /* GradientView.swift */; };
 		9ABE1A2520C07DB7004DC5A7 /* SettingsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE1A2420C07DB7004DC5A7 /* SettingsProtocol.swift */; };
+		9ABE1A2720C1354F004DC5A7 /* SaltEdgeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE1A2620C1354F004DC5A7 /* SaltEdgeHelper.swift */; };
 		9ABEB6BC206E25AE00F817BD /* SelectCurrencyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */; };
 		9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DB2077583C00AFB3BE /* ExchangeService.swift */; };
 		9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */; };
@@ -177,7 +177,6 @@
 		9A77003E20B860C5000209D4 /* LoginHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
 		9A77004020B87B3E000209D4 /* ConnectToSaltEdgeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectToSaltEdgeVC.swift; sourceTree = "<group>"; };
 		9A77004120B87B3E000209D4 /* ConnectToSaltEdgeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectToSaltEdgeVC.xib; sourceTree = "<group>"; };
-		9A796E6920B9A6FF0025FD2C /* SaltEdgeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaltEdgeService.swift; sourceTree = "<group>"; };
 		9A8044B2208E057F0048D82B /* SelectPlaceBySearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlaceBySearchVC.swift; sourceTree = "<group>"; };
 		9A8044B3208E057F0048D82B /* SelectPlaceBySearchVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPlaceBySearchVC.xib; sourceTree = "<group>"; };
 		9A8044B6208F32FB0048D82B /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
@@ -224,6 +223,7 @@
 		9ABA9B0E2063E02500ADA34E /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9ABA9B112063E18800ADA34E /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		9ABE1A2420C07DB7004DC5A7 /* SettingsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProtocol.swift; sourceTree = "<group>"; };
+		9ABE1A2620C1354F004DC5A7 /* SaltEdgeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaltEdgeHelper.swift; sourceTree = "<group>"; };
 		9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectCurrencyVC.xib; sourceTree = "<group>"; };
 		9AD795DB2077583C00AFB3BE /* ExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeService.swift; sourceTree = "<group>"; };
 		9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitDataHelper.swift; sourceTree = "<group>"; };
@@ -298,6 +298,7 @@
 				9A4A531A20878D9400E90EEA /* ImageHelper.swift */,
 				9A59A49B20A434C700B35E70 /* Detail.swift */,
 				9A77003E20B860C5000209D4 /* LoginHelper.swift */,
+				9ABE1A2620C1354F004DC5A7 /* SaltEdgeHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -309,7 +310,6 @@
 				9A9D2D4E2066A47600CC7DE0 /* EncodeDecodeService.swift */,
 				9AD795DB2077583C00AFB3BE /* ExchangeService.swift */,
 				9AF34A012089E9E9005A94C7 /* FourSquareService.swift */,
-				9A796E6920B9A6FF0025FD2C /* SaltEdgeService.swift */,
 			);
 			path = Srevices;
 			sourceTree = "<group>";
@@ -520,6 +520,11 @@
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -678,7 +683,6 @@
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
 				9A305B3A20B43ACC00DD79FF /* LineChartVC.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
-				9A796E6A20B9A6FF0025FD2C /* SaltEdgeService.swift in Sources */,
 				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
 				9A59A49C20A434C700B35E70 /* Detail.swift in Sources */,
 				9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */,
@@ -696,6 +700,7 @@
 				9A77004220B87B3E000209D4 /* ConnectToSaltEdgeVC.swift in Sources */,
 				9AABAD7920716AC4001AA162 /* ColorsConfig.swift in Sources */,
 				9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */,
+				9ABE1A2720C1354F004DC5A7 /* SaltEdgeHelper.swift in Sources */,
 				9A4A53212087A95800E90EEA /* PhotoProtocol.swift in Sources */,
 				9AF34A022089E9E9005A94C7 /* FourSquareService.swift in Sources */,
 				9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */,

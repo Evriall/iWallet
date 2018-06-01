@@ -1239,6 +1239,39 @@ class CoreDataService{
     
     //SaltEdge
     
+    func fetchSETransactionMaxID(account: Account, complition: (String?)->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        
+        let keypathExp = NSExpression(forKeyPath: "se_id") // can be any column
+        let expression = NSExpression(forFunction: "max:", arguments: [keypathExp])
+        
+        let maxDesc = NSExpressionDescription()
+        maxDesc.expression = expression
+        maxDesc.name = "max"
+        maxDesc.expressionResultType = .doubleAttributeType
+        fetchRequest.returnsObjectsAsFaults = false
+        fetchRequest.propertiesToFetch = [maxDesc]
+        fetchRequest.resultType = .dictionaryResultType
+        let predicate = NSPredicate(format: "account == %@", account)
+        fetchRequest.predicate = predicate
+        do{
+            if let resultArray = try managedContext.fetch(fetchRequest) as? [NSDictionary] {
+                if resultArray.count > 0 {
+                    for item in resultArray {
+                        if let max = item["max"] as? Int {
+                            complition("\(max)")
+                        }
+                    }
+                } else {
+                    complition(nil)
+                }
+            }
+        } catch {
+            debugPrint("Could not evaluate income \(error.localizedDescription)")
+        }
+    }
+    
     
     func fetchSECustomer(ByUserObjectID id: String, complition: (_ complete: SECustomer)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}

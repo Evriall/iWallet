@@ -67,6 +67,7 @@ class SlideVC: UIViewController {
     
     
     @IBAction func LogoutBtnPressed(_ sender: Any) {
+        LoginHelper.instance.currentUser = nil
         let loginVC = LoginVC()
         loginVC.modalPresentationStyle = .custom
         presentSecondaryDetail(presentedViewController: self, viewControllerToPresent: loginVC)

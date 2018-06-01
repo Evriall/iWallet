@@ -60,8 +60,6 @@ class LoginVC: UIViewController {
                 }
             }
         }
-        
-        
     }
     
     func showMainVC(){
