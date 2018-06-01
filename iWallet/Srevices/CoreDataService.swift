@@ -100,15 +100,19 @@ class CoreDataService{
         }
     }
     
-    func fetchCategory(ByObjectID id: String, userID: String, complition: (_ complete: Category)-> ()) {
+    func fetchCategory(ByObjectID id: String, userID: String, complition: (_ complete: Category?)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
         let predicate = NSPredicate(format: "id == %@ AND user.id == %@", id, userID)
         fetchRequest.predicate = predicate
         do{
             let categories = try managedContext.fetch(fetchRequest) as! [Category]
-            for item in categories {
-                complition(item)
+            if categories.count > 0 {
+                for item in categories {
+                    complition(item)
+                }
+            } else {
+                complition(nil)
             }
         } catch {
             debugPrint("Could not fetch categories\(error.localizedDescription)")

@@ -664,32 +664,44 @@
                                     <constraint firstAttribute="height" constant="31" id="ZPK-Vn-DzA"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmd-jE-ZXK">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmd-jE-ZXK" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
                                 <rect key="frame" x="16" y="124" width="288" height="45"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
-                                <state key="normal" title="Fetch account from financial provider">
+                                <state key="normal" title="Add accounts from financial provider">
                                     <color key="titleColor" red="0.34509803921568627" green="0.34901960784313724" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="fetchAccountBtnPressed:" destination="9D4-aZ-8ZY" eventType="touchUpInside" id="7F8-T8-aw1"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EIL-Mp-v2Z" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
+                                <rect key="frame" x="16" y="177" width="288" height="40"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
+                                <state key="normal" title="Update accounts" image="UpdateIcon">
+                                    <color key="titleColor" red="0.34509803919999998" green="0.34901960780000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="updateAccountsBtnPressed:" destination="9D4-aZ-8ZY" eventType="touchUpInside" id="paB-Qe-kPz"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Uve-VB-9Ku">
+                                <rect key="frame" x="0.0" y="303" width="320" height="177"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Removing provider will remove it`s accounts and disable updating on server." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2KU-4H-OUt">
-                                <rect key="frame" x="16" y="177" width="288" height="70"/>
+                                <rect key="frame" x="16" y="225" width="288" height="70"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Uve-VB-9Ku">
-                                <rect key="frame" x="0.0" y="255" width="320" height="225"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bza-uI-3vJ" firstAttribute="trailing" secondItem="Uve-VB-9Ku" secondAttribute="trailing" id="4Pi-i0-4m5"/>
+                            <constraint firstItem="2KU-4H-OUt" firstAttribute="top" secondItem="EIL-Mp-v2Z" secondAttribute="bottom" constant="8" id="7fH-ee-UE2"/>
                             <constraint firstItem="hmd-jE-ZXK" firstAttribute="leading" secondItem="bza-uI-3vJ" secondAttribute="leading" constant="16" id="8ez-AU-FT6"/>
                             <constraint firstItem="Uve-VB-9Ku" firstAttribute="leading" secondItem="bza-uI-3vJ" secondAttribute="leading" id="EBJ-pw-Nau"/>
+                            <constraint firstItem="EIL-Mp-v2Z" firstAttribute="leading" secondItem="bza-uI-3vJ" secondAttribute="leading" constant="16" id="EJm-qg-cK3"/>
                             <constraint firstItem="Uve-VB-9Ku" firstAttribute="top" secondItem="2KU-4H-OUt" secondAttribute="bottom" constant="8" id="FCS-sE-sNv"/>
                             <constraint firstItem="bza-uI-3vJ" firstAttribute="trailing" secondItem="hmd-jE-ZXK" secondAttribute="trailing" constant="16" id="Hdu-qf-snh"/>
                             <constraint firstItem="2KU-4H-OUt" firstAttribute="leading" secondItem="bza-uI-3vJ" secondAttribute="leading" constant="16" id="LRi-MH-MdS"/>
@@ -699,10 +711,11 @@
                             <constraint firstItem="hmd-jE-ZXK" firstAttribute="top" secondItem="Xm6-P1-emE" secondAttribute="bottom" constant="8" id="aHL-Kg-OUj"/>
                             <constraint firstItem="bza-uI-3vJ" firstAttribute="trailing" secondItem="2KU-4H-OUt" secondAttribute="trailing" constant="16" id="c9i-tx-Ffp"/>
                             <constraint firstItem="Xm6-P1-emE" firstAttribute="leading" secondItem="bza-uI-3vJ" secondAttribute="leading" constant="16" id="d7E-YS-CeT"/>
-                            <constraint firstItem="2KU-4H-OUt" firstAttribute="top" secondItem="hmd-jE-ZXK" secondAttribute="bottom" constant="8" id="pVA-Ir-D88"/>
+                            <constraint firstItem="EIL-Mp-v2Z" firstAttribute="top" secondItem="hmd-jE-ZXK" secondAttribute="bottom" constant="8" id="hkb-Bn-WPi"/>
                             <constraint firstItem="h6P-6k-QPa" firstAttribute="top" secondItem="as8-G6-0AK" secondAttribute="top" id="tD9-tA-yNj"/>
                             <constraint firstItem="h6P-6k-QPa" firstAttribute="trailing" secondItem="bza-uI-3vJ" secondAttribute="trailing" id="u5L-WE-S5M"/>
                             <constraint firstItem="h6P-6k-QPa" firstAttribute="leading" secondItem="bza-uI-3vJ" secondAttribute="leading" id="uTK-bA-WLp"/>
+                            <constraint firstItem="bza-uI-3vJ" firstAttribute="trailing" secondItem="EIL-Mp-v2Z" secondAttribute="trailing" constant="16" id="urC-Gl-fh0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bza-uI-3vJ"/>
                     </view>
@@ -712,6 +725,7 @@
                         <outlet property="infoLbl" destination="2KU-4H-OUt" id="7Zf-qB-OGl"/>
                         <outlet property="menuBtn" destination="MxA-5B-eJP" id="16e-la-oGC"/>
                         <outlet property="tableView" destination="Uve-VB-9Ku" id="1wG-Tj-2jA"/>
+                        <outlet property="updateAccountBtn" destination="EIL-Mp-v2Z" id="Vqs-r8-tIB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uzC-JX-jvn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1581,6 +1595,7 @@
         <image name="ReportIcon" width="80" height="100"/>
         <image name="SettingsIcon" width="40" height="40"/>
         <image name="TagIconLight" width="86" height="86"/>
+        <image name="UpdateIcon" width="40" height="40"/>
         <image name="WalletInscription" width="3037" height="617"/>
         <image name="addChannelButton" width="22" height="22"/>
         <image name="burger" width="40" height="40"/>

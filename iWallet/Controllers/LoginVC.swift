@@ -54,7 +54,17 @@ class LoginVC: UIViewController {
                 })
             } else {
                 for user in users {
-                    LoginHelper.instance.currentUser = user.id
+                    guard let userID = user.id else {
+                        HUD.flash(.labeledError(title: "Can`t get userID", subtitle: nil), delay: 3.0)
+                        return
+                    }
+                    LoginHelper.instance.currentUser = userID
+                    CoreDataService.instance.fetchAccounts(userID: userID, complition: { (accounts) in
+                        for item in accounts {
+                            AccountHelper.instance.currentAccount = item.id
+                            break
+                        }
+                    })
                     showMainVC()
                     break
                 }

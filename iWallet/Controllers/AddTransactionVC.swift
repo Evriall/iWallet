@@ -367,11 +367,15 @@ class AddTransactionVC: UIViewController {
                     setWithoutCategory(userID: currentUser)
                 } else {
                     CoreDataService.instance.fetchCategory(ByObjectID: currentCategory, userID: currentUser) { (categoryFetched) in
-                        if categoryFetched.systemName == Constants.CATEGORY_TRANSFER {
-                            setWithoutCategory(userID: currentUser)
+                        if let categoryFetched = categoryFetched {
+                            if categoryFetched.systemName == Constants.CATEGORY_TRANSFER {
+                                setWithoutCategory(userID: currentUser)
+                            } else {
+                                self.category = categoryFetched
+                                handleCategory(categoryFetched)
+                            }
                         } else {
-                            self.category = categoryFetched
-                            handleCategory(categoryFetched)
+                            setWithoutCategory(userID: currentUser)
                         }
                     }
                 }

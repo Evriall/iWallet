@@ -18,6 +18,7 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var infoLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var fetchAccountBtn: UIButton!
+    @IBOutlet weak var updateAccountBtn: ButtonWithRightImage!
     
     var providers = [SEProvider]()
     
@@ -32,6 +33,7 @@ class SettingsVC: UIViewController {
         tableView.register(UINib(nibName: "TypeAndCurrencyCell", bundle: nil), forCellReuseIdentifier: "TypeAndCurrencyCell")
         tableView.tableFooterView = UIView()
         fetchAccountBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        updateAccountBtn.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,14 +55,19 @@ class SettingsVC: UIViewController {
         CoreDataService.instance.fetchSEProviders(ByUserID: currentUser) { (providers) in
             self.providers = providers
             if providers.count > 0 {
+                updateAccountBtn.isHidden = false
                 infoLbl.isHidden = false
                 tableView.isHidden = false
             } else {
+                updateAccountBtn.isHidden = true
                 infoLbl.isHidden = true
                 tableView.isHidden = true
             }
             self.tableView.reloadData()
         }
+    }
+    @IBAction func updateAccountsBtnPressed(_ sender: Any) {
+        SaltEdgeHelper.instance.fetchData()
     }
     
 }
