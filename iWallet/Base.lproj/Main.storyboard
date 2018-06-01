@@ -674,9 +674,10 @@
                                     <action selector="fetchAccountBtnPressed:" destination="9D4-aZ-8ZY" eventType="touchUpInside" id="7F8-T8-aw1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EIL-Mp-v2Z" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EIL-Mp-v2Z" customClass="ButtonWithRightImage" customModule="iWallet" customModuleProvider="target">
                                 <rect key="frame" x="16" y="177" width="288" height="40"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Update accounts" image="UpdateIcon">
                                     <color key="titleColor" red="0.34509803919999998" green="0.34901960780000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>

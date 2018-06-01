@@ -18,7 +18,7 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var infoLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var fetchAccountBtn: UIButton!
-    @IBOutlet weak var updateAccountBtn: ButtonWithRightImage!
+    @IBOutlet weak var updateAccountBtn: UIButton!
     
     var providers = [SEProvider]()
     
