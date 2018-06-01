@@ -102,6 +102,7 @@
 		9ABA9B0D2063E01000ADA34E /* SlideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0C2063E01000ADA34E /* SlideVC.swift */; };
 		9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B0E2063E02500ADA34E /* MainVC.swift */; };
 		9ABA9B122063E18800ADA34E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA9B112063E18800ADA34E /* GradientView.swift */; };
+		9ABE1A2520C07DB7004DC5A7 /* SettingsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE1A2420C07DB7004DC5A7 /* SettingsProtocol.swift */; };
 		9ABEB6BC206E25AE00F817BD /* SelectCurrencyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */; };
 		9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DB2077583C00AFB3BE /* ExchangeService.swift */; };
 		9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */; };
@@ -222,6 +223,7 @@
 		9ABA9B0C2063E01000ADA34E /* SlideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideVC.swift; sourceTree = "<group>"; };
 		9ABA9B0E2063E02500ADA34E /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9ABA9B112063E18800ADA34E /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		9ABE1A2420C07DB7004DC5A7 /* SettingsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProtocol.swift; sourceTree = "<group>"; };
 		9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectCurrencyVC.xib; sourceTree = "<group>"; };
 		9AD795DB2077583C00AFB3BE /* ExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeService.swift; sourceTree = "<group>"; };
 		9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitDataHelper.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */,
 				9A4A53202087A95800E90EEA /* PhotoProtocol.swift */,
 				9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */,
+				9ABE1A2420C07DB7004DC5A7 /* SettingsProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
 				9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */,
 				9A73000F2073C4FF002F84F6 /* BriefProtocol.swift in Sources */,
+				9ABE1A2520C07DB7004DC5A7 /* SettingsProtocol.swift in Sources */,
 				9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */,
 				9A36663C2099F1D8005F6F4D /* SearchVC.swift in Sources */,
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,

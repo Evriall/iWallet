@@ -102,7 +102,8 @@ class SearchVC: UIViewController {
         accounts = []
         dates = []
         transactions = []
-        CoreDataService.instance.fetchTransactions(ByTag: tag) { (transactions) in
+        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        CoreDataService.instance.fetchTransactions(ByTag: tag, userID: currentUser) { (transactions) in
             var currentCurrencySymbol = ""
             var currentAccount = ""
             var currentDate = ""

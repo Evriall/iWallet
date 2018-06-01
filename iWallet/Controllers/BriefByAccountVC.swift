@@ -15,6 +15,7 @@ class BriefByAccountVC: UIViewController {
     @IBOutlet weak var menuBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var monthLbl: UILabel!
+    
     var account: Account?
     var date = Date()
     private var currentCalendar: Calendar?
@@ -111,6 +112,14 @@ class BriefByAccountVC: UIViewController {
         }
         tableView.reloadData()
     }
+    
+    @IBAction func editBtnPressed(_ sender: Any) {
+        let addAccountVC = AddAccountVC()
+        addAccountVC.modalPresentationStyle = .custom
+        addAccountVC.account = self.account
+        presentDetail(addAccountVC)
+    }
+    
 }
 
 extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {

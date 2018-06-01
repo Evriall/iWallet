@@ -8,12 +8,18 @@
 
 import UIKit
 
+
 class AddAccountVC: UIViewController {
     
     @IBOutlet weak var typeAccountBtn: ButtonWithRightImage!
     @IBOutlet weak var nameAccountTxt: UITextField!
     @IBOutlet weak var currencyAccountBtn: ButtonWithRightImage!
     @IBOutlet weak var saveAccountBtn: UIButton!
+    @IBOutlet weak var backBtn: UIButton!
+    
+    
+    var account: Account?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUIElements()
@@ -22,11 +28,20 @@ class AddAccountVC: UIViewController {
         dismissDetail()
     }
     func setUIElements(){
-        saveAccountBtn.isEnabled = false
         nameAccountTxt.delegate = self
         nameAccountTxt.addTarget(self, action: #selector(AddAccountVC.textFieldDidChange), for: UIControlEvents.editingChanged)
-        typeAccountBtn.setTitle(AccountType.Cash.rawValue, for: .normal)
-        currencyAccountBtn.setTitle(AccountHelper.instance.getLocaleCarrencySymbolAndCode().code, for: .normal)
+        if let account = self.account {
+            saveAccountBtn.isEnabled = true
+            nameAccountTxt.text = account.name
+            typeAccountBtn.setTitle(account.type, for: .normal)
+            currencyAccountBtn.setTitle(account.currency, for: .normal)
+            backBtn.setImage(UIImage(named: "CloseRoundedDarkIcon"), for: .normal)
+        }else {
+            saveAccountBtn.isEnabled = false
+            typeAccountBtn.setTitle(AccountType.Cash.rawValue, for: .normal)
+            currencyAccountBtn.setTitle(AccountHelper.instance.getLocaleCarrencySymbolAndCode().code, for: .normal)
+            return
+        }
     }
     @objc func textFieldDidChange(){
         guard let text = nameAccountTxt.text else {return}
@@ -42,12 +57,6 @@ class AddAccountVC: UIViewController {
         selectAccountCurrencyVC .delegate = self
         selectAccountCurrencyVC .modalPresentationStyle = .custom
         presentDetail(selectAccountCurrencyVC )
-    }
-    
-    @IBAction func fetchAccountsBtnPressed(_ sender: Any) {
-        let connectToSaltEdgeVC = ConnectToSaltEdgeVC()
-        connectToSaltEdgeVC.modalPresentationStyle = .custom
-        presentDetail(connectToSaltEdgeVC)
     }
     
     @IBAction func typeAccountBtnPressed(_ sender: Any) {
@@ -70,6 +79,8 @@ class AddAccountVC: UIViewController {
             }
         }
     }
+
+    
 }
 
 extension AddAccountVC: UITextFieldDelegate, AccountProtocol {

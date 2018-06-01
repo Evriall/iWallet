@@ -57,7 +57,10 @@ class PlaceDetailsVC: UIViewController {
         accounts = []
         dates = []
         transactions = []
-        CoreDataService.instance.fetchTransactions(latitude: latitude, longitude: longitude, date: date){ (transactions) in
+        guard let currentUser = LoginHelper.instance.currentUser else {
+            return
+        }
+        CoreDataService.instance.fetchTransactions(latitude: latitude, longitude: longitude, date: date, userID: currentUser){ (transactions) in
             var currentCurrencySymbol = ""
             var currentAccount = ""
             var currentDate = ""

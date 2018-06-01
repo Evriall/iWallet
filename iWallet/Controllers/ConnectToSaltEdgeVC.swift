@@ -30,6 +30,8 @@ class ConnectToSaltEdgeVC: UIViewController {
     private var loginID: String = ""
     private var user: User?
     
+    var delegate: SettingsProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.stateDelegate = self
@@ -43,13 +45,12 @@ class ConnectToSaltEdgeVC: UIViewController {
         }
     }
     @IBAction func closeBtnPressed(_ sender: Any) {
+        delegate?.update()
         dismissDetail()
     }
     
     func requestToken() {
-        HUD.show(.labeledProgress(title: "Requesting Token", subtitle: nil))
-            // Set javascriptCallbackType to "iframe" to receive callback with login_id and login_secret
-            // see https://docs.saltedge.com/guides/connect
+            HUD.show(.labeledProgress(title: "Requesting Token", subtitle: nil))
             let tokenParams = SECreateTokenParams(fetchScopes: ["accounts", "transactions"], returnTo: "http://httpbin.org", javascriptCallbackType: "iframe")
             // Check if SERequestManager will call handleTokenResponse
             SERequestManager.shared.createToken(params: tokenParams) { [weak self] response in
@@ -70,21 +71,10 @@ class ConnectToSaltEdgeVC: UIViewController {
             HUD.flash(.labeledError(title: "Error", subtitle: error.localizedDescription), delay: 3.0)
         }
     }
-    
-    func showAlert(){
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: "There are no internet connection", message: "Can`t connect to server", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
-                self.dismissDetail()
-            }))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
+   
     @IBAction func continueBtnPressed(_ sender: Any) {
         if !NetworkReachabilityManager()!.isReachable {
-            self.showAlert()
+            HUD.flash(.labeledError(title: "Error", subtitle: "There are no internet connections"), delay: 3.0)
             return
         }
         infoLbl.isHidden = true
@@ -125,6 +115,7 @@ class ConnectToSaltEdgeVC: UIViewController {
             switch response {
             case .success(let value):
                 var number = 1
+                var status = true
                 for (index, item) in value.data.enumerated() {
                     CoreDataService.instance.fetchAccount(bySE_ID: item.id, seProviderID: providerID, userID: userID, complition: { (accounts) in
                         if accounts.count == 0 {
@@ -145,7 +136,6 @@ class ConnectToSaltEdgeVC: UIViewController {
                             }
                                 CoreDataService.instance.saveSEAccount(name: accountName, type: AccountType.DebitCard.rawValue, currency: item.currencyCode, external: false, seID: item.id, seProvider: provider, user: user, complition: { (account) in
                                     if let account = account {
-                                        var status = true
                                         self?.fetchSETransactions(providerSecret: secret, account: account, complition: { success in
                                             if !success {
                                                 status = false
@@ -161,6 +151,17 @@ class ConnectToSaltEdgeVC: UIViewController {
                                     }
                                 })
                         } else {
+                            for account in accounts {
+                                var status = true
+                                self?.fetchSETransactions(providerSecret: secret, account: account, complition: { success in
+                                    if !success {
+                                        status = false
+                                    }
+                                    if index == value.data.count - 1 {
+                                        complition(status)
+                                    }
+                                })
+                            }
                             if index == value.data.count - 1 {
                                 complition(true)
                             }
@@ -255,49 +256,52 @@ class ConnectToSaltEdgeVC: UIViewController {
         }
         HUD.show(.labeledProgress(title: "Fetching Transactions", subtitle: nil))
         let params = SETransactionParams(accountId: account.se_id)
-        SERequestManager.shared.getAllTransactions(for: providerSecret) { [weak self] response in
-//        SERequestManager.shared.getAllTransactions(for: providerSecret, params: params) { [weak self] response in
+//        SERequestManager.shared.getAllTransactions(for: providerSecret) { [weak self] response in
+        SERequestManager.shared.getAllTransactions(for: providerSecret, params: params) { [weak self] response in
             switch response {
             case .success(let value):
                 for (index, item) in value.data.enumerated() {
-                    CoreDataService.instance.fetchCategory(ByName: item.category, system: true, userID: userID, complition: { (categories) in
-                        if categories.count == 0 {
-                            self?.fetchCategories(complition: { (success) in
-                                if success {
-                                    CoreDataService.instance.fetchCategory(ByName: item.category, system: true, userID: userID, complition: { (categories) in
-                                        if categories.count == 0 {
-                                            CoreDataService.instance.fetchCategory(ByName: Constants.CATEGORY_UNCATEGORIZED, system: true, userID: userID, complition: { (uncategorizedCategories) in
-                                                for category in uncategorizedCategories {
-                                                    CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, complition: { (transaction) in
-                                                        if index == value.data.count - 1 {
-                                                            complition(true)
+                    CoreDataService.instance.fetchTransactions(account: account, se_id: item.id, complition: { (transactions) in
+                        if transactions.count == 0 {
+                            CoreDataService.instance.fetchCategory(ByName: item.category, system: true, userID: userID, complition: { (categories) in
+                                if categories.count == 0 {
+                                    self?.fetchCategories(complition: { (success) in
+                                        if success {
+                                            CoreDataService.instance.fetchCategory(ByName: item.category, system: true, userID: userID, complition: { (categories) in
+                                                if categories.count == 0 {
+                                                    CoreDataService.instance.fetchCategory(ByName: Constants.CATEGORY_UNCATEGORIZED, system: true, userID: userID, complition: { (uncategorizedCategories) in
+                                                        for category in uncategorizedCategories {
+                                                            CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
+                                                                if index == value.data.count - 1 {
+                                                                    complition(true)
+                                                                }
+                                                            })
                                                         }
                                                     })
+                                                } else {
+                                                    for (categoryIndex, category) in categories.enumerated() {
+                                                        CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
+                                                            if index == value.data.count - 1 && categoryIndex == categories.count - 1 {
+                                                                complition(true)
+                                                            }
+                                                        })
+                                                    }
                                                 }
                                             })
-                                        } else {
-                                            for (categoryIndex, category) in categories.enumerated() {
-                                                CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, complition: { (transaction) in
-                                                    if index == value.data.count - 1 && categoryIndex == categories.count - 1 {
-                                                        complition(true)
-                                                    }
-                                                })
-                                            }
                                         }
                                     })
+                                } else {
+                                    for (categoryIndex, category) in categories.enumerated() {
+                                        CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
+                                            if index == value.data.count - 1 && categoryIndex == categories.count - 1 {
+                                                complition(true)
+                                            }
+                                        })
+                                    }
                                 }
                             })
-                        } else {
-                            for (categoryIndex, category) in categories.enumerated() {
-                             CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, complition: { (transaction) in
-                                if index == value.data.count - 1 && categoryIndex == categories.count - 1 {
-                                    complition(true)
-                                }
-                             })
-                            }
                         }
                     })
-                   
                 }
                 HUD.hide(animated: true)
             case .failure(let error):
@@ -335,8 +339,13 @@ class ConnectToSaltEdgeVC: UIViewController {
                         }
                     } else {
                         for (index, item) in providers.enumerated() {
-                            if item.secret != secret {
-                                item.secret = secret
+                            if item.secret != secret || item.disabled {
+                                if item.secret != secret {
+                                    item.secret = secret
+                                }
+                                if item.disabled {
+                                    item.disabled = false
+                                }
                                 CoreDataService.instance.update(complition: { (success) in
                                     if success {
                                         fetchSEAccounts(provider: item, complition: { success in
@@ -385,7 +394,6 @@ extension ConnectToSaltEdgeVC: SEWebViewDelegate {
             if let secret = response.secret, let id = response.loginId {
                 self.secret = secret
                 self.loginID = id
-//                closeBtn.isEnabled = false
             }
         case .error:
             HUD.flash(.labeledError(title: "Cannot Fetch Login", subtitle: nil), delay: 3.0)
