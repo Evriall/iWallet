@@ -30,13 +30,17 @@ struct Constants {
     static let URL_FOURSQUARE =  "https://api.foursquare.com/v2/venues/search?"
     static let URL_IWALLET = "saltedge-api-swift-demo://home.local"
     static let URL_SE_CREATE_CUSTOMER = "https://www.saltedge.com/api/v4/customers/"
+    static let URL_LOGIN = "http://localhost:3000"
+    
     //API keys
     static let API_KEY_CURRENCY_EXCHANGE_RATE = "a759f6dbbd30585e787b0e8c3ff662ef"
     static let API_CLIENT_ID_FOURSQUARE = "TZJQGNH0UMMAPQZIBM0JEDHRL42SK41AV3YI5CBWJAZMYUSE"
     static let API_CLIENT_SECRET_FOURSQUARE = "ACV3PKE5CEFPYQSXJ0J2YCDZLFTSQXOY1WSEIOYDBT24ZQ3A"
     
-     static let APP_ID_SALTEDGE = ""
-    static let APP_SECRET_SALTEDGE = ""
+    static let APP_ID_SALTEDGE = "TzeLyx6kdapRJKcmJ0dkXOi5oCbMP4u-E0yiqejD0MQ"
+    static let APP_SECRET_SALTEDGE = "yKf-qcQxaZWKf8RJ5BrYjn5IHJLrBPZJtLRxTIDXmsQ"
+    
+    static let APP_LOGIN_SECRET  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMTgwNzdiZDZjNzA3MGExM2VjNGE4MyIsImlhdCI6MTUyODM3NDUzMCwiZXhwIjoxNTI4NDYwOTMwfQ.nNOJ7yAhTJ3Pjm37aZsKgY5NRsVG48Q3_dFQVCF5dH8"
     
     //Size
     static let  REGION_SIZE_FOURSQUARE = 1000
@@ -68,6 +72,11 @@ struct Constants {
         "App-id" : APP_ID_SALTEDGE,
         "Secret" : APP_SECRET_SALTEDGE
         
+    ]
+    
+    static let HEADER_REGISTER = [
+        "Content-Type" : "application/json; charset = utf-8",
+        "secret" : APP_LOGIN_SECRET
     ]
     
     

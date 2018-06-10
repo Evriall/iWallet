@@ -11,7 +11,7 @@ import SaltEdge
 import PKHUD
 
 class LoginVC: UIViewController {
-    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var emailTxt: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
     
     @IBOutlet weak var signUpBtn: UIButton!
@@ -20,13 +20,13 @@ class LoginVC: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(LoginVC.handleTap))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        email.delegate = self
+        emailTxt.delegate = self
         passwordTxt.delegate = self
         signUpBtn.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        email.text = ""
+        emailTxt.text = ""
         passwordTxt.text = ""
     }
     
@@ -38,36 +38,58 @@ class LoginVC: UIViewController {
         dismissDetail()
     }
     @IBAction func LoginBtnPressed(_ sender: Any) {
-        guard let email = email.text else {return}
-        CoreDataService.instance.fetchUser(ByEmail: email) { (users) in
-            if users.count == 0 {
-                CoreDataService.instance.saveUser(name: "Test", email: email, complition: { (user) in
-                    guard let user = user else {return}
-                    LoginHelper.instance.currentUser = user.id
-                    InitDataHelper.instance.checkInitData(complition: { (success) in
-                        if success {
-                            self.showMainVC()
-                        } else {
-                            HUD.flash(.labeledError(title: "Error", subtitle: "Can`t initialize data"), delay: 3.0)
-                        }
-                    })
-                })
+        guard let email = emailTxt.text, let password = passwordTxt.text else {return}
+        HUD.show(.labeledProgress(title: "Login", subtitle: nil))
+        LoginService.instance.getLoginToken(email: email, password: password) { (auth, message, token) in
+            if !auth {
+                HUD.hide(animated: true)
+                self.showAlert(message: message)
+                return
             } else {
-                for user in users {
-                    guard let userID = user.id else {
-                        HUD.flash(.labeledError(title: "Can`t get userID", subtitle: nil), delay: 3.0)
-                        return
+                LoginService.instance.loginIn(token: token, complition: { (auth, message, id, name, email) in
+                    if !auth {
+                        HUD.hide(animated: true)
+                        self.showAlert(message: message)
+                    } else {
+                        CoreDataService.instance.fetchUser(ByObjectID: id, complition: { (user) in
+                            if user == nil {
+                                CoreDataService.instance.saveUser(id: id, name: name, email: email, complition: { (user) in
+                                        guard let user = user else {return}
+                                        LoginHelper.instance.currentUser = user.id
+                                        InitDataHelper.instance.checkInitData(complition: { (success) in
+                                            if success {
+                                                HUD.hide(animated: true)
+                                                self.showMainVC()
+                                            } else {
+                                                HUD.hide(animated: true)
+                                                self.showAlert(message: "Can`t initialize data")
+                                            }
+                                        })
+                                })
+                            } else {
+                                guard let userID = user?.id else {
+                                    HUD.hide(animated: true)
+                                    self.showAlert(message: "Can`t get userID")
+                                    return
+                                }
+                                if user?.name != name || user?.email != email {
+                                    user?.name = name
+                                    user?.email = email
+                                    CoreDataService.instance.update(complition: { (success) in})
+                                }
+                                LoginHelper.instance.currentUser = userID
+                                CoreDataService.instance.fetchAccounts(userID: userID, complition: { (accounts) in
+                                    for item in accounts {
+                                        AccountHelper.instance.currentAccount = item.id
+                                        break
+                                    }
+                                })
+                                HUD.hide(animated: true)
+                                self.showMainVC()
+                            }
+                        })
                     }
-                    LoginHelper.instance.currentUser = userID
-                    CoreDataService.instance.fetchAccounts(userID: userID, complition: { (accounts) in
-                        for item in accounts {
-                            AccountHelper.instance.currentAccount = item.id
-                            break
-                        }
-                    })
-                    showMainVC()
-                    break
-                }
+                })
             }
         }
     }
@@ -82,6 +104,19 @@ class LoginVC: UIViewController {
         let signUpVC = SignUpVC()
         signUpVC.modalPresentationStyle = .custom
         presentDetail(signUpVC)
+    }
+    
+    func showAlert(message: String){
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Login error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in}))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    @IBAction func resetBtnPressed(_ sender: Any) {
+        let resetPasswordVC = ResetPasswordVC()
+        resetPasswordVC.modalPresentationStyle = .custom
+        presentDetail(resetPasswordVC)
     }
     
 }

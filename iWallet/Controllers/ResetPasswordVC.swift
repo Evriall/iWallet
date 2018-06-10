@@ -1,46 +1,45 @@
 //
-//  SignUpVC.swift
+//  RessetPasswordVC.swift
 //  iWallet
 //
-//  Created by Sergey Guznin on 5/25/18.
+//  Created by Sergey Guznin on 6/10/18.
 //  Copyright © 2018 Sergey Guznin. All rights reserved.
 //
 
 import UIKit
 import PKHUD
 
-class SignUpVC: UIViewController {
-
-    @IBOutlet weak var usernameTxt: UITextField!
+class ResetPasswordVC: UIViewController {
+    
     @IBOutlet weak var emailTxt: UITextField!
-    @IBOutlet weak var passwordTxt: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(SignUpVC.handleTap))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        usernameTxt.delegate = self
-        emailTxt.delegate = self
-        passwordTxt.delegate = self
+        //        emailTxt.delegate = self
     }
     
     @objc func handleTap(){
         self.view.endEditing(true)
     }
     
-    @IBAction func createBtnPressed(_ sender: Any) {
-        guard let name = usernameTxt.text, let email = emailTxt.text, let password = passwordTxt.text else {return}
-        HUD.show(.labeledProgress(title: "Creating account", subtitle: nil))
-        LoginService.instance.register(name: name, email: email, password: password) { (auth, message) in
+    @IBAction func resetBtnPressed(_ sender: Any) {
+        guard let email = emailTxt.text else {return}
+        HUD.show(.labeledProgress(title: "Reseting password", subtitle: nil))
+        LoginService.instance.resetPassword(email: email) { (auth, message) in
             HUD.hide(animated: true)
             self.showAlert(auth: auth, message: message)
         }
     }
+    @IBAction func closeBtnPressed(_ sender: Any) {
+        dismissDetail()
+    }
     
     func showAlert(auth: Bool, message: String){
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: auth ? "Created successfully" : "Create error", message: message, preferredStyle: .alert)
+            let alert = UIAlertController(title: auth ? "Reset" : "Reset error", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
                 if auth == true {
                     self.dismissDetail()
@@ -49,13 +48,9 @@ class SignUpVC: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
-    @IBAction func closeBtnPressed(_ sender: Any) {
-        dismissDetail()
-    }
 }
 
-extension SignUpVC: UITextFieldDelegate {
+extension ResetPasswordVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true

@@ -1197,12 +1197,12 @@ class CoreDataService{
     
   //User
     
-    func saveUser(name: String, email: String, complition: (_ finished: User?) ->()){
+    func saveUser(id: String, name: String, email: String, complition: (_ finished: User?) ->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let user = User(context: managedContext)
         user.name = name
         user.email = email
-        user.id = user.objectID.uriRepresentation().absoluteString
+        user.id = id
         do{
             try managedContext.save()
             complition(user)
@@ -1231,9 +1231,13 @@ class CoreDataService{
         let predicate = NSPredicate(format: "id == %@", id)
         fetchRequest.predicate = predicate
         do{
-            let seCustomers = try managedContext.fetch(fetchRequest) as! [User]
-            for item in seCustomers {
-                complition(item)
+            let users = try managedContext.fetch(fetchRequest) as! [User]
+            if users.count == 0 {
+                complition(nil)
+            } else {
+                for item in users {
+                    complition(item)
+                }
             }
         } catch {
             debugPrint("Could not fetch User \(error.localizedDescription)")

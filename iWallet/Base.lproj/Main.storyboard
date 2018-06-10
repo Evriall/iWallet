@@ -57,8 +57,24 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vz6-hT-pn5">
+                                        <rect key="frame" x="64" y="452" width="192" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="mb0-GC-pu1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                        <state key="normal" title="Reset password?">
+                                            <color key="titleColor" red="1" green="0.83137254900000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="resetBtnPressed:" destination="cS5-bZ-Plx" eventType="touchUpInside" id="BcP-P3-uok"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lrt-Ry-ydP">
-                                        <rect key="frame" x="64" y="440" width="192" height="32"/>
+                                        <rect key="frame" x="64" y="424" width="192" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="ygg-O3-kFG"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                                         <state key="normal" title="Don`t have an account? Sign up here">
                                             <color key="titleColor" red="1" green="0.83137254900000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -68,7 +84,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQM-RF-T1L" customClass="ButtonWithRoundedCorner" customModule="iWallet" customModuleProvider="target">
-                                        <rect key="frame" x="64" y="387" width="192" height="45"/>
+                                        <rect key="frame" x="64" y="371" width="192" height="45"/>
                                         <color key="backgroundColor" red="1" green="0.83137254900000002" blue="0.023529411760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
                                         <state key="normal" title="Login">
@@ -81,13 +97,16 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Lrt-Ry-ydP" secondAttribute="bottom" constant="8" id="4bG-RP-EeX"/>
                                     <constraint firstItem="hQM-RF-T1L" firstAttribute="width" secondItem="wAT-AY-GVx" secondAttribute="width" id="5JD-nR-USd"/>
                                     <constraint firstItem="Lrt-Ry-ydP" firstAttribute="width" secondItem="hQM-RF-T1L" secondAttribute="width" id="8fZ-58-lWn"/>
                                     <constraint firstItem="Hr7-BI-ynR" firstAttribute="leading" secondItem="CDC-9h-Ke4" secondAttribute="leading" constant="8" id="CyN-0x-oXK"/>
+                                    <constraint firstItem="Vz6-hT-pn5" firstAttribute="width" secondItem="Lrt-Ry-ydP" secondAttribute="width" id="ETl-sI-qSu"/>
+                                    <constraint firstItem="Vz6-hT-pn5" firstAttribute="top" secondItem="Lrt-Ry-ydP" secondAttribute="bottom" id="RHl-WM-Zd6"/>
                                     <constraint firstItem="wAT-AY-GVx" firstAttribute="centerX" secondItem="CDC-9h-Ke4" secondAttribute="centerX" id="SvH-mt-vEV"/>
                                     <constraint firstItem="Lrt-Ry-ydP" firstAttribute="top" secondItem="hQM-RF-T1L" secondAttribute="bottom" constant="8" id="ZQ6-Fp-Ten"/>
+                                    <constraint firstItem="Vz6-hT-pn5" firstAttribute="centerX" secondItem="CDC-9h-Ke4" secondAttribute="centerX" id="bZl-gd-ziB"/>
                                     <constraint firstAttribute="trailing" secondItem="Tli-rd-7Yq" secondAttribute="trailing" constant="64" id="c7B-q0-NTR"/>
+                                    <constraint firstAttribute="bottom" secondItem="Vz6-hT-pn5" secondAttribute="bottom" id="g1n-sD-KxM"/>
                                     <constraint firstItem="wAT-AY-GVx" firstAttribute="top" secondItem="Tli-rd-7Yq" secondAttribute="bottom" constant="72" id="gBL-ja-If8"/>
                                     <constraint firstItem="Tli-rd-7Yq" firstAttribute="top" secondItem="CDC-9h-Ke4" secondAttribute="top" constant="78" id="myC-io-zgF"/>
                                     <constraint firstItem="Lrt-Ry-ydP" firstAttribute="centerX" secondItem="CDC-9h-Ke4" secondAttribute="centerX" id="oaL-1h-quF"/>
@@ -116,7 +135,7 @@
                         <viewLayoutGuide key="safeArea" id="CDH-je-LVL"/>
                     </view>
                     <connections>
-                        <outlet property="email" destination="c3n-IS-Nb3" id="oRp-vL-8Le"/>
+                        <outlet property="emailTxt" destination="c3n-IS-Nb3" id="oRp-vL-8Le"/>
                         <outlet property="passwordTxt" destination="2Pa-FR-aLO" id="mVj-iY-1Gp"/>
                         <outlet property="signUpBtn" destination="Lrt-Ry-ydP" id="xxa-uE-e8X"/>
                     </connections>
