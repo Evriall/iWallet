@@ -19,7 +19,7 @@ class AddAccountVC: UIViewController {
     
     
     var account: Account?
-    
+    var delegate: SettingsProtocol?
     override func viewDidLoad() {
         super.viewDidLoad()
         setUIElements()
@@ -72,9 +72,25 @@ class AddAccountVC: UIViewController {
         guard let currentUser = LoginHelper.instance.currentUser else {return}
         CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
             guard let user = user else {return}
-            CoreDataService.instance.saveAccount(name: name, type: type, currency: currency, user: user) { (success) in
-                if success {
-                    self.dismissDetail()
+            if let account = self.account {
+                if account.name != name || account.type != type || account.currency != currency {
+                    account.name = name
+                    account.type = type
+                    account.currency = currency
+                    account.lastUpdate = Date()
+                    CoreDataService.instance.update(complition: { (success) in
+                        if success {
+                            self.delegate?.update()
+                            self.dismissDetail()
+                        }
+                    })
+                }
+            } else {
+                CoreDataService.instance.saveAccount(name: name, systemName: name, type: type, currency: currency, user: user, lastUpdate: Date()) { (success) in
+                    if success {
+                        self.delegate?.update()
+                        self.dismissDetail()
+                    }
                 }
             }
         }

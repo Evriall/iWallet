@@ -36,10 +36,6 @@ class BriefByAccountVC: UIViewController {
         setUpElements()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        fetchTransactions()
-    }
-    
     func setUpElements(){
         guard let currentAccountObjectID = AccountHelper.instance.currentAccount, let currentUser = LoginHelper.instance.currentUser else {return}
         menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
@@ -50,6 +46,7 @@ class BriefByAccountVC: UIViewController {
         tableView?.register(UINib(nibName: "TransactionCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
         self.tableView.sectionHeaderHeight = 32
         CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID, userID: currentUser) { (account) in
+            guard let account = account else {return}
             self.account = account
             titleLbl.text = account.name
         }
@@ -116,6 +113,7 @@ class BriefByAccountVC: UIViewController {
     @IBAction func editBtnPressed(_ sender: Any) {
         let addAccountVC = AddAccountVC()
         addAccountVC.modalPresentationStyle = .custom
+        addAccountVC.delegate = self
         addAccountVC.account = self.account
         presentDetail(addAccountVC)
     }
@@ -141,6 +139,7 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let transactionVC = AddTransactionVC()
+        transactionVC.delegate = self
         transactionVC.transaction = transactions[indexPath.section][indexPath.row]
         presentDetail(transactionVC)
     }
@@ -189,8 +188,12 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension BriefByAccountVC: BriefProtocol {
+extension BriefByAccountVC: BriefProtocol, SettingsProtocol {
     func handleTransaction(date: Date) {
+        fetchTransactions()
+    }
+    func update() {
+        titleLbl.text = self.account?.name
         fetchTransactions()
     }
 }

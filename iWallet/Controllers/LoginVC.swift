@@ -23,6 +23,21 @@ class LoginVC: UIViewController {
         emailTxt.delegate = self
         passwordTxt.delegate = self
         signUpBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+//        CoreDataService.instance.fetchSEProviders { (providers) in
+//            for item in providers {
+//                print(item.id, item.name, item.secustomer?.id, item.secustomer?.user?.id)
+//            }
+//        }
+//        CoreDataService.instance.fetchSECustomer { (customers) in
+//            for item in customers {
+//                print(item.id, item.user?.id, item.user?.name)
+//            }
+//        }
+//        CoreDataService.instance.fetchAllCategories { (categories) in
+//            for item in categories {
+//                print(item.id, item.name, item.systemName, item.user?.id)
+//            }
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,41 +66,46 @@ class LoginVC: UIViewController {
                         HUD.hide(animated: true)
                         self.showAlert(message: message)
                     } else {
-                        CoreDataService.instance.fetchUser(ByObjectID: id, complition: { (user) in
-                            if user == nil {
+                        CoreDataService.instance.fetchUser(ByObjectID: id, complition: { (fetchedUser) in
+                            if fetchedUser == nil {
                                 CoreDataService.instance.saveUser(id: id, name: name, email: email, complition: { (user) in
                                         guard let user = user else {return}
                                         LoginHelper.instance.currentUser = user.id
-                                        InitDataHelper.instance.checkInitData(complition: { (success) in
-                                            if success {
-                                                HUD.hide(animated: true)
-                                                self.showMainVC()
-                                            } else {
-                                                HUD.hide(animated: true)
-                                                self.showAlert(message: "Can`t initialize data")
-                                            }
-                                        })
+                                    UpdateService.instance.fetchData(user: user, complition: { (success) in
+                                        if success {
+                                            HUD.hide(animated: true)
+                                            self.showMainVC()
+                                        } else {
+                                            HUD.hide(animated: true)
+                                            self.showAlert(message: "Can`t initialize data")
+                                        }
+                                    })
                                 })
                             } else {
-                                guard let userID = user?.id else {
+                                guard let user = fetchedUser, let userID = fetchedUser?.id else {
                                     HUD.hide(animated: true)
                                     self.showAlert(message: "Can`t get userID")
                                     return
                                 }
-                                if user?.name != name || user?.email != email {
-                                    user?.name = name
-                                    user?.email = email
+                                if user.name != name || user.email != email {
+                                    user.name = name
+                                    user.email = email
                                     CoreDataService.instance.update(complition: { (success) in})
                                 }
                                 LoginHelper.instance.currentUser = userID
-                                CoreDataService.instance.fetchAccounts(userID: userID, complition: { (accounts) in
-                                    for item in accounts {
-                                        AccountHelper.instance.currentAccount = item.id
-                                        break
-                                    }
-                                })
                                 HUD.hide(animated: true)
-                                self.showMainVC()
+                                HUD.show(.labeledProgress(title: "Fetching data", subtitle: nil))
+                                UpdateService.instance.fetchData(user: user, complition: { (success) in
+                                    CoreDataService.instance.fetchAccounts(userID: userID, complition: { (accounts) in
+                                        for item in accounts {
+                                            AccountHelper.instance.currentAccount = item.id
+                                            HUD.hide(animated: true)
+                                            self.showMainVC()
+                                            break
+                                        }
+                                    })
+                                })
+                                
                             }
                         })
                     }

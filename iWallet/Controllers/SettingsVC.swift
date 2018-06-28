@@ -67,7 +67,7 @@ class SettingsVC: UIViewController {
         }
     }
     @IBAction func updateAccountsBtnPressed(_ sender: Any) {
-        SaltEdgeHelper.instance.fetchData()
+        SaltEdgeHelper.instance.fetchData { (success) in}
     }
     
 }

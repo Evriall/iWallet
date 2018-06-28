@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17F77" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="class">
         <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="external" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="se_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="systemName" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,6 +16,7 @@
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="systemName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" syncable="YES"/>
@@ -43,12 +45,14 @@
     </entity>
     <entity name="SECustomer" representedClassName="SECustomer" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="seprovider" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SEProvider" inverseName="secustomer" inverseEntity="SEProvider" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="se_customer" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="SEProvider" representedClassName="SEProvider" syncable="YES" codeGenerationType="class">
         <attribute name="disabled" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="secret" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Account" inverseName="se_provider" inverseEntity="Account" syncable="YES"/>
@@ -63,6 +67,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="se_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="transactions" inverseEntity="Account" syncable="YES"/>
@@ -75,21 +80,23 @@
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastFetch" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpload" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Account" inverseName="user" inverseEntity="Account" syncable="YES"/>
         <relationship name="category" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="user" inverseEntity="Category" syncable="YES"/>
         <relationship name="se_customer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SECustomer" inverseName="user" inverseEntity="SECustomer" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-18" positionY="108" width="128" height="195"/>
-        <element name="Category" positionX="-54" positionY="-9" width="128" height="150"/>
+        <element name="Account" positionX="-18" positionY="108" width="128" height="210"/>
+        <element name="Category" positionX="-54" positionY="-9" width="128" height="165"/>
         <element name="CurrencyRate" positionX="-45" positionY="108" width="128" height="105"/>
         <element name="Photo" positionX="-27" positionY="99" width="128" height="90"/>
         <element name="Place" positionX="-45" positionY="117" width="128" height="150"/>
-        <element name="SECustomer" positionX="-45" positionY="117" width="128" height="90"/>
-        <element name="SEProvider" positionX="-36" positionY="126" width="128" height="135"/>
+        <element name="SECustomer" positionX="-45" positionY="117" width="128" height="105"/>
+        <element name="SEProvider" positionX="-36" positionY="126" width="128" height="150"/>
         <element name="Tag" positionX="-36" positionY="81" width="128" height="75"/>
-        <element name="Transaction" positionX="-45" positionY="27" width="128" height="225"/>
-        <element name="User" positionX="-27" positionY="144" width="128" height="135"/>
+        <element name="Transaction" positionX="-45" positionY="27" width="128" height="240"/>
+        <element name="User" positionX="-27" positionY="144" width="128" height="165"/>
     </elements>
 </model>

@@ -57,6 +57,7 @@ class AddCategoryVC: UIViewController {
                 category.name = text
                 category.color = EncodeDecodeService.instance.fromUIColorToStr(color: categoryImg.backgroundColor)
                 category.parent = categoryParent
+                category.lastUpdate = Date()
                 CoreDataService.instance.update(complition: { (success) in
                     if success {
                       dismissDetail()
@@ -65,7 +66,7 @@ class AddCategoryVC: UIViewController {
             } else {
                 CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
                     guard let user = user else {return}
-                    CoreDataService.instance.saveCategory(name: text, color: categoryImg.backgroundColor, parent: categoryParent, user: user) { (category) in
+                    CoreDataService.instance.saveCategory(name: text, color: categoryImg.backgroundColor, parent: categoryParent, user: user, lastUpdate: Date()) { (category) in
                         if category != nil {
                             dismissDetail()
                         }

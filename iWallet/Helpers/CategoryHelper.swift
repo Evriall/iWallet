@@ -29,6 +29,18 @@ class CategoryHelper {
     }
     private var categoryChildrenShown = [String: Bool]()
     
+    
+    func printCategories(){
+        for item in initParentCategories {
+            print(item.0, ":", EncodeDecodeService.instance.fromUIColorToStr(color: item.1), ":", item.2)
+        }
+        print("children")
+        for item in initChildrenCategories {
+            print(item.0, ":", EncodeDecodeService.instance.fromUIColorToStr(color: item.1), ":", item.2)
+        }
+
+    }
+    
     private let initParentCategories: Array<(String, UIColor, String?)> =
         [
          (name: "cost_of_goods", color: #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1), parent: nil),

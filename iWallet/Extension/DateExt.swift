@@ -107,4 +107,11 @@ extension Date {
         dateFormatter.dateFormat = "yyyyMMdd"
         return dateFormatter.string(from: self)
     }
+    
+    func updateServerStr() -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd'T'HH:mm:ss.SSS'Z'"
+        return dateFormatter.string(from: self)
+    }
+    
 }

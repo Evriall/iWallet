@@ -45,6 +45,7 @@ class LineChartVC: UIViewController {
         
         if let currentAccountObjectID = AccountHelper.instance.currentAccount, let currentUser = LoginHelper.instance.currentUser {
             CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID, userID: currentUser) { (account) in
+                guard let account = account else {return}
                 self.currency = account.currency ?? "USD"
                 currencyBtn.setTitle(self.currency, for: .normal)
             }

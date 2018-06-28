@@ -8,6 +8,8 @@
 
 import Foundation
 import SaltEdge
+import Alamofire
+import SwiftyJSON
 
 class SaltEdgeHelper {
     static let instance = SaltEdgeHelper()
@@ -24,7 +26,7 @@ class SaltEdgeHelper {
                 SERequestManager.shared.getLogin(with: secret) { (response) in
                     switch response {
                     case .success(let value):
-                        CoreDataService.instance.saveSEProvider(name: value.data.providerName, id: id, secret: secret, customer: customer, complition: { (provider) in})
+                        CoreDataService.instance.saveSEProvider(name: value.data.providerName, id: id, secret: secret, customer: customer, lastUpdate: Date(), complition: { (provider) in})
                     case .failure(let error):
                         debugPrint(error.localizedDescription)
                         complition(false)
@@ -34,16 +36,22 @@ class SaltEdgeHelper {
         }
     }
     
-    func fetchData(){
+    func fetchData(complition: @escaping (_ completed: Bool)->()){
         guard let currentUser = LoginHelper.instance.currentUser else {return}
         CoreDataService.instance.fetchSEProviders(ByUserID: currentUser) { (providers) in
-            if providers.count > 0 {
+            if providers.count == 0 {
+                complition(true)
+            } else {
                 guard let customerSecret = providers[0].secustomer?.id else {return}
                 SERequestManager.shared.set(appId: Constants.APP_ID_SALTEDGE, appSecret: Constants.APP_SECRET_SALTEDGE)
                 SERequestManager.shared.set(customerSecret: customerSecret)
-            }
-            for (index, item) in providers.enumerated() {
-                fetchSEAccounts(provider: item, complition: { success in })
+                for (index, item) in providers.enumerated() {
+                    fetchSEAccounts(provider: item, complition: { success in
+                        if index == providers.count - 1 {
+                            complition(success)
+                        }
+                    })
+                }
             }
         }
     }
@@ -59,7 +67,7 @@ class SaltEdgeHelper {
                 SERequestManager.shared.getLogin(with: secret) { (response) in
                     switch response {
                     case .success(let value):
-                        CoreDataService.instance.saveSEProvider(name: value.data.providerName, id: id, secret: secret, customer: customer, complition: { (provider) in
+                        CoreDataService.instance.saveSEProvider(name: value.data.providerName, id: id, secret: secret, customer: customer, lastUpdate: Date(), complition: { (provider) in
                             if let provider = provider {
                                 self.fetchSEAccounts(provider: provider, complition: { success in
                                     if success {
@@ -115,7 +123,7 @@ class SaltEdgeHelper {
                                 accountName += " \(number)"
                                 number += 1
                             }
-                            CoreDataService.instance.saveSEAccount(name: accountName, type: AccountType.DebitCard.rawValue, currency: item.currencyCode, external: false, seID: item.id, seProvider: provider, user: user, complition: { (account) in
+                            CoreDataService.instance.saveSEAccount(name: accountName, systemName: accountName, type: AccountType.DebitCard.rawValue, currency: item.currencyCode, external: false, seID: item.id, seProvider: provider, user: user, lastUpdate: Date(), complition: { (account) in
                                 if let account = account {
                                     self?.fetchSETransactions(providerSecret: secret, account: account, complition: { success in
                                         if !success {
@@ -165,71 +173,87 @@ class SaltEdgeHelper {
             complition(false)
             return
         }
-        SERequestManager.shared.getCategories(completion: { (responseCategories) in
-            switch responseCategories {
-            case .success(let value):
-                var index = 0
-                for (key, childArray) in value.data {
-                    let key  = self.categoryReplacement[key] ?? key
-                    CoreDataService.instance.fetchCategoryParent(ByName: key, system: true, userID: userID, complition: { (categories) in
-                        if categories.count == 0 {
-                            CoreDataService.instance.saveCategory(name: key.replacingOccurrences(of: "_", with: "  "), color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: nil,systemName: key, user: user, complition: { (parent) in
-                                if parent != nil {
-                                    if childArray.count == 0 {
-                                        if index == value.data.count - 1 {
-                                            complition(true)
-                                        }
-                                    } else {
-                                        for (indexChild, child) in childArray.enumerated() {
-                                            CoreDataService.instance.saveCategory(name: child.replacingOccurrences(of: "_", with: "  "), color:  #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: parent, user: user, complition: { (category) in
-                                                if index == value.data.count - 1 && indexChild == childArray.count - 1{
-                                                    complition(true)
-                                                }
-                                            })
-                                        }
-                                    }
-                                } else {
-                                    if index == value.data.count - 1 {
-                                        complition(true)
-                                    }
-                                }
-                            })
-                        } else {
-                            for parent in categories {
-                                if childArray.count == 0 {
-                                    if index == value.data.count - 1 {
-                                        complition(true)
-                                    }
-                                } else {
-                                    for (indexChild, child) in childArray.enumerated() {
-                                        CoreDataService.instance.fetchCategory(ByName: child, system: true, userID: userID, complition: { (childCategories) in
-                                            if childCategories.count == 0 {
-                                                CoreDataService.instance.saveCategory(name: child.replacingOccurrences(of: "_", with: "  "), color:  #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: parent, user: user, complition: { (category) in
-                                                    if index == value.data.count - 1 && indexChild == childArray.count - 1{
+        Alamofire.request(Constants.URL_SE_GET_CATEGORY, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: Constants.HEADER_SE).responseJSON { (response) in
+            if response.result.error == nil {
+                guard let data = response.data else {return}
+                let json = JSON(data)
+                if let jsonData = json["data"].dictionary{
+                    var dataCount = 0
+                    for jsonCategoryTypes in jsonData {
+                        var categoryTypeCount = 0
+                        if let categoryType  = jsonCategoryTypes.value.dictionary {
+                            for (key, jsonChildArray) in categoryType {
+                                let parentCategory  = self.categoryReplacement[key] ?? key
+                                let childArray = jsonChildArray.array ?? []
+                                CoreDataService.instance.fetchCategoryParent(ByName: parentCategory, system: true, userID: userID, complition: { (categories) in
+                                    if categories.count == 0 {
+                                        CoreDataService.instance.saveCategory(name: parentCategory.replacingOccurrences(of: "_", with: "  "), color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: nil,systemName: parentCategory, user: user, complition: { (parent) in
+                                            if parent != nil {
+                                                if childArray.count == 0 {
+                                                    if dataCount == jsonData.count - 1 && categoryTypeCount == categoryType.count - 1{
                                                         complition(true)
                                                     }
-                                                })
+                                                } else {
+                                                    for (indexChild, jsonChild) in childArray.enumerated() {
+                                                        if let child = jsonChild.string {
+                                                            CoreDataService.instance.saveCategory(name: child.replacingOccurrences(of: "_", with: "  "), color:  #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: parent, systemName: child, user: user, complition: { (category) in
+                                                                if dataCount == jsonData.count - 1 && categoryTypeCount == categoryType.count - 1 && indexChild == childArray.count - 1{
+                                                                    complition(true)
+                                                                }
+                                                            })
+                                                        } else {
+                                                            if dataCount == jsonData.count - 1 && categoryTypeCount == categoryType.count - 1{
+                                                                complition(true)
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             } else {
-                                                if index == value.data.count - 1 && indexChild == childArray.count - 1{
+                                                if dataCount == jsonData.count - 1 && categoryTypeCount == categoryType.count - 1{
                                                     complition(true)
                                                 }
                                             }
                                         })
-                                        
+                                    } else {
+                                        for parent in categories {
+                                            if childArray.count == 0 {
+                                                if dataCount == jsonData.count - 1 && categoryTypeCount == categoryType.count - 1{
+                                                    complition(true)
+                                                }
+                                            } else {
+                                                for (indexChild, jsonChild) in childArray.enumerated() {
+                                                    if let child = jsonChild.string {
+                                                        CoreDataService.instance.fetchCategory(ByName: child, system: true, userID: userID, complition: { (childCategories) in
+                                                            if childCategories.count == 0 {
+                                                                CoreDataService.instance.saveCategory(name: child.replacingOccurrences(of: "_", with: "  "), color:  #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), parent: parent, systemName: child, user: user, complition: { (category) in
+                                                                    if dataCount == jsonData.count - 1 && categoryTypeCount == categoryType.count - 1 && indexChild == childArray.count - 1{
+                                                                        complition(true)
+                                                                    }
+                                                                })
+                                                            } else {
+                                                                if dataCount == jsonData.count - 1 && categoryTypeCount == categoryType.count - 1{
+                                                                    complition(true)
+                                                                }
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
-                                }
+                                })
                             }
                         }
-                    })
-                    
-                    index += 1
+                      dataCount += 1
+                    }
+                } else {
+                    complition(false)
                 }
-                
-            case .failure(let error):
-                debugPrint(error.localizedDescription)
+            } else {
+                debugPrint(response.result.error as Any)
                 complition(false)
             }
-        })
+        }
     }
     
     func fetchSETransactions(providerSecret: String, account: Account, fromTransactionID: String? = nil, complition: @escaping (_ completed: Bool)->()){
@@ -237,8 +261,8 @@ class SaltEdgeHelper {
             complition(false)
             return
         }
+        let params = fromTransactionID == nil ? SETransactionParams(accountId: account.se_id) : SETransactionParams(accountId: account.se_id, fromId: fromTransactionID)
         
-        let params = SETransactionParams(accountId: account.se_id, fromId: fromTransactionID)
 //        SERequestManager.shared.getAllTransactions(for: providerSecret) { [weak self] response in
         SERequestManager.shared.getAllTransactions(for: providerSecret, params: params) { [weak self] response in
             switch response {
@@ -254,7 +278,7 @@ class SaltEdgeHelper {
                                                 if categories.count == 0 {
                                                     CoreDataService.instance.fetchCategory(ByName: Constants.CATEGORY_UNCATEGORIZED, system: true, userID: userID, complition: { (uncategorizedCategories) in
                                                         for category in uncategorizedCategories {
-                                                            CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
+                                                            CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, lastUpdate: Date(), complition: { (transaction) in
                                                                 if index == value.data.count - 1 {
                                                                     complition(true)
                                                                 }
@@ -263,7 +287,7 @@ class SaltEdgeHelper {
                                                     })
                                                 } else {
                                                     for (categoryIndex, category) in categories.enumerated() {
-                                                        CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
+                                                        CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, lastUpdate: Date(), complition: { (transaction) in
                                                             if index == value.data.count - 1 && categoryIndex == categories.count - 1 {
                                                                 complition(true)
                                                             }
@@ -271,11 +295,15 @@ class SaltEdgeHelper {
                                                     }
                                                 }
                                             })
+                                        } else{
+                                            if index == value.data.count - 1 {
+                                                complition(true)
+                                            }
                                         }
                                     })
                                 } else {
                                     for (categoryIndex, category) in categories.enumerated() {
-                                        CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, complition: { (transaction) in
+                                        CoreDataService.instance.saveTransaction(amount: fabs(item.amount.roundTo(places: 2)), desc: item.description, type: item.amount > 0 ? TransactionType.income.rawValue : TransactionType.costs.rawValue, date: item.createdAt, place: nil, account: account, category: category, transfer: nil, se_id: item.id, lastUpdate: Date(), complition: { (transaction) in
                                             if index == value.data.count - 1 && categoryIndex == categories.count - 1 {
                                                 complition(true)
                                             }

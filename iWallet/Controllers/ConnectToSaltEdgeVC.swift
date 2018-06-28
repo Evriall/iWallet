@@ -90,14 +90,15 @@ class ConnectToSaltEdgeVC: UIViewController {
                     SERequestManager.shared.createCustomer(with: params) { response in
                         switch response {
                         case .success(let value):
-                            CoreDataService.instance.saveSECustomer(id: value.data.secret, user: user, complition: { (customer) in
+                            CoreDataService.instance.saveSECustomer(id: value.data.secret, user: user, lastUpdate:  Date(), complition: { (customer) in
                                 if let customer = customer {
                                     self.customer = customer
                                     SERequestManager.shared.set(customerSecret: value.data.secret)
                                     self.requestToken()
                                 }
                             })
-                        case .failure(let error): print(error)
+                        case .failure(let error):
+                            HUD.flash(.labeledError(title: "Error", subtitle: error.localizedDescription), delay: 3.0)
                         }
                     }
                 }
@@ -126,20 +127,8 @@ extension ConnectToSaltEdgeVC: SEWebViewDelegate {
                     }
                 }
             }
-//            let mainVC = MainVC()
-//            mainVC.modalPresentationStyle = .custom
-//            presentDetail(mainVC)
         case .fetching:
             print("Fetching data")
-//            if let secret = response.secret, let id = response.loginId {
-//                guard let customer = self.customer else {
-//                    HUD.flash(.labeledError(title: "Can`t fetch data", subtitle: nil), delay: 3.0)
-//                    return
-//                }
-//                if !secret.isEmpty && !id.isEmpty {
-//                    SaltEdgeHelper.instance.fetchSEProvider(id: id, secret: secret, customer: customer) { (success) in}
-//                }
-//            }
         case .error:
             HUD.flash(.labeledError(title: "Can`t fetch login", subtitle: nil), delay: 3.0)
         }

@@ -14,6 +14,7 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var usernameTxt: UITextField!
     @IBOutlet weak var emailTxt: UITextField!
     @IBOutlet weak var passwordTxt: UITextField!
+    @IBOutlet weak var createBtn: ButtonWithRoundedCorner!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,7 @@ class SignUpVC: UIViewController {
         usernameTxt.delegate = self
         emailTxt.delegate = self
         passwordTxt.delegate = self
+        createBtn.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     @objc func handleTap(){

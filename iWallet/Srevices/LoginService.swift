@@ -25,7 +25,7 @@ class LoginService {
         if password.count < 8 {
             return complition(false, "Password have to include 8 or more symbols")
         }
-        let parameters = ["name" : name, "email" : email, "password" : password]
+        let parameters = ["name" : name, "email" : email, "password" : password, "currency": Locale.current.currencyCode ?? "USD"]
 
         Alamofire.request("\(Constants.URL_LOGIN)/api/auth/register", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: Constants.HEADER_REGISTER).responseJSON { (response) in
             if response.result.error == nil {

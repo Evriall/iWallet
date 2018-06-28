@@ -9,10 +9,15 @@
 import UIKit
 import CVCalendar
 
-struct CoinCategory {
+class CoinCategory {
     var name = ""
     var amount = 0.0
     var color = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    init(name: String, amount: Double, color: UIColor) {
+        self.name = name
+        self.amount = amount
+        self.color = color
+    }
 }
 class MainVC: UIViewController {
 
@@ -121,7 +126,7 @@ class MainVC: UIViewController {
         parentCategoryCollectionView?.register(UINib(nibName: "CoinCell", bundle: nil), forCellWithReuseIdentifier: "CoinCell")
         parentCategoryCollectionView?.showsVerticalScrollIndicator = false
         parentCategoryCollectionView?.showsHorizontalScrollIndicator = false
-        parentCategoryCollectionView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        parentCategoryCollectionView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         childCategoryCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: Double(self.coinView.frame.width), height: childCategoryHeight), collectionViewLayout: layoutCCV)
         childCategoryCollectionView?.delegate = self
@@ -165,7 +170,7 @@ class MainVC: UIViewController {
             widthParent += getDimensionParentCategoryCell(index: index) + 8
             index += 1
         }
-        widthParent -= 8
+//        widthParent -= 8
         if let selectedParent = selectedParentCategory {
                 widthChild += Double(childCategories[selectedParent].count) * (childCategoryHeight + 8)
                 widthChild -= 8
@@ -182,88 +187,63 @@ class MainVC: UIViewController {
         childCategories = []
         guard let currentUser = LoginHelper.instance.currentUser else {return}
         CoreDataService.instance.fetchCategoriesCosts(ByAccount: account, WithDate: date, userID: currentUser, complition: { (results) in
-            var parentIterator = ""
-            var parentSum = 0.0
-            var parentIndex = 0
-            var parentColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+           
             for arrayItem in results {
-                
-                if let category = arrayItem["category.name"] as? String, let sum = arrayItem["sum"] as? Double {
+                if let category = arrayItem["category.name"] as? String, let colorStr = arrayItem["category.color"] as? String, let sum = arrayItem["sum"] as? Double {
+                    let color = EncodeDecodeService.instance.returnUIColor(components: colorStr)
                     if let parent = arrayItem["category.parent.name"] as? String {
-                        if parent != parentIterator {
-                            if parentIterator.isEmpty {
-                                CoreDataService.instance.fetchCategoryParent(ByName: parent, userID: currentUser, complition: { (fetchedParent) in
-                                    for item in fetchedParent {
-                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                                    }
-                                })
-                                childCategories.append([])
-                                parentIterator = parent
-                            } else {
-                                CoreDataService.instance.fetchCategoryParent(ByName: parentIterator, userID: currentUser, complition: { (fetchedParent) in
-                                    for item in fetchedParent {
-                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                                    }
-                                    childCategories.append([])
-                                    parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
-                                    parentIterator = parent
-                                    parentIndex += 1
-                                    parentSum = 0.0
-                                })
+                        var matchParent = false
+                        for (index, item) in parentCategories.enumerated() {
+                            if item.name == parent {
+                                item.amount += sum
+                                childCategories[index].append(CoinCategory(name: category, amount: sum, color: color))
+                                matchParent = true
                             }
                         }
-                        childCategories[parentIndex].append(CoinCategory(name: category, amount: sum, color: parentColor))
-                        parentSum += sum
+                        if !matchParent {
+                            parentCategories.append(CoinCategory(name: parent, amount: sum, color: color))
+                            childCategories.append([CoinCategory(name: category, amount: sum, color: color)])
+                        }
                     } else {
-                        if parentIterator.isEmpty {
-                            CoreDataService.instance.fetchCategoryParent(ByName: category, userID: currentUser, complition: { (fetchedParent) in
-                                for item in fetchedParent {
-                                    parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                                }
-                            })
-                            childCategories.append([])
-                            parentIterator = category
-                        } else {
-                            if category != parentIterator {
-                                CoreDataService.instance.fetchCategoryParent(ByName: parentIterator, userID: currentUser, complition: { (fetchedParent) in
-                                    for item in fetchedParent {
-                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                                    }
-                                    childCategories.append([])
-                                    if !parentIterator.isEmpty{
-                                        parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
-                                    }
-                                    parentIterator = category
-                                    parentIndex += 1
-                                    parentSum = 0.0
-                                })
+                        var matchParent = false
+                        for item in parentCategories {
+                            if item.name == category {
+                                item.amount += sum
+                                matchParent = true
                             }
                         }
-                        parentSum += sum
+                        if !matchParent {
+                            parentCategories.append(CoinCategory(name: category, amount: sum, color: color))
+                        }
                     }
-                    
                 }
             }
-            if !parentIterator.isEmpty {
-                parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
+            if parentCategories.count > 0 {
+                selectedParentCategory = 0
             }
+            setCategoryContentWidth()
+            for (index, _) in parentCategories.enumerated() {
+                for (nestedIndex, _) in parentCategories.enumerated() {
+                    if parentCategories[index].amount > parentCategories[nestedIndex].amount {
+                        let parentSwap = parentCategories[index]
+                        parentCategories[index] = parentCategories[nestedIndex]
+                        parentCategories[nestedIndex] = parentSwap
+                        let childSwap = childCategories[index]
+                        childCategories[index] = childCategories[nestedIndex]
+                        childCategories[nestedIndex] = childSwap
+                    }
+                }
+            }
+            for (index, item) in childCategories.enumerated() {
+                var childArray = item
+                childArray.sort { (arg0, arg1) -> Bool in
+                    return arg0.amount > arg1.amount
+                }
+                childCategories[index] = childArray
+            }
+            parentCategoryCollectionView?.reloadData()
+            childCategoryCollectionView?.reloadData()
         })
-        if parentCategories.count > 0 {
-            selectedParentCategory = 0
-        }
-        setCategoryContentWidth()
-        parentCategories.sort { (arg0, arg1) -> Bool in
-            return arg0.amount > arg1.amount
-        }
-        for (index, item) in childCategories.enumerated() {
-            var childArray = item
-            childArray.sort { (arg0, arg1) -> Bool in
-                return arg0.amount > arg1.amount
-            }
-            childCategories[index] = childArray
-        }
-        parentCategoryCollectionView?.reloadData()
-        childCategoryCollectionView?.reloadData()
     }
     
     func fetchCategoriesIncomeData(account: String){
@@ -272,88 +252,64 @@ class MainVC: UIViewController {
         childCategories = []
         guard let currentUser = LoginHelper.instance.currentUser else {return}
         CoreDataService.instance.fetchCategoriesIncome(ByAccount: account, WithDate: date, userID: currentUser, complition: { (results) in
-            var parentIterator = ""
-            var parentSum = 0.0
-            var parentIndex = 0
-            var parentColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             for arrayItem in results {
-                
-                if let category = arrayItem["category.name"] as? String, let sum = arrayItem["sum"] as? Double {
+                if let category = arrayItem["category.name"] as? String, let colorStr = arrayItem["category.color"] as? String, let sum = arrayItem["sum"] as? Double {
+                    let color = EncodeDecodeService.instance.returnUIColor(components: colorStr)
                     if let parent = arrayItem["category.parent.name"] as? String {
-                        if parent != parentIterator {
-                            if parentIterator.isEmpty {
-                                CoreDataService.instance.fetchCategory(ByName: parent, userID: currentUser, complition: { (fetchedParent) in
-                                    for item in fetchedParent {
-                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                                    }
-                                })
-                                childCategories.append([])
-                                parentIterator = parent
-                            } else {
-                                CoreDataService.instance.fetchCategory(ByName: parentIterator, userID: currentUser, complition: { (fetchedParent) in
-                                    for item in fetchedParent {
-                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                                    }
-                                    childCategories.append([])
-                                    parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
-                                    parentIterator = parent
-                                    parentIndex += 1
-                                    parentSum = 0.0
-                                })
+                        var matchParent = false
+                        for (index, item) in parentCategories.enumerated() {
+                            if item.name == parent {
+                                item.amount += sum
+                                childCategories[index].append(CoinCategory(name: category, amount: sum, color: color))
+                                matchParent = true
                             }
                         }
-                        childCategories[parentIndex].append(CoinCategory(name: category, amount: sum, color: parentColor))
-                        parentSum += sum
+                        if !matchParent {
+                            parentCategories.append(CoinCategory(name: parent, amount: sum, color: color))
+                            childCategories.append([CoinCategory(name: category, amount: sum, color: color)])
+                        }
                     } else {
-                        if parentIterator.isEmpty {
-                            CoreDataService.instance.fetchCategory(ByName: category, userID: currentUser, complition: { (fetchedParent) in
-                                for item in fetchedParent {
-                                    parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                                }
-                            })
-                            childCategories.append([])
-                            parentIterator = category
-                        } else {
-                            if category != parentIterator {
-                                CoreDataService.instance.fetchCategory(ByName: parentIterator, userID: currentUser, complition: { (fetchedParent) in
-                                    for item in fetchedParent {
-                                        parentColor = EncodeDecodeService.instance.returnUIColor(components: item.color)
-                                    }
-                                    childCategories.append([])
-                                    if !parentIterator.isEmpty{
-                                        parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
-                                    }
-                                    parentIterator = category
-                                    parentIndex += 1
-                                    parentSum = 0.0
-                                })
+                        var matchParent = false
+                        for item in parentCategories {
+                            if item.name == category {
+                                item.amount += sum
+                                matchParent = true
                             }
                         }
-                         parentSum += sum
+                        if !matchParent {
+                            parentCategories.append(CoinCategory(name: category, amount: sum, color: color))
+                            childCategories.append([])
+                        }
                     }
-                    
                 }
             }
-            if !parentIterator.isEmpty {
-                parentCategories.append(CoinCategory(name: parentIterator, amount: parentSum, color: parentColor))
+            if parentCategories.count > 0 {
+                selectedParentCategory = 0
             }
+            setCategoryContentWidth()
+            for (index, _) in parentCategories.enumerated() {
+                for (nestedIndex, _) in parentCategories.enumerated() {
+                    if parentCategories[index].amount > parentCategories[nestedIndex].amount {
+                        let parentSwap = parentCategories[index]
+                        parentCategories[index] = parentCategories[nestedIndex]
+                        parentCategories[nestedIndex] = parentSwap
+                        let childSwap = childCategories[index]
+                        childCategories[index] = childCategories[nestedIndex]
+                        childCategories[nestedIndex] = childSwap
+                    }
+                }
+            }
+            for (index, item) in childCategories.enumerated() {
+                var childArray = item
+                childArray.sort { (arg0, arg1) -> Bool in
+                    return arg0.amount > arg1.amount
+                }
+                childCategories[index] = childArray
+            }
+            parentCategoryCollectionView?.reloadData()
+            childCategoryCollectionView?.reloadData()
         })
-        if parentCategories.count > 0 {
-            selectedParentCategory = 0
-        }
-        setCategoryContentWidth()
-        parentCategories.sort { (arg0, arg1) -> Bool in
-            return arg0.amount > arg1.amount
-        }
-        for (index, item) in childCategories.enumerated() {
-            var childArray = item
-            childArray.sort { (arg0, arg1) -> Bool in
-                return arg0.amount > arg1.amount
-            }
-            childCategories[index] = childArray
-        }
-        parentCategoryCollectionView?.reloadData()
-        childCategoryCollectionView?.reloadData()
+       
     }
 
     func fetchCategoryData(ByAccount account: (name: String, id: String, costs: String, income: String, rate: Double)){

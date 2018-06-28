@@ -13,7 +13,7 @@ class CoreDataService{
     static let instance = CoreDataService()
     
     // Category
-    func saveCategory(name: String, color: UIColor?, parent: Category?, systemName: String = "", user: User, complition: (Category?) ->()){
+    func saveCategory(name: String, color: UIColor?, parent: Category?, systemName: String = "", user: User, id: String? = nil, lastUpdate: Date? = nil, complition: (Category?) ->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let category = Category(context: managedContext)
         category.name = name
@@ -21,9 +21,13 @@ class CoreDataService{
         category.color = EncodeDecodeService.instance.fromUIColorToStr(color: color)
         category.parent = parent
         category.user = user
-        category.id = category.objectID.uriRepresentation().absoluteString
+        category.id = id ?? category.objectID.uriRepresentation().absoluteString
+        if let lastUpdate = lastUpdate {
+            category.lastUpdate = lastUpdate
+        }
         do{
             try managedContext.save()
+            print(category.systemName)
             complition(category)
         } catch {
             debugPrint("Could not save category: \(error.localizedDescription)")
@@ -58,6 +62,19 @@ class CoreDataService{
             complition(category)
         } catch {
             debugPrint("Could not fetch categories by parent \(parent.name) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchLastCategories(ByDate date: Date, userID: String, complition: (_ complete: [Category])-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        let predicate = NSPredicate(format: "lastUpdate >= %@ AND user.id == %@", date as CVarArg, userID)
+        fetchRequest.predicate = predicate
+        do{
+            let category = try managedContext.fetch(fetchRequest) as! [Category]
+            complition(category)
+        } catch {
+            debugPrint("Could not fetch category \(error.localizedDescription)")
         }
     }
     
@@ -100,6 +117,7 @@ class CoreDataService{
         }
     }
     
+    
     func fetchCategory(ByObjectID id: String, userID: String, complition: (_ complete: Category?)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
@@ -116,6 +134,17 @@ class CoreDataService{
             }
         } catch {
             debugPrint("Could not fetch categories\(error.localizedDescription)")
+        }
+    }
+    
+    func fetchAllCategories(complition: (_ complete: [Category])-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        do{
+            let category = try managedContext.fetch(fetchRequest) as! [Category]
+            complition(category)
+        } catch {
+            debugPrint("Could not fetch categories \(error.localizedDescription)")
         }
     }
     
@@ -209,8 +238,8 @@ class CoreDataService{
         sumDesc.name = "sum"
         sumDesc.expressionResultType = .doubleAttributeType
         fetchRequest.returnsObjectsAsFaults = false
-        fetchRequest.propertiesToGroupBy = ["category.name", "category.parent.name"]
-        fetchRequest.propertiesToFetch = ["category.name", "category.parent.name", sumDesc]
+        fetchRequest.propertiesToGroupBy = ["category.name", "category.parent.name", "category.color"]
+        fetchRequest.propertiesToFetch = ["category.name", "category.parent.name", "category.color", sumDesc]
         fetchRequest.resultType = .dictionaryResultType
         let predicate = NSPredicate(format: "account.id == %@ AND type == %@ AND date >= %@ AND date <= %@ AND category.user.id == %@", account, TransactionType.income.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg, userID)
         fetchRequest.predicate = predicate
@@ -235,8 +264,8 @@ class CoreDataService{
         sumDesc.name = "sum"
         sumDesc.expressionResultType = .doubleAttributeType
         fetchRequest.returnsObjectsAsFaults = false
-        fetchRequest.propertiesToGroupBy = ["category.name", "category.parent.name"]
-        fetchRequest.propertiesToFetch = ["category.name", "category.parent.name", sumDesc]
+        fetchRequest.propertiesToGroupBy = ["category.name", "category.parent.name", "category.color"]
+        fetchRequest.propertiesToFetch = ["category.name", "category.parent.name", "category.color", sumDesc]
         fetchRequest.resultType = .dictionaryResultType
         let predicate = NSPredicate(format: "account.id == %@ AND type == %@ AND date >= %@ AND date <= %@ AND category.user.id == %@", account, TransactionType.costs.rawValue, date.startOfMonth() as CVarArg, date.endOfMonth() as CVarArg, userID)
         fetchRequest.predicate = predicate
@@ -292,6 +321,19 @@ class CoreDataService{
         }
     }
     
+    func fetchLastAccounts(ByDate date: Date, userID: String, complition: (_ complete: [Account])-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        let predicate = NSPredicate(format: "lastUpdate >= %@ AND user.id == %@", date as CVarArg, userID)
+        fetchRequest.predicate = predicate
+        do{
+            let account = try managedContext.fetch(fetchRequest) as! [Account]
+            complition(account)
+        } catch {
+            debugPrint("Could not fetch account \(error.localizedDescription)")
+        }
+    }
+    
     func fetchAccount(bySE_ID id: String, seProviderID: String, userID: String, complition: (_ complete: [Account])-> ()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
@@ -302,6 +344,27 @@ class CoreDataService{
             complition(account)
         } catch {
             debugPrint("Could not fetch account by seID \(id) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchAccount(ByID id: String, withSEID seid: String, seProviderID: String, userID: String, complition: (_ complete: Account?)-> ()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        let predicate =  seid.isEmpty ? NSPredicate(format: "id == %@ AND user.id == %@", id, userID) : NSPredicate(format: "(id == %@ OR (se_id == %@ AND se_provider.id == %@)) AND user.id == %@", id, seid, seProviderID, userID)
+        fetchRequest.predicate = predicate
+        do{
+            let accounts = try managedContext.fetch(fetchRequest) as! [Account]
+            if accounts.count == 0 {
+                complition(nil)
+            }
+            else {
+                for item in accounts {
+                    complition(item)
+                    break
+                }
+            }
+        } catch {
+            debugPrint("Could not fetch account by seID \(seid) \(error.localizedDescription)")
         }
     }
     
@@ -318,15 +381,21 @@ class CoreDataService{
         }
     }
     
-    func fetchAccount(ByObjectID id: String, userID: String, complition: (_ complete: Account)-> ()) {
+    func fetchAccount(ByObjectID id: String, userID: String, complition: (_ complete: Account?)-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
         let predicate = NSPredicate(format: "id == %@ AND user.id == %@", id, userID)
         fetchRequest.predicate = predicate
         do{
             let accounts = try managedContext.fetch(fetchRequest) as! [Account]
-            for item in accounts {
-                complition(item)
+            if accounts.count == 0 {
+                complition(nil)
+            }
+            else {
+                for item in accounts {
+                    complition(item)
+                    break
+                }
             }
         } catch {
             debugPrint("Could not fetch account\(error.localizedDescription)")
@@ -334,16 +403,19 @@ class CoreDataService{
     }
     
     
-    func saveAccount(name: String, type: String, currency: String, external: Bool = false, user: User, complition: (Bool) ->()) {
+    func saveAccount(name: String, systemName: String, type: String, currency: String, external: Bool = false, user: User, id: String? = nil, lastUpdate: Date? = nil, complition: (Bool) ->()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let account = Account(context: managedContext)
         account.name = name
         account.type = type
         account.currency = currency
         account.external = external
-        account.systemName = external ? name : ""
+        account.systemName = systemName
         account.user = user
-        account.id = account.objectID.uriRepresentation().absoluteString
+        account.id = id ?? account.objectID.uriRepresentation().absoluteString
+        if let lastUpdate = lastUpdate {
+            account.lastUpdate = lastUpdate
+        }
         do{
             try managedContext.save()
             complition(true)
@@ -353,18 +425,21 @@ class CoreDataService{
         }
     }
     
-    func saveSEAccount(name: String, type: String, currency: String, external: Bool = false, seID: String, seProvider: SEProvider, user: User, complition: (Account?) ->()) {
+    func saveSEAccount(name: String, systemName: String, type: String, currency: String, external: Bool = false, seID: String, seProvider: SEProvider, user: User, id: String? = nil, lastUpdate: Date? = nil, complition: (Account?) ->()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let account = Account(context: managedContext)
         account.name = name
         account.type = type
         account.currency = currency
         account.external = external
-        account.systemName = external ? name : ""
+        account.systemName = systemName
         account.se_id = seID
         account.se_provider = seProvider
         account.user = user
-        account.id = account.objectID.uriRepresentation().absoluteString
+        account.id = id ?? account.objectID.uriRepresentation().absoluteString
+        if let lastUpdate = lastUpdate {
+            account.lastUpdate = lastUpdate
+        }
         do{
             try managedContext.save()
             complition(account)
@@ -564,7 +639,7 @@ class CoreDataService{
     
     //Transaction
     
-    func saveTransaction(amount: Double,desc: String?,type: String, date: Date, place: Place?, account: Account, category: Category,transfer: Transaction?, se_id: String = "", complition: (Transaction) ->()){
+    func saveTransaction(amount: Double,desc: String?,type: String, date: Date, place: Place?, account: Account, category: Category,transfer: Transaction?, se_id: String = "", id: String? = nil, lastUpdate: Date? = nil, complition: (Transaction) ->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let transaction = Transaction(context: managedContext)
         transaction.amount = amount
@@ -576,12 +651,54 @@ class CoreDataService{
         transaction.category = category
         transaction.transfer = transfer
         transaction.se_id = se_id
-        transaction.id = transaction.objectID.uriRepresentation().absoluteString
+        transaction.id = id ?? transaction.objectID.uriRepresentation().absoluteString
+        if let lastUpdate = lastUpdate {
+            transaction.lastUpdate = lastUpdate
+        }
         do{
             try managedContext.save()
             complition(transaction)
         } catch {
             debugPrint("Could not save transaction: \(error.localizedDescription)")
+        }
+    }
+    func fetchTransaction(id: String, account: Account, complition: (Transaction?)->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        let predicate = NSPredicate(format: "account == %@ AND id == %@", account, id)
+        fetchRequest.predicate = predicate
+        do{
+            let transactions = try managedContext.fetch(fetchRequest) as! [Transaction]
+            if transactions.count == 0 {
+                complition(nil)
+            } else {
+                for transaction in transactions {
+                   complition(transaction)
+                    break
+                }
+            }
+        } catch {
+            debugPrint("Could not fetch transaction for account \(account.name) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchTransaction(ById id: String, withSEId seid: String, account: Account, complition: (Transaction?)->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        let predicate = seid.isEmpty ? NSPredicate(format: "account == %@ AND id == %@", account, id) : NSPredicate(format: "account == %@ AND (id == %@ OR se_id == %@)", account, id, seid)
+        fetchRequest.predicate = predicate
+        do{
+            let transactions = try managedContext.fetch(fetchRequest) as! [Transaction]
+            if transactions.count == 0 {
+                complition(nil)
+            } else {
+                for transaction in transactions {
+                    complition(transaction)
+                    break
+                }
+            }
+        } catch {
+            debugPrint("Could not fetch transaction for account \(account.name) \(error.localizedDescription)")
         }
     }
     
@@ -598,6 +715,19 @@ class CoreDataService{
             complition(transaction)
         } catch {
             debugPrint("Could not fetch transactions for account \(account.name) \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchLastTransactions(ByDate date: Date, userID: String, complition: ([Transaction])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Transaction")
+        let predicate = NSPredicate(format: "account.user.id == %@ AND lastUpdate >= %@", userID, date as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            let transaction = try managedContext.fetch(fetchRequest) as! [Transaction]
+            complition(transaction)
+        } catch {
+            debugPrint("Could not fetch transactions \(error.localizedDescription)")
         }
     }
     
@@ -1088,6 +1218,19 @@ class CoreDataService{
         }
     }
     
+    func fetchPlacesByIds(ids: [String],complition: @escaping ([Place])->()){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Place")
+        let predicate = NSPredicate(format: "ANY id IN %@", ids)
+        fetchRequest.predicate = predicate
+        do{
+            let place = try managedContext.fetch(fetchRequest) as! [Place]
+            complition(place)
+        } catch {
+            debugPrint("Could not fetch places by ids \(error.localizedDescription)")
+        }
+    }
+    
     func fetchPlace(ByName name: String,complition: @escaping ([Place])->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Place")
@@ -1269,6 +1412,8 @@ class CoreDataService{
                     for item in resultArray {
                         if let max = item["max"] as? Int {
                             complition("\(max)")
+                        } else {
+                            complition(nil)
                         }
                     }
                 } else {
@@ -1280,16 +1425,50 @@ class CoreDataService{
         }
     }
     
-    
-    func fetchSECustomer(ByUserObjectID id: String, complition: (_ complete: SECustomer)-> ()) {
+    func fetchSECustomer( complition: (_ complete: [SECustomer])-> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SECustomer")
-        let predicate = NSPredicate(format: "user.id == %@", id)
+
+        do{
+            let seCustomers = try managedContext.fetch(fetchRequest) as! [SECustomer]
+            complition(seCustomers)
+        } catch {
+            debugPrint("Could not fetch SECustomers \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchSECustomer(ByID id: String, userID: String, complition: (_ complete: SECustomer?)-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SECustomer")
+        let predicate = NSPredicate(format: "id == %@ AND user.id == %@", id, userID)
         fetchRequest.predicate = predicate
         do{
             let seCustomers = try managedContext.fetch(fetchRequest) as! [SECustomer]
-            for item in seCustomers {
-                complition(item)
+            if seCustomers.count == 0 {
+                complition(nil)
+            } else {
+                for item in seCustomers {
+                    complition(item)
+                }
+            }
+        } catch {
+            debugPrint("Could not fetch SECustomers \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchLastSECustomer(ByDate date: Date, userID: String, complition: (_ complete: SECustomer?)-> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SECustomer")
+        let predicate = NSPredicate(format: "lastUpdate >= %@ AND user.id == %@", date as CVarArg, userID)
+        fetchRequest.predicate = predicate
+        do{
+            let seCustomers = try managedContext.fetch(fetchRequest) as! [SECustomer]
+            if seCustomers.count == 0 {
+                complition(nil)
+            } else {
+                for item in seCustomers {
+                    complition(item)
+                }
             }
         } catch {
             debugPrint("Could not fetch SECustomers \(error.localizedDescription)")
@@ -1298,17 +1477,33 @@ class CoreDataService{
     
     
     
-    func saveSECustomer(id: String, user: User, complition: (_ customer: SECustomer?) ->()){
+    func saveSECustomer(id: String, user: User, lastUpdate: Date? = nil, complition: (_ customer: SECustomer?) ->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let seCustomer = SECustomer(context: managedContext)
         seCustomer.id = id
         seCustomer.user = user
+        if let lastUpdate = lastUpdate {
+            seCustomer.lastUpdate = lastUpdate
+        }
         do{
             try managedContext.save()
             complition(seCustomer)
         } catch {
             debugPrint("Could not save seCustomer: \(error.localizedDescription)")
             complition(nil)
+        }
+    }
+    
+    func fetchLastSEProviders(ByDate date: Date, userID: String, complition: (_ complete: [SEProvider])-> () ){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SEProvider")
+        let predicate = NSPredicate(format: "secustomer.user.id == %@ AND lastUpdate >= %@", userID, date as CVarArg)
+        fetchRequest.predicate = predicate
+        do{
+            let seProviders = try managedContext.fetch(fetchRequest) as! [SEProvider]
+            complition(seProviders)
+        } catch {
+            debugPrint("Could not fetch SEProviders by userID\(userID) \(error.localizedDescription)")
         }
     }
     
@@ -1325,6 +1520,17 @@ class CoreDataService{
         }
     }
     
+    func fetchSEProviders(complition: (_ complete: [SEProvider])-> () ){
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SEProvider")
+        do{
+            let seProviders = try managedContext.fetch(fetchRequest) as! [SEProvider]
+            complition(seProviders)
+        } catch {
+            debugPrint("Could not fetch SEProviders \(error.localizedDescription)")
+        }
+    }
+    
     func fetchSEProvider(ById id: String, customerID: String, complition: (_ complete: [SEProvider])-> () ) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SEProvider")
@@ -1338,13 +1544,16 @@ class CoreDataService{
         }
     }
 
-    func saveSEProvider(name: String, id: String, secret: String, customer: SECustomer, complition: (_ provider: SEProvider?) ->()){
+    func saveSEProvider(name: String, id: String, secret: String, customer: SECustomer, lastUpdate: Date? = nil, complition: (_ provider: SEProvider?) ->()){
         guard let managedContext = appDelegate?.persistentContainer.viewContext else {return}
         let seProvider = SEProvider(context: managedContext)
         seProvider.name = name
         seProvider.id = id
         seProvider.secret = secret
         seProvider.secustomer = customer
+        if let lastUpdate = lastUpdate {
+            seProvider.lastUpdate = lastUpdate
+        }
         do{
             try managedContext.save()
             complition(seProvider)

@@ -41,24 +41,24 @@ class AccountHelper{
         return currSymbol?.1 ?? currencyCode
     }
     
-    func initPersonalAccount(_ complition: (Bool)->()){
-        guard let currentUser = LoginHelper.instance.currentUser else {return}
-        CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
-            guard let user = user else {
-                complition(false)
-                return
-            }
-            CoreDataService.instance.saveAccount(name: "Cash", type: AccountType.Cash.rawValue, currency: getLocaleCarrencySymbolAndCode().code, user: user) { (success) in
-                if success {
-                    complition(success)
-                } else {
-                    complition(success)
-                    print("Can`t create account")
-                }
-            }
-        }
-        
-    }
+//    func initPersonalAccount(_ complition: (Bool)->()){
+//        guard let currentUser = LoginHelper.instance.currentUser else {return}
+//        CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
+//            guard let user = user else {
+//                complition(false)
+//                return
+//            }
+//            CoreDataService.instance.saveAccount(name: "Cash", type: AccountType.Cash.rawValue, currency: getLocaleCarrencySymbolAndCode().code, user: user) { (success) in
+//                if success {
+//                    complition(success)
+//                } else {
+//                    complition(success)
+//                    print("Can`t create account")
+//                }
+//            }
+//        }
+//
+//    }
     
     func evaluateBalance(byAccount: Account? = nil, userID: String, complition: (Double)->()){
         CoreDataService.instance.evaluateAllIncome(byAccount: byAccount, userID: userID) { (incomeSum) in
@@ -70,23 +70,23 @@ class AccountHelper{
     }
     
     
-    func initExternalAccount(complition: (Bool)->()){
-        guard let currentUser = LoginHelper.instance.currentUser else {return}
-        CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
-            guard let user = user else {
-                complition(false)
-                return
-            }
-            CoreDataService.instance.saveAccount(name: Constants.NAME_FOR_EXTERNAL_ACCOUNT, type: AccountType.DebitCard.rawValue, currency: getLocaleCarrencySymbolAndCode().code, external: true, user: user) { (success) in
-                if !success {
-                    print("Can`t create account")
-                    complition(false)
-                } else {
-                    complition(true)
-                }
-            }
-        }
-    }
+//    func initExternalAccount(complition: (Bool)->()){
+//        guard let currentUser = LoginHelper.instance.currentUser else {return}
+//        CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
+//            guard let user = user else {
+//                complition(false)
+//                return
+//            }
+//            CoreDataService.instance.saveAccount(name: Constants.NAME_FOR_EXTERNAL_ACCOUNT, type: AccountType.DebitCard.rawValue, currency: getLocaleCarrencySymbolAndCode().code, external: true, user: user) { (success) in
+//                if !success {
+//                    print("Can`t create account")
+//                    complition(false)
+//                } else {
+//                    complition(true)
+//                }
+//            }
+//        }
+//    }
     
     
 }

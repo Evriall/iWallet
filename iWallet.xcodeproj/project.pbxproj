@@ -11,6 +11,8 @@
 		9A1849222093913C0083E13E /* ViewWithBottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1849212093913C0083E13E /* ViewWithBottomButton.swift */; };
 		9A1D47E120BABA84001FCDDD /* saltedge.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9A1D47E020BAB8F4001FCDDD /* saltedge.com.cer */; };
 		9A1EAE6C209B8D6100E56D33 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */; };
+		9A2491B720D39DCF003DD15C /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2491B620D39DCF003DD15C /* UpdateService.swift */; };
+		9A2491B920D3AD0E003DD15C /* UpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2491B820D3AD0E003DD15C /* UpdateHelper.swift */; };
 		9A305B1220AECE9C00DD79FF /* PieChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B1020AECE9C00DD79FF /* PieChartVC.swift */; };
 		9A305B1320AECE9C00DD79FF /* PieChartVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A305B1120AECE9C00DD79FF /* PieChartVC.xib */; };
 		9A305B3720B435F200DD79FF /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A305B3620B435F100DD79FF /* DateValueFormatter.swift */; };
@@ -130,6 +132,8 @@
 		9A1849212093913C0083E13E /* ViewWithBottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithBottomButton.swift; sourceTree = "<group>"; };
 		9A1D47E020BAB8F4001FCDDD /* saltedge.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = saltedge.com.cer; sourceTree = "<group>"; };
 		9A1EAE6A209B8D6100E56D33 /* TransactionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionCell.xib; sourceTree = "<group>"; };
+		9A2491B620D39DCF003DD15C /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
+		9A2491B820D3AD0E003DD15C /* UpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateHelper.swift; sourceTree = "<group>"; };
 		9A305B1020AECE9C00DD79FF /* PieChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartVC.swift; sourceTree = "<group>"; };
 		9A305B1120AECE9C00DD79FF /* PieChartVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PieChartVC.xib; sourceTree = "<group>"; };
 		9A305B3620B435F100DD79FF /* DateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateValueFormatter.swift; sourceTree = "<group>"; };
@@ -305,6 +309,7 @@
 				9A59A49B20A434C700B35E70 /* Detail.swift */,
 				9A77003E20B860C5000209D4 /* LoginHelper.swift */,
 				9ABE1A2620C1354F004DC5A7 /* SaltEdgeHelper.swift */,
+				9A2491B820D3AD0E003DD15C /* UpdateHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				9AD795DB2077583C00AFB3BE /* ExchangeService.swift */,
 				9AF34A012089E9E9005A94C7 /* FourSquareService.swift */,
 				9ABCD40720CBB7E00017DA26 /* LoginService.swift */,
+				9A2491B620D39DCF003DD15C /* UpdateService.swift */,
 			);
 			path = Srevices;
 			sourceTree = "<group>";
@@ -656,8 +662,10 @@
 				9A9D2D3E206548F300CC7DE0 /* UIViewExt.swift in Sources */,
 				9A59A49020A1AB6F00B35E70 /* MapPlace.swift in Sources */,
 				9A73000B207384E7002F84F6 /* DateExt.swift in Sources */,
+				9A2491B920D3AD0E003DD15C /* UpdateHelper.swift in Sources */,
 				9A9D2D3F206548F300CC7DE0 /* UIButtonExt.swift in Sources */,
 				9ABA9AFA2063DB4500ADA34E /* iWallet.xcdatamodeld in Sources */,
+				9A2491B720D39DCF003DD15C /* UpdateService.swift in Sources */,
 				9AE6D568206E93C700886F73 /* TransactionHelper.swift in Sources */,
 				9A305B3720B435F200DD79FF /* DateValueFormatter.swift in Sources */,
 				9ABA9B0F2063E02500ADA34E /* MainVC.swift in Sources */,

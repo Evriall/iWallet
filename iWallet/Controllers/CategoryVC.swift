@@ -102,7 +102,7 @@ extension CategoryVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         CategoryHelper.instance.clear()
-        dismissDetail()
         delegate?.handleCategory(categories[indexPath.row])
+        dismissDetail()
     }
 }

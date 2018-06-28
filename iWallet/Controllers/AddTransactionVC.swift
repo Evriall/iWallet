@@ -185,6 +185,7 @@ class AddTransactionVC: UIViewController {
             
             
             CoreDataService.instance.fetchAccount(ByObjectID: AccountHelper.instance.currentAccount ?? "", userID: currentUser) { (account) in
+                guard let account = account else {return}
                 self.accountFrom = account
                 accountFromBtn.setTitle(accountFrom?.name, for: .normal)
                 if account.type == AccountType.Cash.rawValue {
@@ -519,11 +520,11 @@ class AddTransactionVC: UIViewController {
     
     func saveTransferTransactions(amount: Double, amountWithCurrencyRate: Double, accountFrom: Account, accountTo: Account, category: Category){
         
-        CoreDataService.instance.saveTransaction(amount: amount, desc: self.desc, type: TransactionType.costs.rawValue , date: self.date, place: self.place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+        CoreDataService.instance.saveTransaction(amount: amount, desc: self.desc, type: TransactionType.costs.rawValue , date: self.date, place: self.place, account: accountFrom, category: category, transfer: nil, lastUpdate: Date()) { (transaction) in
             saveTransactionTags(transaction: transaction, tags: self.tags)
             saveTransactionPhotos(transaction: transaction, photos: self.photos)
             
-            CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.desc, type: TransactionType.income.rawValue , date: self.date, place: self.place, account: accountTo, category: category, transfer: transaction) { (transferTransaction) in
+            CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.desc, type: TransactionType.income.rawValue , date: self.date, place: self.place, account: accountTo, category: category, transfer: transaction, lastUpdate: Date()) { (transferTransaction) in
                 saveTransactionTags(transaction: transferTransaction, tags: self.tags)
                 saveTransactionPhotos(transaction: transferTransaction, photos: self.photos)
                 self.delegate?.handleTransaction(date: self.date)
@@ -599,7 +600,7 @@ class AddTransactionVC: UIViewController {
                     }
                 }
             } else {
-                CoreDataService.instance.saveTransaction(amount: amount, desc: self.desc, type: type, date: date, place: place, account: accountFrom, category: category, transfer: nil) { (transaction) in
+                CoreDataService.instance.saveTransaction(amount: amount, desc: self.desc, type: type, date: date, place: place, account: accountFrom, category: category, transfer: nil, lastUpdate: Date()) { (transaction) in
                     saveTransactionTags(transaction: transaction, tags: self.tags)
                     saveTransactionPhotos(transaction: transaction, photos: self.photos)
                     delegate?.handleTransaction(date: self.date)
@@ -615,6 +616,7 @@ class AddTransactionVC: UIViewController {
                 transaction.date = date
                 transaction.account = accountFrom
                 transaction.place = self.place
+                transaction.lastUpdate = Date()
                 CoreDataService.instance.update { (success) in
                     if success {
                         saveTransactionTags(transaction: transaction, tags: self.tags)

@@ -45,8 +45,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        SaltEdgeHelper.instance.fetchData()
-        completionHandler(.newData)
+        guard let currentUser = LoginHelper.instance.currentUser else {
+            completionHandler(.noData)
+            return
+        }
+        CoreDataService.instance.fetchUser(ByObjectID: currentUser) { (user) in
+            guard let user = user else {
+                completionHandler(.noData)
+                return
+            }
+            UpdateService.instance.uploadData(user: user, complition: { (success) in
+                UpdateService.instance.fetchData(user: user, complition: { (success) in
+                    SaltEdgeHelper.instance.fetchData { (success) in
+                        completionHandler(.newData)
+                    }
+                })
+            })
+        }
     }
     
     // MARK: - Core Data stack

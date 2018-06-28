@@ -24,4 +24,10 @@ extension String {
         guard let attributes = [NSAttributedStringKey.font:  UIFont(name: "Avenir-Book", size: fontSize)] as? [NSAttributedStringKey: Any] else {return CGRect(x: 0, y: 0, width: 70, height: 24)}
         return NSString(string: self).boundingRect(with: size, options: options, attributes: attributes, context: nil)
     }
+    
+    func updateServerDate() -> Date?{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd'T'HH:mm:ss.SSS'Z'"
+        return dateFormatter.date(from: self)
+    }
 }

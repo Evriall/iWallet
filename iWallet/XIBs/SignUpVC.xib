@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpVC" customModule="iWallet" customModuleProvider="target">
             <connections>
+                <outlet property="createBtn" destination="Kj6-1i-w7s" id="EUv-cl-28L"/>
                 <outlet property="emailTxt" destination="dXA-lW-qZb" id="eOC-rA-lKk"/>
                 <outlet property="passwordTxt" destination="Ywa-bl-mhQ" id="hx9-xS-wKU"/>
                 <outlet property="usernameTxt" destination="NX8-BE-6vX" id="8uo-2Z-7vT"/>
@@ -38,7 +39,7 @@
                                 <action selector="closeBtnPressed:" destination="-1" eventType="touchUpInside" id="ise-qC-kgK"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create an account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thA-eP-XQ0">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create an account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="thA-eP-XQ0">
                             <rect key="frame" x="64" y="78" width="247" height="41"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="thA-eP-XQ0" secondAttribute="height" multiplier="6:1" id="sjd-cQ-Nkq"/>
