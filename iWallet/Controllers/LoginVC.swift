@@ -23,21 +23,6 @@ class LoginVC: UIViewController {
         emailTxt.delegate = self
         passwordTxt.delegate = self
         signUpBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-//        CoreDataService.instance.fetchSEProviders { (providers) in
-//            for item in providers {
-//                print(item.id, item.name, item.secustomer?.id, item.secustomer?.user?.id)
-//            }
-//        }
-//        CoreDataService.instance.fetchSECustomer { (customers) in
-//            for item in customers {
-//                print(item.id, item.user?.id, item.user?.name)
-//            }
-//        }
-//        CoreDataService.instance.fetchAllCategories { (categories) in
-//            for item in categories {
-//                print(item.id, item.name, item.systemName, item.user?.id)
-//            }
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

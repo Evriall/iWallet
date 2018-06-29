@@ -91,7 +91,7 @@ class ExchangeService{
                 if let currencyRate = self.evaluateCurrencyRate(base: baseCode, pair: pairCode, rates: currencyRates) {
                     complition(currencyRate)
                 } else {
-                    print("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
+                    debugPrint("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
                     complition(result)
                 }
             } else {

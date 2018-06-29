@@ -384,6 +384,6 @@ extension PieChartVC: CalendarProtocol {
 
 extension PieChartVC: ChartViewDelegate{
     func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
-        print(scaleX, scaleY)
+//        print(scaleX, scaleY)
     }
 }

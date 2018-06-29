@@ -561,7 +561,7 @@ class AddTransactionVC: UIViewController {
                                 let amountWithCurrencyRate = currencyRate * amount
                                 self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
                             } else {
-                                print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                                debugPrint("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
                             }
                         } else {
                             if  Date().startOfDay() <= self.date {
@@ -573,7 +573,7 @@ class AddTransactionVC: UIViewController {
                                                     let amountWithCurrencyRate = currencyRate * amount
                                                     self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
                                                 } else {
-                                                    print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                                                    debugPrint("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
                                                 }
                                             }
                                         }
@@ -589,7 +589,7 @@ class AddTransactionVC: UIViewController {
                                                     let amountWithCurrencyRate = currencyRate * amount
                                                     self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
                                                 } else {
-                                                    print("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
+                                                    debugPrint("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
                                                 }
                                             }
                                         }

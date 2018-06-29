@@ -111,7 +111,6 @@ extension ConnectToSaltEdgeVC: SEWebViewDelegate {
     func webView(_ webView: SEWebView, didReceiveCallbackWithResponse response: SEConnectResponse) {
         switch response.stage {
         case .success:
-            print("Fetched successfully")
             if let secret = response.secret, let id = response.loginId {
                 guard let customer = self.customer else {
                     HUD.flash(.labeledError(title: "Can`t fetch data", subtitle: nil), delay: 3.0)
@@ -128,7 +127,7 @@ extension ConnectToSaltEdgeVC: SEWebViewDelegate {
                 }
             }
         case .fetching:
-            print("Fetching data")
+            debugPrint("Fetching data")
         case .error:
             HUD.flash(.labeledError(title: "Can`t fetch login", subtitle: nil), delay: 3.0)
         }

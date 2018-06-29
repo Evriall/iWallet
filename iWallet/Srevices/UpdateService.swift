@@ -36,7 +36,6 @@ class UpdateService {
                             let json = JSON(data)
                             if let auth = json["auth"].bool, let message = json["message"].string{
                                 if !auth {
-                                    print(message)
                                     complition(false)
                                 } else {
                                     user.lastUpload = newUpload
@@ -65,7 +64,6 @@ class UpdateService {
         var headers = Constants.HEADER_REGISTER
         headers["id"] = userID
         headers["date"] = lastFetch
-        print("Last fetch",lastFetch)
         Alamofire.request("\(Constants.URL_LOGIN)/api/update", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
             if response.result.error == nil {
                 guard let data = response.data else {
@@ -73,7 +71,6 @@ class UpdateService {
                     return
                 }
                 let json = JSON(data)
-                print(json)
                 if let categories = json["categories"].array, let accounts = json["accounts"].array, let seCustomers = json["seCustomers"].array, let seProviders = json["seProviders"].array, let transactions = json["transactions"].array, let places = json["places"].array, let date = json["date"].string{
                     UpdateHelper.instance.saveSECustomers(seCustomers: seCustomers, user: user, complition: { (success) in
                         if success {
@@ -84,16 +81,20 @@ class UpdateService {
                                             UpdateHelper.instance.saveAccounts(accounts: accounts, user: user, complition: { (success) in
                                                 if success {
                                                     UpdateHelper.instance.savePlaces(places: places, complition: { (success) in
-                                                        UpdateHelper.instance.saveTransactions(transactions: transactions, user: user, complition: { (success) in
-                                                            if success {
-                                                                user.lastFetch = date
-                                                                CoreDataService.instance.update(complition: { (success) in
-                                                                    complition(success)
-                                                                })
-                                                            } else {
-                                                                complition(false)
-                                                            }
-                                                        })
+                                                        if success {
+                                                            UpdateHelper.instance.saveTransactions(transactions: transactions, user: user, complition: { (success) in
+                                                                if success {
+                                                                    user.lastFetch = date
+                                                                    CoreDataService.instance.update(complition: { (success) in
+                                                                        complition(success)
+                                                                    })
+                                                                } else {
+                                                                    complition(false)
+                                                                }
+                                                            })
+                                                        } else {
+                                                            complition(false)
+                                                        }
                                                     })
                                                     
                                                 } else {

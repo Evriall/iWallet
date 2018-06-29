@@ -24,16 +24,20 @@ class CategoryVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CategoryCell", bundle: nil), forCellReuseIdentifier: "CategoryCell")
+//        setUPView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func setUPView(){
         guard let currentUser = LoginHelper.instance.currentUser else {return}
         CoreDataService.instance.fetchCategoryParents(userID: currentUser){ (categories) in
             self.categories = categories
-             CategoryHelper.instance.clear()
+            CategoryHelper.instance.clear()
             self.tableView.reloadData()
         }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUPView()
     }
     
     @IBAction func backBtnPressed(_ sender: Any) {
@@ -101,8 +105,9 @@ extension CategoryVC : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         CategoryHelper.instance.clear()
-        delegate?.handleCategory(categories[indexPath.row])
+        self.delegate?.handleCategory(self.categories[indexPath.row])
         dismissDetail()
     }
 }

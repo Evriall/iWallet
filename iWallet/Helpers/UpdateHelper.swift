@@ -99,6 +99,9 @@ class UpdateHelper {
                                         if let desc = item.desc {
                                             convertedTransaction["desc"] = desc
                                         }
+                                        if let accountSEID = item.account?.se_id {
+                                            convertedTransaction["accountSEID"] = accountSEID
+                                        }
                                         convertedTransactions.append(convertedTransaction)
                                         if index == transactions.count - 1 {
                                             uploadData["transactions"] = convertedTransactions
@@ -176,16 +179,20 @@ class UpdateHelper {
             complition(false)
             return
         }
+        
         if transactions.count == 0 {
             complition(true)
         } else {
             var result = true
+            let myGroup = DispatchGroup()
             for (index, item) in transactions.enumerated() {
+                myGroup.enter()
                 if let transaction = item.dictionary {
                     if let id = transaction["mobAppId"]?.string, let amount = transaction["amount"]?.double, let dateStr = transaction["date"]?.string, let type = transaction["type"]?.string, let accountID = transaction["account"]?.string, let categoryID = transaction["category"]?.string {
                         guard let date = dateStr.updateServerDate() else {
-                            complition(false)
-                            return
+                            result = false
+                            myGroup.leave()
+                            break
                         }
                         var tags = [String]()
                         if let jsonTags = transaction["tags"]?.array {
@@ -198,107 +205,109 @@ class UpdateHelper {
                         let seid = transaction["seid"]?.string ?? ""
                         let placeID = transaction["place"]?.string
                         let desc = transaction["desc"]?.string
-                        
+                        let accountSEID = transaction["accountSEID"]?.string ?? ""
                         if placeID != nil {
                             CoreDataService.instance.fetchPlaceById(id: placeID!) { (places) in
                                 if places.count == 0 {
                                     result = false
-                                    if index == transactions.count - 1 {
-                                        complition(result)
-                                    }
+                                    complition(result)
+                                    myGroup.leave()
+                                    return
                                 } else {
                                     for place in places {
-                                        CoreDataService.instance.fetchAccount(ByObjectID: accountID, userID: userID, complition: { (account) in
+                                        CoreDataService.instance.fetchAccount(ByID: accountID, withSEID: accountSEID, userID: userID, complition:  { (account) in
                                             if account == nil {
-                                                complition(false)
+                                                result = false
+                                                complition(result)
+                                                myGroup.leave()
                                                 return
                                             } else {
                                                 CoreDataService.instance.fetchCategory(ByObjectID: categoryID, userID: userID, complition: { (category) in
                                                     if category == nil {
-                                                        complition(false)
+                                                        result = false
+                                                        complition(result)
+                                                        myGroup.leave()
                                                         return
                                                     } else {
                                                         if let transfer = transaction["transfer"]?.string {
-                                                                CoreDataService.instance.fetchTransaction(ById: transfer, withSEId: seid, account: account!, complition:
-                                                                    { (transferTransaction) in
-                                                                    if transferTransaction != nil {
-                                                                         CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
-                                                                            if fetchedTransaction == nil {
-                                                                                CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: place, account: account!, category: category!, transfer: fetchedTransaction, se_id: seid, id: id, complition: { (savedTransaction) in
-                                                                                        if tags.count == 0 {
-                                                                                            if index == transactions.count - 1 {
-                                                                                                complition(result)
-                                                                                            }
-                                                                                        } else {
-                                                                                            for tag in tags {
-                                                                                                CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
-                                                                                            }
-                                                                                            if index == transactions.count - 1 {
-                                                                                                complition(result)
-                                                                                            }
-                                                                                        }
-                                                                                })
-                                                                            } else {
-                                                                                self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
-                                                                                    if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != place || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc {
-                                                                                        fetchedTransaction?.amount = amount
-                                                                                        fetchedTransaction?.category = category
-                                                                                        fetchedTransaction?.place = place
-                                                                                        fetchedTransaction?.date = date
-                                                                                        fetchedTransaction?.type = type
-                                                                                        fetchedTransaction?.desc = desc
-                                                                                        CoreDataService.instance.update(complition: { (success) in
-                                                                                            if index == transactions.count - 1 {
-                                                                                                complition(result)
-                                                                                            }
-                                                                                        })
-                                                                                    }
-                                                                                })
-                                                                            }
-                                                                        })
-                                                                    } else {
-                                                                        if index == transactions.count - 1 {
-                                                                            complition(result)
-                                                                        }
-                                                                    }
-                                                                })
-                                                           
-                                                        } else {
-                                                                CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
-                                                                    if fetchedTransaction == nil {
-                                                                        CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: place, account: account!, category: category!, transfer: nil, se_id: seid, id: id, complition: { (savedTransaction) in
+                                                           CoreDataService.instance.fetchTransaction(ById: transfer, userID: userID, complition: { (transferTransaction) in
+                                                                    CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
+                                                                        if fetchedTransaction == nil {
+                                                                            CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: place, account: account!, category: category!, transfer: transferTransaction, se_id: seid, id: id, complition: { (savedTransaction) in
                                                                                 if tags.count == 0 {
-                                                                                    if index == transactions.count - 1 {
-                                                                                        complition(result)
-                                                                                    }
+                                                                                    myGroup.leave()
                                                                                 } else {
                                                                                     for tag in tags {
                                                                                         CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
                                                                                     }
-                                                                                    if index == transactions.count - 1 {
-                                                                                        complition(result)
-                                                                                    }
+                                                                                    myGroup.leave()
                                                                                 }
-                                                                        })
-                                                                    } else {
-                                                                        self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
-                                                                            if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != place || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc {
-                                                                                fetchedTransaction?.amount = amount
-                                                                                fetchedTransaction?.category = category
-                                                                                fetchedTransaction?.place = place
-                                                                                fetchedTransaction?.date = date
-                                                                                fetchedTransaction?.type = type
-                                                                                fetchedTransaction?.desc = desc
-                                                                                CoreDataService.instance.update(complition: { (success) in
-                                                                                    if index == transactions.count - 1 {
-                                                                                    complition(result)
-                                                                                    }
-                                                                                })
+                                                                            })
+                                                                        } else {
+                                                                            self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
+                                                                                if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != place || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc {
+                                                                                    fetchedTransaction?.amount = amount
+                                                                                    fetchedTransaction?.category = category
+                                                                                    fetchedTransaction?.place = place
+                                                                                    fetchedTransaction?.date = date
+                                                                                    fetchedTransaction?.type = type
+                                                                                    fetchedTransaction?.desc = desc
+                                                                                    CoreDataService.instance.update(complition: { (success) in
+                                                                                        if !success {
+                                                                                            result = false
+                                                                                            complition(result)
+                                                                                            myGroup.leave()
+                                                                                            return
+                                                                                        } else {
+                                                                                            myGroup.leave()
+                                                                                        }
+                                                                                    })
+                                                                                } else {
+                                                                                   myGroup.leave()
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    })
+                                                            })
+                                                            
+                                                        } else {
+                                                            CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
+                                                                if fetchedTransaction == nil {
+                                                                    CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: place, account: account!, category: category!, transfer: nil, se_id: seid, id: id, complition: { (savedTransaction) in
+                                                                        if tags.count == 0 {
+                                                                            myGroup.leave()
+                                                                        } else {
+                                                                            for tag in tags {
+                                                                                CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
                                                                             }
-                                                                        })
-                                                                    }
-                                                                })
-                                                           
+                                                                            myGroup.leave()
+                                                                        }
+                                                                    })
+                                                                } else {
+                                                                    self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
+                                                                        if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != place || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc {
+                                                                            fetchedTransaction?.amount = amount
+                                                                            fetchedTransaction?.category = category
+                                                                            fetchedTransaction?.place = place
+                                                                            fetchedTransaction?.date = date
+                                                                            fetchedTransaction?.type = type
+                                                                            fetchedTransaction?.desc = desc
+                                                                            CoreDataService.instance.update(complition: { (success) in
+                                                                                if !success {
+                                                                                    result = false
+                                                                                    complition(result)
+                                                                                    myGroup.leave()
+                                                                                    return
+                                                                                } else {
+                                                                                    myGroup.leave()
+                                                                                }
+                                                                            })
+                                                                        } else {
+                                                                            myGroup.leave()
+                                                                        }
+                                                                    })
+                                                                }
+                                                            })
                                                         }
                                                     }
                                                 })
@@ -309,33 +318,39 @@ class UpdateHelper {
                                 }
                             }
                         } else {
-                            CoreDataService.instance.fetchAccount(ByObjectID: accountID, userID: userID, complition: { (account) in
+                            CoreDataService.instance.fetchAccount(ByID: accountID, withSEID: accountSEID, userID: userID, complition:  { (account) in
                                 if account == nil {
-                                    complition(false)
+                                    result = false
+                                    complition(result)
+                                    myGroup.leave()
                                     return
                                 } else {
                                     CoreDataService.instance.fetchCategory(ByObjectID: categoryID, userID: userID, complition: { (category) in
                                         if category == nil {
-                                            complition(false)
+                                            result = false
+                                            complition(result)
+                                            myGroup.leave()
                                             return
                                         } else {
                                             if let transfer = transaction["transfer"]?.string {
-                                                CoreDataService.instance.fetchTransaction(ById: transfer, withSEId: seid, account: account!, complition: { (transferTransaction) in
-                                                    if transferTransaction != nil {
+                                                CoreDataService.instance.fetchTransaction(ById: transfer, userID: userID, complition:  { (transferTransaction) in
                                                         CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
                                                             if fetchedTransaction == nil {
-                                                                CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: nil, account: account!, category: category!, transfer: fetchedTransaction, se_id: seid, id: id, complition: { (savedTransaction) in
-                                                                    if tags.count == 0 {
-                                                                        if index == transactions.count - 1 {
-                                                                            complition(result)
+                                                                CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: nil, account: account!, category: category!, transfer: transferTransaction, se_id: seid, id: id, complition: { (savedTransaction) in
+                                                                    if savedTransaction != nil {
+                                                                        if tags.count == 0 {
+                                                                            myGroup.leave()
+                                                                        } else {
+                                                                            for tag in tags {
+                                                                                CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
+                                                                            }
+                                                                            myGroup.leave()
                                                                         }
                                                                     } else {
-                                                                        for tag in tags {
-                                                                            CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
-                                                                        }
-                                                                        if index == transactions.count - 1 {
-                                                                            complition(result)
-                                                                        }
+                                                                        result = false
+                                                                        complition(result)
+                                                                        myGroup.leave()
+                                                                        return
                                                                     }
                                                                 })
                                                             } else {
@@ -348,19 +363,21 @@ class UpdateHelper {
                                                                         fetchedTransaction?.type = type
                                                                         fetchedTransaction?.desc = desc
                                                                         CoreDataService.instance.update(complition: { (success) in
-                                                                            if index == transactions.count - 1 {
+                                                                            if !success {
+                                                                                result = false
                                                                                 complition(result)
+                                                                                myGroup.leave()
+                                                                                return
+                                                                            } else {
+                                                                                myGroup.leave()
                                                                             }
                                                                         })
+                                                                    } else {
+                                                                        myGroup.leave()
                                                                     }
                                                                 })
                                                             }
                                                         })
-                                                    } else {
-                                                        if index == transactions.count - 1 {
-                                                            complition(result)
-                                                        }
-                                                    }
                                                 })
                                                 
                                             } else {
@@ -368,16 +385,12 @@ class UpdateHelper {
                                                         if fetchedTransaction == nil {
                                                             CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: nil, account: account!, category: category!, transfer: nil, se_id: seid, id: id, complition: { (savedTransaction) in
                                                                 if tags.count == 0 {
-                                                                    if index == transactions.count - 1 {
-                                                                        complition(result)
-                                                                    }
+                                                                    myGroup.leave()
                                                                 } else {
                                                                     for tag in tags {
                                                                         CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
                                                                     }
-                                                                    if index == transactions.count - 1 {
-                                                                        complition(result)
-                                                                    }
+                                                                    myGroup.leave()
                                                                 }
                                                             })
                                                         } else {
@@ -390,10 +403,17 @@ class UpdateHelper {
                                                                     fetchedTransaction?.type = type
                                                                     fetchedTransaction?.desc = desc
                                                                     CoreDataService.instance.update(complition: { (success) in
-                                                                        if index == transactions.count - 1 {
+                                                                        if !success {
+                                                                            result = false
                                                                             complition(result)
+                                                                            myGroup.leave()
+                                                                            return
+                                                                        } else {
+                                                                            myGroup.leave()
                                                                         }
                                                                     })
+                                                                } else {
+                                                                    myGroup.leave()
                                                                 }
                                                             })
                                                         }
@@ -406,19 +426,23 @@ class UpdateHelper {
                         }
                     } else {
                         result = false
-                        if index == transactions.count - 1 {
-                            complition(result)
-                        }
+                        complition(result)
+                        myGroup.leave()
+                        return
                     }
                 } else {
                     result = false
-                    if index == transactions.count - 1 {
-                        complition(result)
-                    }
+                    complition(result)
+                    myGroup.leave()
+                    return
                 }
+            }
+            myGroup.notify(queue: .main) {
+                complition(result)
             }
         }
     }
+ 
     
     func savePlaces(places: [JSON], complition: @escaping (Bool)->()){
         if places.count == 0 {
@@ -427,10 +451,10 @@ class UpdateHelper {
             var result = true
             for (index, item) in places.enumerated() {
                 if let place = item.dictionary {
-                    if let id = place["fsid"]?.string, let address = place["address"]?.string, let name = place["name"]?.string, let latitude = place["latitude"]?.string, let longitude = place["longitude"]?.string {
+                    if let id = place["fsid"]?.string, let address = place["address"]?.string, let name = place["name"]?.string, let latitude = place["latitude"]?.double, let longitude = place["longitude"]?.double{
                         CoreDataService.instance.fetchPlaceById(id: id) { (fetchedPlaces) in
                             if fetchedPlaces.count == 0 {
-                                CoreDataService.instance.savePlace(id: id, name: name, address: address, latitude: Double(latitude) ?? 0.0, longitude: Double(longitude) ?? 0.0, complition: { (success) in
+                                CoreDataService.instance.savePlace(id: id, name: name, address: address, latitude: latitude, longitude: longitude, complition: { (success) in
                                     if !success {
                                         result = false
                                     }
@@ -600,7 +624,7 @@ class UpdateHelper {
                     if let id = account["mobAppId"]?.string, let name = account["name"]?.string, let systemName = account["systemName"]?.string, let currency = account["currency"]?.string, let type = account["type"]?.string, let external = account["external"]?.bool {
                         let seId = account["seid"]?.string ?? ""
                         let seProvider = account["seProvider"]?.string ?? ""
-                        CoreDataService.instance.fetchAccount(ByID: id, withSEID: seId, seProviderID: seProvider, userID: userID) { (account) in
+                        CoreDataService.instance.fetchAccount(ByID: id, withSEID: seId, userID: userID) { (account) in
                             if let account = account {
                                 if account.name != name || account.currency != currency || account.external != external || account.type != type{
                                     account.name = name

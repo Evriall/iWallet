@@ -51,7 +51,6 @@ class FourSquareService {
             if let jsonPlaces = jsonResponse["venues"]?.array {
                 for items in jsonPlaces {
                     if let item = items.dictionary {
-                        print(item.count)
                         guard let id  = item["id"]?.string, let name = item["name"]?.string, let location = item["location"]?.dictionary else {continue}
                         let address = location["address"]?.string ?? ""
                         guard let latitude = location["lat"]?.double, let longitude = location["lng"]?.double else {continue}

@@ -79,7 +79,7 @@ class SelectCurrencyVC: UIViewController {
                     self.currencies.append((code: baseCode,name: Locale.current.localizedString(forCurrencyCode: baseCode) ?? "", rate: currencyRate))
                     flag = true
                 } else {
-                    print("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
+                    debugPrint("Can`t evaluate currency rate for \(baseCode):\(pairCode)")
                 }
             } else {
                 flag = false

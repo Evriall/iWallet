@@ -214,6 +214,7 @@ class MainVC: UIViewController {
                         }
                         if !matchParent {
                             parentCategories.append(CoinCategory(name: category, amount: sum, color: color))
+                            childCategories.append([])
                         }
                     }
                 }

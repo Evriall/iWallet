@@ -171,7 +171,7 @@ extension SelectPlaceVC: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error.localizedDescription)
+        debugPrint(error.localizedDescription)
     }
     
     // Show the popup to the user if we have been deined access
