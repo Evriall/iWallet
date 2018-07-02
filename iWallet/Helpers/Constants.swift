@@ -31,7 +31,8 @@ struct Constants {
     static let URL_IWALLET = "saltedge-api-swift-demo://home.local"
     static let URL_SE_CREATE_CUSTOMER = "https://www.saltedge.com/api/v4/customers/"
     static let URL_SE_GET_CATEGORY = "https://www.saltedge.com/api/v4/categories"
-    static let URL_LOGIN = "http://localhost:3000"
+    static let URL_LOGIN = "https://iwalletsg.herokuapp.com"
+//    static let URL_LOGIN = "http://localhost:3000"
     
     //API keys
     static let API_KEY_CURRENCY_EXCHANGE_RATE = ""

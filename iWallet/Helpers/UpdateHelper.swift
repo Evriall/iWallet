@@ -29,10 +29,10 @@ class UpdateHelper {
             }
             CoreDataService.instance.fetchLastSEProviders(ByDate: lastUpload, userID: userID, complition: { (seProviders) in
                 if seProviders.count > 0 {
-                    var convertedSEProviders  = [[String:String]]()
+                    var convertedSEProviders  = [[String:Any]]()
                     for item in seProviders {
                         guard let id = item.id, let name = item.name, let secret = item.secret, let seCustomerID = item.secustomer?.id else {continue}
-                        convertedSEProviders.append(["seid" : id, "name" : name, "secret" : secret, "seCustomer" : seCustomerID])
+                        convertedSEProviders.append(["seid" : id, "name" : name, "secret" : secret, "seCustomer" : seCustomerID, "disabled" : item.disabled])
                     }
                     uploadData["seProviders"] = convertedSEProviders
                 }
@@ -55,9 +55,9 @@ class UpdateHelper {
                             for item in accounts {
                                 guard let id = item.id, let name = item.name, let systemName = item.systemName, let type = item.type, let currency = item.currency else {continue}
                                 if let seid = item.se_id, let seProvider = item.se_provider?.id {
-                                    convertedAccounts.append(["mobAppId" : id, "name" : name, "systemName" : systemName, "type" : type, "currency" : currency, "external" : item.external, "seid" : seid, "seProvider" : seProvider])
+                                    convertedAccounts.append(["mobAppId" : id, "name" : name, "systemName" : systemName, "type" : type, "currency" : currency, "external" : item.external, "seid" : seid, "seProvider" : seProvider, "disabled" : item.disabled])
                                 } else {
-                                    convertedAccounts.append(["mobAppId" : id, "name" : name, "systemName" : systemName, "type" : type, "currency" : currency, "external" : item.external])
+                                    convertedAccounts.append(["mobAppId" : id, "name" : name, "systemName" : systemName, "type" : type, "currency" : currency, "external" : item.external, "disabled" : item.disabled])
                                 }
                             }
                             uploadData["accounts"] = convertedAccounts
@@ -85,7 +85,7 @@ class UpdateHelper {
                                             guard let name = tag.name else {continue}
                                             convertedTags.append(name)
                                         }
-                                        var convertedTransaction : [String : Any] = ["mobAppId" : mobAppId, "type" : type, "date" : date, "category" : category, "account" : account, "tags" : convertedTags, "amount" : item.amount]
+                                        var convertedTransaction : [String : Any] = ["mobAppId" : mobAppId, "type" : type, "date" : date, "category" : category, "account" : account, "tags" : convertedTags, "amount" : item.amount, "disabled" : item.disabled]
                                         if !seid.isEmpty {
                                             convertedTransaction["seid"] = seid
                                         }
@@ -174,12 +174,134 @@ class UpdateHelper {
         }
     }
     
+    func saveTransaction(id : String, amount: Double, date: Date, type: String, accountID: String, categoryID: String, disabled: Bool, tags: [String], seid: String, place: Place?, desc: String?, accountSEID: String, userID: String, transferID: String?, complition: @escaping (Bool)->()){
+        CoreDataService.instance.fetchAccount(ByID: accountID, withSEID: accountSEID, userID: userID, complition:  { (account) in
+            if account == nil {
+                complition(false)
+                return
+            } else {
+                CoreDataService.instance.fetchCategory(ByObjectID: categoryID, userID: userID, complition: { (category) in
+                    if category == nil {
+                        complition(false)
+                        return
+                    } else {
+                        if let transfer = transferID {
+                            CoreDataService.instance.fetchTransaction(ById: transfer, userID: userID, complition: { (transferTransaction) in
+                                CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
+                                    if fetchedTransaction == nil {
+                                        if !disabled {
+                                            CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: place, account: account!, category: category!, transfer: transferTransaction, se_id: seid, id: id, disabled: disabled, complition: { (savedTransaction) in
+                                                if let savedTransaction = savedTransaction {
+                                                    if tags.count == 0 {
+                                                        complition(true)
+                                                    } else {
+                                                        for tag in tags {
+                                                            CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
+                                                        }
+                                                        complition(true)
+                                                    }
+                                                } else {
+                                                    complition(false)
+                                                    return
+                                                }
+                                            })
+                                        } else {
+                                            complition(true)
+                                        }
+                                    } else {
+                                        if (disabled) {
+                                            print("Removed transaction")
+                                            CoreDataService.instance.remove(object: fetchedTransaction!, complition: { (success) in
+                                                complition(success)
+                                            })
+                                        } else {
+                                            if (!fetchedTransaction!.disabled){
+                                                self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
+                                                    if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != place || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc{
+                                                        fetchedTransaction?.amount = amount
+                                                        fetchedTransaction?.category = category
+                                                        fetchedTransaction?.place = place
+                                                        fetchedTransaction?.date = date
+                                                        fetchedTransaction?.type = type
+                                                        fetchedTransaction?.desc = desc
+                                                        CoreDataService.instance.update(complition: { (success) in
+                                                            if !success {
+                                                                complition(false)
+                                                                return
+                                                            } else {
+                                                                complition(true)
+                                                            }
+                                                        })
+                                                    } else {
+                                                        complition(true)
+                                                    }
+                                                })
+                                            } else {
+                                                complition(true)
+                                            }
+                                        }
+                                    }
+                                })
+                            })
+                            
+                        } else {
+                            CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
+                                if fetchedTransaction == nil {
+                                    if(!disabled){
+                                        CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: place, account: account!, category: category!, transfer: nil, se_id: seid, id: id, complition: { (savedTransaction) in
+                                            if let savedTransaction = savedTransaction {
+                                                if tags.count == 0 {
+                                                    complition(true)
+                                                } else {
+                                                    for tag in tags {
+                                                        CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
+                                                    }
+                                                    complition(true)
+                                                }
+                                            } else {
+                                                complition(false)
+                                                return
+                                            }
+                                        })
+                                    }
+                                } else {
+                                    if(disabled) {
+                                        print("Transaction removed")
+                                        CoreDataService.instance.remove(object: fetchedTransaction!, complition: { (success) in
+                                            complition(success)
+                                        })
+                                    } else {
+                                        self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
+                                            if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != place || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc || fetchedTransaction?.disabled != disabled {
+                                                fetchedTransaction?.amount = amount
+                                                fetchedTransaction?.category = category
+                                                fetchedTransaction?.place = place
+                                                fetchedTransaction?.date = date
+                                                fetchedTransaction?.type = type
+                                                fetchedTransaction?.desc = desc
+                                                fetchedTransaction?.disabled = disabled
+                                                CoreDataService.instance.update(complition: { (success) in
+                                                    complition(success)
+                                                })
+                                            } else {
+                                                complition(true)
+                                            }
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
+    
     func saveTransactions(transactions: [JSON], user: User, complition: @escaping (Bool)->()){
         guard let userID = user.id else {
             complition(false)
             return
         }
-        
         if transactions.count == 0 {
             complition(true)
         } else {
@@ -188,7 +310,7 @@ class UpdateHelper {
             for (index, item) in transactions.enumerated() {
                 myGroup.enter()
                 if let transaction = item.dictionary {
-                    if let id = transaction["mobAppId"]?.string, let amount = transaction["amount"]?.double, let dateStr = transaction["date"]?.string, let type = transaction["type"]?.string, let accountID = transaction["account"]?.string, let categoryID = transaction["category"]?.string {
+                    if let id = transaction["mobAppId"]?.string, let amount = transaction["amount"]?.double, let dateStr = transaction["date"]?.string, let type = transaction["type"]?.string, let accountID = transaction["account"]?.string, let categoryID = transaction["category"]?.string, let disabled = transaction["disabled"]?.bool  {
                         guard let date = dateStr.updateServerDate() else {
                             result = false
                             myGroup.leave()
@@ -206,6 +328,7 @@ class UpdateHelper {
                         let placeID = transaction["place"]?.string
                         let desc = transaction["desc"]?.string
                         let accountSEID = transaction["accountSEID"]?.string ?? ""
+                        let transferID = transaction["transfer"]?.string
                         if placeID != nil {
                             CoreDataService.instance.fetchPlaceById(id: placeID!) { (places) in
                                 if places.count == 0 {
@@ -215,102 +338,14 @@ class UpdateHelper {
                                     return
                                 } else {
                                     for place in places {
-                                        CoreDataService.instance.fetchAccount(ByID: accountID, withSEID: accountSEID, userID: userID, complition:  { (account) in
-                                            if account == nil {
+                                        self.saveTransaction(id: id, amount: amount, date: date, type: type, accountID: accountID, categoryID: categoryID, disabled: disabled, tags: tags, seid: seid, place: place, desc: desc, accountSEID: accountSEID, userID: userID, transferID: transferID, complition: { (success) in
+                                            if success {
+                                                myGroup.leave()
+                                            } else {
                                                 result = false
                                                 complition(result)
                                                 myGroup.leave()
                                                 return
-                                            } else {
-                                                CoreDataService.instance.fetchCategory(ByObjectID: categoryID, userID: userID, complition: { (category) in
-                                                    if category == nil {
-                                                        result = false
-                                                        complition(result)
-                                                        myGroup.leave()
-                                                        return
-                                                    } else {
-                                                        if let transfer = transaction["transfer"]?.string {
-                                                           CoreDataService.instance.fetchTransaction(ById: transfer, userID: userID, complition: { (transferTransaction) in
-                                                                    CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
-                                                                        if fetchedTransaction == nil {
-                                                                            CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: place, account: account!, category: category!, transfer: transferTransaction, se_id: seid, id: id, complition: { (savedTransaction) in
-                                                                                if tags.count == 0 {
-                                                                                    myGroup.leave()
-                                                                                } else {
-                                                                                    for tag in tags {
-                                                                                        CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
-                                                                                    }
-                                                                                    myGroup.leave()
-                                                                                }
-                                                                            })
-                                                                        } else {
-                                                                            self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
-                                                                                if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != place || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc {
-                                                                                    fetchedTransaction?.amount = amount
-                                                                                    fetchedTransaction?.category = category
-                                                                                    fetchedTransaction?.place = place
-                                                                                    fetchedTransaction?.date = date
-                                                                                    fetchedTransaction?.type = type
-                                                                                    fetchedTransaction?.desc = desc
-                                                                                    CoreDataService.instance.update(complition: { (success) in
-                                                                                        if !success {
-                                                                                            result = false
-                                                                                            complition(result)
-                                                                                            myGroup.leave()
-                                                                                            return
-                                                                                        } else {
-                                                                                            myGroup.leave()
-                                                                                        }
-                                                                                    })
-                                                                                } else {
-                                                                                   myGroup.leave()
-                                                                                }
-                                                                            })
-                                                                        }
-                                                                    })
-                                                            })
-                                                            
-                                                        } else {
-                                                            CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
-                                                                if fetchedTransaction == nil {
-                                                                    CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: place, account: account!, category: category!, transfer: nil, se_id: seid, id: id, complition: { (savedTransaction) in
-                                                                        if tags.count == 0 {
-                                                                            myGroup.leave()
-                                                                        } else {
-                                                                            for tag in tags {
-                                                                                CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
-                                                                            }
-                                                                            myGroup.leave()
-                                                                        }
-                                                                    })
-                                                                } else {
-                                                                    self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
-                                                                        if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != place || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc {
-                                                                            fetchedTransaction?.amount = amount
-                                                                            fetchedTransaction?.category = category
-                                                                            fetchedTransaction?.place = place
-                                                                            fetchedTransaction?.date = date
-                                                                            fetchedTransaction?.type = type
-                                                                            fetchedTransaction?.desc = desc
-                                                                            CoreDataService.instance.update(complition: { (success) in
-                                                                                if !success {
-                                                                                    result = false
-                                                                                    complition(result)
-                                                                                    myGroup.leave()
-                                                                                    return
-                                                                                } else {
-                                                                                    myGroup.leave()
-                                                                                }
-                                                                            })
-                                                                        } else {
-                                                                            myGroup.leave()
-                                                                        }
-                                                                    })
-                                                                }
-                                                            })
-                                                        }
-                                                    }
-                                                })
                                             }
                                         })
                                         break
@@ -318,109 +353,14 @@ class UpdateHelper {
                                 }
                             }
                         } else {
-                            CoreDataService.instance.fetchAccount(ByID: accountID, withSEID: accountSEID, userID: userID, complition:  { (account) in
-                                if account == nil {
+                            self.saveTransaction(id: id, amount: amount, date: date, type: type, accountID: accountID, categoryID: categoryID, disabled: disabled, tags: tags, seid: seid, place: nil, desc: desc, accountSEID: accountSEID, userID: userID, transferID: transferID, complition: { (success) in
+                                if success {
+                                    myGroup.leave()
+                                } else {
                                     result = false
                                     complition(result)
                                     myGroup.leave()
                                     return
-                                } else {
-                                    CoreDataService.instance.fetchCategory(ByObjectID: categoryID, userID: userID, complition: { (category) in
-                                        if category == nil {
-                                            result = false
-                                            complition(result)
-                                            myGroup.leave()
-                                            return
-                                        } else {
-                                            if let transfer = transaction["transfer"]?.string {
-                                                CoreDataService.instance.fetchTransaction(ById: transfer, userID: userID, complition:  { (transferTransaction) in
-                                                        CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
-                                                            if fetchedTransaction == nil {
-                                                                CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: nil, account: account!, category: category!, transfer: transferTransaction, se_id: seid, id: id, complition: { (savedTransaction) in
-                                                                    if savedTransaction != nil {
-                                                                        if tags.count == 0 {
-                                                                            myGroup.leave()
-                                                                        } else {
-                                                                            for tag in tags {
-                                                                                CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
-                                                                            }
-                                                                            myGroup.leave()
-                                                                        }
-                                                                    } else {
-                                                                        result = false
-                                                                        complition(result)
-                                                                        myGroup.leave()
-                                                                        return
-                                                                    }
-                                                                })
-                                                            } else {
-                                                                self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
-                                                                    if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != nil || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc {
-                                                                        fetchedTransaction?.amount = amount
-                                                                        fetchedTransaction?.category = category
-                                                                        fetchedTransaction?.place = nil
-                                                                        fetchedTransaction?.date = date
-                                                                        fetchedTransaction?.type = type
-                                                                        fetchedTransaction?.desc = desc
-                                                                        CoreDataService.instance.update(complition: { (success) in
-                                                                            if !success {
-                                                                                result = false
-                                                                                complition(result)
-                                                                                myGroup.leave()
-                                                                                return
-                                                                            } else {
-                                                                                myGroup.leave()
-                                                                            }
-                                                                        })
-                                                                    } else {
-                                                                        myGroup.leave()
-                                                                    }
-                                                                })
-                                                            }
-                                                        })
-                                                })
-                                                
-                                            } else {
-                                                    CoreDataService.instance.fetchTransaction(ById: id, withSEId: seid, account: account!, complition: { (fetchedTransaction) in
-                                                        if fetchedTransaction == nil {
-                                                            CoreDataService.instance.saveTransaction(amount: amount, desc: desc, type: type, date: date, place: nil, account: account!, category: category!, transfer: nil, se_id: seid, id: id, complition: { (savedTransaction) in
-                                                                if tags.count == 0 {
-                                                                    myGroup.leave()
-                                                                } else {
-                                                                    for tag in tags {
-                                                                        CoreDataService.instance.saveTag(name: tag, transaction: savedTransaction)
-                                                                    }
-                                                                    myGroup.leave()
-                                                                }
-                                                            })
-                                                        } else {
-                                                            self.saveTags(transaction: fetchedTransaction!, tags: tags, complition: { (success) in
-                                                                if fetchedTransaction!.amount != amount || fetchedTransaction!.category != category || fetchedTransaction!.place != nil || fetchedTransaction!.date != date || fetchedTransaction!.type != type || fetchedTransaction!.desc != desc {
-                                                                    fetchedTransaction?.amount = amount
-                                                                    fetchedTransaction?.category = category
-                                                                    fetchedTransaction?.place = nil
-                                                                    fetchedTransaction?.date = date
-                                                                    fetchedTransaction?.type = type
-                                                                    fetchedTransaction?.desc = desc
-                                                                    CoreDataService.instance.update(complition: { (success) in
-                                                                        if !success {
-                                                                            result = false
-                                                                            complition(result)
-                                                                            myGroup.leave()
-                                                                            return
-                                                                        } else {
-                                                                            myGroup.leave()
-                                                                        }
-                                                                    })
-                                                                } else {
-                                                                    myGroup.leave()
-                                                                }
-                                                            })
-                                                        }
-                                                    })
-                                            }
-                                        }
-                                    })
                                 }
                             })
                         }
@@ -554,41 +494,61 @@ class UpdateHelper {
             var result = true
             for (index, item) in seProviders.enumerated() {
                 if let seProvider = item.dictionary {
-                    if let id = seProvider["seid"]?.string, let name = seProvider["name"]?.string, let secret = seProvider["secret"]?.string, let seCustomerID = seProvider["seCustomer"]?.string {
+                    if let id = seProvider["seid"]?.string, let name = seProvider["name"]?.string, let secret = seProvider["secret"]?.string, let seCustomerID = seProvider["seCustomer"]?.string, let disabled = seProvider["disabled"]?.bool {
                         CoreDataService.instance.fetchSEProvider(ById: id, customerID: seCustomerID) { (fetchedSEProviders) in
                             if fetchedSEProviders.count == 0 {
-                                CoreDataService.instance.fetchSECustomer(ByID: seCustomerID, userID: userID, complition: { (seCustomer) in
-                                    if seCustomer == nil {
-                                        result = false
-                                        if index == seProviders.count - 1 {
-                                            complition(result)
-                                        }
-                                    } else {
-                                        CoreDataService.instance.saveSEProvider(name: name, id: id, secret: secret, customer: seCustomer!, complition: { (savedSEProvider) in
-                                            if savedSEProvider == nil {
-                                                result = false
-                                            }
+                                if (!disabled){
+                                    CoreDataService.instance.fetchSECustomer(ByID: seCustomerID, userID: userID, complition: { (seCustomer) in
+                                        if seCustomer == nil {
+                                            result = false
                                             if index == seProviders.count - 1 {
                                                 complition(result)
                                             }
-                                        })
+                                        } else {
+                                            CoreDataService.instance.saveSEProvider(name: name, id: id, secret: secret, customer: seCustomer!, complition: { (savedSEProvider) in
+                                                if savedSEProvider == nil {
+                                                    result = false
+                                                }
+                                                if index == seProviders.count - 1 {
+                                                    complition(result)
+                                                }
+                                            })
+                                        }
+                                    })
+                                } else {
+                                    if index == seProviders.count - 1 {
+                                        complition(result)
                                     }
-                                })
+                                }
                             } else {
                                 for (fetchedIndex, fetchedSEProvider) in fetchedSEProviders.enumerated() {
-                                    if fetchedSEProvider.secret != secret {
-                                        fetchedSEProvider.secret = secret
-                                        CoreDataService.instance.update(complition: { (success) in
-                                            if !success {
-                                                result = false
-                                            }
+                                    if (disabled) {
+                                        CoreDataService.instance.remove(object: fetchedSEProvider, complition: { (success) in
                                             if (index == seProviders.count - 1) && (fetchedIndex == fetchedSEProviders.count - 1){
                                                 complition(result)
                                             }
                                         })
                                     } else {
-                                        if (index == seProviders.count - 1) && (fetchedIndex == fetchedSEProviders.count - 1){
-                                            complition(result)
+                                        if (!fetchedSEProvider.disabled) {
+                                            if (fetchedSEProvider.secret != secret) {
+                                                fetchedSEProvider.secret = secret
+                                                CoreDataService.instance.update(complition: { (success) in
+                                                    if !success {
+                                                        result = false
+                                                    }
+                                                    if (index == seProviders.count - 1) && (fetchedIndex == fetchedSEProviders.count - 1){
+                                                        complition(result)
+                                                    }
+                                                })
+                                            } else {
+                                                if (index == seProviders.count - 1) && (fetchedIndex == fetchedSEProviders.count - 1){
+                                                    complition(result)
+                                                }
+                                            }
+                                        } else {
+                                            if (index == seProviders.count - 1) && (fetchedIndex == fetchedSEProviders.count - 1){
+                                                complition(result)
+                                            }
                                         }
                                     }
                                 }
@@ -621,62 +581,83 @@ class UpdateHelper {
             var result = true
             for (index, item) in accounts.enumerated() {
                 if let account = item.dictionary {
-                    if let id = account["mobAppId"]?.string, let name = account["name"]?.string, let systemName = account["systemName"]?.string, let currency = account["currency"]?.string, let type = account["type"]?.string, let external = account["external"]?.bool {
+                    if let id = account["mobAppId"]?.string, let name = account["name"]?.string, let systemName = account["systemName"]?.string, let currency = account["currency"]?.string, let type = account["type"]?.string, let external = account["external"]?.bool, let disabled = account["disabled"]?.bool {
                         let seId = account["seid"]?.string ?? ""
                         let seProvider = account["seProvider"]?.string ?? ""
                         CoreDataService.instance.fetchAccount(ByID: id, withSEID: seId, userID: userID) { (account) in
                             if let account = account {
-                                if account.name != name || account.currency != currency || account.external != external || account.type != type{
-                                    account.name = name
-                                    account.currency = currency
-                                    account.external = external
-                                    account.type = type
-                                    CoreDataService.instance.update(complition: { (success) in
-                                        if !success { result = false}
+                                if (disabled) {
+                                    print("Account removed")
+                                    CoreDataService.instance.remove(object: account, complition: { (success) in
                                         if index == accounts.count - 1 {
                                             complition(result)
                                         }
                                     })
                                 } else {
-                                    if index == accounts.count - 1 {
-                                        complition(result)
-                                    }
-                                }
-                            } else {
-                                if seProvider.isEmpty {
-                                    CoreDataService.instance.saveAccount(name: name, systemName: systemName, type: type, currency: currency, external: external, user: user, id: id, complition: { (success) in
-                                        if success {
-                                            if !external {
-                                                AccountHelper.instance.currentAccount = id
-                                            }
-                                        }else{
-                                            result = false
-                                        }
-                                        if index == accounts.count - 1 {
-                                            complition(result)
-                                        }
-                                    })
-                                } else {
-                                    guard let customerId = user.se_customer?.id else {
-                                        result = false
-                                        if index == accounts.count - 1 {
-                                            complition(result)
-                                        }
-                                        return
-                                    }
-                                    CoreDataService.instance.fetchSEProvider(ById: seProvider, customerID: customerId, complition: { (seProviders) in
-                                        for seProviderItem in seProviders {
-                                            CoreDataService.instance.saveSEAccount(name: name, systemName: systemName, type: type, currency: currency, external: external, seID: seId, seProvider: seProviderItem, user: user, id: id, complition: { (account) in
-                                                if account == nil {
-                                                    result = false
-                                                }
+                                    if !account.disabled {
+                                        if account.name != name || account.currency != currency || account.external != external || account.type != type{
+                                            account.name = name
+                                            account.currency = currency
+                                            account.external = external
+                                            account.type = type
+                                            CoreDataService.instance.update(complition: { (success) in
+                                                if !success { result = false}
                                                 if index == accounts.count - 1 {
                                                     complition(result)
                                                 }
                                             })
-                                            break
+                                        } else {
+                                            if index == accounts.count - 1 {
+                                                complition(result)
+                                            }
                                         }
-                                    })
+                                    } else {
+                                        if index == accounts.count - 1 {
+                                            complition(result)
+                                        }
+                                    }
+                                }
+                            } else {
+                                if !disabled {
+                                    if seProvider.isEmpty {
+                                        CoreDataService.instance.saveAccount(name: name, systemName: systemName, type: type, currency: currency, external: external, user: user, id: id, complition: { (account) in
+                                            if account != nil {
+                                                if !external {
+                                                    AccountHelper.instance.currentAccount = id
+                                                }
+                                            }else{
+                                                result = false
+                                            }
+                                            if index == accounts.count - 1 {
+                                                complition(result)
+                                            }
+                                        })
+                                    } else {
+                                        guard let customerId = user.se_customer?.id else {
+                                            result = false
+                                            if index == accounts.count - 1 {
+                                                complition(result)
+                                            }
+                                            return
+                                        }
+                                        CoreDataService.instance.fetchSEProvider(ById: seProvider, customerID: customerId, complition: { (seProviders) in
+                                            for seProviderItem in seProviders {
+                                                CoreDataService.instance.saveSEAccount(name: name, systemName: systemName, type: type, currency: currency, external: external, seID: seId, seProvider: seProviderItem, user: user, id: id, complition: { (account) in
+                                                    if account == nil {
+                                                        result = false
+                                                    }
+                                                    if index == accounts.count - 1 {
+                                                        complition(result)
+                                                    }
+                                                })
+                                                break
+                                            }
+                                        })
+                                    }
+                                } else {
+                                    if index == accounts.count - 1 {
+                                        complition(result)
+                                    }
                                 }
                             }
                         }

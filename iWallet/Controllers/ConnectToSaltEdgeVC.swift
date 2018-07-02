@@ -26,7 +26,7 @@ class ConnectToSaltEdgeVC: UIViewController {
     private var customer: SECustomer?
     private var user: User?
     
-    var delegate: SettingsProtocol?
+    var delegate: UpdateProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()

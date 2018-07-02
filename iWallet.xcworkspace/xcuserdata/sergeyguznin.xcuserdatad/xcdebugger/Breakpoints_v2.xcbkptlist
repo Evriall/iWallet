@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iWallet/Controllers/SearchVC.swift"
-            timestampString = "551894141.482242"
+            timestampString = "552118991.141001"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "handleTransaction(date:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,13 +42,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iWallet/Controllers/AddTransactionVC.swift"
-            timestampString = "551977787.852028"
+            timestampString = "552118991.141091"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "753"
-            endingLineNumber = "753"
-            landmarkName = "handleCategory(_:)"
-            landmarkType = "7">
+            startingLineNumber = "779"
+            endingLineNumber = "779"
+            landmarkName = "AddTransactionVC"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

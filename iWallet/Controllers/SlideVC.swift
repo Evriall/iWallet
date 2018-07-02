@@ -73,7 +73,23 @@ class SlideVC: UIViewController {
         presentSecondaryDetail(presentedViewController: self, viewControllerToPresent: loginVC)
         
     }
-    
+    func disableTransactions(ByAccount account: Account, complition: ()->()) {
+        CoreDataService.instance.fetchTransactions(ByAccount: account) { (transactions) in
+            if transactions.count == 0 {
+              complition()
+            } else {
+                for (index, item) in transactions.enumerated() {
+                    item.disabled = true
+                    item.lastUpdate = Date()
+                    CoreDataService.instance.update(complition: { (success) in
+                        if index == transactions.count - 1 {
+                            complition()
+                        }
+                    })
+                }
+            }
+        }
+    }
 }
 
 extension SlideVC: UITableViewDelegate, UITableViewDataSource {
@@ -97,6 +113,50 @@ extension SlideVC: UITableViewDelegate, UITableViewDataSource {
         AccountHelper.instance.currentAccount = accounts[indexPath.row].id
         let brief = storyboard?.instantiateViewController(withIdentifier: "BriefByAccountVC")
         revealViewController().pushFrontViewController(brief, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.none
+    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "DELETE") { (rowAction, indexPath) in
+            let account = self.accounts[indexPath.row]
+            account.disabled = true
+            account.lastUpdate = Date()
+            CoreDataService.instance.update(complition: { (success) in
+                if(!success) {
+                    debugPrint("Can`t update account")
+                }
+                else {
+                    self.disableTransactions(ByAccount: account, complition: {
+                        if let currentAccount = AccountHelper.instance.currentAccount {
+                            if currentAccount == account.id {
+                                if self.accounts.count > 1 {
+                                    if indexPath.row == 0 {
+                                        AccountHelper.instance.currentAccount = self.accounts[1].id
+                                    } else {
+                                         AccountHelper.instance.currentAccount = self.accounts[0].id
+                                    }
+                                } else {
+                                     AccountHelper.instance.currentAccount = nil
+                                }
+                            } 
+                        }
+                        self.accounts.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                        NotificationCenter.default.post(name: .update, object: nil)
+                    })
+                }
+                
+            })
+        }
+        deleteAction.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        
+        return [deleteAction]
     }
     
 }

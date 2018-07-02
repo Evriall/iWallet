@@ -15,6 +15,7 @@ class BriefByAccountVC: UIViewController {
     @IBOutlet weak var menuBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var monthLbl: UILabel!
+    @IBOutlet weak var addTransactionBtn: UIButton!
     
     var account: Account?
     var date = Date()
@@ -36,15 +37,13 @@ class BriefByAccountVC: UIViewController {
         setUpElements()
     }
     
-    func setUpElements(){
-        guard let currentAccountObjectID = AccountHelper.instance.currentAccount, let currentUser = LoginHelper.instance.currentUser else {return}
-        menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView?.register(UINib(nibName: "TransactionCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
-        self.tableView.sectionHeaderHeight = 32
+    func fetchData(){
+        guard let currentAccountObjectID = AccountHelper.instance.currentAccount, let currentUser = LoginHelper.instance.currentUser else {
+            addTransactionBtn.isHidden = true
+            titleLbl.text = "NO DATA"
+            return
+        }
+        addTransactionBtn.isHidden = false
         CoreDataService.instance.fetchAccount(ByObjectID: currentAccountObjectID, userID: currentUser) { (account) in
             guard let account = account else {return}
             self.account = account
@@ -52,6 +51,21 @@ class BriefByAccountVC: UIViewController {
         }
         setMonthLabel()
         fetchTransactions()
+    }
+    
+    func setUpElements(){
+        menuBtn.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView?.register(UINib(nibName: "TransactionCell", bundle: nil), forCellReuseIdentifier: "TransactionCell")
+        self.tableView.sectionHeaderHeight = 32
+        NotificationCenter.default.addObserver(self, selector: #selector(updateByNotification(notification:)), name: .update, object: nil)
+        fetchData()
+    }
+    @objc func updateByNotification(notification: NSNotification) {
+        fetchData()
     }
     
     func setMonthLabel(){
@@ -172,14 +186,13 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "DELETE") { (rowAction, indexPath) in
-            CoreDataService.instance.fetchTags(transaction: self.transactions[indexPath.section][indexPath.row], complition: { (tags) in
-                for item in tags {
-                    CoreDataService.instance.removeTag(tag: item)
-                }
-                CoreDataService.instance.removeTransaction(transaction: self.transactions[indexPath.section][indexPath.row])
+            let transaction = self.transactions[indexPath.section][indexPath.row]
+            transaction.disabled = true
+            transaction.lastUpdate = Date()
+            CoreDataService.instance.update(complition: { (success) in
+                if(!success) {debugPrint("Can`t update transaction")}
+                self.fetchTransactions()
             })
-            
-            self.fetchTransactions()
         }
         deleteAction.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
         
@@ -188,12 +201,11 @@ extension BriefByAccountVC: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension BriefByAccountVC: BriefProtocol, SettingsProtocol {
+extension BriefByAccountVC: BriefProtocol, UpdateProtocol {
     func handleTransaction(date: Date) {
         fetchTransactions()
     }
     func update() {
-        titleLbl.text = self.account?.name
-        fetchTransactions()
+        fetchData()
     }
 }

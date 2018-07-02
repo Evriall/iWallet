@@ -106,12 +106,14 @@
 		9ABCD40820CBB7E00017DA26 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCD40720CBB7E00017DA26 /* LoginService.swift */; };
 		9ABCD40F20CD1A100017DA26 /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCD40D20CD1A100017DA26 /* ResetPasswordVC.swift */; };
 		9ABCD41220CD1B790017DA26 /* ResetPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABCD41120CD1B790017DA26 /* ResetPasswordVC.xib */; };
-		9ABE1A2520C07DB7004DC5A7 /* SettingsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE1A2420C07DB7004DC5A7 /* SettingsProtocol.swift */; };
+		9ABE1A2520C07DB7004DC5A7 /* UpdateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE1A2420C07DB7004DC5A7 /* UpdateProtocol.swift */; };
 		9ABE1A2720C1354F004DC5A7 /* SaltEdgeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE1A2620C1354F004DC5A7 /* SaltEdgeHelper.swift */; };
 		9ABEB6BC206E25AE00F817BD /* SelectCurrencyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */; };
 		9AD795DC2077583C00AFB3BE /* ExchangeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DB2077583C00AFB3BE /* ExchangeService.swift */; };
 		9AD795DE2077B14900AFB3BE /* InitDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */; };
 		9AD795E02077BA3600AFB3BE /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */; };
+		9AD8FD8A20E7CD8800E0AFA9 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD8FD8920E7CD8700E0AFA9 /* TestVC.swift */; };
+		9AD8FDAC20E89FE200E0AFA9 /* NotificationNameExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD8FDAB20E89FE200E0AFA9 /* NotificationNameExt.swift */; };
 		9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADA1035207CBAB2001BFCD4 /* StringExt.swift */; };
 		9ADCC8BB2080BAEB00F446E4 /* SelectCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADCC8BA2080BAEB00F446E4 /* SelectCurrencyVC.swift */; };
 		9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE093C12087550A00CF43E6 /* PhotoCell.swift */; };
@@ -232,12 +234,14 @@
 		9ABCD40720CBB7E00017DA26 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		9ABCD40D20CD1A100017DA26 /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
 		9ABCD41120CD1B790017DA26 /* ResetPasswordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResetPasswordVC.xib; sourceTree = "<group>"; };
-		9ABE1A2420C07DB7004DC5A7 /* SettingsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProtocol.swift; sourceTree = "<group>"; };
+		9ABE1A2420C07DB7004DC5A7 /* UpdateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProtocol.swift; sourceTree = "<group>"; };
 		9ABE1A2620C1354F004DC5A7 /* SaltEdgeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaltEdgeHelper.swift; sourceTree = "<group>"; };
 		9ABEB6BA206E25AE00F817BD /* SelectCurrencyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectCurrencyVC.xib; sourceTree = "<group>"; };
 		9AD795DB2077583C00AFB3BE /* ExchangeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeService.swift; sourceTree = "<group>"; };
 		9AD795DD2077B14900AFB3BE /* InitDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitDataHelper.swift; sourceTree = "<group>"; };
 		9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
+		9AD8FD8920E7CD8700E0AFA9 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
+		9AD8FDAB20E89FE200E0AFA9 /* NotificationNameExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExt.swift; sourceTree = "<group>"; };
 		9ADA1035207CBAB2001BFCD4 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		9ADCC8BA2080BAEB00F446E4 /* SelectCurrencyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCurrencyVC.swift; sourceTree = "<group>"; };
 		9AE093C12087550A00CF43E6 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
@@ -291,6 +295,7 @@
 				9A73000A207384E7002F84F6 /* DateExt.swift */,
 				9AD795DF2077BA3600AFB3BE /* DoubleExt.swift */,
 				9ADA1035207CBAB2001BFCD4 /* StringExt.swift */,
+				9AD8FDAB20E89FE200E0AFA9 /* NotificationNameExt.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -371,7 +376,7 @@
 				9A73000E2073C4FF002F84F6 /* BriefProtocol.swift */,
 				9A4A53202087A95800E90EEA /* PhotoProtocol.swift */,
 				9A3853F8208A1E8C008B804D /* PlaceProtocol.swift */,
-				9ABE1A2420C07DB7004DC5A7 /* SettingsProtocol.swift */,
+				9ABE1A2420C07DB7004DC5A7 /* UpdateProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 				9A77003A20B848EB000209D4 /* SignUpVC.swift */,
 				9A77004020B87B3E000209D4 /* ConnectToSaltEdgeVC.swift */,
 				9ABCD40D20CD1A100017DA26 /* ResetPasswordVC.swift */,
+				9AD8FD8920E7CD8700E0AFA9 /* TestVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -695,7 +701,7 @@
 				9ABA9AF22063DB4500ADA34E /* AppDelegate.swift in Sources */,
 				9A9D2D65206A238500CC7DE0 /* CategoryHelper.swift in Sources */,
 				9A73000F2073C4FF002F84F6 /* BriefProtocol.swift in Sources */,
-				9ABE1A2520C07DB7004DC5A7 /* SettingsProtocol.swift in Sources */,
+				9ABE1A2520C07DB7004DC5A7 /* UpdateProtocol.swift in Sources */,
 				9A9D2D512066C34E00CC7DE0 /* ColorCell.swift in Sources */,
 				9A36663C2099F1D8005F6F4D /* SearchVC.swift in Sources */,
 				9A9D2D482066636800CC7DE0 /* Constants.swift in Sources */,
@@ -703,6 +709,7 @@
 				9A659822206BDC2000519722 /* AccountCell.swift in Sources */,
 				9A305B3A20B43ACC00DD79FF /* LineChartVC.swift in Sources */,
 				9AE093C32087550A00CF43E6 /* PhotoCell.swift in Sources */,
+				9AD8FDAC20E89FE200E0AFA9 /* NotificationNameExt.swift in Sources */,
 				9A3853FC208A3F59008B804D /* PlaceCell.swift in Sources */,
 				9A59A49C20A434C700B35E70 /* Detail.swift in Sources */,
 				9A8044B8208F32FB0048D82B /* WalletCell.swift in Sources */,
@@ -712,6 +719,7 @@
 				9A3C1C3D20AAE2A900B2865E /* ButtonWithRoundedCorner.swift in Sources */,
 				9A8044B4208E057F0048D82B /* SelectPlaceBySearchVC.swift in Sources */,
 				9AF34A002088CCD3005A94C7 /* DirectedPanGestureRecognizer.swift in Sources */,
+				9AD8FD8A20E7CD8800E0AFA9 /* TestVC.swift in Sources */,
 				9AABAD7320714C1F001AA162 /* CalendarVC.swift in Sources */,
 				9ADA1036207CBAB2001BFCD4 /* StringExt.swift in Sources */,
 				9AB9841220921BED008E84D9 /* CoinCell.swift in Sources */,

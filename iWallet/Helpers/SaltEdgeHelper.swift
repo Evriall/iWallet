@@ -16,6 +16,41 @@ class SaltEdgeHelper {
     let categoryReplacement = ["business_services":"services",
                                "auto_and_transport":"transport",
                                "bills_and_utilities":"utilities"]
+    
+    func disableSEProvider(seProvider: SEProvider, userID: String, complition: @escaping (_ completed: Bool)->()){
+        var result = true
+        guard let seProviderID = seProvider.id else {
+            complition(false)
+            return
+        }
+        seProvider.disabled = true
+        seProvider.lastUpdate = Date()
+        CoreDataService.instance.update { (success) in
+            if (!success) { result = false }
+            CoreDataService.instance.fetchAccounts(bySEProviderID: seProviderID, userID: userID, complition: { (accounts) in
+                for (accountIndex, account) in accounts.enumerated() {
+                    account.disabled = true
+                    account.lastUpdate = Date()
+                    CoreDataService.instance.update(complition: { (success) in
+                        if (!success) {result = false}
+                        CoreDataService.instance.fetchTransactions(ByAccount: account, complition: { (transactions) in
+                            for (transactionIndex, transaction) in transactions.enumerated() {
+                                transaction.disabled = true
+                                transaction.lastUpdate = Date()
+                                CoreDataService.instance.update(complition: { (success) in
+                                    if(!success) {result = false}
+                                    if (accountIndex == accounts.count - 1 && transactionIndex == transactions.count - 1) {
+                                        complition(result)
+                                    }
+                                })
+                            }
+                        })
+                    })
+                }
+            })
+        }
+    }
+    
     func fetchSEProvider(id: String, secret: String, customer: SECustomer, complition: @escaping (_ completed: Bool)->()){
         guard let customerID = customer.id else {
             complition(false)

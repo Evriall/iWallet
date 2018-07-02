@@ -31,6 +31,7 @@ class MainVC: UIViewController {
     @IBOutlet weak var coinView: ViewWithBottomButton!
     @IBOutlet weak var parentCategoryScrollView: UIScrollView!
     @IBOutlet weak var childCategoryScrollView: UIScrollView!
+    @IBOutlet weak var titleLbl: UILabel!
     
     
     var cards = [(name: String, id: String, costs: String, income: String)]()
@@ -155,6 +156,12 @@ class MainVC: UIViewController {
         setMonthLabel()
         fetchData()
         setCategoryContentWidth()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateByNotification(notification:)), name: .update, object: nil)
+    }
+    
+    @objc func updateByNotification(notification: NSNotification) {
+        fetchData()
+        setCategoryContentWidth()
     }
     func setCategoryHeight(){
         if CGFloat(parentCategoryHeight + childCategoryHeight + 8) > (self.view.frame.height - coinView.frame.origin.y) {
@@ -185,7 +192,9 @@ class MainVC: UIViewController {
         selectedParentCategory = nil
         parentCategories = []
         childCategories = []
-        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        guard let currentUser = LoginHelper.instance.currentUser else {
+            return
+        }
         CoreDataService.instance.fetchCategoriesCosts(ByAccount: account, WithDate: date, userID: currentUser, complition: { (results) in
            
             for arrayItem in results {
@@ -413,7 +422,13 @@ class MainVC: UIViewController {
         var accountIDs = [String]()
         selectedCashRow = nil
         selectedCardsRow = nil
-        guard let currentUser = LoginHelper.instance.currentUser else {return}
+        guard let currentUser = LoginHelper.instance.currentUser, let currentAccount = AccountHelper.instance.currentAccount else {
+            titleLbl.text = "NO DATA"
+            coinView.addButton.isHidden = true
+            return
+        }
+        titleLbl.text = "BRIEF"
+        coinView.addButton.isHidden = false
         self.fetchAccountsIncome { (succes) in
             self.fetchAccountsCosts(complition: { (success) in
                 self.accounts.sort(by: { (arg0, arg1) -> Bool in
@@ -429,8 +444,8 @@ class MainVC: UIViewController {
                 }
                 
                     CoreDataService.instance.fetchAccounts(ByObjectIDs: accountIDs, userID: currentUser, complition: { (fetchedAccounts) in
-                            for fetchedAccount in fetchedAccounts {
-                                for (index, account) in self.accounts.enumerated() {
+                            for (index, account) in self.accounts.enumerated() {
+                                for fetchedAccount in fetchedAccounts {
                                     if account.id == fetchedAccount.id {
                                         guard let type = fetchedAccount.type, let currency = fetchedAccount.currency else {continue}
                                         if  type == AccountType.Cash.rawValue {

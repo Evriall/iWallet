@@ -614,6 +614,7 @@
                         <outlet property="menuBtn" destination="QNp-xz-zs7" id="5mZ-zA-5ri"/>
                         <outlet property="monthLbl" destination="iZ6-ZK-fVV" id="AF3-Cu-knf"/>
                         <outlet property="parentCategoryScrollView" destination="95y-xE-yxm" id="ep1-eT-rrQ"/>
+                        <outlet property="titleLbl" destination="dnI-KG-mkE" id="BwO-Bb-5aE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5FA-sq-Sji" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1377,6 +1378,7 @@
                         <viewLayoutGuide key="safeArea" id="Jw2-sk-9CV"/>
                     </view>
                     <connections>
+                        <outlet property="addTransactionBtn" destination="xgL-Tn-EcW" id="iAz-4D-8gd"/>
                         <outlet property="menuBtn" destination="DyT-eR-y8K" id="lc1-N1-Y01"/>
                         <outlet property="monthLbl" destination="Sao-6s-Y9h" id="lyt-Up-cmH"/>
                         <outlet property="tableView" destination="IRd-Jf-nFv" id="eev-sR-X7i"/>

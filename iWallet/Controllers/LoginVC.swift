@@ -82,11 +82,16 @@ class LoginVC: UIViewController {
                                 HUD.show(.labeledProgress(title: "Fetching data", subtitle: nil))
                                 UpdateService.instance.fetchData(user: user, complition: { (success) in
                                     CoreDataService.instance.fetchAccounts(userID: userID, complition: { (accounts) in
-                                        for item in accounts {
-                                            AccountHelper.instance.currentAccount = item.id
+                                        if accounts.count == 0 {
                                             HUD.hide(animated: true)
                                             self.showMainVC()
-                                            break
+                                        } else {
+                                            for item in accounts {
+                                                AccountHelper.instance.currentAccount = item.id
+                                                HUD.hide(animated: true)
+                                                self.showMainVC()
+                                                break
+                                            }
                                         }
                                     })
                                 })
@@ -101,8 +106,8 @@ class LoginVC: UIViewController {
     
     func showMainVC(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let sw = storyboard.instantiateViewController(withIdentifier: "SWRevealViewController")
-        present(sw, animated: false, completion: nil)
+        let sw = storyboard.instantiateViewController(withIdentifier: "SWRevealViewController") as! SWRevealViewController
+        present(sw, animated: false)
     }
     
     @IBAction func signUpBtnPressed(_ sender: Any) {

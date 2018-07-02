@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol SettingsProtocol {
+protocol UpdateProtocol {
     func update()
 }

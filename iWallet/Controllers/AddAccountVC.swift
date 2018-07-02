@@ -19,7 +19,7 @@ class AddAccountVC: UIViewController {
     
     
     var account: Account?
-    var delegate: SettingsProtocol?
+    var delegate: UpdateProtocol?
     override func viewDidLoad() {
         super.viewDidLoad()
         setUIElements()
@@ -86,9 +86,13 @@ class AddAccountVC: UIViewController {
                     })
                 }
             } else {
-                CoreDataService.instance.saveAccount(name: name, systemName: name, type: type, currency: currency, user: user, lastUpdate: Date()) { (success) in
-                    if success {
+                CoreDataService.instance.saveAccount(name: name, systemName: name, type: type, currency: currency, user: user, lastUpdate: Date()) { (account) in
+                    if let account = account {
                         self.delegate?.update()
+                        if AccountHelper.instance.currentAccount == nil {
+                            AccountHelper.instance.currentAccount = account.id
+                            NotificationCenter.default.post(name: .update, object: nil)
+                        }
                         self.dismissDetail()
                     }
                 }

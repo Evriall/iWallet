@@ -99,7 +99,7 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "DELETE") { (rowAction, indexPath) in
-            guard let loginSecret = self.providers[indexPath.row].secret, let customerSecret = self.providers[indexPath.row].secustomer?.id else {return}
+            guard let currentUser = LoginHelper.instance.currentUser, let loginSecret = self.providers[indexPath.row].secret, let customerSecret = self.providers[indexPath.row].secustomer?.id else {return}
             let provider = self.providers[indexPath.row]
             if !NetworkReachabilityManager()!.isReachable {
                 HUD.flash(.labeledError(title: "Error", subtitle: "There are no internet connections"), delay: 3.0)
@@ -112,10 +112,15 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
                 switch response {
                 case .success(let value):
                     if value.data.removed {
-                        CoreDataService.instance.removeSEProvider(seProvider: provider)
-                        self?.fetchProviders()
+                        SaltEdgeHelper.instance.disableSEProvider(seProvider: provider, userID: currentUser, complition: { (success) in
+//                            self?.providers.remove(at: indexPath.row)
+//                            tableView.deleteRows(at: [indexPath], with: .automatic)
+                            HUD.show(.labeledProgress(title: "Accounts disabled successfully", subtitle: nil))
+                            HUD.hide(animated: true)
+                            self?.fetchProviders()
+                        })
                     }
-                    HUD.hide(animated: true)
+                    
                 case .failure(let error):
                     HUD.flash(.labeledError(title: "Error", subtitle: error.localizedDescription), delay: 3.0)
                 }
@@ -127,7 +132,7 @@ extension SettingsVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension SettingsVC: SettingsProtocol{
+extension SettingsVC: UpdateProtocol{
     func update() {
         self.fetchProviders()
     }

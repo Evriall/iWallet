@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17F77" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="class">
         <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="disabled" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="external" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -66,6 +67,7 @@
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="disabled" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="se_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -88,15 +90,15 @@
         <relationship name="se_customer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SECustomer" inverseName="user" inverseEntity="SECustomer" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-18" positionY="108" width="128" height="210"/>
-        <element name="Category" positionX="-54" positionY="-9" width="128" height="165"/>
-        <element name="CurrencyRate" positionX="-45" positionY="108" width="128" height="105"/>
-        <element name="Photo" positionX="-27" positionY="99" width="128" height="90"/>
-        <element name="Place" positionX="-45" positionY="117" width="128" height="150"/>
-        <element name="SECustomer" positionX="-45" positionY="117" width="128" height="105"/>
-        <element name="SEProvider" positionX="-36" positionY="126" width="128" height="150"/>
-        <element name="Tag" positionX="-36" positionY="81" width="128" height="75"/>
-        <element name="Transaction" positionX="-45" positionY="27" width="128" height="240"/>
-        <element name="User" positionX="-27" positionY="144" width="128" height="165"/>
+        <element name="Account" positionX="-182" positionY="-270" width="128" height="225"/>
+        <element name="Category" positionX="-353" positionY="-270" width="128" height="165"/>
+        <element name="CurrencyRate" positionX="-351" positionY="129" width="128" height="105"/>
+        <element name="Photo" positionX="-0" positionY="9" width="128" height="90"/>
+        <element name="Place" positionX="-182" positionY="-36" width="128" height="150"/>
+        <element name="SECustomer" positionX="-191" positionY="201" width="128" height="105"/>
+        <element name="SEProvider" positionX="-29" positionY="162" width="128" height="150"/>
+        <element name="Tag" positionX="-351" positionY="-72" width="128" height="75"/>
+        <element name="Transaction" positionX="-540" positionY="-153" width="128" height="255"/>
+        <element name="User" positionX="-540" positionY="144" width="128" height="165"/>
     </elements>
 </model>

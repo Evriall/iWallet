@@ -518,17 +518,25 @@ class AddTransactionVC: UIViewController {
         }
     }
     
-    func saveTransferTransactions(amount: Double, amountWithCurrencyRate: Double, accountFrom: Account, accountTo: Account, category: Category){
+    func saveTransferTransactions(amount: Double, amountWithCurrencyRate: Double, accountFrom: Account, accountTo: Account, category: Category, complition: @escaping (Bool)->()){
         
         CoreDataService.instance.saveTransaction(amount: amount, desc: self.desc, type: TransactionType.costs.rawValue , date: self.date, place: self.place, account: accountFrom, category: category, transfer: nil, lastUpdate: Date()) { (transaction) in
-            saveTransactionTags(transaction: transaction, tags: self.tags)
-            saveTransactionPhotos(transaction: transaction, photos: self.photos)
-            
-            CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.desc, type: TransactionType.income.rawValue , date: self.date, place: self.place, account: accountTo, category: category, transfer: transaction, lastUpdate: Date()) { (transferTransaction) in
-                saveTransactionTags(transaction: transferTransaction, tags: self.tags)
-                saveTransactionPhotos(transaction: transferTransaction, photos: self.photos)
-                self.delegate?.handleTransaction(date: self.date)
-                self.dismissDetail()
+            if let transaction = transaction {
+                saveTransactionTags(transaction: transaction, tags: self.tags)
+                saveTransactionPhotos(transaction: transaction, photos: self.photos)
+                
+                CoreDataService.instance.saveTransaction(amount: amountWithCurrencyRate.roundTo(places: 2), desc: self.desc, type: TransactionType.income.rawValue , date: self.date, place: self.place, account: accountTo, category: category, transfer: transaction, lastUpdate: Date()) { (transferTransaction) in
+                    if let transferTransaction = transferTransaction {
+                        saveTransactionTags(transaction: transferTransaction, tags: self.tags)
+                        saveTransactionPhotos(transaction: transferTransaction, photos: self.photos)
+                        self.delegate?.handleTransaction(date: self.date)
+                        complition(true)
+                    } else {
+                        complition(false)
+                    }
+                }
+            } else {
+                complition(false)
             }
             
         }
@@ -553,13 +561,21 @@ class AddTransactionVC: UIViewController {
                 guard let currencyFrom = accountFrom.currency else {return}
                 guard let currencyTo = accountTo.currency else {return}
                 if currencyFrom == currencyTo {
-                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amount, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amount, accountFrom: accountFrom, accountTo: accountTo, category: category, complition: { success in
+                        if success {
+                            self.dismissDetail()
+                        }
+                    })
                 } else {
                     CoreDataService.instance.fetchCurrencyRate(base: currencyFrom, pair: currencyTo, date: date) { (currencyRates) in
                         if currencyRates.count > 0 {
                             if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
                                 let amountWithCurrencyRate = currencyRate * amount
-                                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                                self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category, complition: {success in
+                                    if success {
+                                        self.dismissDetail()
+                                    }
+                                })
                             } else {
                                 debugPrint("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
                             }
@@ -571,7 +587,11 @@ class AddTransactionVC: UIViewController {
                                             if currencyRates.count > 0 {
                                                 if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
                                                     let amountWithCurrencyRate = currencyRate * amount
-                                                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                                                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category, complition: {success in
+                                                        if success {
+                                                            self.dismissDetail()
+                                                        }
+                                                    })
                                                 } else {
                                                     debugPrint("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
                                                 }
@@ -587,7 +607,11 @@ class AddTransactionVC: UIViewController {
                                             if currencyRates.count > 0 {
                                                 if let currencyRate = ExchangeService.instance.evaluateCurrencyRate(base: currencyFrom, pair: currencyTo, rates: currencyRates) {
                                                     let amountWithCurrencyRate = currencyRate * amount
-                                                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category)
+                                                    self.saveTransferTransactions(amount: amount, amountWithCurrencyRate: amountWithCurrencyRate, accountFrom: accountFrom, accountTo: accountTo, category: category, complition: {success in
+                                                        if success {
+                                                            self.dismissDetail()
+                                                        }
+                                                    })
                                                 } else {
                                                     debugPrint("Can`t evaluate currency rate for \(currencyFrom):\(currencyTo)")
                                                 }
@@ -601,10 +625,12 @@ class AddTransactionVC: UIViewController {
                 }
             } else {
                 CoreDataService.instance.saveTransaction(amount: amount, desc: self.desc, type: type, date: date, place: place, account: accountFrom, category: category, transfer: nil, lastUpdate: Date()) { (transaction) in
-                    saveTransactionTags(transaction: transaction, tags: self.tags)
-                    saveTransactionPhotos(transaction: transaction, photos: self.photos)
-                    delegate?.handleTransaction(date: self.date)
-                    dismissDetail()
+                    if let transaction = transaction {
+                        saveTransactionTags(transaction: transaction, tags: self.tags)
+                        saveTransactionPhotos(transaction: transaction, photos: self.photos)
+                        delegate?.handleTransaction(date: self.date)
+                        dismissDetail()
+                    }
                 }
             }
         } else {

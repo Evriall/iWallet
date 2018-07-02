@@ -147,12 +147,6 @@ class SearchVC: UIViewController {
             }
             details = accounts
             self.tableView.reloadData()
-            
-//            for (index,item) in dates.enumerated()  {
-//                for date in item {
-//                    print(index, " : ", date.name, date.amount)
-//                }
-//            }
         }
     }
     
